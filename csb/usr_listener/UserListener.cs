@@ -16,8 +16,7 @@ namespace csb.usr_listener
 
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
-        Client user;
-        List<IUpdateObserver> updatesObserversList = new();
+        Client user;        
         TL.Messages_Chats chats;
         TL.Messages_Dialogs dialogs;
 
@@ -55,17 +54,11 @@ namespace csb.usr_listener
                 //case "verification_code": /*return "65420";*/Console.Write("Code: "); return Console.ReadLine();
                 case "session_pathname": return $"{PhoneNumber}.session";
                 case "verification_code":
-                    NeedVerifyCodeEvent?.Invoke(PhoneNumber);
-                    //Thread t = new Thread(getCode);
-                    //t.IsBackground = true;
-                    //t.Start();
-
-                    //getCode();
+                    NeedVerifyCodeEvent?.Invoke(PhoneNumber);                    
                     codeReady.Reset();
                     codeReady.Wait();
-                    return VerifyCode;                   
-                    
-
+                    return VerifyCode;             
+            
                 case "first_name": return "Stevie";      // if sign-up is required
                 case "last_name": return "Voughan";        // if sign-up is required
                 case "password": return "secret!";     // if user has enabled 2FA
@@ -124,6 +117,11 @@ namespace csb.usr_listener
                             case MessageMediaDocument mmd:
                                 mediaGroup.Update(m.grouped_id, unm.message.ID);                                                               
                                 break;
+
+                            //case MessageMediaWebPage wp:
+                            //    //await user.SendMessageAsync(resolved, m.message, 0, m.entities, default, true);
+                            //    //await user.Messages_SendMessage(resolved, m.message, Helpers.RandomLong(), false, false, false, false, false, null, m.reply_markup, m.entities, null, null);
+                            //    break;
 
                             default:                                
                                 await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { WTelegram.Helpers.RandomLong() }, resolved);

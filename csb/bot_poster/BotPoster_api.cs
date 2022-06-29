@@ -35,7 +35,7 @@ namespace csb.bot_poster
         #endregion
 
         public BotPoster_api(string token)
-        {           
+        {
             this.token = token;
         }
 
@@ -43,7 +43,7 @@ namespace csb.bot_poster
         {
             bot = new TelegramBotClient(token);
             User u = bot.GetMeAsync().Result;
-            OutputBotName = u.Username;           
+            OutputBotName = u.Username;
 
             cts = new CancellationTokenSource();
 
@@ -59,7 +59,7 @@ namespace csb.bot_poster
 
             IsRunning = true;
         }
-        
+
         public void Stop()
         {
             mediaTimer.Dispose();
@@ -68,8 +68,8 @@ namespace csb.bot_poster
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
         {
-          
-            var message = update.Message;           
+
+            var message = update.Message;
 
             switch (message.Type)
             {
@@ -79,12 +79,12 @@ namespace csb.bot_poster
                     imp.Caption = message.Caption;
                     imp.CaptionEntities = message.CaptionEntities;
 
-                    
+
                     if (message.MediaGroupId == null)
                     {
                         await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
-                    }                   
+                    }
 
                     if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
                     {
@@ -96,7 +96,7 @@ namespace csb.bot_poster
                     }
                     mediaGroupId = message.MediaGroupId;
 
-                    if (mediaList.Count == 0)                        
+                    if (mediaList.Count == 0)
                         mediaTimer.Start();
 
                     mediaList.Add(imp);
@@ -114,14 +114,14 @@ namespace csb.bot_poster
                         await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
                     }
-                    
+
 
                     if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
                     {
                         await bot.SendMediaGroupAsync(
                            chatId: OutputChannelID,
                            media: mediaList,
-                            cancellationToken: cancellationToken);
+                           cancellationToken: cancellationToken);
                         mediaList.Clear();
                     }
                     mediaGroupId = message.MediaGroupId;
@@ -144,13 +144,75 @@ namespace csb.bot_poster
                     //    {
                     //        item.
                     //    }
-                    //}
+                    //}                    
 
 
-                    await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                    //message.Entities[0].Type = MessageEntityType.Url;
+
+                    //await bot.SendTextMessageAsync(OutputChannelID, message.Text, ParseMode.Html, message.Entities, true, null, null, null, null, message.ReplyMarkup, new CancellationToken());
+
+                    string text = message.Text;
+
+                    string webPage = message.Entities[0].Url //Если нихуя тут нет, то просто как сообщение обрабатывать
+
+                    var u = "\"" + webPage + "\"";
+                    int tagLenCntr = 0;
+
+                    foreach (var item in message.Entities)
+                    {
+                        //if (item is MessageEntityTextUrl)
+                        //{
+                        //    insertTagUrl(item.offset, item.length, ref message, ref tagLenCntr, ((MessageEntityTextUrl)item).url);
+                        //}
+
+                        if (item.Type == MessageEntityType.Italic)
+                        {
+                            insertTag("i", item.Offset, item.Length, ref text, ref tagLenCntr);
+                        }
+                        if (item.Type == MessageEntityType.Bold)
+                        {
+                            insertTag("b", item.Offset, item.Length, ref text, ref tagLenCntr);
+                        }
+
+
+                    }
+
+                    var t = text + "<a href=" + u + ">&#8288;</a>";
+
+                    await bot.SendTextMessageAsync(
+                    //chatId: channelName,
+                    chatId: OutputChannelID,
+                    text: t,
+                    replyMarkup: message.ReplyMarkup,
+                    parseMode: ParseMode.Html,
+                    cancellationToken: cancellationToken);
+
+
+
+                    //await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                     break;
 
             }
+        }
+
+        void insertTag(string tag, int offset, int length, ref string s, ref int tagLengtCntr)
+        {
+            string startTeg = $"<{tag}>";
+            s = s.Insert(offset + tagLengtCntr, startTeg);
+            tagLengtCntr += startTeg.Length;
+            string stopTeg = $"</{tag}>";
+            s = s.Insert(offset + length + tagLengtCntr, stopTeg);
+            tagLengtCntr += stopTeg.Length;
+        }
+
+        void insertTagUrl(int offset, int length, ref string s, ref int tagLengtCntr, string url)
+        {
+            string startTeg = $"<a href=\"{url}\">";
+            s = s.Insert(offset + tagLengtCntr, startTeg);
+            tagLengtCntr += startTeg.Length;
+            string stopTeg = $"</a>";
+            s = s.Insert(offset + length + tagLengtCntr, stopTeg);
+            tagLengtCntr += stopTeg.Length;
         }
 
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
@@ -171,13 +233,13 @@ namespace csb.bot_poster
             {
                 await bot.SendMediaGroupAsync(
                     chatId: OutputChannelID,
-                    media: mediaList,                    
-                    
+                    media: mediaList,
+
                     cancellationToken: cts.Token);
 
                 mediaList.Clear();
             } catch (Exception ex)
-            {             
+            {
                 IsRunning = false;
             }
         }
