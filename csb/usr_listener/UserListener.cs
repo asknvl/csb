@@ -1,6 +1,7 @@
 ﻿using csb.bot_poster;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -46,13 +47,19 @@ namespace csb.usr_listener
         string Config(string what)
         {
 
+            string dir = Path.Combine(Directory.GetCurrentDirectory(), "userpool");
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
             switch (what)
             {
                 case "api_id": return globals.api_id;
                 case "api_hash": return globals.api_hash;
+                case "session_pathname": return $"{dir}/{PhoneNumber}.session";
                 case "phone_number": return PhoneNumber;
                 //case "verification_code": /*return "65420";*/Console.Write("Code: "); return Console.ReadLine();
-                case "session_pathname": return $"{PhoneNumber}.session";
+                
                 case "verification_code":
                     NeedVerifyCodeEvent?.Invoke(PhoneNumber);                    
                     codeReady.Reset();
@@ -66,13 +73,7 @@ namespace csb.usr_listener
             }
 
         }
-
-        public void SetVerifyCode(string code)
-        {
-            VerifyCode = code;
-            codeReady.Set();
-        }
-
+       
         public UserListener(string phonenumber)
         {
             PhoneNumber = phonenumber;                   
@@ -99,14 +100,24 @@ namespace csb.usr_listener
                         //if (1708105731 != unm.message.Peer.ID)
                         //    return;
 
-                        from_chat = chats.chats[unm.message.Peer.ID];
+                        Message m;
+                        try
+                        {
+                            m = (Message)unm.message;                           
+                            from_chat = chats.chats[unm.message.Peer.ID];
+                        } catch (Exception ex)
+                        {
+                            return;
+                        }
+
+                        //if (m.fwd_from != null)
+                        //    continue;
 
                         if (resolved == null)
                             resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
 
                         InputSingleMedia sm;
 
-                        var m = (Message)unm.message;
 
                         switch (m.media) {
 
@@ -133,6 +144,28 @@ namespace csb.usr_listener
             }            
         }
 
+        private async void MediaGroup_MediaReadyEvent(MediaGroup group)
+        {
+            await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), group.MessageRands.ToArray(), resolved);
+        }
+
+        #region public
+        public void SetVerifyCode(string code)
+        {
+            VerifyCode = code;
+            codeReady.Set();
+        }
+
+        public async Task AddInputChannel(string input)
+        {
+            input = input.Replace("https://t.me/", "").Replace("+", "");
+
+            var cci = await user.Messages_CheckChatInvite(input);
+            //var ici = await user.Messages_ImportChatInvite(input);            
+            //user.Channels_JoinChannel()
+
+        }
+
         public void Start()
         {
 
@@ -154,11 +187,9 @@ namespace csb.usr_listener
             user?.Dispose();            
             IsRunning = false; 
         }
+        #endregion
 
-        private async void MediaGroup_MediaReadyEvent(MediaGroup group)
-        {
-            await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), group.MessageRands.ToArray(), resolved);
-        }
+        
 
         public event Action<string> NeedVerifyCodeEvent;
 

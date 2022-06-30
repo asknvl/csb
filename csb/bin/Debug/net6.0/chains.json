@@ -2,23 +2,13 @@
   {
     "Owner": 0,
     "Name": "Ch1",
-    "Id": 3,
+    "Id": 1,
     "PhoneNumber": "+447424419801",
     "Token": "5545059081:AAET5wlLR-xXvEs4381y4t9x2awB6WmCv44",
     "OutputChannelID": -1001783366577,
     "OutputChannelTitle": "OUT1",
     "IsRunning": true,
-    "OutputBotName": "csb_test_1_bot"
-  },
-  {
-    "Owner": 0,
-    "Name": "Ch2",
-    "Id": 4,
-    "PhoneNumber": "+447424419889",
-    "Token": "5449913929:AAHlZnGxppka2nam38yHVYJn_IGEoWwpqq0",
-    "OutputChannelID": -1001270891482,
-    "OutputChannelTitle": "OUT2",
-    "IsRunning": false,
-    "OutputBotName": "?"
+    "OutputBotName": "csb_test_1_bot",
+    "OutputChannelLink": "@ceoxtime"
   }
 ]

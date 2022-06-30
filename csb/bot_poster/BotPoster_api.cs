@@ -29,7 +29,7 @@ namespace csb.bot_poster
 
         #region properties
         public long OutputChannelID { get; set; }
-
+        public string OutputChannelLink { get; set; }
         public string OutputBotName { get; set; }
         public bool IsRunning { get; set; }
         #endregion
@@ -70,6 +70,10 @@ namespace csb.bot_poster
         {
 
             var message = update.Message;
+
+            if (message.ReplyMarkup != null)
+                swapMarkupLink(message.ReplyMarkup, OutputChannelLink);
+
 
             switch (message.Type)
             {
@@ -135,64 +139,83 @@ namespace csb.bot_poster
                     //await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, new CancellationToken());
                     break;
 
+                case MessageType.Text:
+                    await postTextAndWebPage(message, cancellationToken);
+                    break;
+
                 default:
-
-                    //var inkm = message.ReplyMarkup;
-                    //foreach (var button in inkm.InlineKeyboard)
-                    //{
-                    //    foreach (var item in button)
-                    //    {
-                    //        item.
-                    //    }
-                    //}                    
-
-
-                    //message.Entities[0].Type = MessageEntityType.Url;
-
-                    //await bot.SendTextMessageAsync(OutputChannelID, message.Text, ParseMode.Html, message.Entities, true, null, null, null, null, message.ReplyMarkup, new CancellationToken());
-
-                    string text = message.Text;
-
-                    string webPage = message.Entities[0].Url //Если нихуя тут нет, то просто как сообщение обрабатывать
-
-                    var u = "\"" + webPage + "\"";
-                    int tagLenCntr = 0;
-
-                    foreach (var item in message.Entities)
-                    {
-                        //if (item is MessageEntityTextUrl)
-                        //{
-                        //    insertTagUrl(item.offset, item.length, ref message, ref tagLenCntr, ((MessageEntityTextUrl)item).url);
-                        //}
-
-                        if (item.Type == MessageEntityType.Italic)
-                        {
-                            insertTag("i", item.Offset, item.Length, ref text, ref tagLenCntr);
-                        }
-                        if (item.Type == MessageEntityType.Bold)
-                        {
-                            insertTag("b", item.Offset, item.Length, ref text, ref tagLenCntr);
-                        }
-
-
-                    }
-
-                    var t = text + "<a href=" + u + ">&#8288;</a>";
-
-                    await bot.SendTextMessageAsync(
-                    //chatId: channelName,
-                    chatId: OutputChannelID,
-                    text: t,
-                    replyMarkup: message.ReplyMarkup,
-                    parseMode: ParseMode.Html,
-                    cancellationToken: cancellationToken);
-
-
-
-                    //await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                    await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                     break;
 
             }
+        }
+
+        void swapMarkupLink(InlineKeyboardMarkup markup, string newlink)
+        {
+            foreach (var button in markup.InlineKeyboard)
+            {
+                foreach (var item in button)
+                {
+                    item.Url = $"http://t.me/{newlink.Replace("@", "")}";
+                }
+            }
+        }
+
+        void swapTextLink(string text, string newlink)
+        {
+
+        }
+
+        async Task postTextAndWebPage(Message message, CancellationToken cts)
+        {
+            string text = message.Text;            
+            int tagLenCntr = 0;
+            string insertUrl = "";
+            bool needPreview = false;
+
+            if (message.Entities != null)
+            {
+                foreach (var item in message.Entities)
+                {
+                    switch (item.Type)
+                    {
+                        case MessageEntityType.Italic:
+                            insertTag("i", item.Offset, item.Length, ref text, ref tagLenCntr);
+                            break;
+                        case MessageEntityType.Bold:
+                            insertTag("b", item.Offset, item.Length, ref text, ref tagLenCntr);
+                            break;
+                        case MessageEntityType.Underline:
+                            insertTag("u", item.Offset, item.Length, ref text, ref tagLenCntr);
+                            break;
+                        case MessageEntityType.Strikethrough:
+                            insertTag("s", item.Offset, item.Length, ref text, ref tagLenCntr);
+                            break;
+                        case MessageEntityType.TextLink:
+                            //TODO
+                            break;
+                    }
+                }
+
+                var wp = message.Entities.FirstOrDefault(o => o.Url != null);
+                if (wp != null)
+                {
+                    string webPage = wp.Url;
+                    var u = "\"" + webPage + "\"";
+                    insertUrl = "<a href=" + u + ">&#8288;</a>";
+                    needPreview = true;
+                }
+            }            
+            var t = text + insertUrl;
+
+            await bot.SendTextMessageAsync(
+            //chatId: channelName,
+            chatId: OutputChannelID,
+            text: t,
+            disableWebPagePreview: !needPreview,
+            replyMarkup: message.ReplyMarkup,
+            parseMode: ParseMode.Html,
+            cancellationToken: cts);
         }
 
         void insertTag(string tag, int offset, int length, ref string s, ref int tagLengtCntr)

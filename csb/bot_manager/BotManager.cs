@@ -21,11 +21,14 @@ namespace csb.bot_manager
     public enum BotState
     {
         free,
-        waitingChainName,
+        waitingChainName,        
         waitingPhoneNumber,
         waitingToken,     
         waitingOutputChannelId,
-        waitingVerificationCode
+        waitingOutputChannelLink,
+        waitingVerificationCode,
+
+        editInputChannels
     }
     
     public class MessagesProcessor
@@ -126,7 +129,7 @@ namespace csb.bot_manager
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
                 },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "<<Назад", callbackData: "back"),
                 }
 
             })},
@@ -142,8 +145,28 @@ namespace csb.bot_manager
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
                 },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "<<Назад", callbackData: "back"),
                 }
+
+            })},
+
+            {"editChain", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить входной канал", callbackData: "addInputChannel"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить входной канал", callbackData: "delteInputChannel"),
+                    //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "<<Назад", callbackData: "back"),
+                },
+                //new[] {
+                //    InlineKeyboardButton.WithCallbackData(text: "Запустить", callbackData: "startChain"),
+                //    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
+                //},
+                //new[] {
+                //    InlineKeyboardButton.WithCallbackData(text: "Назад", callbackData: "back"),
+                //}
 
             })},
 
@@ -192,10 +215,10 @@ namespace csb.bot_manager
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, new CancellationToken());
 
-            foreach (var chat in userManager.GetIDs())
-            {
-                await showMyChains(chat);
-            }
+            //foreach (var chat in userManager.GetIDs())
+            //{
+            //    await showMyChains(chat);
+            //}
         }
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
@@ -278,6 +301,26 @@ namespace csb.bot_manager
             {
                 string name = $"{update.Message.Chat.FirstName} {update.Message.Chat.LastName}";
                 userManager.Add(chat, name);
+                //await bot.SendTextMessageAsync(chat, 
+                //    "Вас приветствует бот Вдуть 2.0!\n" +
+                //    "Бот позволяет копировать чужие каналы и заменять в них ссылки.\n" +
+                //    "Для копирования канала нужно создать цепочку.\n" +
+                //    "Цепочка состоит из пользователя-шпиона и выводного бота:\n" +
+                //    "-Шпион должены быть подписан на чужой канал;\n" +
+                //    "-Выводной бот должен быть администратором канала, в который будут копироваться данные.\n\n" +
+                //    @"/mychains - список цепочек"
+                //    );
+
+                string helloText = "Вас приветствует бот Вдуть 2.0!\n" +
+                    "Бот позволяет копировать чужие каналы (входные каналы) и заменять в них ссылки.\n" +
+                    "Для копирования канала нужно создать цепочку.\n" +
+                    "Цепочка состоит из пользователя-шпиона и выводного бота:\n" +
+                    "-Шпион должены быть подписан на чужой канал;\n" +
+                    "-Выводной бот должен быть администратором канала, в который будут копироваться данные (выходной канал).\n\n" +
+                    @"/mychains - управление цепочками";
+
+                await sendTextMessage(chat, helloText);
+                //await showMyChains(chat);
                 return;
             }
 
@@ -374,6 +417,21 @@ namespace csb.bot_manager
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
+                            await sendTextMessage(chat, "Введите телеграм аккаунт ведущего канала, в который будут направляться сообщения в формате @name");
+                            State = BotState.waitingOutputChannelLink;
+                            //await messagesProcessor.Add(chat, "startsave", await sendTextButtonMessage(chat, "Регистрация завершена. Выберите действие:", "startsave"));
+                            //State = BotState.free;
+                            break;
+
+                        case BotState.waitingOutputChannelLink:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.OutputChannelLink = msg;
+                            } catch (Exception ex)
+                            {
+
+                            }
                             await messagesProcessor.Add(chat, "startsave", await sendTextButtonMessage(chat, "Регистрация завершена. Выберите действие:", "startsave"));
                             State = BotState.free;
                             break;
@@ -383,6 +441,18 @@ namespace csb.bot_manager
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
                                 chain.SetVerifyCode(msg);
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.editInputChannels:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                await chain.AddInputChannel(msg);
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
@@ -459,6 +529,7 @@ namespace csb.bot_manager
                                       $"Token={chain.Token}\n" +
                                       $"OutputBotName={chain.OutputBotName}\n" +
                                       $"OutputChId={chain.OutputChannelID}\n" +
+                                      $"OutputChLink={chain.OutputChannelLink}\n" +
                                       $"OutputChName={chain.OutputChannelTitle}\n" +                                      
                                       $"IsActive={chain.IsRunning}\n";
                         await messagesProcessor.Add(chat, "back", await sendTextButtonMessage(chat, info, "back"));
@@ -495,6 +566,26 @@ namespace csb.bot_manager
                     break;
 
                 case "editChain":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await messagesProcessor.Add(chat, "editChain", await sendTextButtonMessage(chat, $"Редактирование цепочки {chain.ToString()}", "editChain"));
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Начато редактирование");                        
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "addInputChannel":
+                    try
+                    {
+                        await sendTextMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz");
+                        State = BotState.editInputChannels;
+                    } catch (Exception ex)
+                    {
+                    }
                     break;
 
                 case "deleteChain":

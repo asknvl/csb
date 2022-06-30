@@ -53,10 +53,17 @@ namespace csb.chains
             }
         }
 
+        public string OutputChannelLink { get; set; }
+
         #endregion
 
         public Chain()
         {
+        }
+
+        public async Task AddInputChannel(string input)
+        {
+            await user.AddInputChannel(input);
         }
 
         public void Start()
@@ -70,20 +77,13 @@ namespace csb.chains
                 {
                     NeedVerifyCodeEvent?.Invoke(Id, phone);
                 };
-
+                                
                 bot.OutputChannelID = OutputChannelID;
+                bot.OutputChannelLink = OutputChannelLink;
                 bot.Start();
 
                 user.CorrespondingBotName = bot.OutputBotName;
                 user.Start();
-
-
-                //int ctr;
-                //while (!(bot.IsRunning & user.IsRunning))
-                //{
-                //    Thread.Sleep(1000);
-                //    Console.WriteLine($"starting chain Id={Id}...");                    
-                //}
 
                 Console.WriteLine($"chain Id={Id} started");
 
@@ -96,6 +96,7 @@ namespace csb.chains
         {
             bot?.Stop();
             user?.Stop();
+            Console.WriteLine($"chain Id={Id} stopped");
         }
 
         public void SetVerifyCode(string code)

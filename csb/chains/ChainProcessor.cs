@@ -112,6 +112,7 @@ namespace csb.chains
             var found = chainList.FirstOrDefault(x => x.Id == id);
             if (found == null)
                 throw new Exception("Цепочки с таким ID не существует");
+            found.Stop();
             chainList.Remove(found);
             Save();
         }

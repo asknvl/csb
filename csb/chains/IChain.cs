@@ -15,11 +15,14 @@ namespace csb.chains
         string Token { get; set; }
         string OutputBotName { get; }
         long OutputChannelID { get; set; }
+        string OutputChannelLink { get; set; }
         public string OutputChannelTitle { get; set; }
         bool IsRunning { get; }
 
         public void Start();
         public void Stop();
+
+        Task AddInputChannel(string input);
 
         void SetVerifyCode(string code);
     }
