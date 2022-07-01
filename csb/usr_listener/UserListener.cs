@@ -22,7 +22,9 @@ namespace csb.usr_listener
         TL.Messages_Dialogs dialogs;
 
         ChatBase from_chat;
-        Contacts_ResolvedPeer resolved = null;
+
+        List<Contacts_ResolvedPeer> resolvedBots = new();
+
         MediaGroup mediaGroup = new();
 
         private readonly ManualResetEventSlim codeReady = new();
@@ -30,7 +32,7 @@ namespace csb.usr_listener
 
         #region properties
         public string PhoneNumber { get; set; }
-        public string CorrespondingBotName { get; set; }
+        public List<string> CorrespondingBotNames { get; set; } = new();
 
         string vcode = "";
         public string VerifyCode {
@@ -113,8 +115,8 @@ namespace csb.usr_listener
                         //if (m.fwd_from != null)
                         //    continue;
 
-                        if (resolved == null)
-                            resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
+                        //if (resolved == null)
+                        //    resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
 
                         InputSingleMedia sm;
 
@@ -134,8 +136,15 @@ namespace csb.usr_listener
                             //    //await user.Messages_SendMessage(resolved, m.message, Helpers.RandomLong(), false, false, false, false, false, null, m.reply_markup, m.entities, null, null);
                             //    break;
 
-                            default:                                
-                                await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { WTelegram.Helpers.RandomLong() }, resolved);
+                            default:
+                                foreach (var item in resolvedBots)
+                                    try
+                                    {
+                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { WTelegram.Helpers.RandomLong() }, item);
+                                    } catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.ToString());
+                                    }
                                 break;
 
                         }
@@ -146,7 +155,16 @@ namespace csb.usr_listener
 
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
         {
-            await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), group.MessageRands.ToArray(), resolved);
+            foreach (var item in resolvedBots)
+            {
+                try
+                {
+                    await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), group.MessageRands.ToArray(), item);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
 
         #region public
@@ -160,8 +178,24 @@ namespace csb.usr_listener
         {
             input = input.Replace("https://t.me/", "").Replace("+", "");
 
-            var cci = await user.Messages_CheckChatInvite(input);
-            //var ici = await user.Messages_ImportChatInvite(input);            
+
+            //user.Channels_JoinChannel(new InputChannel())
+
+           
+            int hash = string.GetHashCode(input);
+
+            
+
+            var cci = await user.Messages_CheckChatInvite(hash);
+            var ici = await user.Messages_ImportChatInvite(input);
+
+            user.Joi
+
+            //await user.Channels_LeaveChannel()
+            //InputChannelBase c = new InputChannel(cci.);
+            //await user.Channels_JoinChannel();
+
+            chats = await user.Messages_GetAllChats();
             //user.Channels_JoinChannel()
 
         }
@@ -177,6 +211,12 @@ namespace csb.usr_listener
                 var usr = await user.LoginUserIfNeeded();
                 chats = await user.Messages_GetAllChats();
                 dialogs = await user.Messages_GetAllDialogs();
+
+                foreach (var item in CorrespondingBotNames)
+                {
+                    resolvedBots.Add(await user.Contacts_ResolveUsername(item));
+                }
+
                 user.Update += User_Update;
                 IsRunning = true;
             });

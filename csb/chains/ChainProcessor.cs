@@ -74,7 +74,7 @@ namespace csb.chains
                 id++;
             }
 
-            var chain = new Chain() { Name = name, Id = id, OutputChannelID = -1001783366577 };          
+            var chain = new Chain() { Name = name, Id = id };          
 
             chainList.Add(chain);
 
@@ -127,6 +127,9 @@ namespace csb.chains
 
         public void StartAll()
         {
+            if (chainList == null)
+                return;
+
             foreach (var item in chainList)
             {
                 item.NeedVerifyCodeEvent += Chain_NeedVerifyCodeEvent;

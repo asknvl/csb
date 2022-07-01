@@ -15,7 +15,6 @@ namespace csb.chains
     {
         #region vars
         UserListener user;
-        BotPoster_api bot;
         #endregion
 
         #region properties
@@ -26,34 +25,36 @@ namespace csb.chains
         public int Id { get; set; }
         [JsonProperty]
         public string PhoneNumber { get; set; }
+
         [JsonProperty]
-        public string Token { get; set; }
-        [JsonProperty]
-        public long OutputChannelID { get; set; }
-        [JsonProperty]
-        public string OutputChannelTitle { get; set; }        
+        public List<BotPoster_api> Bots { get; set; } = new();
+
+        
+
         public bool IsRunning
         {
             get
             {
-                if (bot == null || user == null)
+                if (/*bot == null ||*/ user == null)
                     return false;
-                return bot.IsRunning & user.IsRunning;
-            }
-        }
-        [JsonProperty]
-        public string OutputBotName
-        {
-            get
-            {
-                if (bot == null)
-                    return "?";
-                else
-                    return bot.OutputBotName;
+                return /*bot.IsRunning &*/ user.IsRunning;
             }
         }
 
-        public string OutputChannelLink { get; set; }
+
+        //[JsonProperty]
+        //public string OutputBotName
+        //{
+        //    get
+        //    {
+        //        if (bot == null)
+        //            return "?";
+        //        else
+        //            return bot.OutputBotName;
+        //    }
+        //}
+
+        //public string OutputChannelLink { get; set; }
 
         #endregion
 
@@ -69,7 +70,7 @@ namespace csb.chains
         public void Start()
         {
             user = new UserListener(PhoneNumber);
-            bot = new BotPoster_api(Token);
+            //bot = new BotPoster_api(Token);
 
             try
             {
@@ -78,11 +79,18 @@ namespace csb.chains
                     NeedVerifyCodeEvent?.Invoke(Id, phone);
                 };
                                 
-                bot.OutputChannelID = OutputChannelID;
-                bot.OutputChannelLink = OutputChannelLink;
-                bot.Start();
+                foreach (var item in Bots)
+                {                    
+                    item.Start();                    
+                    user.CorrespondingBotNames.Add(item.Name);
+                }
 
-                user.CorrespondingBotName = bot.OutputBotName;
+
+                //bot.OutputChannelID = OutputChannelID;
+                //bot.OutputChannelLink = OutputChannelLink;
+                //bot.Start();
+
+                
                 user.Start();
 
                 Console.WriteLine($"chain Id={Id} started");
@@ -94,7 +102,12 @@ namespace csb.chains
 
         public void Stop()
         {
-            bot?.Stop();
+            if (Bots != null)
+            {
+                foreach (var item in Bots)
+                    item.Stop();
+            }
+            //bot?.Stop();
             user?.Stop();
             Console.WriteLine($"chain Id={Id} stopped");
         }

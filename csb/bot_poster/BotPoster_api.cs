@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,31 +20,39 @@ namespace csb.bot_poster
         #region vars
         ITelegramBotClient bot;
         CancellationTokenSource cts;
-
-
         string mediaGroupId = "";
         List<IAlbumInputMedia> mediaList = new();
         System.Timers.Timer mediaTimer = new System.Timers.Timer();
-        string token;
         #endregion
 
         #region properties
-        public long OutputChannelID { get; set; }
-        public string OutputChannelLink { get; set; }
-        public string OutputBotName { get; set; }
+        [JsonProperty]
+        public string Token { get; set; }
+        [JsonProperty]
+        public string Name { get; set; }
+        [JsonProperty]
+        public long ChannelID { get; set; }
+        [JsonProperty]
+        public string ChannelTitle { get; set; }
+        [JsonProperty]
+        public string ChannelLink { get; set; }
+        [JsonIgnore]
         public bool IsRunning { get; set; }
         #endregion
 
         public BotPoster_api(string token)
         {
-            this.token = token;
+            Token = token;            
         }
 
         public void Start()
         {
-            bot = new TelegramBotClient(token);
+            if (IsRunning)
+                return;
+
+            bot = new TelegramBotClient(Token);
             User u = bot.GetMeAsync().Result;
-            OutputBotName = u.Username;
+            Name = u.Username;
 
             cts = new CancellationTokenSource();
 
@@ -62,8 +71,8 @@ namespace csb.bot_poster
 
         public void Stop()
         {
-            mediaTimer.Dispose();
-            cts.Cancel();
+            mediaTimer?.Dispose();
+            cts?.Cancel();            
         }
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
@@ -72,7 +81,7 @@ namespace csb.bot_poster
             var message = update.Message;
 
             if (message.ReplyMarkup != null)
-                swapMarkupLink(message.ReplyMarkup, OutputChannelLink);
+                swapMarkupLink(message.ReplyMarkup, ChannelLink);
 
 
             switch (message.Type)
@@ -86,14 +95,14 @@ namespace csb.bot_poster
 
                     if (message.MediaGroupId == null)
                     {
-                        await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                        await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
                     }
 
                     if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
                     {
                         await bot.SendMediaGroupAsync(
-                           chatId: OutputChannelID,
+                           chatId: ChannelID,
                            media: mediaList,
                             cancellationToken: cancellationToken);
                         mediaList.Clear();
@@ -115,7 +124,7 @@ namespace csb.bot_poster
 
                     if (message.MediaGroupId == null)
                     {
-                        await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                        await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
                     }
 
@@ -123,7 +132,7 @@ namespace csb.bot_poster
                     if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
                     {
                         await bot.SendMediaGroupAsync(
-                           chatId: OutputChannelID,
+                           chatId: ChannelID,
                            media: mediaList,
                            cancellationToken: cancellationToken);
                         mediaList.Clear();
@@ -144,7 +153,7 @@ namespace csb.bot_poster
                     break;
 
                 default:
-                    await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                    await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                     break;
 
             }
@@ -210,7 +219,7 @@ namespace csb.bot_poster
 
             await bot.SendTextMessageAsync(
             //chatId: channelName,
-            chatId: OutputChannelID,
+            chatId: ChannelID,
             text: t,
             disableWebPagePreview: !needPreview,
             replyMarkup: message.ReplyMarkup,
@@ -255,7 +264,7 @@ namespace csb.bot_poster
             try
             {
                 await bot.SendMediaGroupAsync(
-                    chatId: OutputChannelID,
+                    chatId: ChannelID,
                     media: mediaList,
 
                     cancellationToken: cts.Token);
@@ -265,6 +274,11 @@ namespace csb.bot_poster
             {
                 IsRunning = false;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}:\n{Token}\n{ChannelTitle}\n{ChannelLink}";
         }
     }
 }

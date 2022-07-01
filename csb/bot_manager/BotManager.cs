@@ -1,4 +1,5 @@
-﻿using csb.chains;
+﻿using csb.bot_poster;
+using csb.chains;
 using csb.settings;
 using csb.settings.validators;
 using csb.users;
@@ -28,7 +29,9 @@ namespace csb.bot_manager
         waitingOutputChannelLink,
         waitingVerificationCode,
 
-        editInputChannels
+        editInputChannels,
+
+       
     }
     
     public class MessagesProcessor
@@ -129,7 +132,7 @@ namespace csb.bot_manager
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
                 },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "<<Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 }
 
             })},
@@ -145,7 +148,7 @@ namespace csb.bot_manager
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
                 },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "<<Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 }
 
             })},
@@ -157,8 +160,13 @@ namespace csb.bot_manager
                     InlineKeyboardButton.WithCallbackData(text: "Удалить входной канал", callbackData: "delteInputChannel"),
                     //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
                 },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить бота", callbackData: "addOutputBot"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить бота", callbackData: "delteOutputBot"),
+                    //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
+                },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "<<Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 },
                 //new[] {
                 //    InlineKeyboardButton.WithCallbackData(text: "Запустить", callbackData: "startChain"),
@@ -173,7 +181,7 @@ namespace csb.bot_manager
             {"back", new(new[] {
 
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 }
             })},
 
@@ -324,14 +332,18 @@ namespace csb.bot_manager
                 return;
             }
 
-            if (!userManager.Check(chat))
+            if (!userManager.Check(chat) && !msg.Equals("/start"))
             {
                 await sendTextMessage(chat, "Нет доступа");
                 return;
             }
 
             switch (msg)
-            {   
+            {
+                case "/start":
+                    await sendTextMessage(chat, "Введите пароль...");
+                    break;
+
                 case "/mychains":
                     //State = BotState.free;
                     //messagesProcessor.Add("/mychains", await bot.SendTextMessageAsync(
@@ -379,7 +391,15 @@ namespace csb.bot_manager
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            await sendTextMessage(chat, "Введите токен бота:");
+
+                            string tokenMsg = $"Создайте выводного бота. Для этого выполните следующие действия:\n" +
+                                               "1.Перейдите в @BotFather и там введите команду /newbot. " +
+                                               "Далее отправьте название вашего бота и его юзернейм. " +
+                                               "Юзернейм должен быть уникальным, состоять из символов латинского алфавита и оканчиваться на bot." +
+                                               "2. @BotFather отправит вам сообщение с API-токеном. Скопируйте токен и отпавьте его сюда.";
+
+
+                            await sendTextMessage(chat, tokenMsg);
                             State = BotState.waitingToken;
                             break;
 
@@ -394,7 +414,8 @@ namespace csb.bot_manager
                             try
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
-                                chain.Token = token;
+                                chain.Bots.Add(new BotPoster_api(token));
+
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
@@ -410,8 +431,10 @@ namespace csb.bot_manager
                             try
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
-                                chain.OutputChannelID = frwd.ForwardFromChat.Id;
-                                chain.OutputChannelTitle = frwd.ForwardFromChat.Title;
+                                var bot = chain.Bots.Last();
+                                bot.ChannelID = frwd.ForwardFromChat.Id;
+                                bot.ChannelTitle = frwd.ForwardFromChat.Title;
+
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
@@ -427,7 +450,9 @@ namespace csb.bot_manager
                             try
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
-                                chain.OutputChannelLink = msg;
+                                var bot = chain.Bots.Last();
+                                bot.ChannelLink = msg;
+
                             } catch (Exception ex)
                             {
 
@@ -522,15 +547,23 @@ namespace csb.bot_manager
                 case "viewChain":
                     try
                     {
+                        string botsinfo = "";                        
                         var chain = chainsProcessor.Get(currentChainID);
+                        foreach (var bot in chain.Bots)
+                        {
+                            botsinfo += $"{bot.ToString()}\n";
+                        }
+
                         string info = $"Id={chain.Id}\n" +
                                       $"Name={chain.Name}\n" +
                                       $"Phone={chain.PhoneNumber}\n" +
-                                      $"Token={chain.Token}\n" +
-                                      $"OutputBotName={chain.OutputBotName}\n" +
-                                      $"OutputChId={chain.OutputChannelID}\n" +
-                                      $"OutputChLink={chain.OutputChannelLink}\n" +
-                                      $"OutputChName={chain.OutputChannelTitle}\n" +                                      
+                                      $"Bots:\n" + botsinfo+
+                                      //$"Token={chain.Token}\n" +
+                                      //$"OutputBotName={chain.OutputBotName}\n" +
+
+                                      //$"OutputChId={chain.OutputChannelID}\n" +
+                                      //$"OutputChLink={chain.OutputChannelLink}\n" +
+                                      //$"OutputChName={chain.OutputChannelTitle}\n" +                                      
                                       $"IsActive={chain.IsRunning}\n";
                         await messagesProcessor.Add(chat, "back", await sendTextButtonMessage(chat, info, "back"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
@@ -585,6 +618,18 @@ namespace csb.bot_manager
                         State = BotState.editInputChannels;
                     } catch (Exception ex)
                     {
+                    }
+                    break;
+
+                case "addOutputBot":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "addOutputBot", await sendTextButtonMessage(chat, "Введите токен бота:", "back"));
+                        State = BotState.waitingToken;
+
+                    } catch (Exception ex)
+                    {
+
                     }
                     break;
 

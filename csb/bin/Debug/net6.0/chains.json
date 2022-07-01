@@ -1,14 +1,32 @@
 [
   {
     "Owner": 0,
-    "Name": "Ch1",
+    "Name": "CH1",
     "Id": 1,
-    "PhoneNumber": "+447424419801",
-    "Token": "5545059081:AAET5wlLR-xXvEs4381y4t9x2awB6WmCv44",
-    "OutputChannelID": -1001783366577,
-    "OutputChannelTitle": "OUT1",
-    "IsRunning": true,
-    "OutputBotName": "csb_test_1_bot",
-    "OutputChannelLink": "@ceoxtime"
+    "PhoneNumber": "+447424419889",
+    "Bots": [
+      {
+        "Token": "5545059081:AAET5wlLR-xXvEs4381y4t9x2awB6WmCv44",
+        "Name": "csb_test_1_bot",
+        "ChannelID": -1001783366577,
+        "ChannelTitle": "OUT1",
+        "ChannelLink": "@asknvl"
+      },
+      {
+        "Token": "5579105972:AAFTAMgod1FXRCn4CHU2Iqa1GracO3kAr08",
+        "Name": "ch_pool_1_bot",
+        "ChannelID": -1001682491982,
+        "ChannelTitle": "ch_pool_1",
+        "ChannelLink": "@asknvl"       
+      },
+      {
+        "Token": "5391652797:AAENgE75S7JDQre4AoF4ZG95Se1czVB4rEE",
+        "Name": null,
+        "ChannelID": -1001762519455,
+        "ChannelTitle": "ch_pool_2",
+        "ChannelLink": "@ceoxtime"       
+      }
+    ],
+    "IsRunning": true
   }
 ]
