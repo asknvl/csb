@@ -1,4 +1,5 @@
 ﻿using csb.bot_poster;
+using csb.usr_listener;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace csb.chains
         long Owner { get; set; }
         string Name { get; set; }
         int Id { get; set; }
-        string PhoneNumber { get; set; }        
-        List<BotPoster_api> Bots { get; set; }        
+        string PhoneNumber { get; set; }
+        List<BotPoster_api> Bots { get; set; }
+        UserListener User { get; }
         bool IsRunning { get; }
 
         public void Start();
@@ -22,5 +24,7 @@ namespace csb.chains
         Task AddInputChannel(string input);
 
         void SetVerifyCode(string code);
+
+        void AddBot(string token);
     }
 }

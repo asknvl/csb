@@ -13,10 +13,6 @@ namespace csb.chains
 {
     public class Chain : IChain
     {
-        #region vars
-        UserListener user;
-        #endregion
-
         #region properties
         public long Owner { get; set; }
         [JsonProperty]
@@ -28,16 +24,15 @@ namespace csb.chains
 
         [JsonProperty]
         public List<BotPoster_api> Bots { get; set; } = new();
-
-        
+        public UserListener User { get; private set; }
 
         public bool IsRunning
         {
             get
             {
-                if (/*bot == null ||*/ user == null)
+                if (/*bot == null ||*/ User == null)
                     return false;
-                return /*bot.IsRunning &*/ user.IsRunning;
+                return /*bot.IsRunning &*/ User.IsRunning;
             }
         }
 
@@ -64,17 +59,17 @@ namespace csb.chains
 
         public async Task AddInputChannel(string input)
         {
-            await user.AddInputChannel(input);
+            await User.AddInputChannel(input);
         }
 
         public void Start()
         {
-            user = new UserListener(PhoneNumber);
+            User = new UserListener(PhoneNumber);
             //bot = new BotPoster_api(Token);
 
             try
             {
-                user.NeedVerifyCodeEvent += (phone) =>
+                User.NeedVerifyCodeEvent += (phone) =>
                 {
                     NeedVerifyCodeEvent?.Invoke(Id, phone);
                 };
@@ -82,7 +77,7 @@ namespace csb.chains
                 foreach (var item in Bots)
                 {                    
                     item.Start();                    
-                    user.CorrespondingBotNames.Add(item.Name);
+                    User.CorrespondingBotNames.Add(item.Name);
                 }
 
 
@@ -91,7 +86,7 @@ namespace csb.chains
                 //bot.Start();
 
                 
-                user.Start();
+                User.Start();
 
                 Console.WriteLine($"chain Id={Id} started");
 
@@ -108,13 +103,22 @@ namespace csb.chains
                     item.Stop();
             }
             //bot?.Stop();
-            user?.Stop();
+            User?.Stop();
             Console.WriteLine($"chain Id={Id} stopped");
         }
 
         public void SetVerifyCode(string code)
         {
-            user.SetVerifyCode(code);
+            User.SetVerifyCode(code);
+        }
+
+        public void AddBot(string token)
+        {
+            var found = Bots.FirstOrDefault(t => t.Token.Equals(token));
+            if (found == null)
+                Bots.Add(new BotPoster_api(token));
+            else
+                throw new Exception("Бот с таким токеном уже существет, введите другой токен");
         }
 
         public event Action<int, string> NeedVerifyCodeEvent;

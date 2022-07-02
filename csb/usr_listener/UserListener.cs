@@ -141,6 +141,7 @@ namespace csb.usr_listener
                                     try
                                     {
                                         await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { WTelegram.Helpers.RandomLong() }, item);
+                                        Console.WriteLine("->" + item);
                                     } catch (Exception ex)
                                     {
                                         Console.WriteLine(ex.ToString());
@@ -176,28 +177,66 @@ namespace csb.usr_listener
 
         public async Task AddInputChannel(string input)
         {
-            input = input.Replace("https://t.me/", "").Replace("+", "");
+            string hash = "";
+            string[] splt = input.Split("/");
+            input = splt.Last();
 
+            if (input.Contains("+"))
+            {
+                hash = input.Replace("+", "");
+                var cci = await user.Messages_CheckChatInvite(hash);
+                var ici = await user.Messages_ImportChatInvite(hash);
+            }  else
+            {
+                hash = input.Replace("@", "");
+                var resolved = await user.Contacts_ResolveUsername(hash); // without the @
+                if (resolved.Chat is Channel channel)
+                    await user.Channels_JoinChannel(channel);
+            }
 
             //user.Channels_JoinChannel(new InputChannel())
-
-           
-            int hash = string.GetHashCode(input);
-
-            
-
-            var cci = await user.Messages_CheckChatInvite(hash);
-            var ici = await user.Messages_ImportChatInvite(input);
-
-            user.Joi
 
             //await user.Channels_LeaveChannel()
             //InputChannelBase c = new InputChannel(cci.);
             //await user.Channels_JoinChannel();
 
-            chats = await user.Messages_GetAllChats();
+            //chats = await user.Messages_GetAllChats();
             //user.Channels_JoinChannel()
+        }
 
+        public async Task ResoreInputChannels()
+        {
+            chats = await user.Messages_GetAllChats();
+        }
+
+        public async Task<List<(string, long)>> GetAllChannels()
+        {
+            List <(string, long)> res = new();
+            //var chats = await user.Messages_GetAllChats();                
+            await Task.Run(() => { 
+                foreach (var item in chats.chats)
+                {
+                    if (item.Value is Channel channel)
+                    {
+                        res.Add(new (item.Value.Title, item.Value.ID));
+                    }
+                }
+            });
+
+            return res; 
+        }
+
+        public async Task LeaveChannel(string title)
+        {
+            //var resolved = await user.Contacts_ResolveUsername(title);           
+            //var chats = await user.Messages_GetAllChats();
+            var channels = chats.chats.Where(o => o.Value is Channel);
+            var channel = channels.FirstOrDefault(o => o.Value.Title.Equals(title));
+            var c = (Channel)channel.Value;
+            await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
+            chats.chats.Remove(channel.Key);
+            //chats = await user.Messages_GetAllChats();                
+            //await user.Channels_LeaveChannel(channel.);
         }
 
         public void Start()

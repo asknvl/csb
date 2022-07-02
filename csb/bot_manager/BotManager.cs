@@ -29,7 +29,7 @@ namespace csb.bot_manager
         waitingOutputChannelLink,
         waitingVerificationCode,
 
-        editInputChannels,
+        waitingAddInputChannel,
 
        
     }
@@ -69,6 +69,15 @@ namespace csb.bot_manager
                     messages.Remove(key);
                 } catch { }
             }
+        }
+
+        public async Task Clear(long chat)
+        {
+            foreach (var item in messages)
+            {
+                await bot.DeleteMessageAsync(chat, item.Value.MessageId);
+            }
+            messages.Clear();
         }
 
         public async Task Back(long chat)
@@ -185,6 +194,20 @@ namespace csb.bot_manager
                 }
             })},
 
+             {"addChainCancel", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addChainCancel"),
+                }
+            })},
+
+             {"saveInputChannels", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Завершить", callbackData: "saveInputChannels"),
+                }
+            })},
+
         };
         #endregion
 
@@ -271,6 +294,39 @@ namespace csb.bot_manager
             return inlineKeyboard;
         }
 
+        async Task<InlineKeyboardMarkup> getMyChannelsMarkUp(IChain chain)
+        {
+
+            var channels = await chain.User.GetAllChannels();
+            int number = channels.Count;
+
+            InlineKeyboardButton[][] channel_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
+            {
+                channel_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: channels[i].Item1, callbackData: $"channel_{channels[i].Item1}") };
+            }
+
+            channel_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(channel_buttons);
+
+
+            //InlineKeyboardMarkup inlineKeyboard = new(new[] {
+
+            //                //channel_buttons,
+
+            //                new InlineKeyboardButton[]
+            //                {
+            //                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+            //                }
+
+            //            });
+
+            return inlineKeyboard;
+
+        }
+
         async Task<Message> sendTextMessage(long chat, string message)
         {
             return await bot.SendTextMessageAsync(
@@ -298,6 +354,29 @@ namespace csb.bot_manager
                 replyMarkup: getMyChainsMarkUp(),
                 cancellationToken: cancellationToken));
         }
+
+        async Task showDeleteChannel(long chat, IChain chain)
+        {
+            var markup = await getMyChannelsMarkUp(chain);
+
+            await messagesProcessor.Add(chat, "delteInputChannel", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Удалить канал:",                
+                replyMarkup: markup,
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showListChannels(long chat, IChain chain)
+        {
+            var markup = await getMyChannelsMarkUp(chain);
+
+            await messagesProcessor.Add(chat, "showInputChannels", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Входные каналы:",
+                replyMarkup: markup,
+                cancellationToken: cancellationToken));
+        }
+
         private async Task processMessage(Update update)
         {            
             var chat = update.Message.Chat.Id;
@@ -345,14 +424,22 @@ namespace csb.bot_manager
                     break;
 
                 case "/mychains":
-                    //State = BotState.free;
+                    State = BotState.free;
                     //messagesProcessor.Add("/mychains", await bot.SendTextMessageAsync(
                     //    chatId: chat,
                     //    text: "Управление цепочками:",
                     //    //replyMarkup: inlineKeyboards["/mychains"],
                     //    replyMarkup: getMyChainsMarkUp(),
                     //    cancellationToken: cancellationToken));
-                    await showMyChains(chat);
+                    try
+                    {
+                        await messagesProcessor.Clear(chat);
+                        await showMyChains(chat);
+                    } catch(Exception ex)
+                    {
+                        await sendTextMessage(chat, ex.Message);
+                        return;
+                    }
                     break;
 
                 default:
@@ -414,7 +501,8 @@ namespace csb.bot_manager
                             try
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
-                                chain.Bots.Add(new BotPoster_api(token));
+                                //chain.Bots.Add(new BotPoster_api(token));
+                                chain.AddBot(token);
 
                             } catch (Exception ex)
                             {
@@ -473,11 +561,13 @@ namespace csb.bot_manager
                             }
                             break;
 
-                        case BotState.editInputChannels:
+                        case BotState.waitingAddInputChannel:
                             try
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
                                 await chain.AddInputChannel(msg);
+                                await messagesProcessor.Delete(chat, "saveInputChannel");
+                                await messagesProcessor.Add(chat, "saveInputChannels", await sendTextButtonMessage(chat, "Добавьте еще входной канал или нажмите \"Завершить\"", "saveInputChannels"));
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
@@ -498,17 +588,33 @@ namespace csb.bot_manager
 
             switch (query.Data)
             {
+                case "addChainCancel":
+                    try
+                    {
+
+                        switch (State)
+                        {
+                            case BotState.waitingChainName:
+                                await messagesProcessor.Back(chat);
+                                break;
+                        }
+
+                        State = BotState.free;
+                        chainsProcessor.Delete(currentChainID);
+                    } catch (Exception ex)
+                    {
+
+                    }
+                    break;
+
                 case "newchain":
                     State = BotState.waitingChainName;
                     currentChainID = 0;
                     try
                     {
-                        await sendTextMessage(chat, "Введите имя новой цепочки:");
-                        //messages.Add("newchain", await bot.SendTextMessageAsync(
-                        //    chatId: query.Message.Chat.Id,
-                        //    text: "Введите имя новой цепочки:",                        
-                        //    cancellationToken: cancellationToken));
-                         await messagesProcessor.Delete(chat, "/mychains");
+                        //await sendTextMessage(chat, "Введите имя новой цепочки:");
+                        await messagesProcessor.Add(chat, "newchain", await sendTextButtonMessage(chat, "Введите имя новой цепочки", "addChainCancel"));                       
+                        await messagesProcessor.Delete(chat, "/mychains");
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
                     {
@@ -614,10 +720,42 @@ namespace csb.bot_manager
                 case "addInputChannel":
                     try
                     {
-                        await sendTextMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz");
-                        State = BotState.editInputChannels;
+                        await messagesProcessor.Add(chat, "addInputChannel", await sendTextButtonMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz", "back"));
+                        //await sendTextMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz");
+                        State = BotState.waitingAddInputChannel;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
                     {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "saveInputChannels":
+                    try
+                    {
+                        State = BotState.free;
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await chain.User.ResoreInputChannels();
+                        await messagesProcessor.Back(chat);
+                        await messagesProcessor.Delete(chat, "addInputChannel");
+                        await showListChannels(chat, chain);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "delteInputChannel":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await showDeleteChannel(chat, chain);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Выберите канал для удаления");
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
                     break;
 
@@ -626,6 +764,7 @@ namespace csb.bot_manager
                     {
                         await messagesProcessor.Add(chat, "addOutputBot", await sendTextButtonMessage(chat, "Введите токен бота:", "back"));
                         State = BotState.waitingToken;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)
                     {
@@ -650,6 +789,7 @@ namespace csb.bot_manager
                 case "back":
                     try
                     {
+                        State = BotState.free;
                         await messagesProcessor.Back(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex) {
@@ -690,6 +830,24 @@ namespace csb.bot_manager
                         }
 
                         //await bot.AnswerCallbackQueryAsync(query.Id, $"Выбрана цепочка Id={currentChainID}");
+                    }
+
+                    if (data.Contains("channel_"))
+                    {
+                        try
+                        {
+                            string title = data.Replace("channel_", "");
+                            var chain = chainsProcessor.Get(currentChainID);
+                            await chain.User.LeaveChannel(title);
+                            await showDeleteChannel(chat, chain);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Канал удален");                            
+
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+
                     }
 
                     break;

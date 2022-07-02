@@ -66,6 +66,8 @@ namespace csb.bot_poster
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
+            Console.WriteLine(Name + "started");
+
             IsRunning = true;
         }
 
@@ -83,6 +85,7 @@ namespace csb.bot_poster
             if (message.ReplyMarkup != null)
                 swapMarkupLink(message.ReplyMarkup, ChannelLink);
 
+            Console.WriteLine(Name + " " + message.Text);
 
             switch (message.Type)
             {
