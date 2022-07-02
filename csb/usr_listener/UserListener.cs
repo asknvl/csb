@@ -140,8 +140,8 @@ namespace csb.usr_listener
                                 foreach (var item in resolvedBots)
                                     try
                                     {
-                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { WTelegram.Helpers.RandomLong() }, item);
-                                        Console.WriteLine("->" + item);
+                                        long rand = Helpers.RandomLong();                                        
+                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { rand }, item);                                                                               
                                     } catch (Exception ex)
                                     {
                                         Console.WriteLine(ex.ToString());
@@ -160,7 +160,11 @@ namespace csb.usr_listener
             {
                 try
                 {
-                    await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), group.MessageRands.ToArray(), item);
+                    List<long> rands = new();
+                    for (int i = 0; i < group.MessageRands.Count; i++)
+                        rands.Add(Helpers.RandomLong());
+                    //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
+                    await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
