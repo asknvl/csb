@@ -1,11 +1,11 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v5.0",
+    "name": ".NETCoreApp,Version=v6.0",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v5.0": {
+    ".NETCoreApp,Version=v6.0": {
       "csb/1.0.0": {
         "dependencies": {
           "Telegram.Bot": "18.0.0",
@@ -24,14 +24,7 @@
           }
         }
       },
-      "System.Threading.Channels/6.0.0": {
-        "runtime": {
-          "lib/netcoreapp3.1/System.Threading.Channels.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
+      "System.Threading.Channels/6.0.0": {},
       "Telegram.Bot/18.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.2"

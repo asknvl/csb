@@ -21,7 +21,6 @@ namespace csb.chains
         public int Id { get; set; }
         [JsonProperty]
         public string PhoneNumber { get; set; }
-
         [JsonProperty]
         public List<BotPoster_api> Bots { get; set; } = new();
         public UserListener User { get; private set; }
@@ -36,6 +35,9 @@ namespace csb.chains
             }
         }
 
+        public ChainState State {
+            get; set;
+        }
 
         //[JsonProperty]
         //public string OutputBotName
@@ -57,37 +59,25 @@ namespace csb.chains
         {
         }
 
-        public async Task AddInputChannel(string input)
-        {
-            await User.AddInputChannel(input);
-        }
-
         public void Start()
         {
-            User = new UserListener(PhoneNumber);
-            //bot = new BotPoster_api(Token);
-
-            try
+            if (User == null)
             {
+                User = new UserListener(PhoneNumber);
                 User.NeedVerifyCodeEvent += (phone) =>
                 {
                     NeedVerifyCodeEvent?.Invoke(Id, phone);
                 };
-                                
+            }
+
+            try
+            {                   
                 foreach (var item in Bots)
                 {                    
-                    item.Start();                    
-                    User.CorrespondingBotNames.Add(item.Name);
-                }
-
-
-                //bot.OutputChannelID = OutputChannelID;
-                //bot.OutputChannelLink = OutputChannelLink;
-                //bot.Start();
-
-                
+                    item.Start();
+                    User.AddCorrespondingBot(item.Name);
+                } 
                 User.Start();
-
                 Console.WriteLine($"chain Id={Id} started");
 
             } catch (Exception ex)
@@ -119,6 +109,17 @@ namespace csb.chains
                 Bots.Add(new BotPoster_api(token));
             else
                 throw new Exception("Бот с таким токеном уже существет, введите другой токен");
+        }
+
+        public void RemoveBot(string name)
+        {
+            var found = Bots.FirstOrDefault(t => t.Name.Equals(name));
+            if (found != null)
+            {
+                User.CorrespondingBotNames.Remove(found.Name);
+                found.Stop();
+                Bots.Remove(found);                
+            }
         }
 
         public event Action<int, string> NeedVerifyCodeEvent;

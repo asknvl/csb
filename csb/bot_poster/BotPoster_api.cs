@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -42,7 +43,7 @@ namespace csb.bot_poster
 
         public BotPoster_api(string token)
         {
-            Token = token;            
+            Token = token;
         }
 
         public void Start()
@@ -74,7 +75,7 @@ namespace csb.bot_poster
         public void Stop()
         {
             mediaTimer?.Dispose();
-            cts?.Cancel();            
+            cts?.Cancel();
         }
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
@@ -87,78 +88,108 @@ namespace csb.bot_poster
 
             Console.WriteLine(Name + " " + message.Text);
 
-            switch (message.Type)
+            try
             {
 
-                case MessageType.Photo:
-                    InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
-                    imp.Caption = message.Caption;
-                    imp.CaptionEntities = message.CaptionEntities;
+                switch (message.Type)
+                {
+
+                    case MessageType.Photo:
+                        InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
+                        imp.Caption = swapTextLink(message.Caption, ChannelLink);
+                        imp.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                        //if (message.MediaGroupId == null)
+                        //{
+                        //    await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                        //    break;
+                        //}
+
+                        if (message.MediaGroupId == null)
+                        {
+                            InputMediaDocument doc = new InputMediaDocument(imp.Media);
+
+                            doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                            doc.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            await bot.SendPhotoAsync(ChannelID,
+                                doc.Media,
+                                caption: doc.Caption,
+                                captionEntities: doc.CaptionEntities);
+                            //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                            break;
+                        }
+
+                        if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
+                        {
+                            await bot.SendMediaGroupAsync(
+                               chatId: ChannelID,
+                               media: mediaList,
+                                cancellationToken: cancellationToken);
+                            mediaList.Clear();
+                        }
+                        mediaGroupId = message.MediaGroupId;
+
+                        if (mediaList.Count == 0)
+                            mediaTimer.Start();
+
+                        mediaList.Add(imp);
+
+                        break;
 
 
-                    if (message.MediaGroupId == null)
-                    {
+                    case MessageType.Video:
+
+                        InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
+                        imv.Caption = swapTextLink(message.Caption, ChannelLink);
+                        imv.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                        if (message.MediaGroupId == null)
+                        {
+                            InputMediaDocument doc = new InputMediaDocument(imv.Media);
+
+                            doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                            doc.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            await bot.SendVideoAsync(ChannelID,
+                                doc.Media,
+                                caption: doc.Caption,
+                                captionEntities: doc.CaptionEntities);
+                            //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
+                            break;
+                        }
+
+
+                        if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
+                        {
+                            var s = await bot.SendMediaGroupAsync(
+                               chatId: ChannelID,
+                               media: mediaList,
+                               cancellationToken: cancellationToken);
+                            mediaList.Clear();
+                        }
+                        mediaGroupId = message.MediaGroupId;
+
+                        if (mediaList.Count == 0)
+                            mediaTimer.Start();
+
+                        mediaList.Add(imv);
+
+                        //await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, new CancellationToken());
+                        break;
+
+                    case MessageType.Text:
+                        await postTextAndWebPage(message, cancellationToken);
+                        break;
+
+                    default:
                         await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
-                    }
 
-                    if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
-                    {
-                        await bot.SendMediaGroupAsync(
-                           chatId: ChannelID,
-                           media: mediaList,
-                            cancellationToken: cancellationToken);
-                        mediaList.Clear();
-                    }
-                    mediaGroupId = message.MediaGroupId;
-
-                    if (mediaList.Count == 0)
-                        mediaTimer.Start();
-
-                    mediaList.Add(imp);
-
-                    break;
-
-
-                case MessageType.Video:
-                    InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
-                    imv.Caption = message.Caption;
-                    imv.CaptionEntities = message.CaptionEntities;
-
-                    if (message.MediaGroupId == null)
-                    {
-                        await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
-                        break;
-                    }
-
-
-                    if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
-                    {
-                        await bot.SendMediaGroupAsync(
-                           chatId: ChannelID,
-                           media: mediaList,
-                           cancellationToken: cancellationToken);
-                        mediaList.Clear();
-                    }
-                    mediaGroupId = message.MediaGroupId;
-
-                    if (mediaList.Count == 0)
-                        mediaTimer.Start();
-
-                    mediaList.Add(imv);
-
-
-                    //await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, new CancellationToken());
-                    break;
-
-                case MessageType.Text:
-                    await postTextAndWebPage(message, cancellationToken);
-                    break;
-
-                default:
-                    await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
-                    break;
-
+                }
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -173,14 +204,46 @@ namespace csb.bot_poster
             }
         }
 
-        void swapTextLink(string text, string newlink)
+        string? swapTextLink(string text, string newlink)
         {
+            if (text == null)
+                return null;
 
+            string pattern = @"[@][[a-zA-Z0-9_]{5,32}";
+            Regex regex = new Regex(pattern);
+            var m = regex.Matches(text);
+            foreach (Match item in m)
+            {
+                text = text.Replace(item.Value, newlink);
+            }
+            string res = text;
+            return res;
+        }
+
+        MessageEntity[]? filterEntities(MessageEntity[] input)
+        {
+            if (input == null)
+                return null;
+
+            var entities = input;
+            var res = new List<MessageEntity>();
+            try
+            {
+                foreach (var item in entities)
+                    if (item.Type != MessageEntityType.TextLink)
+                    {
+                        res.Add(item);
+                    }
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return res.ToArray();
         }
 
         async Task postTextAndWebPage(Message message, CancellationToken cts)
         {
-            string text = message.Text;            
+            string text = message.Text;
             int tagLenCntr = 0;
             string insertUrl = "";
             bool needPreview = false;
@@ -204,6 +267,16 @@ namespace csb.bot_poster
                             insertTag("s", item.Offset, item.Length, ref text, ref tagLenCntr);
                             break;
                         case MessageEntityType.TextLink:
+
+                            if (item.Url.Contains("jpg") || item.Url.Contains("jpeg") || item.Url.Contains(""))
+                            {
+
+                            } else
+                                if (item.Url.Contains(""))
+                            {
+                                item.Url = "";
+                            }
+
                             //TODO
                             break;
                     }
@@ -217,8 +290,9 @@ namespace csb.bot_poster
                     insertUrl = "<a href=" + u + ">&#8288;</a>";
                     needPreview = true;
                 }
-            }            
-            var t = text + insertUrl;
+            }
+
+            var t = swapTextLink(text, ChannelLink) + insertUrl;
 
             await bot.SendTextMessageAsync(
             //chatId: channelName,
@@ -258,7 +332,7 @@ namespace csb.bot_poster
                     => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
                 _ => exception.ToString()
             };
-            //Console.WriteLine(ErrorMessage);
+            Console.WriteLine(ErrorMessage);
             return Task.CompletedTask;
         }
 
@@ -269,13 +343,15 @@ namespace csb.bot_poster
                 await bot.SendMediaGroupAsync(
                     chatId: ChannelID,
                     media: mediaList,
-
                     cancellationToken: cts.Token);
 
-                mediaList.Clear();
             } catch (Exception ex)
             {
-                IsRunning = false;
+                Console.WriteLine(ex.ToString());
+                //IsRunning = false;
+            } finally
+            {
+                mediaList.Clear();
             }
         }
 

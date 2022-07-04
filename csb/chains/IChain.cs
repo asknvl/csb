@@ -17,14 +17,23 @@ namespace csb.chains
         List<BotPoster_api> Bots { get; set; }
         UserListener User { get; }
         bool IsRunning { get; }
+        ChainState State { get; set; }
 
         public void Start();
         public void Stop();
 
-        Task AddInputChannel(string input);
-
         void SetVerifyCode(string code);
 
         void AddBot(string token);
+        void RemoveBot(string name);
     }
+
+
+    public enum ChainState
+    {
+        X,
+        creating,
+        edditing        
+    }
+         
 }

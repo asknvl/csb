@@ -112,8 +112,10 @@ namespace csb.usr_listener
                             return;
                         }
 
-                        //if (m.fwd_from != null)
-                        //    continue;
+#if DEBUG
+                        if (m.fwd_from != null)
+                            continue;
+#endif
 
                         //if (resolved == null)
                         //    resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
@@ -141,7 +143,8 @@ namespace csb.usr_listener
                                     try
                                     {
                                         long rand = Helpers.RandomLong();                                        
-                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { rand }, item);                                                                               
+                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { rand }, item);
+                                        Thread.Sleep(1000);
                                     } catch (Exception ex)
                                     {
                                         Console.WriteLine(ex.ToString());
@@ -165,6 +168,7 @@ namespace csb.usr_listener
                         rands.Add(Helpers.RandomLong());
                     //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
                     await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
+                    Thread.Sleep(1000);
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
@@ -243,8 +247,18 @@ namespace csb.usr_listener
             //await user.Channels_LeaveChannel(channel.);
         }
 
+        public void AddCorrespondingBot(string name)
+        {
+            if (!CorrespondingBotNames.Contains(name)) 
+                CorrespondingBotNames.Add(name);
+        } 
+
         public void Start()
         {
+            if (IsRunning)
+            {
+                ResoreInputChannels().Wait();
+            }                
 
             mediaGroup = new();
             mediaGroup.MediaReadyEvent += MediaGroup_MediaReadyEvent;
@@ -254,12 +268,10 @@ namespace csb.usr_listener
                 var usr = await user.LoginUserIfNeeded();
                 chats = await user.Messages_GetAllChats();
                 dialogs = await user.Messages_GetAllDialogs();
-
                 foreach (var item in CorrespondingBotNames)
                 {
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
                 }
-
                 user.Update += User_Update;
                 IsRunning = true;
             });

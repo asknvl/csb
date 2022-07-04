@@ -32,9 +32,7 @@ namespace csb.chains
             {
                 Save();
             }
-
             string rd = File.ReadAllText(path);
-
             chainList = JsonConvert.DeserializeObject<List<Chain>>(rd);
         }
 
@@ -74,7 +72,7 @@ namespace csb.chains
                 id++;
             }
 
-            var chain = new Chain() { Name = name, Id = id };          
+            var chain = new Chain() { Name = name, Id = id, State = ChainState.creating };          
 
             chainList.Add(chain);
 
@@ -99,11 +97,10 @@ namespace csb.chains
 
             try
             {
-                found.Start();                                                
-
+                found.Start();      
             } catch (Exception ex)
             {
-
+                throw new Exception("Не удалось запустить цепочку");
             }            
         }
 

@@ -15,8 +15,14 @@ namespace csb.settings
 
         static GlobalSettings instance;
         private GlobalSettings() {
-            api_id = "17730462";
-            api_hash = "10f1c6f26189d6c95f5fbeefe635d115";
+#if RELEASE
+            api_id = "16532988";
+            api_hash = "05a55aa70deae546f5eb4b2892a56606";
+#endif
+#if DEBUG
+            api_id = "13180345";
+            api_hash = "df78e4859fb0cbd03dc5cf83d5d0c0cb";
+#endif
         }
         public static GlobalSettings getInstance()
         {
