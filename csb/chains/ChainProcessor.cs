@@ -87,7 +87,7 @@ namespace csb.chains
             return found;
         }
 
-        public async Task Start(int id)
+        public void Start(int id)
         {
             var found = chainList.FirstOrDefault(x => x.Id == id);
             if (found == null)

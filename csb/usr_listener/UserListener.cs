@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -43,6 +44,7 @@ namespace csb.usr_listener
             }
         }
 
+        [JsonIgnore]
         public bool IsRunning { get; set; }
         #endregion
 
@@ -113,8 +115,8 @@ namespace csb.usr_listener
                         }
 
 #if DEBUG
-                        if (m.fwd_from != null)
-                            continue;
+                        //if (m.fwd_from != null)
+                        //    continue;
 #endif
 
                         //if (resolved == null)
@@ -226,7 +228,7 @@ namespace csb.usr_listener
                 {
                     if (item.Value is Channel channel)
                     {
-                        res.Add(new (item.Value.Title, item.Value.ID));
+                        res.Add(new (((Channel)item.Value).username, item.Value.ID));
                     }
                 }
             });
@@ -238,11 +240,32 @@ namespace csb.usr_listener
         {
             //var resolved = await user.Contacts_ResolveUsername(title);           
             //var chats = await user.Messages_GetAllChats();
-            var channels = chats.chats.Where(o => o.Value is Channel);
-            var channel = channels.FirstOrDefault(o => o.Value.Title.Equals(title));
-            var c = (Channel)channel.Value;
-            await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
-            chats.chats.Remove(channel.Key);
+
+            //var channels = chats.chats.Where(o => o.Value is Channel);
+            //var channel = channels.FirstOrDefault(o => o.Value.Title.Equals(title));
+            //var c = (Channel)channel.Value;
+
+            foreach (var item in chats.chats)
+            {
+                if (item.Value is Channel)
+                {
+                    var c = (Channel)item.Value;
+                    if (c.username.Equals(title))
+                    {
+                        await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
+                        chats.chats.Remove(item.Key);
+                    }
+
+                }
+            }
+
+
+            //var channel = chats.chats.FirstOrDefault(o => o is Channel && ((Channel)o.Value).username.Equals(title));
+            //var c = (Channel)channel.Value;
+
+            //await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
+            //chats.chats.Remove(channel.Key);
+
             //chats = await user.Messages_GetAllChats();                
             //await user.Channels_LeaveChannel(channel.);
         }
@@ -258,13 +281,15 @@ namespace csb.usr_listener
             if (IsRunning)
             {
                 ResoreInputChannels().Wait();
+                return;
             }                
 
             mediaGroup = new();
             mediaGroup.MediaReadyEvent += MediaGroup_MediaReadyEvent;
 
-            Task.Run(async () => { 
-                user = new Client(Config);                           
+            Task.Run(async () =>
+            {
+                user = new Client(Config);
                 var usr = await user.LoginUserIfNeeded();
                 chats = await user.Messages_GetAllChats();
                 dialogs = await user.Messages_GetAllDialogs();
@@ -273,8 +298,10 @@ namespace csb.usr_listener
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
                 }
                 user.Update += User_Update;
+                Console.WriteLine($"User {PhoneNumber} started");
                 IsRunning = true;
             });
+           
         }
 
         public void Stop()

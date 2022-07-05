@@ -23,8 +23,9 @@ namespace csb.chains
         public string PhoneNumber { get; set; }
         [JsonProperty]
         public List<BotPoster_api> Bots { get; set; } = new();
+        [JsonIgnore]
         public UserListener User { get; private set; }
-
+        [JsonIgnore]
         public bool IsRunning
         {
             get
@@ -61,14 +62,12 @@ namespace csb.chains
 
         public void Start()
         {
-            if (User == null)
+         
+            User = new UserListener(PhoneNumber);
+            User.NeedVerifyCodeEvent += (phone) =>
             {
-                User = new UserListener(PhoneNumber);
-                User.NeedVerifyCodeEvent += (phone) =>
-                {
-                    NeedVerifyCodeEvent?.Invoke(Id, phone);
-                };
-            }
+                NeedVerifyCodeEvent?.Invoke(Id, phone);
+            };
 
             try
             {                   
