@@ -7,9 +7,25 @@
     "Bots": [
       {
         "Token": "5579105972:AAFTAMgod1FXRCn4CHU2Iqa1GracO3kAr08",
-        "Name": null,
+        "Name": "ch_pool_1_bot",
         "ChannelID": -1001682491982,
         "ChannelTitle": "ch_pool_1",
+        "ChannelLink": "@asknvl"
+      }
+    ],
+    "State": 0
+  },
+  {
+    "Owner": 0,
+    "Name": "ch2",
+    "Id": 2,
+    "PhoneNumber": "+33773697940",
+    "Bots": [
+      {
+        "Token": "5391652797:AAENgE75S7JDQre4AoF4ZG95Se1czVB4rEE",
+        "Name": null,
+        "ChannelID": -1001762519455,
+        "ChannelTitle": "ch_pool_2",
         "ChannelLink": "@asknvl"
       }
     ],

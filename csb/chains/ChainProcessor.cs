@@ -94,6 +94,7 @@ namespace csb.chains
                 throw new Exception("Цепочки с таким ID не существует");
 
             found.NeedVerifyCodeEvent += Chain_NeedVerifyCodeEvent;
+            found.UserStartedEvent += Chain_UserStartedEvent;
 
             try
             {
@@ -129,7 +130,11 @@ namespace csb.chains
 
             foreach (var item in chainList)
             {
+                if (item.IsRunning)
+                    return;
+
                 item.NeedVerifyCodeEvent += Chain_NeedVerifyCodeEvent;
+                item.UserStartedEvent += Chain_UserStartedEvent;
                 item.Start();
             }
         }
@@ -137,11 +142,18 @@ namespace csb.chains
 
         #region events
         public event Action<int, string> NeedVerifyCodeEvent;
+        public event Action<IChain> ChainStartedEvent;
         #endregion
 
         private void Chain_NeedVerifyCodeEvent(int id, string phone)
         {
             NeedVerifyCodeEvent?.Invoke(id, phone);
+        }
+
+        private void Chain_UserStartedEvent(IChain chain)
+        {
+            ChainStartedEvent?.Invoke(chain);
+            Console.WriteLine("chain processor");
         }
     }
 }

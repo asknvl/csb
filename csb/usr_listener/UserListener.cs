@@ -299,6 +299,7 @@ namespace csb.usr_listener
                 }
                 user.Update += User_Update;
                 Console.WriteLine($"User {PhoneNumber} started");
+                StartedEvent?.Invoke(PhoneNumber);
                 IsRunning = true;
             });
            
@@ -311,9 +312,8 @@ namespace csb.usr_listener
         }
         #endregion
 
-        
-
         public event Action<string> NeedVerifyCodeEvent;
+        public event Action<string> StartedEvent;
 
     }
 }

@@ -69,6 +69,11 @@ namespace csb.chains
                 NeedVerifyCodeEvent?.Invoke(Id, phone);
             };
 
+            User.StartedEvent += (phone) => {                
+                UserStartedEvent?.Invoke(this);
+                Console.WriteLine("chain");
+            };
+
             try
             {                   
                 foreach (var item in Bots)
@@ -122,6 +127,7 @@ namespace csb.chains
         }
 
         public event Action<int, string> NeedVerifyCodeEvent;
+        public event Action<IChain> UserStartedEvent;
 
         public override string ToString()
         {
