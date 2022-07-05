@@ -223,6 +223,10 @@ namespace csb.usr_listener
         {
             List <(string, long)> res = new();
             //var chats = await user.Messages_GetAllChats();                
+
+            if (chats == null)
+                throw new Exception("Цепочка не была запущена, нет информации о входных каналах");
+
             await Task.Run(() => { 
                 foreach (var item in chats.chats)
                 {
@@ -245,18 +249,25 @@ namespace csb.usr_listener
             //var channel = channels.FirstOrDefault(o => o.Value.Title.Equals(title));
             //var c = (Channel)channel.Value;
 
-            foreach (var item in chats.chats)
+            try
             {
-                if (item.Value is Channel)
-                {
-                    var c = (Channel)item.Value;
-                    if (c.username.Equals(title))
-                    {
-                        await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
-                        chats.chats.Remove(item.Key);
-                    }
 
+                foreach (var item in chats.chats)
+                {
+                    if (item.Value is Channel)
+                    {
+                        var c = (Channel)item.Value;
+                        if (c.username.Equals(title))
+                        {
+                            await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
+                            chats.chats.Remove(item.Key);
+                        }
+
+                    }
                 }
+            } catch (Exception ex)
+            {
+                throw new Exception("Для удаления каналов цепочка должна быть запущена");
             }
 
 
@@ -279,8 +290,9 @@ namespace csb.usr_listener
         public void Start()
         {
             if (IsRunning)
-            {
+            {                
                 ResoreInputChannels().Wait();
+                StartedEvent?.Invoke(PhoneNumber);
                 return;
             }                
 
@@ -306,7 +318,7 @@ namespace csb.usr_listener
         }
 
         public void Stop()
-        {
+        {            
             user?.Dispose();            
             IsRunning = false; 
         }

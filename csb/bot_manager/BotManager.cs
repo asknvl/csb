@@ -40,7 +40,7 @@ namespace csb.bot_manager
         #region vars
         ITelegramBotClient bot;
         CancellationToken cancellationToken;
-        ChainProcessor chainsProcessor = new ChainProcessor("chains.json");        
+        //ChainProcessor chainsProcessor = new ChainProcessor("chains.json");        
 
         UserManager userManager;
 
@@ -57,12 +57,12 @@ namespace csb.bot_manager
 #endif
         
             
-            chainsProcessor.Load();
+            //chainsProcessor.Load();
 
-            userManager = new UserManager(bot, chainsProcessor, cancellationToken);
+            userManager = new UserManager(bot, cancellationToken);
             userManager.Init();
 
-            chainsProcessor.StartAll();
+            //chainsProcessor.StartAll();
             
         }
 
@@ -134,7 +134,7 @@ namespace csb.bot_manager
                         {
                             await bot.SendTextMessageAsync(
                                   chatId: chat,
-                                  text: "Нет доступа",
+                                  text: "Введите пароль",
                                   cancellationToken: cancellationToken);
                             return;
                         }

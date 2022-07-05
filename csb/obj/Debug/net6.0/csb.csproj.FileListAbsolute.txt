@@ -22,6 +22,7 @@ C:\Users\konovalov.a\Desktop\csb\csb\obj\Debug\net6.0\csb.genruntimeconfig.cache
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\csb.exe
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\csb.deps.json
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\csb.runtimeconfig.json
+D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\csb.pdb
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\Telegram.Bot.dll
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\Telegram.Bot.Extensions.Polling.dll
@@ -36,5 +37,4 @@ D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.dll
 D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\refint\csb.dll
 D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.pdb
 D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.genruntimeconfig.cache
-D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\csb.pdb
 D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\ref\csb.dll

@@ -26,7 +26,14 @@ namespace csb.users
             if (messages.ContainsKey(key))
             {
                 var msg = messages[key];
-                await bot.DeleteMessageAsync(chat, msg.MessageId);
+
+                try
+                {
+                    await bot.DeleteMessageAsync(chat, msg.MessageId);
+                } catch (Exception ex)
+                {
+
+                }
                 messages.Remove(key);
             }
 

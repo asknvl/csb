@@ -21,9 +21,13 @@ namespace csb.chains
         public List<Chain> Chains => chainList;
         #endregion
 
-        public ChainProcessor(string path)
+        public ChainProcessor(string userId)
         {
-            this.path = path;
+            string dirPath = Path.Combine(Directory.GetCurrentDirectory(), "chains", $"{userId}");
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
+
+            this.path = Path.Combine(dirPath, "chains.json");
         }
 
         public void Load()
@@ -46,8 +50,7 @@ namespace csb.chains
 
                 File.WriteAllText(path, json);
 
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 throw new Exception("Не удалось сохранить файл JSON");
             }
@@ -72,7 +75,7 @@ namespace csb.chains
                 id++;
             }
 
-            var chain = new Chain() { Name = name, Id = id, State = ChainState.creating };          
+            var chain = new Chain() { Name = name, Id = id, State = ChainState.creating };
 
             chainList.Add(chain);
 
@@ -93,16 +96,18 @@ namespace csb.chains
             if (found == null)
                 throw new Exception("Цепочки с таким ID не существует");
 
+            found.NeedVerifyCodeEvent -= Chain_NeedVerifyCodeEvent;
             found.NeedVerifyCodeEvent += Chain_NeedVerifyCodeEvent;
+            found.UserStartedEvent -= Chain_UserStartedEvent;
             found.UserStartedEvent += Chain_UserStartedEvent;
 
             try
             {
-                found.Start();      
+                found.Start();
             } catch (Exception ex)
             {
                 throw new Exception("Не удалось запустить цепочку");
-            }            
+            }
         }
 
         public void Delete(int id)
@@ -120,6 +125,8 @@ namespace csb.chains
             var found = chainList.FirstOrDefault(x => x.Id == id);
             if (found == null)
                 throw new Exception("Цепочки с таким ID не существует");
+            found.NeedVerifyCodeEvent -= Chain_NeedVerifyCodeEvent;
+            found.UserStartedEvent -= Chain_UserStartedEvent;
             found.Stop();
         }
 

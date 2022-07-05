@@ -163,9 +163,13 @@ namespace csb.users
             State = BotState.waitingVerificationCode;
         }
         private async void ChainProcessor_ChainStartedEvent(IChain chain)
-        {
+        {            
+            await messagesProcessor.Back(Id);
             await sendTextMessage(Id, $"Цепочка {chain.ToString()} запущена");
-            Console.WriteLine("user");
+            //await messagesProcessor.Delete(Id, "startsave");
+            //await messagesProcessor.Delete(Id, "editChain");            
+            //await showMyChains(Id);
+
         }
 
 
@@ -412,13 +416,16 @@ namespace csb.users
                             {
                                 var chain = chainsProcessor.Get(currentChainID);                                
                                 chain.AddBot(token);
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
+                            
 
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));                            
+                            
                             State = BotState.waitingOutputChannelId;                            
                             break;
 
@@ -430,13 +437,15 @@ namespace csb.users
                                 var bot = chain.Bots.Last();
                                 bot.ChannelID = frwd.ForwardFromChat.Id;
                                 bot.ChannelTitle = frwd.ForwardFromChat.Title;
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name) ведущего канала, котороуму будут направляться сообщения подписчиков:", "addChainCancel"));
 
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name) ведущего канала, котороуму будут направляться сообщения подписчиков:", "addChainCancel"));                            
+                            
                             State = BotState.waitingOutputChannelLink;                            
                             break;
 
@@ -447,12 +456,14 @@ namespace csb.users
                                 var bot = chain.Bots.Last();
                                 bot.ChannelLink = msg;
                                 chain.State = ChainState.X;
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "startsave", await sendTextButtonMessage(chat, "Регистрация завершена. Выберите действие:", "startsave"));
 
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                             }
-                            await messagesProcessor.Add(chat, "startsave", await sendTextButtonMessage(chat, "Регистрация завершена. Выберите действие:", "startsave"));
+                            
                             State = BotState.free;
                             break;
 
@@ -553,7 +564,7 @@ namespace csb.users
                         chainsProcessor.Start(currentChainID);
                         //await messagesProcessor.Delete(chat, "startsave");
                         //await showMyChains(chat);
-                        //await bot.AnswerCallbackQueryAsync(query.Id);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Запуск...");
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
@@ -565,7 +576,7 @@ namespace csb.users
                     {
                         chainsProcessor.Start(currentChainID);
                         //await messagesProcessor.Back(chat);
-                        //await bot.AnswerCallbackQueryAsync(query.Id, "Цепочка запущена");
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Запуск...");
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);

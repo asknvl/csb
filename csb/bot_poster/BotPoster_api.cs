@@ -74,6 +74,7 @@ namespace csb.bot_poster
 
         public void Stop()
         {
+            IsRunning = false;
             mediaTimer?.Dispose();
             cts?.Cancel();
         }

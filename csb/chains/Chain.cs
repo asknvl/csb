@@ -62,7 +62,13 @@ namespace csb.chains
 
         public void Start()
         {
-         
+
+            if (IsRunning)
+            {
+                UserStartedEvent?.Invoke(this);
+                return;
+            }
+
             User = new UserListener(PhoneNumber);
             User.NeedVerifyCodeEvent += (phone) =>
             {
@@ -70,8 +76,7 @@ namespace csb.chains
             };
 
             User.StartedEvent += (phone) => {                
-                UserStartedEvent?.Invoke(this);
-                Console.WriteLine("chain");
+                UserStartedEvent?.Invoke(this);                
             };
 
             try
@@ -110,7 +115,18 @@ namespace csb.chains
         {
             var found = Bots.FirstOrDefault(t => t.Token.Equals(token));
             if (found == null)
-                Bots.Add(new BotPoster_api(token));
+            {
+                var bot = new BotPoster_api(token);
+                Bots.Add(bot);
+                try
+                {
+                    bot.Start();
+                } catch (Exception ex)
+                {
+                    throw new Exception("Не удалось запустить бота");
+                }
+            }
+                
             else
                 throw new Exception("Бот с таким токеном уже существет, введите другой токен");
         }

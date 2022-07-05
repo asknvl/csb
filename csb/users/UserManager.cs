@@ -24,8 +24,7 @@ namespace csb.users
         #region vars
         IStorage<UserManager> storage;
         CancellationToken cancellationToken;
-        ITelegramBotClient bot;        
-        ChainProcessor chainsProcessor;
+        ITelegramBotClient bot;                
         #endregion
 
         #region properties
@@ -33,10 +32,9 @@ namespace csb.users
         List<User> users { get; set; } = new List<User>();
         #endregion
 
-        public UserManager(ITelegramBotClient bot, ChainProcessor chainsProcessor, CancellationToken cancellationToken)
+        public UserManager(ITelegramBotClient bot, CancellationToken cancellationToken)
         {
-            this.bot = bot;
-            this.chainsProcessor = chainsProcessor;
+            this.bot = bot;            
             this.cancellationToken = cancellationToken;
         }
 
@@ -49,30 +47,31 @@ namespace csb.users
 
             foreach (var user in users)
             {
+                user.cancellationToken = cancellationToken;
                 user.bot = bot;
                 user.messagesProcessor = new MessagesProcessor(bot);
-                user.chainsProcessor = chainsProcessor;
-                user.cancellationToken = cancellationToken;
+                user.chainsProcessor = new ChainProcessor($"{user.Id}");
+                user.chainsProcessor.Load();
+                user.chainsProcessor.StartAll();
             }
         }
-        public void Add(long id, string name)
+        public void Add(long userId, string name)
         {
-            if (!users.Any(u => u.Id == id))
+            if (!users.Any(u => u.Id == userId))
             {
                 //users.Add(new User(bot, chainsProcessor, cancellationToken) { Id = id, Name = name });
 
                 User newUser = new User()
                 {
+                    Id = userId,
                     bot = bot,
                     messagesProcessor = new MessagesProcessor(bot),
-                    chainsProcessor = chainsProcessor,
-                    cancellationToken = cancellationToken,
-                    Id = id,
+                    chainsProcessor = new ChainProcessor($"{userId}"),
+                    cancellationToken = cancellationToken,                    
                     Name = name
                 };
 
                 users.Add(newUser);
-
                 storage.save(this);
             }
         }
