@@ -219,9 +219,9 @@ namespace csb.usr_listener
             chats = await user.Messages_GetAllChats();
         }
 
-        public async Task<List<(string, long)>> GetAllChannels()
+        public async Task<List<(string, string, long)>> GetAllChannels()
         {
-            List <(string, long)> res = new();
+            List <(string, string, long)> res = new();
             //var chats = await user.Messages_GetAllChats();                
 
             if (chats == null)
@@ -232,7 +232,12 @@ namespace csb.usr_listener
                 {
                     if (item.Value is Channel channel)
                     {
-                        res.Add(new (((Channel)item.Value).username, item.Value.ID));
+                        //string name = (((Channel)item.Value).username != null) ? ((Channel)item.Value).username : ((Channel)item.Value).Title;
+
+                        string title =  ((Channel)item.Value).Title;
+                        string username = ((Channel)item.Value).username;
+
+                        res.Add(new (title, username, item.Value.ID));
                     }
                 }
             });
@@ -240,7 +245,7 @@ namespace csb.usr_listener
             return res; 
         }
 
-        public async Task LeaveChannel(string title)
+        public async Task LeaveChannel(string id)
         {
             //var resolved = await user.Contacts_ResolveUsername(title);           
             //var chats = await user.Messages_GetAllChats();
@@ -257,15 +262,25 @@ namespace csb.usr_listener
                     if (item.Value is Channel)
                     {
                         var c = (Channel)item.Value;
-                        if (c.username.Equals(title))
+
+                        //if (c.username.Equals(text))
+                        //{
+                        //    await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
+                        //    chats.chats.Remove(item.Key);
+                        //}
+
+                        if (c.ID == long.Parse(id))
                         {
                             await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
                             chats.chats.Remove(item.Key);
                         }
-
                     }
                 }
-            } catch (Exception ex)
+            } catch (FormatException ex)
+            {
+                throw new Exception("Неверный ID канала");
+            }
+            catch (Exception ex)
             {
                 throw new Exception("Для удаления каналов цепочка должна быть запущена");
             }

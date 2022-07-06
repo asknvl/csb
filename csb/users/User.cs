@@ -208,7 +208,7 @@ namespace csb.users
 
             for (int i = 0; i < number; i++)
             {
-                channel_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: channels[i].Item1, callbackData: $"channel_{channels[i].Item1}") };
+                channel_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: channels[i].Item1, callbackData: $"channel_{channels[i].Item3}") };
             }
 
             channel_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
@@ -228,7 +228,10 @@ namespace csb.users
 
             for (int i = 0; i < number; i++)
             {
-                channel_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithUrl(text: channels[i].Item1, url: $"http://t.me/{channels[i].Item1}") };
+                if (channels[i].Item2 != null)
+                    channel_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithUrl(text: channels[i].Item1, url: $"http://t.me/{channels[i].Item2}") };
+                else
+                    channel_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: channels[i].Item1, callbackData: $"privateChannel_{channels[i].Item3}") };
             }
 
             channel_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
@@ -791,11 +794,26 @@ namespace csb.users
                     {
                         try
                         {
-                            string title = data.Replace("channel_", "");
+                            string id = data.Replace("channel_", "");
                             var chain = chainsProcessor.Get(currentChainID);
-                            await chain.User.LeaveChannel(title);
+                            await chain.User.LeaveChannel(id);
                             await showDeleteChannel(chat, chain);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Канал удален");
+
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+
+                    }
+
+                    if (data.Contains("privateChannel_"))
+                    {
+                        try
+                        {
+                            string id = data.Replace("privateChannel_", "");                            
+                            await bot.AnswerCallbackQueryAsync(query.Id, $"Id={id}");
 
 
                         } catch (Exception ex)
