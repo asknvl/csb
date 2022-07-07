@@ -85,7 +85,7 @@ namespace csb.usr_listener
             }
         }
 
-        private void clear()
+        public void clear()
         {
             GroupId = null;
             MessageIDs.Clear();

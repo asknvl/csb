@@ -29,7 +29,9 @@ namespace csb.bot_manager
         waitingOutputChannelLink,
         waitingVerificationCode,
 
-        waitingAddInputChannel,       
+        waitingAddInputChannel,
+
+        waitingFilteredWord,
     }
     
     

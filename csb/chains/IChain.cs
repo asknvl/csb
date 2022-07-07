@@ -16,6 +16,7 @@ namespace csb.chains
         string PhoneNumber { get; set; }
         List<BotPoster_api> Bots { get; set; }
         UserListener User { get; }
+
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -23,9 +24,11 @@ namespace csb.chains
         public void Stop();
 
         void SetVerifyCode(string code);
-
         void AddBot(string token);
         void RemoveBot(string name);
+        void AddFilteredWord(string text);
+        void RemoveFilteredWord(int index);
+        void ClearFilteredWords();
     }
 
 

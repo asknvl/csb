@@ -1,7 +1,7 @@
 [
   {
     "Owner": 0,
-    "Name": "ср1",
+    "Name": "CH1",
     "Id": 1,
     "PhoneNumber": "+447424419801",
     "Bots": [
@@ -10,9 +10,14 @@
         "Name": "ch_pool_1_bot",
         "ChannelID": -1001682491982,
         "ChannelTitle": "ch_pool_1",
-        "ChannelLink": "@asdasdasdasd"
+        "ChannelLink": "@asdadasdasdasd"
       }
     ],
+    "User": {
+      "FilteredWords": [
+        "https"
+      ]
+    },
     "State": 0
   }
 ]

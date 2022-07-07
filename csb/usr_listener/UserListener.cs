@@ -1,10 +1,10 @@
 ﻿using csb.bot_poster;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -32,10 +32,13 @@ namespace csb.usr_listener
         #endregion
 
         #region properties
+        [JsonIgnore]
         public string PhoneNumber { get; set; }
+        [JsonIgnore]
         public List<string> CorrespondingBotNames { get; set; } = new();
 
         string vcode = "";
+        [JsonIgnore]
         public string VerifyCode {
             get => vcode;
             set
@@ -43,9 +46,11 @@ namespace csb.usr_listener
                 vcode = value;        
             }
         }
-
         [JsonIgnore]
         public bool IsRunning { get; set; }
+
+        [JsonProperty]
+        public List<string> FilteredWords { get; set; }
         #endregion
 
         string Config(string what)
@@ -104,10 +109,22 @@ namespace csb.usr_listener
                         //if (1708105731 != unm.message.Peer.ID)
                         //    return;
 
+                                                
+
+
                         Message m;
                         try
                         {
-                            m = (Message)unm.message;                           
+                            m = (Message)unm.message;
+
+                            //Filtering text of a message
+                            if (m.media == null) {                                
+                                foreach (var item in FilteredWords)
+                                    if (m.message.ToLower().Contains(item.ToLower()))
+                                        return;
+                            }
+
+
                             from_chat = chats.chats[unm.message.Peer.ID];
                         } catch (Exception ex)
                         {
@@ -161,6 +178,48 @@ namespace csb.usr_listener
 
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
         {
+
+            //Filter mediagroup by caption
+
+            bool filterFlag = false;
+
+            foreach (var id in group.MessageIDs)
+            {
+                Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
+                MessageBase mb = message.Messages[0] as MessageBase;
+                Message m = mb as Message;
+
+
+                filterFlag = true;
+
+                foreach (var item in FilteredWords)
+                {
+                    filterFlag = m.message.ToLower().Contains(item.ToLower());
+                    if (filterFlag)
+                        break;
+                }
+                    
+
+                //switch (m.media)
+                //{
+                //    case MessageMediaPhoto mp:
+
+                //        break;
+
+                //    case MessageMediaDocument md:
+                //        break;
+                //}
+
+
+            }
+
+            if (filterFlag)
+            {
+                mediaGroup.clear();
+                return;
+            }
+
+
             foreach (var item in resolvedBots)
             {
                 try

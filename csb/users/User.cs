@@ -83,6 +83,11 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Удалить бота", callbackData: "deleteOutputBot"),
                     //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
                 },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить фильтр", callbackData: "addFilteredWord"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить фильтр", callbackData: "deleteFilteredWord"),
+                    //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
+                },
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 },
@@ -117,11 +122,18 @@ namespace csb.users
                 }
             })},
 
+             {"saveFilteredWords", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Сохранить", callbackData: "saveFilteredWords"),
+                }
+            })},
+
         };
         #endregion
 
         #region vars          
-        int currentChainID;                
+        int currentChainID;
         BotState State;
         #endregion
 
@@ -137,7 +149,8 @@ namespace csb.users
         public MessagesProcessor messagesProcessor { get; set; }
         ChainProcessor chainprocessor;
         [JsonIgnore]
-        public ChainProcessor chainsProcessor {
+        public ChainProcessor chainsProcessor
+        {
             get => chainprocessor;
             set
             {
@@ -152,7 +165,7 @@ namespace csb.users
         #endregion
 
         public User()
-        {            
+        {
         }
 
         #region private
@@ -163,7 +176,7 @@ namespace csb.users
             State = BotState.waitingVerificationCode;
         }
         private async void ChainProcessor_ChainStartedEvent(IChain chain)
-        {            
+        {
             await messagesProcessor.Back(Id);
             await sendTextMessage(Id, $"Цепочка {chain.ToString()} запущена");
             //await messagesProcessor.Delete(Id, "startsave");
@@ -189,7 +202,7 @@ namespace csb.users
                         // first row
                         new []
                         {
-                             InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain"),                       
+                             InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain"),
                         },
 
                         chains.ToArray()
@@ -242,7 +255,7 @@ namespace csb.users
         }
 
         InlineKeyboardMarkup getMyBotsMarkUp(IChain chain)
-        {            
+        {
             var bots = chain.Bots;
             int number = bots.Count;
 
@@ -255,6 +268,25 @@ namespace csb.users
             bots_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
 
             InlineKeyboardMarkup inlineKeyboard = new(bots_buttons);
+
+            return inlineKeyboard;
+        }
+
+        InlineKeyboardMarkup getFilteredWordsMarkUp(IChain chain)
+        {
+            var words = chain.User.FilteredWords;
+            int number = words.Count;
+
+            InlineKeyboardButton[][] words_buttons = new InlineKeyboardButton[number + 2][];
+
+            for (int i = 0; i < number; i++)
+            {
+                words_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: words[i], callbackData: $"filteredWords_{i}") };
+            }
+            words_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "× Очистить", callbackData: "clearFilteredWords") };
+            words_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };            
+
+            InlineKeyboardMarkup inlineKeyboard = new(words_buttons);
 
             return inlineKeyboard;
         }
@@ -330,6 +362,17 @@ namespace csb.users
                 replyMarkup: markup,
                 cancellationToken: cancellationToken));
         }
+
+        async Task showFilteredWords(long chat, IChain chain)
+        {
+            var markup = getFilteredWordsMarkUp(chain);
+
+            await messagesProcessor.Add(chat, "showFilteredWords", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Фильтры для сообщений:",
+                replyMarkup: markup,
+                cancellationToken: cancellationToken));
+        }
         #endregion
 
         #region public
@@ -347,7 +390,7 @@ namespace csb.users
                     break;
 
                 case "/mychains":
-                    State = BotState.free;                    
+                    State = BotState.free;
                     try
                     {
                         await messagesProcessor.Clear(chat);
@@ -374,7 +417,7 @@ namespace csb.users
                                 return;
                             }
                             //chainsProcessor.Save();
-                            await messagesProcessor.Add(chat, "waitingPhoneNumber", await sendTextButtonMessage(chat, "Введите номер телефона аккаунта-шпиона:", "addChainCancel"));                            
+                            await messagesProcessor.Add(chat, "waitingPhoneNumber", await sendTextButtonMessage(chat, "Введите номер телефона аккаунта-шпиона:", "addChainCancel"));
                             State = BotState.waitingPhoneNumber;
                             break;
 
@@ -403,7 +446,7 @@ namespace csb.users
                                                "4.@BotFather отправит вам сообщение с API-токеном. Скопируйте токен и отпавьте его сюда:";
 
 
-                            await messagesProcessor.Add(chat, "waitingToken", await sendTextButtonMessage(chat, tokenMsg, "addChainCancel"));                            
+                            await messagesProcessor.Add(chat, "waitingToken", await sendTextButtonMessage(chat, tokenMsg, "addChainCancel"));
                             State = BotState.waitingToken;
                             break;
 
@@ -417,19 +460,19 @@ namespace csb.users
                             }
                             try
                             {
-                                var chain = chainsProcessor.Get(currentChainID);                                
+                                var chain = chainsProcessor.Get(currentChainID);
                                 chain.AddBot(token);
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
-                            
+
 
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            
-                            State = BotState.waitingOutputChannelId;                            
+
+                            State = BotState.waitingOutputChannelId;
                             break;
 
                         case BotState.waitingOutputChannelId:
@@ -448,8 +491,8 @@ namespace csb.users
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            
-                            State = BotState.waitingOutputChannelLink;                            
+
+                            State = BotState.waitingOutputChannelLink;
                             break;
 
                         case BotState.waitingOutputChannelLink:
@@ -466,7 +509,7 @@ namespace csb.users
                             {
                                 await sendTextMessage(chat, ex.Message);
                             }
-                            
+
                             State = BotState.free;
                             break;
 
@@ -494,6 +537,21 @@ namespace csb.users
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
+                            break;
+
+                        case BotState.waitingFilteredWord:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.AddFilteredWord(msg);
+                                await messagesProcessor.Delete(chat, "saveInputChannel");
+                                await messagesProcessor.Add(chat, "saveFilteredWords", await sendTextButtonMessage(chat, "Добавьте еще фильтр или нажмите \"Сохранить\"", "saveFilteredWords"));
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }                            
                             break;
                     }
                     break;
@@ -534,7 +592,7 @@ namespace csb.users
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
-                    break;               
+                    break;
 
                 case "viewChain":
                     try
@@ -549,7 +607,7 @@ namespace csb.users
                         string info = $"Id={chain.Id}\n" +
                                       $"Name={chain.Name}\n" +
                                       $"Phone={chain.PhoneNumber}\n" +
-                                      $"Bots:\n" + botsinfo +                                                                           
+                                      $"Bots:\n" + botsinfo +
                                       $"IsActive={chain.IsRunning}\n";
                         await messagesProcessor.Add(chat, "back", await sendTextButtonMessage(chat, info, "back"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
@@ -614,7 +672,7 @@ namespace csb.users
                 case "addInputChannel":
                     try
                     {
-                        await messagesProcessor.Add(chat, "addInputChannel", await sendTextButtonMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz", "back"));                        
+                        await messagesProcessor.Add(chat, "addInputChannel", await sendTextButtonMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz", "back"));
                         State = BotState.waitingAddInputChannel;
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
@@ -755,6 +813,42 @@ namespace csb.users
                     }
                     break;
 
+
+                case "addFilteredWord":
+                    try
+                    {                        
+                        await messagesProcessor.Add(chat, "addFilteredWords", await sendTextButtonMessage(chat, "Введите текст. Сообщения с даным будут отфильтрованы и не будут пересылаться в выходной канал:", "back"));
+                        State = BotState.waitingFilteredWord;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+                    
+
+                case "deleteFilteredWord":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await showFilteredWords(chat, chain);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Выберите фильтр, который нужно удалить");
+
+                    } catch (Exception ex)
+                    {
+
+                    }
+                    
+                    break;
+
+                case "saveFilteredWords":
+                    State = BotState.free;
+                    chainsProcessor.Save();                    
+                    await messagesProcessor.Back(chat);
+                    await messagesProcessor.Delete(chat, "addFilteredWords");                    
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
                 case "":
                     break;
 
@@ -812,7 +906,7 @@ namespace csb.users
                     {
                         try
                         {
-                            string id = data.Replace("privateChannel_", "");                            
+                            string id = data.Replace("privateChannel_", "");
                             await bot.AnswerCallbackQueryAsync(query.Id, $"Id={id}");
 
 
@@ -834,6 +928,40 @@ namespace csb.users
                             await showDeleteBot(chat, chain);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Бот удален");
 
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("filteredWords_"))
+                    {
+                        try
+                        {
+                            string sindex = data.Replace("filteredWords_", "");
+                            int index = int.Parse(sindex);
+                            var chain = chainsProcessor.Get(currentChainID);
+                            chain.RemoveFilteredWord(index);
+                            chainprocessor.Save();
+                            await showFilteredWords(chat, chain);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Фильтр удален");
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("clearFilteredWords"))
+                    {
+                        try
+                        {
+                            var chain = chainsProcessor.Get(currentChainID);
+                            chain.ClearFilteredWords();
+                            chainprocessor.Save();
+                            await messagesProcessor.Back(chat);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Фильтры удалены");
 
                         } catch (Exception ex)
                         {

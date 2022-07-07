@@ -23,9 +23,9 @@ namespace csb.chains
         public string PhoneNumber { get; set; }
         [JsonProperty]
         public List<BotPoster_api> Bots { get; set; } = new();
-        [JsonIgnore]
+        [JsonProperty]
         public UserListener User { get; private set; }
-        [JsonIgnore]
+        [JsonIgnore]        
         public bool IsRunning
         {
             get
@@ -39,21 +39,6 @@ namespace csb.chains
         public ChainState State {
             get; set;
         }
-
-        //[JsonProperty]
-        //public string OutputBotName
-        //{
-        //    get
-        //    {
-        //        if (bot == null)
-        //            return "?";
-        //        else
-        //            return bot.OutputBotName;
-        //    }
-        //}
-
-        //public string OutputChannelLink { get; set; }
-
         #endregion
 
         public Chain()
@@ -69,7 +54,8 @@ namespace csb.chains
                 return;
             }
 
-            User = new UserListener(PhoneNumber);
+            //User = new UserListener(PhoneNumber);
+            User.PhoneNumber = PhoneNumber;
             User.NeedVerifyCodeEvent += (phone) =>
             {
                 NeedVerifyCodeEvent?.Invoke(Id, phone);
@@ -140,6 +126,21 @@ namespace csb.chains
                 found.Stop();
                 Bots.Remove(found);                
             }
+        }
+
+        public void AddFilteredWord(string text)
+        {
+            if (!User.FilteredWords.Contains(text))
+                User.FilteredWords.Add(text);            
+        }
+        public void RemoveFilteredWord(int index)
+        {
+            User.FilteredWords.RemoveAt(index);
+        }
+
+        public void ClearFilteredWords()
+        {
+            User.FilteredWords.Clear();
         }
 
         public event Action<int, string> NeedVerifyCodeEvent;
