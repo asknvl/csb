@@ -101,25 +101,32 @@ namespace csb.bot_poster
 
                         InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
 
-                        //imp.Caption = swapTextLink(message.Caption, ChannelLink);
-                        //imp.CaptionEntities = filterEntities(message.CaptionEntities);
-                                              
-                        (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                        if (!ChannelLink.Equals("0"))
+                        {
+                            imp.Caption = swapTextLink(message.Caption, ChannelLink);
+                            imp.CaptionEntities = filterEntities(message.CaptionEntities);
+                        } else
+                        {
 
-                        imp.Caption = text;
-                        imp.CaptionEntities = entities;
-
+                            (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                            imp.Caption = text;
+                            imp.CaptionEntities = entities;
+                        }
 
                         if (message.MediaGroupId == null)
                         {
                             InputMediaDocument doc = new InputMediaDocument(imp.Media);
 
-                            //doc.Caption = swapTextLink(message.Caption, ChannelLink);
-                            //doc.CaptionEntities = filterEntities(message.CaptionEntities);
-
-                            (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-                            doc.Caption = text;
-                            doc.CaptionEntities = entities;
+                            if (!ChannelLink.Equals("0"))
+                            {
+                                doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                                doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            } else
+                            {
+                                (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                                doc.Caption = text;
+                                doc.CaptionEntities = entities;
+                            }
 
                             await bot.SendPhotoAsync(ChannelID,
                                 doc.Media,
@@ -150,25 +157,33 @@ namespace csb.bot_poster
                     case MessageType.Video:
 
                         InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
-                        //imv.Caption = swapTextLink(message.Caption, ChannelLink);
-                        //imv.CaptionEntities = filterEntities(message.CaptionEntities);
+                        if (!ChannelLink.Equals("0"))
+                        {
+                            imv.Caption = swapTextLink(message.Caption, ChannelLink);
+                            imv.CaptionEntities = filterEntities(message.CaptionEntities);
+                        } else
+                        {
 
-                        (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-
-                        imv.Caption = text;
-                        imv.CaptionEntities = entities;
+                            (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                            imv.Caption = text;
+                            imv.CaptionEntities = entities;
+                        }
 
                         if (message.MediaGroupId == null)
                         {
                             InputMediaDocument doc = new InputMediaDocument(imv.Media);
 
-                            //doc.Caption = swapTextLink(message.Caption, ChannelLink);
-                            //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            if (!ChannelLink.Equals("0"))
+                            {
+                                doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                                doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            } else
+                            {
 
-                            (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-
-                            doc.Caption = text;
-                            doc.CaptionEntities = entities;
+                                (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                                doc.Caption = text;
+                                doc.CaptionEntities = entities;
+                            }
 
                             await bot.SendVideoAsync(ChannelID,
                                 doc.Media,
@@ -273,23 +288,8 @@ namespace csb.bot_poster
                         } catch ( Exception ex)
                         {
 
-                        }
-
-                        
-
-                        //foreach (var entity in found)
-                        //{
-                        //    var index = tmpEntities.IndexOf(entity);
-                        //    int length = entity.Length;
-                        //    tmpEntities.Remove(entity);
-                        //    for (int i = index; i < tmpEntities.Count; i++)
-                        //    {
-                        //        tmpEntities[i].Offset -= length;
-                        //    }
-                        //}
-
-
-                        
+                        }                
+                                                
                     }
                     
                 }
@@ -322,17 +322,18 @@ namespace csb.bot_poster
                     text = text.Replace(item.Value, newlink);
             }
 
-            //string res = text;
-
-            //pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
-            //regex = new Regex(pattern);
-            //m = regex.Matches(text);
-            //foreach (Match item in m)
-            //{
-            //    Console.WriteLine(item.Index);
-            //    text = text.Replace(item.Value, "");                
-            //}
             string res = text;
+
+            pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
+            regex = new Regex(pattern);
+            m = regex.Matches(text);
+            foreach (Match item in m)
+            {
+                Console.WriteLine(item.Index);
+                text = text.Replace(item.Value, "");
+            }
+
+            res = text;
             return res;
         }
 
