@@ -10,16 +10,13 @@
         "Name": "ch_pool_1_bot",
         "ChannelID": -1001682491982,
         "ChannelTitle": "ch_pool_1",
-        "ChannelLink": "0"
+        "ChannelLink": "@asdasdasd"
       }
     ],
     "User": {
       "FilteredWords": [
-        "ссылка",
         "https",
-        "подписаться на",
-        "подпишись на",
-        "наши друзья"
+        "ссылка"
       ]
     },
     "State": 0

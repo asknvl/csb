@@ -50,7 +50,7 @@ namespace csb.usr_listener
         public bool IsRunning { get; set; }
 
         [JsonProperty]
-        public List<string> FilteredWords { get; set; }
+        public List<string> FilteredWords { get; set; } = new();
         #endregion
 
         string Config(string what)
@@ -77,7 +77,7 @@ namespace csb.usr_listener
             
                 case "first_name": return "Stevie";      // if sign-up is required
                 case "last_name": return "Voughan";        // if sign-up is required
-                case "password": return "secret!";     // if user has enabled 2FA
+                case "password": return "5555";     // if user has enabled 2FA
                 default: return null;                  // let WTelegramClient decide the default config
             }
 
@@ -118,10 +118,13 @@ namespace csb.usr_listener
                             m = (Message)unm.message;
 
                             //Filtering text of a message
-                            if (m.media == null) {                                
+                            if (m.media == null || m.media is MessageMediaWebPage) {
                                 foreach (var item in FilteredWords)
                                     if (m.message.ToLower().Contains(item.ToLower()))
+                                    {
+                                        Console.WriteLine($"filtered byt: {item}");
                                         return;
+                                    }
                             }
 
 
@@ -179,61 +182,54 @@ namespace csb.usr_listener
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
         {
 
-            //Filter mediagroup by caption
-
-            bool filterFlag = false;
-
-            foreach (var id in group.MessageIDs)
+            try
             {
-                Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
-                MessageBase mb = message.Messages[0] as MessageBase;
-                Message m = mb as Message;
 
+                bool filterFlag = false;
 
-                filterFlag = true;
-
-                foreach (var item in FilteredWords)
+                foreach (var id in group.MessageIDs)
                 {
-                    filterFlag = m.message.ToLower().Contains(item.ToLower());
-                    if (filterFlag)
-                        break;
+                    Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
+                    MessageBase mb = message.Messages[0] as MessageBase;
+                    Message m = mb as Message;
+
+                    if (m != null)
+                    {
+                        foreach (var item in FilteredWords)
+                        {
+                            filterFlag = m.message.ToLower().Contains(item.ToLower());
+                            if (filterFlag)
+                                break;
+                        }
+                    }
+
                 }
-                    
 
-                //switch (m.media)
-                //{
-                //    case MessageMediaPhoto mp:
-
-                //        break;
-
-                //    case MessageMediaDocument md:
-                //        break;
-                //}
-
-
-            }
-
-            if (filterFlag)
-            {
-                mediaGroup.clear();
-                return;
-            }
-
-
-            foreach (var item in resolvedBots)
-            {
-                try
+                if (filterFlag)
                 {
-                    List<long> rands = new();
-                    for (int i = 0; i < group.MessageRands.Count; i++)
-                        rands.Add(Helpers.RandomLong());
-                    //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
-                    await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
-                    Thread.Sleep(1000);
-                } catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
+                    return;
                 }
+
+                foreach (var item in resolvedBots)
+                {
+                    try
+                    {
+                        List<long> rands = new();
+                        for (int i = 0; i < group.MessageRands.Count; i++)
+                            rands.Add(Helpers.RandomLong());
+                        //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
+                        await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
+                        Thread.Sleep(1000);
+                    } catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 

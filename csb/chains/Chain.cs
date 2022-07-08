@@ -54,6 +54,11 @@ namespace csb.chains
                 return;
             }
 
+            if (User == null)
+            {
+                User = new UserListener(PhoneNumber);
+            }
+
             //User = new UserListener(PhoneNumber);
             User.PhoneNumber = PhoneNumber;
             User.NeedVerifyCodeEvent += (phone) =>

@@ -83,6 +83,8 @@ namespace csb.bot_poster
         {
 
             var message = update.Message;
+            string? text;
+            MessageEntity[]? entities;
 
             if (message.ReplyMarkup != null)
                 swapMarkupLink(message.ReplyMarkup, ChannelLink);
@@ -96,22 +98,28 @@ namespace csb.bot_poster
                 {
 
                     case MessageType.Photo:
-                        InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
-                        imp.Caption = swapTextLink(message.Caption, ChannelLink);
-                        imp.CaptionEntities = filterEntities(message.CaptionEntities);
 
-                        //if (message.MediaGroupId == null)
-                        //{
-                        //    await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
-                        //    break;
-                        //}
+                        InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
+
+                        //imp.Caption = swapTextLink(message.Caption, ChannelLink);
+                        //imp.CaptionEntities = filterEntities(message.CaptionEntities);
+                                              
+                        (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+
+                        imp.Caption = text;
+                        imp.CaptionEntities = entities;
+
 
                         if (message.MediaGroupId == null)
                         {
                             InputMediaDocument doc = new InputMediaDocument(imp.Media);
 
-                            doc.Caption = swapTextLink(message.Caption, ChannelLink);
-                            doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            //doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                            //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                            doc.Caption = text;
+                            doc.CaptionEntities = entities;
 
                             await bot.SendPhotoAsync(ChannelID,
                                 doc.Media,
@@ -142,15 +150,25 @@ namespace csb.bot_poster
                     case MessageType.Video:
 
                         InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
-                        imv.Caption = swapTextLink(message.Caption, ChannelLink);
-                        imv.CaptionEntities = filterEntities(message.CaptionEntities);
+                        //imv.Caption = swapTextLink(message.Caption, ChannelLink);
+                        //imv.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                        (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+
+                        imv.Caption = text;
+                        imv.CaptionEntities = entities;
 
                         if (message.MediaGroupId == null)
                         {
                             InputMediaDocument doc = new InputMediaDocument(imv.Media);
 
-                            doc.Caption = swapTextLink(message.Caption, ChannelLink);
-                            doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            //doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                            //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+
+                            doc.Caption = text;
+                            doc.CaptionEntities = entities;
 
                             await bot.SendVideoAsync(ChannelID,
                                 doc.Media,
@@ -205,6 +223,87 @@ namespace csb.bot_poster
             }
         }
 
+
+        (string?, MessageEntity[]?) getUpdatedText(string text, MessageEntity[]? entities)
+        {
+            string? tres = null;
+            MessageEntity[]? eres = null;
+
+            if (text == null)
+                return (tres, eres);
+
+            string[] patterns = {
+                @"[@][[a-zA-Z0-9_]{5,32}", //@telegram
+                @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?" //t.me/asdasd
+            };
+
+            List<MessageEntity> tmpEntities = entities.ToList();
+
+
+            int length = 0;
+
+            foreach (var pattern in patterns)
+            {
+                Regex regex = new Regex(pattern);
+                var mathces = regex.Matches(text);
+
+                foreach (Match match in mathces)
+                {
+                    text = text.Replace(match.Value, "");
+
+                    if (tmpEntities != null)
+                    
+                    {
+                        tmpEntities = tmpEntities.OrderBy(e => e.Offset).ToList();
+                        int position = match.Index;
+                        var found = tmpEntities.Where(e => e.Offset == position).ToList();
+                        try
+                        {
+
+                            if (found != null)
+                            {
+                                var index = tmpEntities.IndexOf(found[0]);
+                                length += found[0].Length;
+                                tmpEntities.RemoveAll(e => e.Offset == position);
+                                for (int i = index; i < tmpEntities.Count; i++)
+                                {
+                                    tmpEntities[i].Offset -= length;
+                                }
+                            }
+                        } catch ( Exception ex)
+                        {
+
+                        }
+
+                        
+
+                        //foreach (var entity in found)
+                        //{
+                        //    var index = tmpEntities.IndexOf(entity);
+                        //    int length = entity.Length;
+                        //    tmpEntities.Remove(entity);
+                        //    for (int i = index; i < tmpEntities.Count; i++)
+                        //    {
+                        //        tmpEntities[i].Offset -= length;
+                        //    }
+                        //}
+
+
+                        
+                    }
+                    
+                }
+                
+            }
+
+            if (tmpEntities != null)
+                eres = tmpEntities.ToArray();
+
+            tres = text;
+
+            return (tres, eres);
+        }
+
         string? swapTextLink(string text, string newlink)
         {
             if (text == null)
@@ -215,11 +314,29 @@ namespace csb.bot_poster
             var m = regex.Matches(text);
             foreach (Match item in m)
             {
-                text = text.Replace(item.Value, newlink);
+                
+
+                if (newlink == "0")
+                    text = text.Replace(item.Value, "");
+                else
+                    text = text.Replace(item.Value, newlink);
             }
+
+            //string res = text;
+
+            //pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
+            //regex = new Regex(pattern);
+            //m = regex.Matches(text);
+            //foreach (Match item in m)
+            //{
+            //    Console.WriteLine(item.Index);
+            //    text = text.Replace(item.Value, "");                
+            //}
             string res = text;
             return res;
         }
+
+
 
         MessageEntity[]? filterEntities(MessageEntity[] input)
         {
@@ -231,7 +348,7 @@ namespace csb.bot_poster
             try
             {
                 foreach (var item in entities)
-                    if (item.Type != MessageEntityType.TextLink)
+                    if (item.Type != MessageEntityType.TextLink && item.Type != MessageEntityType.Url)
                     {
                         res.Add(item);
                     }
@@ -279,6 +396,9 @@ namespace csb.bot_poster
                             }
 
                             //TODO
+                            break;
+
+                        case MessageEntityType.Url:
                             break;
                     }
                 }

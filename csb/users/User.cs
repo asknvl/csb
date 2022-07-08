@@ -484,7 +484,7 @@ namespace csb.users
                                 bot.ChannelID = frwd.ForwardFromChat.Id;
                                 bot.ChannelTitle = frwd.ForwardFromChat.Title;
                                 await messagesProcessor.Back(chat);
-                                await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name) ведущего канала, котороуму будут направляться сообщения подписчиков:", "addChainCancel"));
+                                await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), на который будут заменяться телеграм акаунты во входящих сообщениях. Введите 0, если ссылки на аккаунты нужно удалять:", "addChainCancel"));
 
                             } catch (Exception ex)
                             {
@@ -817,7 +817,7 @@ namespace csb.users
                 case "addFilteredWord":
                     try
                     {                        
-                        await messagesProcessor.Add(chat, "addFilteredWords", await sendTextButtonMessage(chat, "Введите текст. Сообщения с даным будут отфильтрованы и не будут пересылаться в выходной канал:", "back"));
+                        await messagesProcessor.Add(chat, "addFilteredWords", await sendTextButtonMessage(chat, "Введите текст. Сообщения, содержащие данный текст, будут отфильтрованы и не будут пересылаться в выходной канал:", "back"));
                         State = BotState.waitingFilteredWord;
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
