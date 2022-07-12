@@ -26,6 +26,8 @@ namespace csb.chains
         [JsonProperty]
         public UserListener User { get; private set; }
         [JsonIgnore]        
+
+
         public bool IsRunning
         {
             get
@@ -66,8 +68,12 @@ namespace csb.chains
                 NeedVerifyCodeEvent?.Invoke(Id, phone);
             };
 
-            User.StartedEvent += (phone) => {                
-                UserStartedEvent?.Invoke(this);                
+            User.StartedEvent += (phone) => {
+
+                foreach (var item in Bots)
+                    item.AllowedID = User.ID;
+
+                UserStartedEvent?.Invoke(this);                     
             };
 
             try
@@ -102,20 +108,29 @@ namespace csb.chains
             User.SetVerifyCode(code);
         }
 
-        public void AddBot(string token)
+        public async Task AddBot(string token)
         {
             var found = Bots.FirstOrDefault(t => t.Token.Equals(token));
             if (found == null)
             {
                 var bot = new BotPoster_api(token);
+                if (User != null)
+                {
+                    bot.AllowedID = User.ID;
+                }
+
                 Bots.Add(bot);
                 try
                 {
                     bot.Start();
+                    if (User != null)
+                        await User.AddCorrespondingBot(bot.Name);
                 } catch (Exception ex)
                 {
                     throw new Exception("Не удалось запустить бота");
                 }
+
+
             }
                 
             else

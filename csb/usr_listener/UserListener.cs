@@ -21,14 +21,13 @@ namespace csb.usr_listener
         Client user;        
         TL.Messages_Chats chats;
         TL.Messages_Dialogs dialogs;
-
         ChatBase from_chat;
-
         List<Contacts_ResolvedPeer> resolvedBots = new();
-
         MediaGroup mediaGroup = new();
 
         private readonly ManualResetEventSlim codeReady = new();
+
+        System.Timers.Timer timer;        
         #endregion
 
         #region properties
@@ -36,6 +35,9 @@ namespace csb.usr_listener
         public string PhoneNumber { get; set; }
         [JsonIgnore]
         public List<string> CorrespondingBotNames { get; set; } = new();
+
+        [JsonIgnore]
+        public long ID { get; set; }
 
         string vcode = "";
         [JsonIgnore]
@@ -88,150 +90,140 @@ namespace csb.usr_listener
             PhoneNumber = phonenumber;                   
         }
         
-        private async void User_Update(TL.IObject u)
-        {
-            //NotifyObservers(update);
+//        private async void User_Update(TL.IObject u)
+//        {
+//            //NotifyObservers(update);
 
-            if (u is not UpdatesBase updates)
-                return;
-            foreach (var update in updates.UpdateList)
-            {
+//            if (u is not UpdatesBase updates)
+//                return;
+//            foreach (var update in updates.UpdateList)
+//            {
 
-                switch (update)
-                {   
+//                switch (update)
+//                {   
 
-                    case UpdateNewMessage unm:
+//                    case UpdateNewMessage unm:
 
-                        //if (1665029284 == unm.message.Peer.ID)
-                        //    return;
+//                        Message m;
+//                        try
+//                        {
+//                            m = (Message)unm.message;
 
-
-                        //if (1708105731 != unm.message.Peer.ID)
-                        //    return;
-
-                                                
-
-
-                        Message m;
-                        try
-                        {
-                            m = (Message)unm.message;
-
-                            //Filtering text of a message
-                            if (m.media == null || m.media is MessageMediaWebPage) {
-                                foreach (var item in FilteredWords)
-                                    if (m.message.ToLower().Contains(item.ToLower()))
-                                    {
-                                        Console.WriteLine($"filtered byt: {item}");
-                                        return;
-                                    }
-                            }
+//                            //Filtering text of a message
+//                            if (m.media == null || m.media is MessageMediaWebPage) {
+//                                foreach (var item in FilteredWords)
+//                                    if (m.message.ToLower().Contains(item.ToLower()))
+//                                    {
+//                                        Console.WriteLine($"filtered byt: {item}");
+//                                        return;
+//                                    }
+//                            }
 
 
-                            from_chat = chats.chats[unm.message.Peer.ID];
-                        } catch (Exception ex)
-                        {
-                            return;
-                        }
+//                            from_chat = chats.chats[unm.message.Peer.ID];
+//                        } catch (Exception ex)
+//                        {
+//                            return;
+//                        }
 
-#if DEBUG
-                        //if (m.fwd_from != null)
-                        //    continue;
-#endif
+//#if DEBUG
+//                        //if (m.fwd_from != null)
+//                        //    continue;
+//#endif
 
-                        //if (resolved == null)
-                        //    resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
+//                        //if (resolved == null)
+//                        //    resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
 
-                        InputSingleMedia sm;
-
-
-                        switch (m.media) {
-
-                            case MessageMediaPhoto mmp:                                
-                                mediaGroup.Update(m.grouped_id, unm.message.ID);
-                                break;
-
-                            case MessageMediaDocument mmd:
-                                mediaGroup.Update(m.grouped_id, unm.message.ID);                                                               
-                                break;
-
-                            //case MessageMediaWebPage wp:
-                            //    //await user.SendMessageAsync(resolved, m.message, 0, m.entities, default, true);
-                            //    //await user.Messages_SendMessage(resolved, m.message, Helpers.RandomLong(), false, false, false, false, false, null, m.reply_markup, m.entities, null, null);
-                            //    break;
-
-                            default:
-                                foreach (var item in resolvedBots)
-                                    try
-                                    {
-                                        long rand = Helpers.RandomLong();                                        
-                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { rand }, item);
-                                        Thread.Sleep(1000);
-                                    } catch (Exception ex)
-                                    {
-                                        Console.WriteLine(ex.ToString());
-                                    }
-                                break;
-
-                        }
-                        break;                        
-                }
-            }            
-        }
-
-        private async void MediaGroup_MediaReadyEvent(MediaGroup group)
-        {
-
-            try
-            {
-
-                bool filterFlag = false;
-
-                foreach (var id in group.MessageIDs)
-                {
-                    Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
-                    MessageBase mb = message.Messages[0] as MessageBase;
-                    Message m = mb as Message;
-
-                    if (m != null)
-                    {
-                        foreach (var item in FilteredWords)
-                        {
-                            filterFlag = m.message.ToLower().Contains(item.ToLower());
-                            if (filterFlag)
-                                break;
-                        }
-                    }
-
-                }
-
-                if (filterFlag)
-                {
-                    return;
-                }
-
-                foreach (var item in resolvedBots)
-                {
-                    try
-                    {
-                        List<long> rands = new();
-                        for (int i = 0; i < group.MessageRands.Count; i++)
-                            rands.Add(Helpers.RandomLong());
-                        //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
-                        await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
-                        Thread.Sleep(1000);
-                    } catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
-                }
+//                        InputSingleMedia sm;
 
 
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-        }
+//                        switch (m.media) {
+
+//                            case MessageMediaPhoto mmp:                                
+//                                mediaGroup.Update(m.grouped_id, unm.message.ID);
+//                                break;
+
+//                            case MessageMediaDocument mmd:
+//                                mediaGroup.Update(m.grouped_id, unm.message.ID);                                                               
+//                                break;
+
+//                            //case MessageMediaWebPage wp:
+//                            //    //await user.SendMessageAsync(resolved, m.message, 0, m.entities, default, true);
+//                            //    //await user.Messages_SendMessage(resolved, m.message, Helpers.RandomLong(), false, false, false, false, false, null, m.reply_markup, m.entities, null, null);
+//                            //    break;
+
+//                            default:
+//                                foreach (var item in resolvedBots)
+//                                    try
+//                                    {
+//                                        long rand = Helpers.RandomLong();                                        
+//                                        await user.Messages_ForwardMessages(from_chat, new[] { unm.message.ID }, new[] { rand }, item);
+//                                        Thread.Sleep(1000);
+//                                    } catch (Exception ex)
+//                                    {
+//                                        Console.WriteLine(ex.ToString());
+//                                    }
+//                                break;
+
+//                        }
+//                        break;                        
+//                }
+//            }            
+//        }
+
+        //private async void MediaGroup_MediaReadyEvent(MediaGroup group)
+        //{
+
+        //    try
+        //    {
+
+        //        bool filterFlag = false;
+
+        //        foreach (var id in group.MessageIDs)
+        //        {
+        //            Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
+        //            MessageBase mb = message.Messages[0] as MessageBase;
+        //            Message m = mb as Message;
+
+        //            if (m != null)
+        //            {
+        //                foreach (var item in FilteredWords)
+        //                {
+        //                    filterFlag = m.message.ToLower().Contains(item.ToLower());
+        //                    if (filterFlag)
+        //                        break;
+        //                }
+        //            }
+
+        //        }
+
+        //        if (filterFlag)
+        //        {
+        //            return;
+        //        }
+
+        //        foreach (var item in resolvedBots)
+        //        {
+        //            try
+        //            {
+        //                List<long> rands = new();
+        //                for (int i = 0; i < group.MessageRands.Count; i++)
+        //                    rands.Add(Helpers.RandomLong());
+        //                //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
+        //                await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
+        //                Thread.Sleep(1000);
+        //            } catch (Exception ex)
+        //            {
+        //                Console.WriteLine(ex.ToString());
+        //            }
+        //        }
+
+
+        //    } catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.ToString());
+        //    }
+        //}
 
         #region public
         public void SetVerifyCode(string code)
@@ -351,10 +343,18 @@ namespace csb.usr_listener
             //await user.Channels_LeaveChannel(channel.);
         }
 
-        public void AddCorrespondingBot(string name)
+        public async Task AddCorrespondingBot(string name)
         {
             if (!CorrespondingBotNames.Contains(name)) 
                 CorrespondingBotNames.Add(name);
+
+            resolvedBots.Clear();
+
+            foreach (var item in CorrespondingBotNames)
+            {
+                if (user != null)
+                    resolvedBots.Add(await user.Contacts_ResolveUsername(item));
+            }
         } 
 
         public void Start()
@@ -367,28 +367,81 @@ namespace csb.usr_listener
             }                
 
             mediaGroup = new();
-            mediaGroup.MediaReadyEvent += MediaGroup_MediaReadyEvent;
+
+            //mediaGroup.MediaReadyEvent += MediaGroup_MediaReadyEvent;
 
             Task.Run(async () =>
             {
                 user = new Client(Config);
                 var usr = await user.LoginUserIfNeeded();
+                ID = usr.ID;
                 chats = await user.Messages_GetAllChats();
                 dialogs = await user.Messages_GetAllDialogs();
                 foreach (var item in CorrespondingBotNames)
                 {
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
                 }
-                user.Update += User_Update;
+                
+                //user.Update += User_Update;
+
                 Console.WriteLine($"User {PhoneNumber} started");
                 StartedEvent?.Invoke(PhoneNumber);
+
+                timer = new System.Timers.Timer();
+                timer.Interval = 1000;
+                timer.AutoReset = true;
+                timer.Elapsed += Timer_Elapsed;
+                timer.Start();
+
                 IsRunning = true;
             });
            
         }
 
+
+        List<Messages_Messages[]> channelsMessages = new List<Messages_Messages[]>();
+        List<long> storeIds = new List<long>();
+
+
+        private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+            foreach (var (id, chat) in chats.chats)
+                switch (chat)
+                {
+                   
+                    case Channel channel when (channel.flags & Channel.Flags.broadcast) != 0:
+
+                        var msgs = await user.Messages_GetHistory(chat, limit: 10);
+
+                        var message = msgs.Messages[0];
+                        //foreach (var msg in msgs.Messages)
+                        //{
+                        //    Message m = (Message)msg;
+                                                        
+                        //    long groupId = 0;                            
+                        //    bool isFiltered = false;
+
+                        //    foreach (var word in FilteredWords)
+                        //    {
+                        //        if (m.message.Contains(word))
+                        //        {
+                        //            isFiltered = true;
+                        //        }
+                        //    }
+                        //}
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+        }
+
         public void Stop()
         {            
+            timer?.Stop();
             user?.Dispose();            
             IsRunning = false; 
         }

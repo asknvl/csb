@@ -10,17 +10,25 @@
         "Name": "ch_pool_1_bot",
         "ChannelID": -1001682491982,
         "ChannelTitle": "ch_pool_1",
-        "ChannelLink": "0"
+        "ChannelLink": "@asknvl"
+      },
+      {
+        "Token": "5391652797:AAENgE75S7JDQre4AoF4ZG95Se1czVB4rEE",
+        "Name": "ch_pool_2_bot",
+        "ChannelID": -1001762519455,
+        "ChannelTitle": "ch_pool_2",
+        "ChannelLink": "@asdasd"
+      },
+      {
+        "Token": "5493204330:AAE7RdtRABiQ61Bpu6rMgGpD_3Zl7wrutdM",
+        "Name": "ch_pool_3_bot",
+        "ChannelID": -1001503072570,
+        "ChannelTitle": "ch_pool_3",
+        "ChannelLink": "@123asdad"
       }
     ],
     "User": {
-      "FilteredWords": [
-        "ссылка",
-        "https",
-        "подписаться на",
-        "подпишись на",
-        "наши друзья"
-      ]
+      "FilteredWords": []
     },
     "State": 0
   }

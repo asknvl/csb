@@ -159,8 +159,7 @@ namespace csb.chains
 
         private void Chain_UserStartedEvent(IChain chain)
         {
-            ChainStartedEvent?.Invoke(chain);
-            Console.WriteLine("chain processor");
+            ChainStartedEvent?.Invoke(chain);            
         }
     }
 }

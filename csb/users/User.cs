@@ -460,7 +460,7 @@ namespace csb.users
                             }
                             try
                             {
-                                var chain = chainsProcessor.Get(currentChainID);
+                                var chain = chainsProcessor.Get(currentChainID);                                
                                 chain.AddBot(token);
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
@@ -498,6 +498,14 @@ namespace csb.users
                         case BotState.waitingOutputChannelLink:
                             try
                             {
+
+                                IValidator tl_vl = new TelegramValidator();
+                                if (!tl_vl.IsValid(msg))
+                                {
+                                    await sendTextMessage(chat, tl_vl.Message);
+                                    return;
+                                }
+
                                 var chain = chainsProcessor.Get(currentChainID);
                                 var bot = chain.Bots.Last();
                                 bot.ChannelLink = msg;

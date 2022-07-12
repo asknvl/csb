@@ -9,7 +9,7 @@ namespace csb.settings.validators
 {
     public class PhoneNumberValidator : IValidator
     {
-        public string Message => "Неверный формат номера телефона";
+        public string Message => "Неправильный формат номер телефона. Номер должен иметь вид: +79250000000";
 
         public bool IsValid(string value)
         {

@@ -24,7 +24,7 @@ namespace csb.chains
         public void Stop();
 
         void SetVerifyCode(string code);
-        void AddBot(string token);
+        Task AddBot(string token);
         void RemoveBot(string name);
         void AddFilteredWord(string text);
         void RemoveFilteredWord(int index);

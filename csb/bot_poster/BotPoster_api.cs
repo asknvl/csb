@@ -36,10 +36,12 @@ namespace csb.bot_poster
         [JsonProperty]
         public string ChannelTitle { get; set; }
         [JsonProperty]
-        public string ChannelLink { get; set; }
+        public string ChannelLink { get; set; }        
         [JsonIgnore]
         public bool IsRunning { get; set; }
         #endregion
+        [JsonIgnore]
+        public long AllowedID { get; set; }
 
         public BotPoster_api(string token)
         {
@@ -82,7 +84,17 @@ namespace csb.bot_poster
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
         {
 
+            if (update == null)
+                return;
+
+            if (update.Message == null)
+                return;
+
             var message = update.Message;
+
+            if (message.Chat.Id != AllowedID)
+                return;
+
             string? text;
             MessageEntity[]? entities;
 
