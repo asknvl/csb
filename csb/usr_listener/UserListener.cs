@@ -54,8 +54,16 @@ namespace csb.usr_listener
         [JsonProperty]
         public List<string> FilteredWords { get; set; } = new();
 
+        double timeinterval = 0;
         [JsonProperty]
-        public double TimeInterval { get; set; } = 60 * 1000;
+        public double TimeInterval
+        {
+            get => timeinterval;
+            set
+            {
+                timeinterval = value * 60 * 1000;
+            }
+        }
         #endregion
 
         string Config(string what)

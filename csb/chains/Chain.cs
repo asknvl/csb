@@ -163,6 +163,11 @@ namespace csb.chains
             User.FilteredWords.Clear();
         }
 
+        public void SetMessagingPeriod(double period)
+        {
+            User.TimeInterval = period;
+        }
+
         public event Action<int, string> NeedVerifyCodeEvent;
         public event Action<IChain> UserStartedEvent;
 

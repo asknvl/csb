@@ -36,6 +36,8 @@ namespace csb.bot_poster
         [JsonProperty]
         public string ChannelTitle { get; set; }
         [JsonProperty]
+        public string VictimLink { get; set; }
+        [JsonProperty]
         public string ChannelLink { get; set; }        
         [JsonIgnore]
         public bool IsRunning { get; set; }
@@ -115,7 +117,7 @@ namespace csb.bot_poster
 
                         if (!ChannelLink.Equals("0"))
                         {
-                            imp.Caption = swapTextLink(message.Caption, ChannelLink);
+                            imp.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
                             imp.CaptionEntities = filterEntities(message.CaptionEntities);
                         } else
                         {
@@ -131,7 +133,7 @@ namespace csb.bot_poster
 
                             if (!ChannelLink.Equals("0"))
                             {
-                                doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                                doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
                                 doc.CaptionEntities = filterEntities(message.CaptionEntities);
                             } else
                             {
@@ -171,7 +173,7 @@ namespace csb.bot_poster
                         InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
                         if (!ChannelLink.Equals("0"))
                         {
-                            imv.Caption = swapTextLink(message.Caption, ChannelLink);
+                            imv.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
                             imv.CaptionEntities = filterEntities(message.CaptionEntities);
                         } else
                         {
@@ -187,7 +189,7 @@ namespace csb.bot_poster
 
                             if (!ChannelLink.Equals("0"))
                             {
-                                doc.Caption = swapTextLink(message.Caption, ChannelLink);
+                                doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
                                 doc.CaptionEntities = filterEntities(message.CaptionEntities);
                             } else
                             {
@@ -316,7 +318,7 @@ namespace csb.bot_poster
             return (tres, eres);
         }
 
-        string? swapTextLink(string text, string newlink)
+        string? swapTextLink(string text, string oldlink, string newlink)
         {
             if (text == null)
                 return null;
@@ -325,13 +327,13 @@ namespace csb.bot_poster
             Regex regex = new Regex(pattern);
             var m = regex.Matches(text);
             foreach (Match item in m)
-            {
-                
+            {                
 
                 if (newlink == "0")
                     text = text.Replace(item.Value, "");
                 else
-                    text = text.Replace(item.Value, newlink);
+                    if (item.Value.Equals(oldlink))
+                        text = text.Replace(item.Value, newlink);
             }
 
             string res = text;
@@ -426,7 +428,7 @@ namespace csb.bot_poster
                 }
             }
 
-            var t = swapTextLink(text, ChannelLink) + insertUrl;
+            var t = swapTextLink(text, VictimLink, ChannelLink) + insertUrl;
 
             await bot.SendTextMessageAsync(
             //chatId: channelName,

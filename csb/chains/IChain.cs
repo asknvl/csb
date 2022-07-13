@@ -29,6 +29,7 @@ namespace csb.chains
         void AddFilteredWord(string text);
         void RemoveFilteredWord(int index);
         void ClearFilteredWords();
+        void SetMessagingPeriod(double period);
     }
 
 

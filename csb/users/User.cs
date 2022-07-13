@@ -75,18 +75,18 @@ namespace csb.users
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Добавить входной канал", callbackData: "addInputChannel"),
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить входной канал", callbackData: "deleteInputChannel"),
-                    //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить входной канал", callbackData: "deleteInputChannel"),                    
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Добавить бота", callbackData: "addOutputBot"),
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить бота", callbackData: "deleteOutputBot"),
-                    //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить бота", callbackData: "deleteOutputBot"),                    
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Установить период вывода сообщений", callbackData: "setMessagingPeriod"),                    
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Добавить фильтр", callbackData: "addFilteredWord"),
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить фильтр", callbackData: "deleteFilteredWord"),
-                    //InlineKeyboardButton.WithCallbackData(text: "Изменить", callbackData: "editChain"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить фильтр", callbackData: "deleteFilteredWord"),                    
                 },
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
@@ -484,7 +484,7 @@ namespace csb.users
                                 bot.ChannelID = frwd.ForwardFromChat.Id;
                                 bot.ChannelTitle = frwd.ForwardFromChat.Title;
                                 await messagesProcessor.Back(chat);
-                                await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), на который будут заменяться телеграм акаунты во входящих сообщениях. Введите 0, если ссылки на аккаунты нужно удалять:", "addChainCancel"));
+                                await messagesProcessor.Add(chat, "waitingOutputVictimLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), КОТОРЫЙ требуется заменить во входящих сообщениях. Введите 0, если требуется заменять все аккаунты:", "addChainCancel"));
 
                             } catch (Exception ex)
                             {
@@ -492,13 +492,35 @@ namespace csb.users
                                 return;
                             }
 
+                            State = BotState.waitingVictimChannelLink;
+                            break;
+
+                        case BotState.waitingVictimChannelLink:
+                            try
+                            {
+                                IValidator tl_vl = new TelegramValidator();
+                                if (!tl_vl.IsValid(msg))
+                                {
+                                    await sendTextMessage(chat, tl_vl.Message);
+                                    return;
+                                }
+
+                                var chain = chainsProcessor.Get(currentChainID);
+                                var bot = chain.Bots.Last();
+                                bot.VictimLink = msg;                                
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), НА КОТОРЫЙ будут заменяться телеграм акаунты во входящих сообщениях. Введите 0, если ссылки на аккаунты нужно удалять:", "addChainCancel"));
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
                             State = BotState.waitingOutputChannelLink;
                             break;
 
                         case BotState.waitingOutputChannelLink:
                             try
                             {
-
                                 IValidator tl_vl = new TelegramValidator();
                                 if (!tl_vl.IsValid(msg))
                                 {
@@ -558,8 +580,24 @@ namespace csb.users
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
+                                var chain = chainsProcessor.Get(currentChainID);
                                 return;
                             }                            
+                            break;
+
+                        case BotState.waitingMessagingPeriod:
+                            try
+                            {
+                                double period = double.Parse(msg.Trim());
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.SetMessagingPeriod(period);
+                                chainprocessor.Save();
+                                State = BotState.free;
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
                             break;
                     }
                     break;
@@ -855,6 +893,19 @@ namespace csb.users
                     await messagesProcessor.Back(chat);
                     await messagesProcessor.Delete(chat, "addFilteredWords");                    
                     await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "setMessagingPeriod":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "setMessagingPeriod", await sendTextButtonMessage(chat, "Введите период вывода сообщений в минутах. Введите 0, если сообщения требуется выводить сразу:", "back"));
+                        State = BotState.waitingMessagingPeriod;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
                     break;
 
                 case "":

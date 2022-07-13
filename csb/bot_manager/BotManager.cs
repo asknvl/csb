@@ -26,12 +26,15 @@ namespace csb.bot_manager
         waitingPhoneNumber,
         waitingToken,     
         waitingOutputChannelId,
+        waitingVictimChannelLink,
         waitingOutputChannelLink,
         waitingVerificationCode,
 
         waitingAddInputChannel,
 
         waitingFilteredWord,
+
+        waitingMessagingPeriod
     }
     
     
