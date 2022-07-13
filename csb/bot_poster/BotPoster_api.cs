@@ -493,7 +493,7 @@ namespace csb.bot_poster
 
         public override string ToString()
         {
-            return $"{Name}:\n{Token}\n{ChannelTitle}\n{ChannelLink}";
+            return $"{Name}:\n{ChannelTitle}\n{VictimLink}\n{ChannelLink}";
         }
     }
 }

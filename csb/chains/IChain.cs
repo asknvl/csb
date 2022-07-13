@@ -30,6 +30,7 @@ namespace csb.chains
         void RemoveFilteredWord(int index);
         void ClearFilteredWords();
         void SetMessagingPeriod(double period);
+        double GetMessagingPeriod();
     }
 
 

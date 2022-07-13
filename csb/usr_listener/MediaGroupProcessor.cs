@@ -36,7 +36,7 @@ namespace csb.usr_listener
         }
 
         public MediaGroup() {
-            mediaTimer.Interval = 2000;
+            mediaTimer.Interval = 3000;
             mediaTimer.AutoReset = false;
             mediaTimer.Elapsed += MediaTimer_Elapsed;
         }

@@ -168,6 +168,11 @@ namespace csb.chains
             User.TimeInterval = period;
         }
 
+        public double GetMessagingPeriod()
+        {
+            return User.TimeInterval;
+        }
+
         public event Action<int, string> NeedVerifyCodeEvent;
         public event Action<IChain> UserStartedEvent;
 

@@ -189,26 +189,45 @@ namespace csb.users
         InlineKeyboardMarkup getMyChainsMarkUp()
         {
 
-            List<InlineKeyboardButton> chains = new();
+            //List<InlineKeyboardButton> chains = new();
 
-            foreach (var item in chainsProcessor.Chains)
+            //foreach (var item in chainsProcessor.Chains)
+            //{
+            //    chains.Add(InlineKeyboardButton.WithCallbackData(text: item.ToString(), callbackData: $"chain_{item.Id}"));
+            //}
+
+            //InlineKeyboardMarkup inlineKeyboard = new(new[]
+
+            //        {
+            //            // first row
+            //            new []
+            //            {
+            //                 InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain"),
+            //            },
+
+            //            chains.ToArray()
+
+            //        });
+            //return inlineKeyboard;
+
+            var chains = chainprocessor.Chains;
+            int number = chains.Count;
+
+            InlineKeyboardButton[][] chains_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
             {
-                chains.Add(InlineKeyboardButton.WithCallbackData(text: item.ToString(), callbackData: $"chain_{item.Id}"));
+                chains_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: chains[i].ToString(), callbackData: $"chain_{chains[i].Id}") };
             }
 
-            InlineKeyboardMarkup inlineKeyboard = new(new[]
+            chains_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain") };
 
-                    {
-                        // first row
-                        new []
-                        {
-                             InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain"),
-                        },
 
-                        chains.ToArray()
 
-                    });
+            InlineKeyboardMarkup inlineKeyboard = new(chains_buttons);
+
             return inlineKeyboard;
+
         }
 
         async Task<InlineKeyboardMarkup> getMyChannelsMarkUp(IChain chain)
@@ -592,6 +611,7 @@ namespace csb.users
                                 var chain = chainsProcessor.Get(currentChainID);
                                 chain.SetMessagingPeriod(period);
                                 chainprocessor.Save();
+                                await messagesProcessor.Delete(chat, "setMessagingPeriod");
                                 State = BotState.free;
                             } catch (Exception ex)
                             {
@@ -645,16 +665,20 @@ namespace csb.users
                     {
                         string botsinfo = "";
                         var chain = chainsProcessor.Get(currentChainID);
+                        int index = 1;
                         foreach (var bot in chain.Bots)
                         {
-                            botsinfo += $"{bot.ToString()}\n";
+                            botsinfo += $"{index}. {bot.ToString()}\n------\n";
                         }
 
-                        string info = $"Id={chain.Id}\n" +
-                                      $"Name={chain.Name}\n" +
-                                      $"Phone={chain.PhoneNumber}\n" +
-                                      $"Bots:\n" + botsinfo +
-                                      $"IsActive={chain.IsRunning}\n";
+                        string isActive = (chain.IsRunning) ? "АКТИВНА" : "НЕАКТИВНА";
+
+                        string info = $"Id:{chain.Id}\n" +
+                                      $"Имя:{chain.Name}\n" +
+                                      $"Телефон шпиона:{chain.PhoneNumber}\n" +
+                                      $"Боты:\n" + botsinfo +
+                                      $"Период вывода сообщений:\n{chain.GetMessagingPeriod():0.0} мин.\n" +
+                                      $"{isActive}\n";
                         await messagesProcessor.Add(chat, "back", await sendTextButtonMessage(chat, info, "back"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
 

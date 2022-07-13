@@ -61,7 +61,19 @@ namespace csb.usr_listener
             get => timeinterval;
             set
             {
-                timeinterval = value * 60 * 1000;
+                timeinterval = value;
+                if (timer != null)
+                {
+                    if (timeinterval > 0)
+                    {
+                        timer.Interval = 60 * timeinterval * 1000;
+                        timer.Start();
+                    } else
+                    {
+                        timer.Stop();
+                        AllowMessagingFlag = true;
+                    }
+                }
             }
         }
         #endregion
@@ -98,13 +110,26 @@ namespace csb.usr_listener
        
         public UserListener(string phonenumber)
         {
-            PhoneNumber = phonenumber;                   
+            PhoneNumber = phonenumber;
+
+            timer = new();
+            //timer.Interval = 60 * TimeInterval * 1000;
+            timer.Elapsed += (sender, e) =>
+            {
+
+                AllowMessagingFlag = true;
+                Console.WriteLine($"{PhoneNumber} {DateTime.Now} AllowMessaging=" + AllowMessagingFlag);
+
+            };
+            timer.AutoReset = true;
+
         }
 
         private async void User_Update(TL.IObject u)
         {
             //NotifyObservers(update);
 
+            
             if (!AllowMessagingFlag)
                 return;
 
@@ -181,7 +206,8 @@ namespace csb.usr_listener
                                         Console.WriteLine(ex.ToString());
                                     }
                                 }
-                                AllowMessagingFlag = false;
+                                if (TimeInterval > 0)
+                                    AllowMessagingFlag = false;
                                 break;
 
                         }
@@ -236,8 +262,8 @@ namespace csb.usr_listener
                         Console.WriteLine(ex.ToString());
                     }
                 }
-
-                AllowMessagingFlag = false;
+                if (TimeInterval > 0)
+                    AllowMessagingFlag = false;
 
 
             } catch (Exception ex)
@@ -374,8 +400,13 @@ namespace csb.usr_listener
             foreach (var item in CorrespondingBotNames)
             {
                 if (user != null)
+                {
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
+                }
             }
+
+
+
         } 
 
         public void Start()
@@ -401,20 +432,6 @@ namespace csb.usr_listener
                 foreach (var item in CorrespondingBotNames)
                 {
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
-                }
-
-                if (TimeInterval > 0)
-                {
-                    timer = new();
-                    timer.Interval = TimeInterval;
-                    timer.Elapsed += (sender, e) => { 
-
-                        AllowMessagingFlag = true;
-                        Console.WriteLine("AllowMessaging=" + AllowMessagingFlag);
-
-                    };
-                    timer.AutoReset = true;
-                    timer.Start();
                 }
 
                 user.Update += User_Update;

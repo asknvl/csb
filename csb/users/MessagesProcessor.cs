@@ -54,12 +54,15 @@ namespace csb.users
 
         public async Task Clear(long chat)
         {
-            foreach (var item in messages)
+            try
             {
-                if (item.Value.Chat.Id == chat)
-                    await bot.DeleteMessageAsync(chat, item.Value.MessageId);
-            }
-            messages.Clear();
+                foreach (var item in messages)
+                {
+                    if (item.Value.Chat.Id == chat)
+                        await bot.DeleteMessageAsync(chat, item.Value.MessageId);
+                }
+                messages.Clear();
+            } catch { }
         }
 
         public async Task Back(long chat)
