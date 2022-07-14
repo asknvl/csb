@@ -1,35 +1,6 @@
 [
   {
     "Owner": 0,
-    "Name": "CH1",
-    "Id": 1,
-    "PhoneNumber": "+447424419801",
-    "Bots": [
-      {
-        "Token": "5579105972:AAFTAMgod1FXRCn4CHU2Iqa1GracO3kAr08",
-        "Name": "ch_pool_1_bot",
-        "ChannelID": -1001682491982,
-        "ChannelTitle": "ch_pool_1",
-        "VictimLink": "@David_Gnzlz",
-        "ChannelLink": "@asknvl"
-      },
-      {
-        "Token": "5391652797:AAENgE75S7JDQre4AoF4ZG95Se1czVB4rEE",
-        "Name": "ch_pool_2_bot",
-        "ChannelID": -1001762519455,
-        "ChannelTitle": "ch_pool_2",
-        "VictimLink": "@qwerty",
-        "ChannelLink": "@asknvl"
-      }
-    ],
-    "User": {
-      "FilteredWords": [],
-      "TimeInterval": 0.1
-    },
-    "State": 0
-  },
-  {
-    "Owner": 0,
     "Name": "+79346603416",
     "Id": 2,
     "PhoneNumber": "+79346603416",
@@ -45,7 +16,7 @@
     ],
     "User": {
       "FilteredWords": [],
-      "TimeInterval": 0.0
+      "TimeInterval": 1.0
     },
     "State": 0
   }

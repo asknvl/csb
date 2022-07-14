@@ -434,6 +434,9 @@ namespace csb.usr_listener
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
                 }
 
+                if (TimeInterval > 0)
+                    timer?.Start();
+
                 user.Update += User_Update;
 
                 Console.WriteLine($"User {PhoneNumber} started");
@@ -488,7 +491,7 @@ namespace csb.usr_listener
 
         public void Stop()
         {            
-            //timer?.Stop();
+            timer?.Stop();
             user?.Dispose();            
             IsRunning = false; 
         }
