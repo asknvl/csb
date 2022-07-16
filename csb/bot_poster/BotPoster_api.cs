@@ -263,10 +263,11 @@ namespace csb.bot_poster
 
             string[] patterns = {
                 @"[@][[a-zA-Z0-9_]{5,32}", //@telegram
-                @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?" //t.me/asdasd
+                @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
+                @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)"
             };
 
-            List<MessageEntity> tmpEntities = entities.ToList();
+            List<MessageEntity>? tmpEntities = entities?.ToList();
 
 
             int length = 0;
@@ -347,6 +348,15 @@ namespace csb.bot_poster
                 text = text.Replace(item.Value, "");
             }
 
+            //pattern = @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)";
+            //regex = new Regex(pattern);
+            //m = regex.Matches(text);
+            //foreach (Match item in m)
+            //{
+            //    Console.WriteLine(item.Index);
+            //    text = text.Replace(item.Value, "");
+            //}
+
             res = text;
             return res;
         }
@@ -377,6 +387,8 @@ namespace csb.bot_poster
         async Task postTextAndWebPage(Message message, CancellationToken cts)
         {
             string text = message.Text;
+            MessageEntity[] entities;
+
             int tagLenCntr = 0;
             string insertUrl = "";
             bool needPreview = false;

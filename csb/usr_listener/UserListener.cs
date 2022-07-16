@@ -64,16 +64,11 @@ namespace csb.usr_listener
                 timeinterval = value;
                 if (timer != null)
                 {
-                    if (timeinterval > 0)
-                    {
+                    if (timeinterval > 0)  
                         timer.Interval = 60 * timeinterval * 1000;
-                        timer.Start();
-                    } else
-                    {
-                        timer.Stop();
-                        AllowMessagingFlag = true;
-                    }
+                    timer.Stop();
                 }
+                AllowMessagingFlag = true;
             }
         }
         #endregion
@@ -118,10 +113,10 @@ namespace csb.usr_listener
             {
 
                 AllowMessagingFlag = true;
-                Console.WriteLine($"{PhoneNumber} {DateTime.Now} AllowMessaging=" + AllowMessagingFlag);
+                Console.WriteLine($"{PhoneNumber} {DateTime.Now} Elapsed: AllowMessaging=" + AllowMessagingFlag);
 
             };
-            timer.AutoReset = true;
+            timer.AutoReset = false;
 
         }
 
@@ -154,7 +149,7 @@ namespace csb.usr_listener
                                 foreach (var item in FilteredWords)
                                     if (m.message.ToLower().Contains(item.ToLower()))
                                     {
-                                        Console.WriteLine($"filtered byt: {item}");
+                                        Console.WriteLine($"filtered by: {item}");
                                         return;
                                     }
                             }
@@ -166,10 +161,11 @@ namespace csb.usr_listener
                             return;
                         }
 
-#if DEBUG
-                        //if (m.fwd_from != null)
-                        //    continue;
+#if RELEASE
+                        if (m.fwd_from != null)
+                            continue;
 #endif
+
 
                         //if (resolved == null)
                         //    resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
@@ -194,6 +190,14 @@ namespace csb.usr_listener
                             //    break;
 
                             default:
+
+                                if (TimeInterval > 0)
+                                {
+                                    AllowMessagingFlag = false;
+                                    Console.WriteLine($"{PhoneNumber} {DateTime.Now} AllowMessaging=" + AllowMessagingFlag);
+                                    timer?.Start();
+                                }
+
                                 foreach (var item in resolvedBots)
                                 {
                                     try
@@ -205,9 +209,7 @@ namespace csb.usr_listener
                                     {
                                         Console.WriteLine(ex.ToString());
                                     }
-                                }
-                                if (TimeInterval > 0)
-                                    AllowMessagingFlag = false;
+                                }                               
                                 break;
 
                         }
@@ -218,6 +220,13 @@ namespace csb.usr_listener
 
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
         {
+
+            if (TimeInterval > 0)
+            {
+                AllowMessagingFlag = false;
+                Console.WriteLine($"{PhoneNumber} {DateTime.Now} AllowMessaging=" + AllowMessagingFlag);
+                timer?.Start();
+            }
 
             try
             {
@@ -261,10 +270,7 @@ namespace csb.usr_listener
                     {
                         Console.WriteLine(ex.ToString());
                     }
-                }
-                if (TimeInterval > 0)
-                    AllowMessagingFlag = false;
-
+                }               
 
             } catch (Exception ex)
             {
@@ -272,7 +278,7 @@ namespace csb.usr_listener
             }
         }
 
-        #region public
+#region public
         public void SetVerifyCode(string code)
         {
             VerifyCode = code;
@@ -495,7 +501,7 @@ namespace csb.usr_listener
             user?.Dispose();            
             IsRunning = false; 
         }
-        #endregion
+#endregion
 
         public event Action<string> NeedVerifyCodeEvent;
         public event Action<string> StartedEvent;

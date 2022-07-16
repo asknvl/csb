@@ -1,0 +1,20 @@
+[
+  {
+    "Owner": 0,
+    "Name": "+79346603416",
+    "Id": 1,
+    "PhoneNumber": "+79346603416",
+    "Bots": [
+      {
+        "Token": "5493204330:AAE7RdtRABiQ61Bpu6rMgGpD_3Zl7wrutdM",
+        "Name": "ch_pool_3_bot",
+        "ChannelID": -1001503072570,
+        "ChannelTitle": "ch_pool_3",
+        "VictimLink": "@daavid_gzlez",
+        "ChannelLink": "@asknvl"
+      }
+    ],
+    "User": null,
+    "State": 0
+  }
+]
