@@ -105,6 +105,8 @@ namespace csb.bot_poster
 
             Console.WriteLine(Name + " " + message.Text);
 
+            
+
             try
             {
 
@@ -230,6 +232,9 @@ namespace csb.bot_poster
                         await postTextAndWebPage(message, cancellationToken);
                         break;
 
+                    //case MessageType.Document:
+                    //    break;
+
                     default:
                         await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
@@ -312,7 +317,10 @@ namespace csb.bot_poster
             }
 
             if (tmpEntities != null)
+            {
+                tmpEntities.RemoveAll((e) => e.Type == MessageEntityType.TextLink);
                 eres = tmpEntities.ToArray();
+            }
 
             tres = text;
 

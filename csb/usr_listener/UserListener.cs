@@ -143,6 +143,8 @@ namespace csb.usr_listener
                         {
                             m = (Message)unm.message;
 
+                            
+
                             //Filtering text of a message
                             if (m.media == null || m.media is MessageMediaWebPage)
                             {
@@ -170,17 +172,16 @@ namespace csb.usr_listener
                         //if (resolved == null)
                         //    resolved = await user.Contacts_ResolveUsername(CorrespondingBotName);
 
-                        InputSingleMedia sm;
-
-
                         switch (m.media)
-                        {
+                        {                           
 
                             case MessageMediaPhoto mmp:
                                 mediaGroup.Update(m.grouped_id, unm.message.ID);
                                 break;
 
                             case MessageMediaDocument mmd:
+                                if (((Document)mmd.document).mime_type.Equals(""))
+                                    return;
                                 mediaGroup.Update(m.grouped_id, unm.message.ID);
                                 break;
 
