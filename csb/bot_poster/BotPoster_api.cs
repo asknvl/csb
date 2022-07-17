@@ -18,12 +18,23 @@ namespace csb.bot_poster
 {
     public class BotPoster_api
     {
+        #region const
+        string[] replace_patterns = {                        
+            @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)", //url
+            @"\S*\.*ru",
+            @"(Подписаться на )\w*\s|S",
+            @"(Подписаться на )\w*.*",
+            @"[@][[a-zA-Z0-9_]{5,32}", //@telegram
+            @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
+        };
+        #endregion
+
         #region vars
         ITelegramBotClient bot;
         CancellationTokenSource cts;
         string mediaGroupId = "";
         List<IAlbumInputMedia> mediaList = new();
-        System.Timers.Timer mediaTimer = new System.Timers.Timer();
+        System.Timers.Timer mediaTimer = new System.Timers.Timer();        
         #endregion
 
         #region properties
@@ -103,9 +114,7 @@ namespace csb.bot_poster
             if (message.ReplyMarkup != null)
                 swapMarkupLink(message.ReplyMarkup, ChannelLink);
 
-            Console.WriteLine(Name + " " + message.Text);
-
-            
+            Console.WriteLine(Name + " " + message.Text);            
 
             try
             {
@@ -266,18 +275,12 @@ namespace csb.bot_poster
             if (text == null)
                 return (tres, eres);
 
-            string[] patterns = {
-                @"[@][[a-zA-Z0-9_]{5,32}", //@telegram
-                @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
-                @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)"
-            };
-
             List<MessageEntity>? tmpEntities = entities?.ToList();
 
 
             int length = 0;
 
-            foreach (var pattern in patterns)
+            foreach (var pattern in replace_patterns)
             {
                 Regex regex = new Regex(pattern);
                 var mathces = regex.Matches(text);
@@ -345,16 +348,20 @@ namespace csb.bot_poster
                         text = text.Replace(item.Value, newlink);
             }
 
-            string res = text;
-
-            pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
-            regex = new Regex(pattern);
-            m = regex.Matches(text);
-            foreach (Match item in m)
+            foreach (var p in replace_patterns)
             {
-                Console.WriteLine(item.Index);
-                text = text.Replace(item.Value, "");
+                text = Regex.Replace(text, p, "");
             }
+
+
+            //pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
+            //regex = new Regex(pattern);
+            //m = regex.Matches(text);
+            //foreach (Match item in m)
+            //{
+            //    Console.WriteLine(item.Index);
+            //    text = text.Replace(item.Value, "");
+            //}
 
             //pattern = @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)";
             //regex = new Regex(pattern);
@@ -365,8 +372,18 @@ namespace csb.bot_poster
             //    text = text.Replace(item.Value, "");
             //}
 
-            res = text;
-            return res;
+            //pattern = @"^\s.*[.](com|ru)?";
+            //regex = new Regex(pattern);
+            //m = regex.Matches(text);
+            //foreach (Match item in m)
+            //{
+            //    Console.WriteLine(item.Index);
+            //    text = text.Replace(item.Value, "");
+            //}
+
+
+
+            return text;
         }
 
 
@@ -434,12 +451,14 @@ namespace csb.bot_poster
                             break;
 
                         case MessageEntityType.Url:
+
+
                             break;
                     }
                 }
 
                 var wp = message.Entities.FirstOrDefault(o => o.Url != null);
-                if (wp != null)
+                if (wp != null && !wp.Url.Contains("t.me"))
                 {
                     string webPage = wp.Url;
                     var u = "\"" + webPage + "\"";

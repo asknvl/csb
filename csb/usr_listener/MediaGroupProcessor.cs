@@ -22,6 +22,7 @@ namespace csb.usr_listener
         public long? GroupId { get; set; }
         public List<int> MessageIDs { get;} = new();
         public List<long> MessageRands { get; } = new();
+        public bool IsEmpty => MessageIDs.Count == 0;
         #endregion
 
         public MediaGroup(MediaGroup source)
@@ -41,7 +42,7 @@ namespace csb.usr_listener
             mediaTimer.Elapsed += MediaTimer_Elapsed;
         }
 
-        private async void MediaTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void MediaTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             MediaReadyEvent?.Invoke(new MediaGroup(this));
             clear();
@@ -51,18 +52,23 @@ namespace csb.usr_listener
 
             if (GroupId != group_id)
             {
+                Console.WriteLine($"Group={GroupId} group={group_id} message {message_id} PURGE");
                 purge();                
             }                     
 
-            if (group_id == null)
+            if (group_id == null || group_id == 0)
             {
                 var mediaGroup = new MediaGroup();
                 mediaGroup.add(null, message_id);
+                Console.WriteLine($"Group={GroupId} group={group_id} message {message_id} INVOKE");
                 MediaReadyEvent?.Invoke(mediaGroup);
+                mediaTimer.Stop();
+                clear();
 
             } else
             {
                 add(group_id, message_id);
+                Console.WriteLine($"Group={GroupId} group={group_id} message {message_id} ADD");
                 if (!mediaTimer.Enabled)
                     mediaTimer.Start();
             }

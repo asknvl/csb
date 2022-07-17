@@ -13,12 +13,16 @@ using WTelegram;
 
 namespace csb.usr_listener
 {
-    public class UserListener
+    public class UserListener_v1
     {
+
+        #region const
+        const int messages_buffer_length = 20;
+        #endregion
 
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
-        Client user;        
+        Client user;
         TL.Messages_Chats chats;
         TL.Messages_Dialogs dialogs;
         ChatBase from_chat;
@@ -27,8 +31,11 @@ namespace csb.usr_listener
 
         private readonly ManualResetEventSlim codeReady = new();
         System.Timers.Timer timer;
-        bool AllowMessagingFlag = true;
-        bool WaitingMedia = false;
+
+
+        List<int> nomediaIDs = new();
+        List<int[]> mediaIDs = new();
+
         #endregion
 
         #region properties
@@ -42,11 +49,12 @@ namespace csb.usr_listener
 
         string vcode = "";
         [JsonIgnore]
-        public string VerifyCode {
+        public string VerifyCode
+        {
             get => vcode;
             set
             {
-                vcode = value;        
+                vcode = value;
             }
         }
         [JsonIgnore]
@@ -65,11 +73,15 @@ namespace csb.usr_listener
                 timeinterval = value;
                 if (timer != null)
                 {
-                    if (timeinterval > 0)  
-                        timer.Interval = 60 * timeinterval * 1000;
+
+                    if (value < 1.0)
+                        timeinterval = 0.05;
+
                     timer.Stop();
+                    timer.Interval = 60 * timeinterval * 1000;
+                    timer.Start();
+
                 }
-                AllowMessagingFlag = true;
             }
         }
         #endregion
@@ -89,13 +101,13 @@ namespace csb.usr_listener
                 case "session_pathname": return $"{dir}/{PhoneNumber}.session";
                 case "phone_number": return PhoneNumber;
                 //case "verification_code": /*return "65420";*/Console.Write("Code: "); return Console.ReadLine();
-                
+
                 case "verification_code":
-                    NeedVerifyCodeEvent?.Invoke(PhoneNumber);                    
+                    NeedVerifyCodeEvent?.Invoke(PhoneNumber);
                     codeReady.Reset();
                     codeReady.Wait();
-                    return VerifyCode;             
-            
+                    return VerifyCode;
+
                 case "first_name": return "Stevie";      // if sign-up is required
                 case "last_name": return "Voughan";        // if sign-up is required
                 case "password": return "5555";     // if user has enabled 2FA
@@ -103,33 +115,19 @@ namespace csb.usr_listener
             }
 
         }
-       
-        public UserListener(string phonenumber)
+
+        public UserListener_v1(string phonenumber)
         {
             PhoneNumber = phonenumber;
 
             timer = new();
             //timer.Interval = 60 * TimeInterval * 1000;
-            timer.Elapsed += (sender, e) =>
-            {
-
-                AllowMessagingFlag = true;
-                //user.Update -= User_Update;
-                //user.Update += User_Update;
-                Console.WriteLine($"{PhoneNumber} {DateTime.Now} Elapsed: AllowMessaging");
-
-                //Console.WriteLine($"{PhoneNumber} {DateTime.Now} Elapsed: AllowMessaging=" + AllowMessagingFlag);
-
-            };
-            timer.AutoReset = false;
-
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = true;
         }
 
-        private async void User_Update(TL.IObject u)
+        private void User_Update(TL.IObject u)
         {
-
-            if (!AllowMessagingFlag)
-                return;
 
             if (u is not UpdatesBase updates)
                 return;
@@ -138,9 +136,6 @@ namespace csb.usr_listener
 
             foreach (var update in updates.UpdateList)
             {
-
-                if (!AllowMessagingFlag)
-                    return;
 
                 switch (update)
                 {
@@ -153,8 +148,6 @@ namespace csb.usr_listener
                         try
                         {
                             m = (Message)unm.message;
-
-                            
 
                             //Filtering text of a message
                             if (m.media == null || m.media is MessageMediaWebPage)
@@ -174,61 +167,46 @@ namespace csb.usr_listener
                             return;
                         }
 
-#if RELEASE
+#if DEBUG
                         if (m.fwd_from != null)
                             continue;
 #endif
 
 
                         switch (m.media)
-                        {                           
+                        {
 
                             case MessageMediaPhoto mmp:
-                                WaitingMedia = TimeInterval > 0;
                                 mediaGroup.Update(m.grouped_id, unm.message.ID);
                                 break;
 
                             case MessageMediaDocument mmd:
                                 if (((Document)mmd.document).mime_type.Equals(""))
                                     return;
-                                WaitingMedia = TimeInterval > 0;
                                 mediaGroup.Update(m.grouped_id, unm.message.ID);
                                 break;
 
                             default:
-                                if (AllowMessagingFlag && !WaitingMedia)
-                                {
-
-                                    if (TimeInterval > 0)
-                                    {
-                                        AllowMessagingFlag = false;
-                                        //user.Update -= User_Update;
-                                        Console.WriteLine($"{PhoneNumber} {DateTime.Now} Elapsed: DenyMessaging");                                        
-                                    }
 
 
-                                    await Task.Run(async () =>
-                                    {
-                                        foreach (var item in resolvedBots)
-                                        {
-                                            try
-                                            {
-                                                long rand = Helpers.RandomLong();
-                                                await user.Messages_ForwardMessages(from_chat, new[] { messageID }, new[] { rand }, item);
-                                                //Thread.Sleep(1000);
-                                            } catch (Exception ex)
-                                            {
-                                                Console.WriteLine(ex.ToString());
-                                            }
-                                        }
+                                //foreach (var item in resolvedBots)
+                                //{
+                                //    try
+                                //    {
+                                //        long rand = Helpers.RandomLong();
+                                //        await user.Messages_ForwardMessages(from_chat, new[] { messageID }, new[] { rand }, item);
+                                //    } catch (Exception ex)
+                                //    {
+                                //        Console.WriteLine(ex.ToString());
+                                //    }
+                                //}
 
-                                        timer.Start();
-                                    });
+                                if (nomediaIDs.Count > messages_buffer_length)
+                                    nomediaIDs.Clear();
+                                nomediaIDs.Add(unm.message.ID);
+                                Console.WriteLine($"added text, total:{nomediaIDs.Count}");
 
-                                } else
-                                {
-                                    Console.WriteLine($"{PhoneNumber} {DateTime.Now} TextMessaging denied");
-                                }                               
+
                                 break;
 
                         }
@@ -240,88 +218,167 @@ namespace csb.usr_listener
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
         {
 
-            WaitingMedia = false;
-
-            Console.WriteLine($"Media READY {group.MessageIDs.Count}");
-
             try
             {
 
-                if (AllowMessagingFlag)
-                {
 
-                    if (TimeInterval > 0)
+                bool filterFlag = false;
+
+                foreach (var id in group.MessageIDs)
+                {
+                    Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
+                    MessageBase mb = message.Messages[0] as MessageBase;
+                    Message m = mb as Message;
+
+                    if (m != null)
                     {
-                        AllowMessagingFlag = false;
-                        //Console.WriteLine($"{PhoneNumber} {DateTime.Now} AllowMessaging=" + AllowMessagingFlag);
-                        Console.WriteLine($"{PhoneNumber} {DateTime.Now} Elapsed: DenyMessaging");                        
+                        foreach (var item in FilteredWords)
+                        {
+                            filterFlag = m.message.ToLower().Contains(item.ToLower());
+                            if (filterFlag)
+                                break;
+                        }
                     }
 
-                    await Task.Run(async () =>
-                    {
-
-                        bool filterFlag = false;
-
-                        foreach (var id in group.MessageIDs)
-                        {
-                            Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
-                            MessageBase mb = message.Messages[0] as MessageBase;
-                            Message m = mb as Message;
-
-                            if (m != null)
-                            {
-                                foreach (var item in FilteredWords)
-                                {
-                                    filterFlag = m.message.ToLower().Contains(item.ToLower());
-                                    if (filterFlag)
-                                        break;
-                                }
-                            }
-
-                        }
-
-                        if (filterFlag)
-                        {
-                            timer?.Start();
-                            return;
-                        }
-
-
-                        foreach (var item in resolvedBots)
-                        {
-                            try
-                            {
-                                List<long> rands = new();
-                                for (int i = 0; i < group.MessageRands.Count; i++)
-                                    rands.Add(Helpers.RandomLong());
-                                //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
-                                await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);
-                                //Thread.Sleep(1000);
-                            } catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.ToString());
-                            }
-
-                            timer?.Start();
-                        }
-
-                       
-
-                    });
-
-                } else
-                {
-                    Console.WriteLine($"{PhoneNumber} {DateTime.Now} MediaMessaging denied");
                 }
+
+                if (filterFlag)
+                {
+                    return;
+                }
+
+                if (mediaIDs.Count > messages_buffer_length)
+                    mediaIDs.Clear();
+                mediaIDs.Add(group.MessageIDs.ToArray());
+                Console.WriteLine($"added {group.MessageIDs.Count} medias, total:{mediaIDs.Count}");
+
+                //foreach (var item in resolvedBots)
+                //{
+                //    try
+                //    {
+                //        List<long> rands = new();
+                //        for (int i = 0; i < group.MessageRands.Count; i++)
+                //            rands.Add(Helpers.RandomLong());
+                //        //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
+                //        await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);                        
+                //    } catch (Exception ex)
+                //    {
+                //        Console.WriteLine(ex.ToString());
+                //    }
+                //}
+
 
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-            } finally {                
+            } finally
+            {
             }
         }
 
-#region public
+        async Task sendMedia()
+        {
+
+            if (mediaIDs.Count == 0)
+            {
+                Console.WriteLine("NO MORE MEDIA");
+                return;
+            }
+
+
+            int[] ids = new int[mediaIDs[0].Length];
+            for (int i = 0; i < ids.Length; i++)
+                ids[i] = mediaIDs[0][i];
+            mediaIDs.RemoveAt(0);
+
+            Console.WriteLine($"{DateTime.Now} media length:{ids.Length}");
+
+            foreach (var item in resolvedBots)
+            {
+                try
+                {
+                    List<long> rands = new();
+                    for (int i = 0; i < ids.Length; i++)
+                        rands.Add(Helpers.RandomLong());
+                    //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
+                    await user.Messages_ForwardMessages(from_chat, ids, rands.ToArray(), item);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine("RETRY MEDIA");
+                    await sendMedia();
+                }
+            }
+
+            Console.WriteLine($"{DateTime.Now} media sent");
+        }
+
+        async Task sendText()
+        {
+
+            if (nomediaIDs.Count == 0)
+            {
+                Console.WriteLine("NO MORE TEXT");
+                return;
+            }
+
+            int id = nomediaIDs[0];
+            nomediaIDs.RemoveAt(0);
+
+            foreach (var item in resolvedBots)
+            {
+                try
+                {
+                    long rand = Helpers.RandomLong();
+                    await user.Messages_ForwardMessages(from_chat, new[] { id }, new[] { rand }, item);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine("RETRY TEXT");
+                    await sendText();
+                }
+            }
+        }
+
+
+        Random rand = new Random();
+        private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+            Console.WriteLine($"{DateTime.Now} {PhoneNumber}: timer elapsed");
+
+            if (nomediaIDs.Count == 0 && mediaIDs.Count > 0)
+            {                
+                await sendMedia();                
+                return;
+            } 
+
+            if (nomediaIDs.Count > 0 && mediaIDs.Count == 0)
+            {                
+                await sendText();             
+                return;
+            }
+
+            if (nomediaIDs.Count > 0 && mediaIDs.Count > 0)
+            {
+
+                int r = rand.Next(100);
+                Console.WriteLine($"r={r}");
+                if (r < 20)
+                {
+                    Console.WriteLine($"sending checked text");
+                    await sendText();
+                    Console.WriteLine("sent checked text");
+                } else
+                {
+                    Console.WriteLine($"sending checked media");
+                    await sendMedia();
+                    Console.WriteLine("sent checked media");
+                }
+            }
+        }
+
+        #region public
         public void SetVerifyCode(string code)
         {
             VerifyCode = code;
@@ -339,7 +396,7 @@ namespace csb.usr_listener
                 hash = input.Replace("+", "");
                 var cci = await user.Messages_CheckChatInvite(hash);
                 var ici = await user.Messages_ImportChatInvite(hash);
-            }  else
+            } else
             {
                 hash = input.Replace("@", "");
                 var resolved = await user.Contacts_ResolveUsername(hash); // without the @
@@ -364,28 +421,29 @@ namespace csb.usr_listener
 
         public async Task<List<(string, string, long)>> GetAllChannels()
         {
-            List <(string, string, long)> res = new();
+            List<(string, string, long)> res = new();
             //var chats = await user.Messages_GetAllChats();                
 
             if (chats == null)
                 throw new Exception("Цепочка не была запущена, нет информации о входных каналах");
 
-            await Task.Run(() => { 
+            await Task.Run(() =>
+            {
                 foreach (var item in chats.chats)
                 {
                     if (item.Value is Channel channel)
                     {
                         //string name = (((Channel)item.Value).username != null) ? ((Channel)item.Value).username : ((Channel)item.Value).Title;
 
-                        string title =  ((Channel)item.Value).Title;
+                        string title = ((Channel)item.Value).Title;
                         string username = ((Channel)item.Value).username;
 
-                        res.Add(new (title, username, item.Value.ID));
+                        res.Add(new(title, username, item.Value.ID));
                     }
                 }
             });
 
-            return res; 
+            return res;
         }
 
         public async Task LeaveChannel(string id)
@@ -422,8 +480,7 @@ namespace csb.usr_listener
             } catch (FormatException ex)
             {
                 throw new Exception("Неверный ID канала");
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 throw new Exception("Для удаления каналов цепочка должна быть запущена");
             }
@@ -441,7 +498,7 @@ namespace csb.usr_listener
 
         public async Task AddCorrespondingBot(string name)
         {
-            if (!CorrespondingBotNames.Contains(name)) 
+            if (!CorrespondingBotNames.Contains(name))
                 CorrespondingBotNames.Add(name);
 
             resolvedBots.Clear();
@@ -456,16 +513,16 @@ namespace csb.usr_listener
 
 
 
-        } 
+        }
 
         public void Start()
         {
             if (IsRunning)
-            {                
+            {
                 ResoreInputChannels().Wait();
                 StartedEvent?.Invoke(PhoneNumber);
                 return;
-            }                
+            }
 
             mediaGroup = new();
 
@@ -474,7 +531,7 @@ namespace csb.usr_listener
             Task.Run(async () =>
             {
                 user = new Client(Config);
-                
+
                 var usr = await user.LoginUserIfNeeded();
                 ID = usr.ID;
                 chats = await user.Messages_GetAllChats();
@@ -500,7 +557,7 @@ namespace csb.usr_listener
 
                 IsRunning = true;
             });
-           
+
         }
 
         //private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -540,12 +597,12 @@ namespace csb.usr_listener
         //}
 
         public void Stop()
-        {            
+        {
             timer?.Stop();
-            user?.Dispose();            
-            IsRunning = false; 
+            user?.Dispose();
+            IsRunning = false;
         }
-#endregion
+        #endregion
 
         public event Action<string> NeedVerifyCodeEvent;
         public event Action<string> StartedEvent;

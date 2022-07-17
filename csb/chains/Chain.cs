@@ -24,7 +24,7 @@ namespace csb.chains
         [JsonProperty]
         public List<BotPoster_api> Bots { get; set; } = new();
         [JsonProperty]
-        public UserListener User { get; private set; }
+        public UserListener_v1 User { get; private set; }
         [JsonIgnore]        
 
 
@@ -58,7 +58,7 @@ namespace csb.chains
 
             if (User == null)
             {
-                User = new UserListener(PhoneNumber);
+                User = new UserListener_v1(PhoneNumber);
             }
 
             //User = new UserListener(PhoneNumber);

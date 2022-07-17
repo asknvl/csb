@@ -15,7 +15,7 @@ namespace csb.chains
         int Id { get; set; }
         string PhoneNumber { get; set; }
         List<BotPoster_api> Bots { get; set; }
-        UserListener User { get; }
+        UserListener_v1 User { get; }
 
         bool IsRunning { get; }
         ChainState State { get; set; }

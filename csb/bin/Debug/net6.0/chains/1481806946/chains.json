@@ -16,7 +16,7 @@
     ],
     "User": {
       "FilteredWords": [],
-      "TimeInterval": 0.0
+      "TimeInterval": 2.0
     },
     "State": 0
   }
