@@ -169,6 +169,7 @@ namespace csb.usr_listener
 
 
                             from_chat = chats.chats[unm.message.Peer.ID];
+
                         } catch (Exception ex)
                         {
                             return;
