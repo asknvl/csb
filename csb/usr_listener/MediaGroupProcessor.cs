@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WTelegram;
+using TL;
 
 namespace csb.usr_listener
 {
@@ -20,20 +21,16 @@ namespace csb.usr_listener
 
         #region properties
         public long? GroupId { get; set; }
-        public List<int> MessageIDs { get;} = new();
-        public List<long> MessageRands { get; } = new();
+        public List<(ChatBase, int)> MessageIDs { get;} = new();        
         public bool IsEmpty => MessageIDs.Count == 0;
         #endregion
 
         public MediaGroup(MediaGroup source)
         {
             GroupId = source.GroupId;
-            MessageIDs = new List<int>();
+            MessageIDs = new();
             foreach (var id in source.MessageIDs)
-                MessageIDs.Add(id);
-            MessageRands = new List<long>();
-            foreach (var rand in source.MessageRands)
-                MessageRands.Add(rand);
+                MessageIDs.Add(id);            
         }
 
         public MediaGroup() {
@@ -48,7 +45,7 @@ namespace csb.usr_listener
             clear();
         }
 
-        public void Update(long? group_id, int message_id) {
+        public void Update(ChatBase from_chat, long? group_id, int message_id) {
 
             if (GroupId != group_id)
             {
@@ -59,7 +56,7 @@ namespace csb.usr_listener
             if (group_id == null || group_id == 0)
             {
                 var mediaGroup = new MediaGroup();
-                mediaGroup.add(null, message_id);
+                mediaGroup.add(from_chat, null, message_id);
                 Console.WriteLine($"Group={GroupId} group={group_id} message {message_id} INVOKE");
                 MediaReadyEvent?.Invoke(mediaGroup);
                 mediaTimer.Stop();
@@ -67,18 +64,17 @@ namespace csb.usr_listener
 
             } else
             {
-                add(group_id, message_id);
+                add(from_chat, group_id, message_id);
                 Console.WriteLine($"Group={GroupId} group={group_id} message {message_id} ADD");
                 if (!mediaTimer.Enabled)
                     mediaTimer.Start();
             }
         }
 
-        public void add(long? group_id, int message_id)
+        public void add(ChatBase from_chat, long? group_id, int message_id)
         {
             GroupId = group_id;
-            MessageIDs.Add(message_id);
-            MessageRands.Add(Helpers.RandomLong());
+            MessageIDs.Add((from_chat, message_id));         
         }
 
         private void purge()
@@ -94,8 +90,7 @@ namespace csb.usr_listener
         public void clear()
         {
             GroupId = null;
-            MessageIDs.Clear();
-            MessageRands.Clear();
+            MessageIDs.Clear();            
         }
 
         public event Action<MediaGroup> MediaReadyEvent;

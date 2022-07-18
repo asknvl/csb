@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Telegram.Bot.Types.ReplyMarkups;
 using TL;
 using WTelegram;
 
@@ -33,8 +32,8 @@ namespace csb.usr_listener
         System.Timers.Timer timer;
 
 
-        List<int> nomediaIDs = new();
-        List<int[]> mediaIDs = new();
+        List<(ChatBase, int)> nomediaIDs = new();
+        List<(ChatBase, int)[]> mediaIDs = new();
 
         #endregion
 
@@ -167,7 +166,7 @@ namespace csb.usr_listener
                             return;
                         }
 
-#if DEBUG
+#if RELEASE
                         if (m.fwd_from != null)
                             continue;
 #endif
@@ -177,13 +176,13 @@ namespace csb.usr_listener
                         {
 
                             case MessageMediaPhoto mmp:
-                                mediaGroup.Update(m.grouped_id, unm.message.ID);
+                                mediaGroup.Update(from_chat, m.grouped_id, unm.message.ID);
                                 break;
 
                             case MessageMediaDocument mmd:
                                 if (((Document)mmd.document).mime_type.Equals(""))
                                     return;
-                                mediaGroup.Update(m.grouped_id, unm.message.ID);
+                                mediaGroup.Update(from_chat, m.grouped_id, unm.message.ID);
                                 break;
 
                             default:
@@ -203,7 +202,7 @@ namespace csb.usr_listener
 
                                 if (nomediaIDs.Count > messages_buffer_length)
                                     nomediaIDs.Clear();
-                                nomediaIDs.Add(unm.message.ID);
+                                nomediaIDs.Add((from_chat, unm.message.ID));
                                 Console.WriteLine($"added text, total:{nomediaIDs.Count}");
 
 
@@ -226,7 +225,7 @@ namespace csb.usr_listener
 
                 foreach (var id in group.MessageIDs)
                 {
-                    Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0]);
+                    Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0].Item2);
                     MessageBase mb = message.Messages[0] as MessageBase;
                     Message m = mb as Message;
 
@@ -286,22 +285,27 @@ namespace csb.usr_listener
             }
 
 
-            int[] ids = new int[mediaIDs[0].Length];
-            for (int i = 0; i < ids.Length; i++)
-                ids[i] = mediaIDs[0][i];
+            (ChatBase, int)[] ChatIDs = new(ChatBase, int)[mediaIDs[0].Length];
+            for (int i = 0; i < ChatIDs.Length; i++)
+                ChatIDs[i] = mediaIDs[0][i];
             mediaIDs.RemoveAt(0);
 
-            Console.WriteLine($"{DateTime.Now} media length:{ids.Length}");
+            Console.WriteLine($"{DateTime.Now} media length:{ChatIDs.Length}");
 
             foreach (var item in resolvedBots)
             {
                 try
                 {
                     List<long> rands = new();
-                    for (int i = 0; i < ids.Length; i++)
+                    for (int i = 0; i < ChatIDs.Length; i++)
                         rands.Add(Helpers.RandomLong());
                     //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
-                    await user.Messages_ForwardMessages(from_chat, ids, rands.ToArray(), item);
+
+                    int[] ids = new int[ChatIDs.Length];
+                    for (int j = 0; j < ChatIDs.Length; j++)
+                        ids[j] = ChatIDs[j].Item2;
+
+                    await user.Messages_ForwardMessages(ChatIDs[0].Item1, ids, rands.ToArray(), item);
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
@@ -322,7 +326,8 @@ namespace csb.usr_listener
                 return;
             }
 
-            int id = nomediaIDs[0];
+            int id = nomediaIDs[0].Item2;
+            ChatBase chat = nomediaIDs[0].Item1;
             nomediaIDs.RemoveAt(0);
 
             foreach (var item in resolvedBots)
@@ -330,7 +335,7 @@ namespace csb.usr_listener
                 try
                 {
                     long rand = Helpers.RandomLong();
-                    await user.Messages_ForwardMessages(from_chat, new[] { id }, new[] { rand }, item);
+                    await user.Messages_ForwardMessages(chat, new[] { id }, new[] { rand }, item);
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
