@@ -62,7 +62,7 @@ namespace csb.usr_listener
         [JsonProperty]
         public List<string> FilteredWords { get; set; } = new();
 
-        double timeinterval = 0;
+        double timeinterval = 1.0 / 60;
         [JsonProperty]
         public double TimeInterval
         {
@@ -74,7 +74,7 @@ namespace csb.usr_listener
                 {
 
                     if (value < 1.0)
-                        timeinterval = 0.05;
+                        timeinterval = 1.0 / 60;
 
                     timer.Stop();
                     timer.Interval = 60 * timeinterval * 1000;
@@ -120,9 +120,10 @@ namespace csb.usr_listener
             PhoneNumber = phonenumber;
 
             timer = new();
-            //timer.Interval = 60 * TimeInterval * 1000;
+            timer.Interval = 60 * TimeInterval * 1000;
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
+            timer.Start();
         }
 
         private void User_Update(TL.IObject u)
@@ -501,22 +502,31 @@ namespace csb.usr_listener
             //await user.Channels_LeaveChannel(channel.);
         }
 
-        public async Task AddCorrespondingBot(string name)
+        public void AddCorrespondingBot(string name)
         {
             if (!CorrespondingBotNames.Contains(name))
                 CorrespondingBotNames.Add(name);
 
+            //resolvedBots.Clear();
+
+            //foreach (var item in CorrespondingBotNames)
+            //{
+            //    if (user != null)
+            //    {
+            //        resolvedBots.Add(await user.Contacts_ResolveUsername(item));
+            //    }
+            //}
+
+        }
+
+        public async Task RestoreBots()
+        {
             resolvedBots.Clear();
 
             foreach (var item in CorrespondingBotNames)
             {
-                if (user != null)
-                {
-                    resolvedBots.Add(await user.Contacts_ResolveUsername(item));
-                }
+                resolvedBots.Add(await user.Contacts_ResolveUsername(item));                
             }
-
-
 
         }
 
@@ -535,7 +545,13 @@ namespace csb.usr_listener
 
             Task.Run(async () =>
             {
-                user = new Client(Config);
+                try
+                {
+                    user = new Client(Config);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
                 var usr = await user.LoginUserIfNeeded();
                 ID = usr.ID;
@@ -549,6 +565,9 @@ namespace csb.usr_listener
                 if (TimeInterval > 0)
                     timer?.Start();
 
+                await RestoreBots();
+
+                user.Update -= User_Update;
                 user.Update += User_Update;
 
                 Console.WriteLine($"User {PhoneNumber} started");
@@ -557,8 +576,7 @@ namespace csb.usr_listener
                 //timer = new System.Timers.Timer();
                 //timer.Interval = 1000;
                 //timer.AutoReset = true;
-                //timer.Elapsed += Timer_Elapsed;
-                //timer.Start();
+                //timer.Elapsed += Timer_Elapsed;               
 
                 IsRunning = true;
             });
@@ -604,7 +622,8 @@ namespace csb.usr_listener
         public void Stop()
         {
             timer?.Stop();
-            user?.Dispose();
+            user.Update -= User_Update;            
+            user.Dispose();
             IsRunning = false;
         }
         #endregion

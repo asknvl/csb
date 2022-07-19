@@ -690,9 +690,9 @@ namespace csb.users
 
                 case "saveAndStartChain":
                     try
-                    {
-                        chainsProcessor.Save();
+                    {                        
                         chainsProcessor.Start(currentChainID);
+                        chainsProcessor.Save();
                         //await messagesProcessor.Delete(chat, "startsave");
                         //await showMyChains(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Запуск...");

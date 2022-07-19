@@ -45,9 +45,10 @@ namespace csb.chains
 
         public Chain()
         {
+            
         }
 
-        public void Start()
+        public async void Start()
         {
 
             if (IsRunning)
@@ -68,13 +69,8 @@ namespace csb.chains
                 NeedVerifyCodeEvent?.Invoke(Id, phone);
             };
 
-            User.StartedEvent += (phone) => {
-
-                foreach (var item in Bots)
-                    item.AllowedID = User.ID;
-
-                UserStartedEvent?.Invoke(this);                     
-            };
+            User.StartedEvent -= User_StartedEvent;
+            User.StartedEvent += User_StartedEvent;
 
             try
             {                   
@@ -89,6 +85,14 @@ namespace csb.chains
             } catch (Exception ex)
             {
             }
+        }
+
+        private void User_StartedEvent(string phone)
+        {
+            foreach (var item in Bots)
+                item.AllowedID = User.ID;
+
+            UserStartedEvent?.Invoke(this);
         }
 
         public void Stop()
@@ -124,7 +128,10 @@ namespace csb.chains
                 {
                     bot.Start();
                     if (User != null)
-                        await User.AddCorrespondingBot(bot.Name);
+                    {
+                        User.AddCorrespondingBot(bot.Name);
+                        await User.RestoreBots();
+                    }
                 } catch (Exception ex)
                 {
                     throw new Exception("Не удалось запустить бота");

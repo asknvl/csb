@@ -34,7 +34,7 @@ namespace csb.bot_poster
         CancellationTokenSource cts;
         string mediaGroupId = "";
         List<IAlbumInputMedia> mediaList = new();
-        System.Timers.Timer mediaTimer = new System.Timers.Timer();        
+        System.Timers.Timer mediaTimer;
         #endregion
 
         #region properties
@@ -72,13 +72,14 @@ namespace csb.bot_poster
 
             cts = new CancellationTokenSource();
 
+            mediaTimer = new System.Timers.Timer();
             mediaTimer.Interval = 5000;
             mediaTimer.AutoReset = false;
             mediaTimer.Elapsed += MediaTimer_Elapsed;
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = new UpdateType[] { UpdateType.Message }
+                AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.ChatJoinRequest }
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
@@ -100,6 +101,20 @@ namespace csb.bot_poster
             if (update == null)
                 return;
 
+            if (update.ChatJoinRequest != null)
+            {
+                try
+                {
+                    var chatJoinRequest = update.ChatJoinRequest;
+                    Console.WriteLine($"join request: {Name} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName}");
+                    bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+                    Console.WriteLine("Result=" + res);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
             if (update.Message == null)
                 return;
 
@@ -107,6 +122,8 @@ namespace csb.bot_poster
 
             if (message.Chat.Id != AllowedID)
                 return;
+
+            
 
             string? text;
             MessageEntity[]? entities;
@@ -121,6 +138,7 @@ namespace csb.bot_poster
 
                 switch (message.Type)
                 {
+                    
 
                     case MessageType.Photo:
 
@@ -385,8 +403,6 @@ namespace csb.bot_poster
 
             return text;
         }
-
-
 
         MessageEntity[]? filterEntities(MessageEntity[] input)
         {
