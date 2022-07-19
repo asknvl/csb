@@ -34,6 +34,7 @@ namespace csb.usr_listener
 
         List<(ChatBase, int)> nomediaIDs = new();
         List<(ChatBase, int)[]> mediaIDs = new();
+        Random rand = new Random();
 
         #endregion
 
@@ -171,8 +172,6 @@ namespace csb.usr_listener
                         if (m.fwd_from != null)
                             continue;
 #endif
-
-
                         switch (m.media)
                         {
 
@@ -188,24 +187,10 @@ namespace csb.usr_listener
 
                             default:
 
-
-                                //foreach (var item in resolvedBots)
-                                //{
-                                //    try
-                                //    {
-                                //        long rand = Helpers.RandomLong();
-                                //        await user.Messages_ForwardMessages(from_chat, new[] { messageID }, new[] { rand }, item);
-                                //    } catch (Exception ex)
-                                //    {
-                                //        Console.WriteLine(ex.ToString());
-                                //    }
-                                //}
-
                                 if (nomediaIDs.Count > messages_buffer_length)
                                     nomediaIDs.Clear();
                                 nomediaIDs.Add((from_chat, unm.message.ID));
                                 Console.WriteLine($"added text, total:{nomediaIDs.Count}");
-
 
                                 break;
 
@@ -217,11 +202,8 @@ namespace csb.usr_listener
 
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
         {
-
             try
             {
-
-
                 bool filterFlag = false;
 
                 foreach (var id in group.MessageIDs)
@@ -251,22 +233,6 @@ namespace csb.usr_listener
                     mediaIDs.Clear();
                 mediaIDs.Add(group.MessageIDs.ToArray());
                 Console.WriteLine($"added {group.MessageIDs.Count} medias, total:{mediaIDs.Count}");
-
-                //foreach (var item in resolvedBots)
-                //{
-                //    try
-                //    {
-                //        List<long> rands = new();
-                //        for (int i = 0; i < group.MessageRands.Count; i++)
-                //            rands.Add(Helpers.RandomLong());
-                //        //Суперважно менять рандомные айди при рассылке многим пользоватям одного и того же
-                //        await user.Messages_ForwardMessages(from_chat, group.MessageIDs.ToArray(), /*group.MessageRands.ToArray()*/ rands.ToArray(), item);                        
-                //    } catch (Exception ex)
-                //    {
-                //        Console.WriteLine(ex.ToString());
-                //    }
-                //}
-
 
             } catch (Exception ex)
             {
@@ -346,8 +312,6 @@ namespace csb.usr_listener
             }
         }
 
-
-        Random rand = new Random();
         private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
 
@@ -410,14 +374,6 @@ namespace csb.usr_listener
                     await user.Channels_JoinChannel(channel);
             }
 
-            //user.Channels_JoinChannel(new InputChannel())
-
-            //await user.Channels_LeaveChannel()
-            //InputChannelBase c = new InputChannel(cci.);
-            //await user.Channels_JoinChannel();
-
-            //chats = await user.Messages_GetAllChats();
-            //user.Channels_JoinChannel()
         }
 
         public async Task ResoreInputChannels()
@@ -454,27 +410,13 @@ namespace csb.usr_listener
 
         public async Task LeaveChannel(string id)
         {
-            //var resolved = await user.Contacts_ResolveUsername(title);           
-            //var chats = await user.Messages_GetAllChats();
-
-            //var channels = chats.chats.Where(o => o.Value is Channel);
-            //var channel = channels.FirstOrDefault(o => o.Value.Title.Equals(title));
-            //var c = (Channel)channel.Value;
-
             try
             {
-
                 foreach (var item in chats.chats)
                 {
                     if (item.Value is Channel)
                     {
                         var c = (Channel)item.Value;
-
-                        //if (c.username.Equals(text))
-                        //{
-                        //    await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
-                        //    chats.chats.Remove(item.Key);
-                        //}
 
                         if (c.ID == long.Parse(id))
                         {
@@ -490,33 +432,12 @@ namespace csb.usr_listener
             {
                 throw new Exception("Для удаления каналов цепочка должна быть запущена");
             }
-
-
-            //var channel = chats.chats.FirstOrDefault(o => o is Channel && ((Channel)o.Value).username.Equals(title));
-            //var c = (Channel)channel.Value;
-
-            //await user.Channels_LeaveChannel(new InputChannel(c.ID, c.access_hash));
-            //chats.chats.Remove(channel.Key);
-
-            //chats = await user.Messages_GetAllChats();                
-            //await user.Channels_LeaveChannel(channel.);
         }
 
         public void AddCorrespondingBot(string name)
         {
             if (!CorrespondingBotNames.Contains(name))
                 CorrespondingBotNames.Add(name);
-
-            //resolvedBots.Clear();
-
-            //foreach (var item in CorrespondingBotNames)
-            //{
-            //    if (user != null)
-            //    {
-            //        resolvedBots.Add(await user.Contacts_ResolveUsername(item));
-            //    }
-            //}
-
         }
 
         public async Task RestoreBots()
@@ -573,51 +494,10 @@ namespace csb.usr_listener
                 Console.WriteLine($"User {PhoneNumber} started");
                 StartedEvent?.Invoke(PhoneNumber);
 
-                //timer = new System.Timers.Timer();
-                //timer.Interval = 1000;
-                //timer.AutoReset = true;
-                //timer.Elapsed += Timer_Elapsed;               
-
                 IsRunning = true;
             });
 
         }
-
-        //private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //{
-
-        //    foreach (var (id, chat) in chats.chats)
-        //        switch (chat)
-        //        {
-
-        //            case Channel channel when (channel.flags & Channel.Flags.broadcast) != 0:
-
-        //                var msgs = await user.Messages_GetHistory(chat, limit: 10);
-
-        //                var message = msgs.Messages[0];
-        //                //foreach (var msg in msgs.Messages)
-        //                //{
-        //                //    Message m = (Message)msg;
-
-        //                //    long groupId = 0;                            
-        //                //    bool isFiltered = false;
-
-        //                //    foreach (var word in FilteredWords)
-        //                //    {
-        //                //        if (m.message.Contains(word))
-        //                //        {
-        //                //            isFiltered = true;
-        //                //        }
-        //                //    }
-        //                //}
-
-        //                break;
-
-        //            default:
-        //                break;
-        //        }
-
-        //}
 
         public void Stop()
         {
