@@ -291,10 +291,7 @@ namespace csb.bot_poster
                     case MessageType.Text:
                         await postTextAndWebPage(message, cancellationToken);
                         break;
-
-                    //case MessageType.Document:
-                    //    break;
-
+                    
                     default:
                         await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                         break;
