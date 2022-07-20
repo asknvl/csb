@@ -59,9 +59,9 @@ namespace csb.bot_manager
             bot = new TelegramBotClient("5386081110:AAH71hl90ItlSNK7XSLguxUOC_e8gJNxRiQ");
 #else
             //Latam
-            //bot = new TelegramBotClient("5597155386:AAEvPn9KUuWRPCECuOTJDHdh6RiY_IVbpWM");             
+            bot = new TelegramBotClient("5597155386:AAEvPn9KUuWRPCECuOTJDHdh6RiY_IVbpWM");             
             //Вестник
-            bot = new TelegramBotClient("5417889302:AAG2sMp32gXlzfl6HnEvB2VmVXfAR_7G274");            
+            //bot = new TelegramBotClient("5417889302:AAG2sMp32gXlzfl6HnEvB2VmVXfAR_7G274");            
 #endif
 
 

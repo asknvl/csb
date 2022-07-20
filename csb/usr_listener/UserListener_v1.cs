@@ -315,8 +315,6 @@ namespace csb.usr_listener
         private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
 
-            Console.WriteLine($"{DateTime.Now} {PhoneNumber}: timer elapsed");
-
             if (nomediaIDs.Count == 0 && mediaIDs.Count > 0)
             {                
                 await sendMedia();                

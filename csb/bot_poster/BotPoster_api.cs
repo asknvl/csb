@@ -27,6 +27,15 @@ namespace csb.bot_poster
             @"[@][[a-zA-Z0-9_]{5,32}", //@telegram
             @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
         };
+
+
+        string[] replace_patterns_change_links = {
+            @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)", //url
+            @"\S*\.*ru",
+            @"(Подписаться на )\w*\s|S",
+            @"(Подписаться на )\w*.*",            
+            @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
+        };
         #endregion
 
         #region vars
@@ -255,6 +264,30 @@ namespace csb.bot_poster
                         //await bot.CopyMessageAsync(OutputChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, new CancellationToken());
                         break;
 
+                    case MessageType.Document:
+
+                        text = message.Caption;
+                        entities = message.CaptionEntities;
+
+                        if (!ChannelLink.Equals("0"))
+                        {
+                            text = swapTextLink(text, VictimLink, ChannelLink);
+                            entities = filterEntities(entities);
+
+                        } else
+                        {
+                            (text, entities) = getUpdatedText(text, entities);
+                        }
+
+                        InputMedia idoc = new InputMedia(message.Document.FileId);
+                        await bot.SendDocumentAsync(
+                                chatId: ChannelID,
+                                idoc,
+                                caption: text,
+                                captionEntities: entities);
+
+                        break;
+
                     case MessageType.Text:
                         await postTextAndWebPage(message, cancellationToken);
                         break;
@@ -366,10 +399,10 @@ namespace csb.bot_poster
                         text = text.Replace(item.Value, newlink);
             }
 
-            foreach (var p in replace_patterns)
-            {
-                text = Regex.Replace(text, p, "");
-            }
+            //foreach (var p in replace_patterns_change_links)
+            //{
+            //    text = Regex.Replace(text, p, "");
+            //}
 
 
             //pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
