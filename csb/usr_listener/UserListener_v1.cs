@@ -1,4 +1,5 @@
 ﻿using csb.bot_poster;
+using csb.matching;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,11 @@ namespace csb.usr_listener
         private readonly ManualResetEventSlim codeReady = new();
         System.Timers.Timer timer;
 
-
         List<(ChatBase, int)> nomediaIDs = new();
         List<(ChatBase, int)[]> mediaIDs = new();
         Random rand = new Random();
+
+        ITextMatchingAnalyzer textMatsingAnalyzer = new TextMatchingAnalyzer(8);
 
         #endregion
 
@@ -220,14 +222,21 @@ namespace csb.usr_listener
                             if (filterFlag)
                                 break;
                         }
-                    }
 
+                        int percentage = textMatsingAnalyzer.Check(m.message);
+                        Console.WriteLine(percentage);
+                        if (percentage > 70)
+                        {
+                            filterFlag = true;
+                            break;
+                        } else
+                            textMatsingAnalyzer.Add(m.message);
+
+                    }
                 }
 
                 if (filterFlag)
-                {
                     return;
-                }
 
                 if (mediaIDs.Count > messages_buffer_length)
                     mediaIDs.Clear();
@@ -297,6 +306,28 @@ namespace csb.usr_listener
             ChatBase chat = nomediaIDs[0].Item1;
             nomediaIDs.RemoveAt(0);
 
+            try
+            {
+                Messages_MessagesBase msgb = await user.GetMessages(chat, id);
+                MessageBase mb = msgb.Messages[0];
+                Message message = (Message)mb;
+
+                if (message != null)
+                {
+                    int percentage = textMatsingAnalyzer.Check(message.message);
+                    Console.WriteLine(percentage);
+                    if (percentage > 70)
+                        return;
+                    else
+                        textMatsingAnalyzer.Add(message.message);
+                }               
+
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             foreach (var item in resolvedBots)
             {
                 try
@@ -305,7 +336,7 @@ namespace csb.usr_listener
                     await user.Messages_ForwardMessages(chat, new[] { id }, new[] { rand }, item);
                 } catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine(ex.Message);
                     Console.WriteLine("RETRY TEXT");
                     await sendText();
                 }

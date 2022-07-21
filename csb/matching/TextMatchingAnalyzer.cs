@@ -41,6 +41,7 @@ namespace csb.matching
         {
             var splt = text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
             int length = splt.Length;
+            int max = 0;
 
             foreach (var message in messageQueue)
             {
@@ -53,10 +54,14 @@ namespace csb.matching
                     if (tmp.Contains(word))
                         counter++;
                 }
-                Console.WriteLine(counter);
+
+                if (counter > max)
+                    max = counter;
+
+                Console.WriteLine(max);
             }
 
-            return 0;
+            return (max * 100) / length;
         }
         #endregion
     }
