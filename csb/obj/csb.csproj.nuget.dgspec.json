@@ -1,27 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\KONOVALOV\\Sources\\csb\\csb\\csb.csproj": {}
+    "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj": {}
   },
   "projects": {
-    "C:\\KONOVALOV\\Sources\\csb\\csb\\csb.csproj": {
+    "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\KONOVALOV\\Sources\\csb\\csb\\csb.csproj",
+        "projectUniqueName": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
         "projectName": "csb",
-        "projectPath": "C:\\KONOVALOV\\Sources\\csb\\csb\\csb.csproj",
-        "packagesPath": "C:\\Users\\konovalov.a\\.nuget\\packages\\",
-        "outputPath": "C:\\KONOVALOV\\Sources\\csb\\csb\\obj\\",
+        "projectPath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
+        "packagesPath": "C:\\Users\\Никита\\.nuget\\packages\\",
+        "outputPath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\konovalov.a\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Никита\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.avaloniaui.net/repository/avalonia-all/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -63,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

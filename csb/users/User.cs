@@ -1,5 +1,6 @@
 ﻿using csb.bot_manager;
 using csb.chains;
+using csb.moderation;
 using csb.settings.validators;
 using Newtonsoft.Json;
 using System;
@@ -101,6 +102,26 @@ namespace csb.users
 
             })},
 
+            {"editModerator", new(new[] {
+
+                new[] {                    
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteModerator"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+                
+                //new[] {
+                //    InlineKeyboardButton.WithCallbackData(text: "Запустить", callbackData: "startChain"),
+                //    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
+                //},
+                //new[] {
+                //    InlineKeyboardButton.WithCallbackData(text: "Назад", callbackData: "back"),
+                //}
+
+            })},
+
             {"back", new(new[] {
 
                 new[] {
@@ -112,6 +133,13 @@ namespace csb.users
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addChainCancel"),
+                }
+            })},
+
+             {"addModeratorCancel", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addModeratorCancel"),
                 }
             })},
 
@@ -134,6 +162,7 @@ namespace csb.users
 
         #region vars          
         int currentChainID;
+        string currentModeratorGeoTag;
         BotState State;
         #endregion
 
@@ -160,6 +189,9 @@ namespace csb.users
             }
         }
 
+        [JsonIgnore]
+        public ModerationProcessor  moderationProcessor { get; set; }
+        
         [JsonIgnore]
         public CancellationToken cancellationToken { get; set; }
         #endregion
@@ -225,6 +257,29 @@ namespace csb.users
 
 
             InlineKeyboardMarkup inlineKeyboard = new(chains_buttons);
+
+            return inlineKeyboard;
+
+        }
+
+        InlineKeyboardMarkup getMyModeratorsMarkUp()
+        {                      
+
+            var moderators = moderationProcessor.ModeratorBots;
+            int number = moderators.Count;
+
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
+            {
+                moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: moderators[i].GeoTag, callbackData: $"moderator_{moderators[i].GeoTag}") };
+            }
+
+            moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить модератора", callbackData: "newmoderator") };
+
+
+
+            InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
 
             return inlineKeyboard;
 
@@ -338,6 +393,17 @@ namespace csb.users
                 cancellationToken: cancellationToken));
         }
 
+        async Task showMyModerators(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "/mymoderators", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Управление модераторами:",
+                //replyMarkup: inlineKeyboards["/mychains"],
+                replyMarkup: getMyModeratorsMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
         async Task showDeleteChannel(long chat, IChain chain)
         {
             var markup = await getMyChannelsMarkUp(chain);
@@ -414,6 +480,19 @@ namespace csb.users
                     {
                         await messagesProcessor.Clear(chat);
                         await showMyChains(chat);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(chat, ex.Message);
+                        return;
+                    }
+                    break;
+
+                case "/mymoderators":
+                    State = BotState.free;
+                    try
+                    {
+                        await messagesProcessor.Clear(chat);
+                        await showMyModerators(chat);
                     } catch (Exception ex)
                     {
                         await sendTextMessage(chat, ex.Message);
@@ -619,6 +698,67 @@ namespace csb.users
                                 return;
                             }
                             break;
+
+                        case BotState.waitingModeratorGeoTag:
+                            try
+                            {
+                                string geotag = msg.Trim();
+                                var found = moderationProcessor.ModeratorBots.FirstOrDefault(o => o.GeoTag.Equals(geotag));
+                                if (found != null)
+                                {
+                                    throw new Exception("Бот с таким геотегом уже существует. Введите другой геотег:");
+                                }
+
+                                currentModeratorGeoTag = geotag;                                
+
+                                string moderatorTokenMsg = $"Создайте бота-модератора. Для этого выполните следующие действия:\n" +
+                                               "1.Перейдите в @BotFather и там введите команду /newbot.\n" +
+                                               "2.Придумайте и отправьте название выводного бота. Название должно соответствоать ГЕО связки (например MODERATOR_IND1).\n" +
+                                               "3.Далее отправьте username бота. Username бота должен иметь вид: названиеБота_bot (например MODERATOR_IND1_bot).\n" +
+                                               "4.Добавьте бота в модерируемый канал.\n" +
+                                               "5.Скопируйте API-токен бота-модератора из @BotFather и отпавьте его сюда:";
+
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingModeratorToken", await sendTextButtonMessage(chat, moderatorTokenMsg, "addModeratorCancel"));                                
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            State = BotState.waitingModeratorToken;
+                            break;
+
+                        case BotState.waitingModeratorToken:
+                            string moder_token = msg;
+                            IValidator moder_token_vl = new TokenValidator();
+                            if (!moder_token_vl.IsValid(moder_token))
+                            {
+                                await sendTextMessage(chat, moder_token_vl.Message);
+                                return;
+                            }
+                            try
+                            {
+
+                                moderationProcessor.Add(moder_token, currentModeratorGeoTag);
+                                //moderationProcessor.Start(currentModeratorGeoTag);
+                                await messagesProcessor.Back(chat);
+                                await sendTextMessage(Id, $"Модератор {currentModeratorGeoTag} запущен");
+
+                                //var chain = chainsProcessor.Get(currentChainID);
+                                //chain.AddBot(token);
+                                //await messagesProcessor.Back(chat);
+                                //await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
+
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+
+                            State = BotState.free;
+                            break;
                     }
                     break;
             }
@@ -644,7 +784,7 @@ namespace csb.users
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
-                    break;
+                    break;               
 
                 case "saveChain":
                     try
@@ -881,8 +1021,7 @@ namespace csb.users
                     {
 
                     }
-                    break;
-
+                    break;                
 
                 case "addFilteredWord":
                     try
@@ -931,6 +1070,68 @@ namespace csb.users
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
                     break;
+
+                case "newmoderator":
+                    State = BotState.waitingModeratorGeoTag;
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "newmoderator", await sendTextButtonMessage(chat, "Введите геотег нового модератора", "addModeratorCancel"));
+                        await messagesProcessor.Delete(chat, "/mymoderators");
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "deleteModerator":
+                    try
+                    {
+                        moderationProcessor.Delete(currentModeratorGeoTag);
+                        await messagesProcessor.Back(chat);
+                        await messagesProcessor.Back(chat);
+                        await showMyModerators(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Модератор удален");
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+                    break;
+
+                case "addModeratorCancel":
+                    try
+                    {
+
+                        switch (State)
+                        {
+                            case BotState.waitingModeratorGeoTag:
+                                await messagesProcessor.Back(chat);
+                                currentModeratorGeoTag = "";
+                                return;
+
+                            case BotState.waitingModeratorToken:
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Back(chat);
+                                break;
+                        }
+
+                        State = BotState.free;
+                        if (!currentModeratorGeoTag.Equals(""))
+                        {
+                            try
+                            {
+                                var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                                moderationProcessor.Delete(currentModeratorGeoTag);
+                            } catch { };
+                        }
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
 
                 case "":
                     break;
@@ -1045,6 +1246,23 @@ namespace csb.users
                             chainprocessor.Save();
                             await messagesProcessor.Back(chat);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Фильтры удалены");
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("moderator_"))
+                    {
+                        try
+                        {
+
+                            currentModeratorGeoTag = data.Replace("moderator_", "");
+                            var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                            string m = $"Выбран модератор {moderator.GeoTag}. Что сделать?";
+                            await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
+                            await bot.AnswerCallbackQueryAsync(query.Id);
 
                         } catch (Exception ex)
                         {

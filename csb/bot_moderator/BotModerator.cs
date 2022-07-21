@@ -22,13 +22,13 @@ namespace csb.bot_moderator
 
         #region properties
         [JsonProperty]
-        public string GeoTag { get; protected set; }
+        public string GeoTag { get; set; }
         [JsonProperty]
         public string Name { get; set; }
         [JsonProperty]
         public string Token { get; set; }
         [JsonIgnore]
-        public bool IsRunning { get; protected set; }
+        public bool IsRunning { get; set; }
         #endregion
 
         public BotModerator()
@@ -46,6 +46,20 @@ namespace csb.bot_moderator
         {
             if (update == null)
                 return;
+
+            if (update.ChatJoinRequest != null)
+            {
+                try
+                {
+                    var chatJoinRequest = update.ChatJoinRequest;                    
+                    Console.WriteLine($"join request: {Name} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName}");
+                    bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+                    Console.WriteLine("Result=" + res);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
 
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
@@ -81,10 +95,14 @@ namespace csb.bot_moderator
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
             IsRunning = true;
+            Console.WriteLine($"Moderator {Name} started");
         }
 
         public void Stop()
-        {            
+        {
+            cts.Cancel();
+            IsRunning = false;
+            Console.WriteLine($"Moderator {Name} stopped");
         }
 
         #endregion

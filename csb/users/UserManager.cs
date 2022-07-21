@@ -1,4 +1,5 @@
 ﻿using csb.chains;
+using csb.moderation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,10 @@ namespace csb.users
                 user.chainsProcessor = new ChainProcessor($"{user.Id}");
                 user.chainsProcessor.Load();
                 user.chainsProcessor.StartAll();
+
+                user.moderationProcessor = new ModerationProcessor($"{user.Id}");
+                user.moderationProcessor.Load();
+                user.moderationProcessor.StartAll();
             }
         }
         public void Add(long userId, string name)
@@ -67,6 +72,7 @@ namespace csb.users
                     bot = bot,
                     messagesProcessor = new MessagesProcessor(bot),
                     chainsProcessor = new ChainProcessor($"{userId}"),
+                    moderationProcessor = new ModerationProcessor($"{userId}"),
                     cancellationToken = cancellationToken,                    
                     Name = name
                 };

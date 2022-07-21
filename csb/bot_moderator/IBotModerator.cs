@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace csb.bot_moderator
 {
-    internal interface IBotModerator
+    public interface IBotModerator
     {
         string GeoTag { get; set; }
-        string Name { get; protected set; }
+        string Name { get; set; }
         string Token { get; set; }
-        bool IsRunning { get; protected set; }
+        bool IsRunning { get; set; }
         void Start();
         void Stop();
     }

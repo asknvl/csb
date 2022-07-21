@@ -1,6 +1,7 @@
 ﻿using csb.bot_manager;
 using csb.bot_poster;
 using csb.usr_listener;
+using csb.bot_moderator;
 using System;
 
 namespace csb
@@ -10,16 +11,15 @@ namespace csb
         static void Main(string[] args)
         {
 
-            //UserListener user = new UserListener("+79256186936");
-            //BotPoster_api bot = new BotPoster_api("5565803263:AAEea9w5P3EgIc94Xng4vpItImVl2Jw1TYY");
-            //bot.OutputChannelID = -1001783366577;
-            //bot.Start();
-            //user.Start().Wait();
 
-            Console.WriteLine("Вдудь 2.0.3");
+            Console.WriteLine("Вдудь 2.0.4");
 
             BotManager manager = new BotManager();
             manager.Start();
+
+            //BotModerator moderator = new BotModerator("5452060432:AAGL0eApCkj5lFT6vivJYMU87u6ctDERBk4", "PER1X");
+            //moderator.Start();
+
 
             Console.ReadLine();
         }

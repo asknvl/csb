@@ -34,7 +34,10 @@ namespace csb.bot_manager
 
         waitingFilteredWord,
 
-        waitingMessagingPeriod
+        waitingMessagingPeriod,
+
+        waitingModeratorGeoTag,
+        waitingModeratorToken,
     }
     
     
