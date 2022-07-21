@@ -3,6 +3,9 @@ using csb.bot_poster;
 using csb.usr_listener;
 using csb.bot_moderator;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using csb.matching;
 
 namespace csb
 {
@@ -14,11 +17,21 @@ namespace csb
 
             Console.WriteLine("Вдудь 2.0.4");
 
-            BotManager manager = new BotManager();
-            manager.Start();
+            //BotManager manager = new BotManager();
+            //manager.Start();
 
-            //BotModerator moderator = new BotModerator("5452060432:AAGL0eApCkj5lFT6vivJYMU87u6ctDERBk4", "PER1X");
-            //moderator.Start();
+
+            ITextMatchingAnalyzer analyzer = new TextMatchingAnalyzer(4);
+
+            analyzer.Add("aaa, bbb, ccc");
+            analyzer.Add("ddd eee fff.");
+            analyzer.Add("ggg, hhh.iii,\n");
+            analyzer.Add("ggg\n hhh. iii");
+
+            analyzer.Check("aaa bbb ccc");
+            
+
+
 
 
             Console.ReadLine();

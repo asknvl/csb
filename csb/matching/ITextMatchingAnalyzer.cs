@@ -9,6 +9,6 @@ namespace csb.matching
     internal interface ITextMatchingAnalyzer
     {
         void Add(string message);
-        bool Check(string message);
+        int Check(string message);
     }
 }
