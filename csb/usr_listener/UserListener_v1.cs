@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using TL;
 using WTelegram;
 
+
+
 namespace csb.usr_listener
 {
     public class UserListener_v1
@@ -163,14 +165,13 @@ namespace csb.usr_listener
                                     }
                             }
 
-
                             from_chat = chats.chats[unm.message.Peer.ID];
                         } catch (Exception ex)
                         {
                             return;
                         }
 
-#if RELEASE
+#if MULT_INP && !DEBUG
                         if (m.fwd_from != null)
                             continue;
 #endif
@@ -193,9 +194,7 @@ namespace csb.usr_listener
                                     nomediaIDs.Clear();
                                 nomediaIDs.Add((from_chat, unm.message.ID));
                                 Console.WriteLine($"added text, total:{nomediaIDs.Count}");
-
                                 break;
-
                         }
                         break;
                 }
@@ -222,7 +221,7 @@ namespace csb.usr_listener
                             if (filterFlag)
                                 break;
                         }
-
+#if MULT_INP
                         int percentage = textMatsingAnalyzer.Check(m.message);
                         Console.WriteLine(percentage);
                         if (percentage > 70)
@@ -231,6 +230,7 @@ namespace csb.usr_listener
                             break;
                         } else
                             textMatsingAnalyzer.Add(m.message);
+#endif
 
                     }
                 }
@@ -306,6 +306,8 @@ namespace csb.usr_listener
             ChatBase chat = nomediaIDs[0].Item1;
             nomediaIDs.RemoveAt(0);
 
+#if MULT_INP
+
             try
             {
                 Messages_MessagesBase msgb = await user.GetMessages(chat, id);
@@ -327,6 +329,7 @@ namespace csb.usr_listener
             {
                 Console.WriteLine(ex.Message);
             }
+#endif
 
             foreach (var item in resolvedBots)
             {
@@ -377,7 +380,7 @@ namespace csb.usr_listener
             }
         }
 
-        #region public
+#region public
         public void SetVerifyCode(string code)
         {
             VerifyCode = code;
@@ -535,7 +538,7 @@ namespace csb.usr_listener
             user.Dispose();
             IsRunning = false;
         }
-        #endregion
+#endregion
 
         public event Action<string> NeedVerifyCodeEvent;
         public event Action<string> StartedEvent;
