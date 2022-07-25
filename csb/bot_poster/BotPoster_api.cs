@@ -88,7 +88,7 @@ namespace csb.bot_poster
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.ChatJoinRequest }
+                AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.ChatJoinRequest, UpdateType.ChatMember }
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
