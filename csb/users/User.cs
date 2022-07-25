@@ -365,6 +365,25 @@ namespace csb.users
             return inlineKeyboard;
         }
 
+        InlineKeyboardMarkup getRemovedWordsMarkUp(IChain chain)
+        {
+            var words = chain.User.FilteredWords;
+            int number = words.Count;
+
+            InlineKeyboardButton[][] words_buttons = new InlineKeyboardButton[number + 2][];
+
+            for (int i = 0; i < number; i++)
+            {
+                words_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: words[i], callbackData: $"filteredWords_{i}") };
+            }
+            words_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "× Очистить", callbackData: "clearFilteredWords") };
+            words_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(words_buttons);
+
+            return inlineKeyboard;
+        }
+
         async Task<Message> sendTextMessage(long chat, string message)
         {
             return await bot.SendTextMessageAsync(
