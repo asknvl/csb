@@ -89,6 +89,12 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Добавить фильтр", callbackData: "addFilteredWord"),
                     InlineKeyboardButton.WithCallbackData(text: "Удалить фильтр", callbackData: "deleteFilteredWord"),                    
                 },
+
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить исключение", callbackData: "addReplacedWord"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить исключение", callbackData: "deleteReplacedWord"),
+                },
+
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 },
@@ -154,6 +160,13 @@ namespace csb.users
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Сохранить", callbackData: "saveFilteredWords"),
+                }
+            })},
+
+             {"saveReplacedWords", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Сохранить", callbackData: "saveReplacedWords"),
                 }
             })},
 
@@ -365,18 +378,18 @@ namespace csb.users
             return inlineKeyboard;
         }
 
-        InlineKeyboardMarkup getRemovedWordsMarkUp(IChain chain)
+        InlineKeyboardMarkup getReplacedWordsMarkUp(IChain chain)
         {
-            var words = chain.User.FilteredWords;
+            var words = chain.ReplacedWords;
             int number = words.Count;
 
             InlineKeyboardButton[][] words_buttons = new InlineKeyboardButton[number + 2][];
 
             for (int i = 0; i < number; i++)
             {
-                words_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: words[i], callbackData: $"filteredWords_{i}") };
+                words_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: words[i], callbackData: $"replacedWords_{i}") };
             }
-            words_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "× Очистить", callbackData: "clearFilteredWords") };
+            words_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "× Очистить", callbackData: "clearReplacedWords") };
             words_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
 
             InlineKeyboardMarkup inlineKeyboard = new(words_buttons);
@@ -474,6 +487,17 @@ namespace csb.users
             await messagesProcessor.Add(chat, "showFilteredWords", await bot.SendTextMessageAsync(
                 chatId: chat,
                 text: "Фильтры для сообщений:",
+                replyMarkup: markup,
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showReplacedWords(long chat, IChain chain)
+        {
+            var markup = getReplacedWordsMarkUp(chain);
+
+            await messagesProcessor.Add(chat, "showReplacedWords", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Исключения:",
                 replyMarkup: markup,
                 cancellationToken: cancellationToken));
         }
@@ -700,6 +724,22 @@ namespace csb.users
                                 var chain = chainsProcessor.Get(currentChainID);
                                 return;
                             }                            
+                            break;
+
+                        case BotState.waitingReplacedWord:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.AddReplacedWord(msg);
+                                await messagesProcessor.Delete(chat, "saveInputChannel");
+                                await messagesProcessor.Add(chat, "saveReplacedWords", await sendTextButtonMessage(chat, "Добавьте еще удаляемую фразу или нажмите \"Сохранить\"", "saveReplacedWords"));
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                var chain = chainsProcessor.Get(currentChainID);
+                                return;
+                            }
                             break;
 
                         case BotState.waitingMessagingPeriod:
@@ -1053,7 +1093,6 @@ namespace csb.users
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
                     break;
-                    
 
                 case "deleteFilteredWord":
                     try
@@ -1076,6 +1115,40 @@ namespace csb.users
                     await messagesProcessor.Delete(chat, "addFilteredWords");                    
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
+
+                case "addReplacedWord":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "addReplacedWord", await sendTextButtonMessage(chat, "Введите текст. Данный текст будет являться исключением, он будет удален из всех сообщений:", "back"));
+                        State = BotState.waitingReplacedWord;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "deleteReplacedWord":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await showReplacedWords(chat, chain);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Выберите исключение, который нужно удалить");
+
+                    } catch (Exception ex)
+                    {
+
+                    }
+                    break;
+
+                case "saveReplacedWords":
+                    State = BotState.free;
+                    chainsProcessor.Save();
+                    await messagesProcessor.Back(chat);
+                    await messagesProcessor.Delete(chat, "addReplacedWord");
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
 
                 case "setMessagingPeriod":
                     try
@@ -1256,6 +1329,25 @@ namespace csb.users
                         }
                     }
 
+
+                    if (data.Contains("replacedWords_"))
+                    {
+                        try
+                        {
+                            string sindex = data.Replace("replacedWords_", "");
+                            int index = int.Parse(sindex);
+                            var chain = chainsProcessor.Get(currentChainID);
+                            chain.RemoveReplacedWord(index);
+                            chainprocessor.Save();
+                            await showReplacedWords(chat, chain);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Исключение удалено");
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
                     if (data.Contains("clearFilteredWords"))
                     {
                         try
@@ -1282,6 +1374,22 @@ namespace csb.users
                             string m = $"Выбран модератор {moderator.GeoTag}. Что сделать?";
                             await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
                             await bot.AnswerCallbackQueryAsync(query.Id);
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("clearReplacedWords"))
+                    {
+                        try
+                        {
+                            var chain = chainsProcessor.Get(currentChainID);
+                            chain.ClearReplacedWords();
+                            chainprocessor.Save();
+                            await messagesProcessor.Back(chat);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Исключения удалены");
 
                         } catch (Exception ex)
                         {

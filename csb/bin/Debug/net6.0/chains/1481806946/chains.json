@@ -11,13 +11,19 @@
         "ChannelID": -1001762519455,
         "ChannelTitle": "ch_pool_2",
         "VictimLink": "0",
-        "ChannelLink": "0"
+        "ChannelLink": "0",
+        "ReplacedWords": [
+          "Persigue tu sueño"
+        ]
       }
     ],
     "User": {
       "FilteredWords": [],
       "TimeInterval": 0.016666666666666666
     },
+    "ReplacedWords": [
+      "Persigue tu sueño"
+    ],
     "State": 0
   }
 ]

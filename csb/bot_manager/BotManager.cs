@@ -38,6 +38,8 @@ namespace csb.bot_manager
 
         waitingModeratorGeoTag,
         waitingModeratorToken,
+
+        waitingReplacedWord,
     }
     
     

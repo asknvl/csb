@@ -58,7 +58,10 @@ namespace csb.bot_poster
         [JsonProperty]
         public string VictimLink { get; set; }
         [JsonProperty]
-        public string ChannelLink { get; set; }        
+        public string ChannelLink { get; set; }
+        [JsonProperty]
+        public List<string> ReplacedWords { get; set; } = new();
+
         [JsonIgnore]
         public bool IsRunning { get; set; }
         #endregion
@@ -130,9 +133,7 @@ namespace csb.bot_poster
             var message = update.Message;
 
             if (message.Chat.Id != AllowedID)
-                return;
-
-            
+                return;            
 
             string? text;
             MessageEntity[]? entities;
@@ -325,10 +326,11 @@ namespace csb.bot_poster
 
             List<MessageEntity>? tmpEntities = entities?.ToList();
 
-
             int length = 0;
 
-            foreach (var pattern in replace_patterns)
+            var patterns = ReplacedWords.Concat(replace_patterns.ToList());
+
+            foreach (var pattern in patterns)
             {
                 Regex regex = new Regex(pattern);
                 var mathces = regex.Matches(text);
@@ -513,7 +515,17 @@ namespace csb.bot_poster
                 }
             }
 
-            var t = swapTextLink(text, VictimLink, ChannelLink) + insertUrl;
+
+            string t;
+            if (!ChannelLink.Equals("0"))
+                t = swapTextLink(text, VictimLink, ChannelLink);
+            else
+            {
+                MessageEntity[] e;
+                (t, e) = getUpdatedText(text, null);
+            }
+
+            t += insertUrl;
 
             await bot.SendTextMessageAsync(
             //chatId: channelName,

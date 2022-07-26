@@ -16,7 +16,7 @@ namespace csb.chains
         string PhoneNumber { get; set; }
         List<BotPoster_api> Bots { get; set; }
         UserListener_v1 User { get; }
-
+        public List<string> ReplacedWords { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -31,6 +31,10 @@ namespace csb.chains
         void ClearFilteredWords();
         void SetMessagingPeriod(double period);
         double GetMessagingPeriod();
+
+        void AddReplacedWord(string word);
+        void RemoveReplacedWord(int index);
+        void ClearReplacedWords();
     }
 
 

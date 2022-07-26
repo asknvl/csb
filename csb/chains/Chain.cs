@@ -25,9 +25,10 @@ namespace csb.chains
         public List<BotPoster_api> Bots { get; set; } = new();
         [JsonProperty]
         public UserListener_v1 User { get; private set; }
+        [JsonProperty]
+        public List<string> ReplacedWords { get; set; } = new();
+
         [JsonIgnore]        
-
-
         public bool IsRunning
         {
             get
@@ -75,7 +76,8 @@ namespace csb.chains
             try
             {                   
                 foreach (var item in Bots)
-                {                    
+                {
+                    item.ReplacedWords = new List<string>(ReplacedWords);
                     item.Start();
                     User.AddCorrespondingBot(item.Name);
                 } 
@@ -121,6 +123,7 @@ namespace csb.chains
                 if (User != null)
                 {
                     bot.AllowedID = User.ID;
+                    bot.ReplacedWords = new List<string>(ReplacedWords);
                 }
 
                 Bots.Add(bot);
@@ -188,5 +191,26 @@ namespace csb.chains
             return $"{Name} Id={Id}";
         }
 
+        public void AddReplacedWord(string word)
+        {
+            if (!ReplacedWords.Contains(word))
+                ReplacedWords.Add(word);
+            foreach (var item in Bots)
+                item.ReplacedWords.Add(word);            
+        }
+
+        public void RemoveReplacedWord(int index)
+        {
+            ReplacedWords.RemoveAt(index);
+            foreach (var item in Bots)
+                item.ReplacedWords.RemoveAt(index);
+        }
+
+        public void ClearReplacedWords()
+        {
+            ReplacedWords.Clear();
+            foreach (var item in Bots)
+                item.ReplacedWords.Clear();
+        }
     }
 }

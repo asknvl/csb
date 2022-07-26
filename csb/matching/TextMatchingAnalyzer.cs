@@ -43,6 +43,9 @@ namespace csb.matching
             int length = splt.Length;
             int max = 0;
 
+            if (length == 0)
+                return 0;
+
             foreach (var message in messageQueue)
             {
 
@@ -61,7 +64,11 @@ namespace csb.matching
                 Console.WriteLine(max);
             }
 
-            return (max * 100) / length;
+            //return (max * 100) / length;
+
+            return 0;
+
+
         }
         #endregion
     }
