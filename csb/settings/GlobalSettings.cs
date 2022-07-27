@@ -15,7 +15,7 @@ namespace csb.settings
 
         static GlobalSettings instance;
         private GlobalSettings() {
-#if RELEASE
+#if VESTNIK || LATAM
             api_id = "16532988";
             api_hash = "05a55aa70deae546f5eb4b2892a56606";
 #endif
