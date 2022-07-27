@@ -20,6 +20,16 @@ namespace csb.usr_listener
 
         #region const
         const int messages_buffer_length = 20;
+#if DEBUG
+        const int analyse_message_buffer_length = 10;
+        const int analyse_treshold = 71;
+#elif LATAM
+        const int analyse_message_buffer_length = 5;
+        const int analyse_treshold = 99;
+#elif VESTNIK
+        const int analyse_message_buffer_length = 8;
+        const int analyse_treshold = 70;
+#endif
         #endregion
 
         #region vars
@@ -40,9 +50,9 @@ namespace csb.usr_listener
 
         ITextMatchingAnalyzer textMatchingAnalyzer;
 
-        #endregion
+#endregion
 
-        #region properties
+#region properties
         [JsonIgnore]
         public string PhoneNumber { get; set; }
         [JsonIgnore]
@@ -90,10 +100,10 @@ namespace csb.usr_listener
         }
 
         [JsonProperty]
-        public int MessageBufferLength { get; set; } = 8;
+        public int MessageBufferLength { get; set; } = analyse_message_buffer_length;
         [JsonProperty]
-        public int MatchingPercentageTreshold { get; set; } = 70;
-        #endregion
+        public int MatchingPercentageTreshold { get; set; } = analyse_treshold;
+#endregion
 
         string Config(string what)
         {
@@ -176,7 +186,7 @@ namespace csb.usr_listener
                             return;
                         }
 
-#if MULT_INP && !DEBUG
+#if VESTNIK
                         if (m.fwd_from != null)
                             continue;
 #endif
@@ -214,7 +224,8 @@ namespace csb.usr_listener
 
                 foreach (var id in group.MessageIDs)
                 {
-                    Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0].Item2);
+                    //Messages_MessagesBase message = await user.GetMessages(from_chat, group.MessageIDs[0].Item2);
+                    Messages_MessagesBase message = await user.GetMessages(from_chat, id.Item2);
                     MessageBase mb = message.Messages[0] as MessageBase;
                     Message m = mb as Message;
 
@@ -227,14 +238,17 @@ namespace csb.usr_listener
                                 break;
                         }
 #if MULT_INP
-                        int percentage = textMatchingAnalyzer.Check(m.message);
-                        Console.WriteLine(percentage);
-                        if (percentage > MatchingPercentageTreshold)
+                        if (!string.IsNullOrEmpty(m.message))
                         {
-                            filterFlag = true;
-                            break;
-                        } else
-                            textMatchingAnalyzer.Add(m.message);
+                            int percentage = textMatchingAnalyzer.Check(m.message);
+                            Console.WriteLine($"{percentage}%");                            
+                            if (percentage > MatchingPercentageTreshold)
+                            {
+                                filterFlag = true;
+                                break;
+                            } else
+                                textMatchingAnalyzer.Add(m.message);
+                        }
 #endif
 
                     }

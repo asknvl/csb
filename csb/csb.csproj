@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Latam|AnyCPU'">
-    <DefineConstants>$(DefineConstants)TRACE;LATAM;</DefineConstants>
+    <DefineConstants>$(DefineConstants)TRACE;LATAM;MULT_INP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

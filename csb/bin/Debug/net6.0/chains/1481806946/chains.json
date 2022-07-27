@@ -21,9 +21,9 @@
     ],
     "User": {
       "FilteredWords": [],
-      "TimeInterval": 0.016666666666666666,
-      "MessageBufferLength": 1,
-      "MatchingPercentageTreshold": 80
+      "TimeInterval": 10.0,
+      "MessageBufferLength": 6,
+      "MatchingPercentageTreshold": 99
     },
     "ReplacedWords": [
       "МТЛБ",
