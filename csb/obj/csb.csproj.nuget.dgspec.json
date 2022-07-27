@@ -1,21 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj": {}
+    "/Users/alexeykonovalov/work/csb/csb/csb.csproj": {}
   },
   "projects": {
-    "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj": {
+    "/Users/alexeykonovalov/work/csb/csb/csb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
+        "projectUniqueName": "/Users/alexeykonovalov/work/csb/csb/csb.csproj",
         "projectName": "csb",
-        "projectPath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
-        "packagesPath": "C:\\Users\\Никита\\.nuget\\packages\\",
-        "outputPath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\obj\\",
+        "projectPath": "/Users/alexeykonovalov/work/csb/csb/csb.csproj",
+        "packagesPath": "/Users/alexeykonovalov/.nuget/packages/",
+        "outputPath": "/Users/alexeykonovalov/work/csb/csb/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Никита\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/alexeykonovalov/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -64,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/x64/sdk/6.0.104/RuntimeIdentifierGraph.json"
         }
       }
     }

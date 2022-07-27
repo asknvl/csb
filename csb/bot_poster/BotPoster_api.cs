@@ -326,9 +326,14 @@ namespace csb.bot_poster
 
             List<MessageEntity>? tmpEntities = entities?.ToList();
 
-            int length = 0;
+            foreach (var replaced in ReplacedWords)
+            {
+                string spaces = new string(' ', replaced.Length);
+                text = text.Replace(replaced, spaces);
+            }
 
-            var patterns = ReplacedWords.Concat(replace_patterns.ToList());
+            int length = 0;
+            var patterns = replace_patterns.ToList();
 
             foreach (var pattern in patterns)
             {
@@ -347,7 +352,6 @@ namespace csb.bot_poster
                         var found = tmpEntities.Where(e => e.Offset == position).ToList();
                         try
                         {
-
                             if (found != null)
                             {
                                 var index = tmpEntities.IndexOf(found[0]);

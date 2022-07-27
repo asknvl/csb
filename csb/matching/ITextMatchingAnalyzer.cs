@@ -8,6 +8,7 @@ namespace csb.matching
 {
     internal interface ITextMatchingAnalyzer
     {
+        int Capacity { get; set; }
         void Add(string message);
         int Check(string message);
     }

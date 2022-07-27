@@ -511,6 +511,23 @@ namespace csb.users
             if (msg == null)
                 return;
 
+            if (msg.Contains("/setbufferlength"))
+            {
+                try
+                {
+                    string val = msg.Replace("/setbufferlength", "").Trim();
+                    int len = int.Parse(val);
+                    var chain = chainsProcessor.Get(currentChainID);
+                    chain.User.SetMessageBufferLength(len);
+                    chainsProcessor.Save();
+
+                }
+                catch (Exception ex)
+                {
+                    await sendTextMessage(chat, ex.Message);
+                }
+            }
+
             switch (msg)
             {
                 case "/start":
@@ -541,6 +558,16 @@ namespace csb.users
                         await sendTextMessage(chat, ex.Message);
                         return;
                     }
+                    break;
+
+                case "/getbufferlength":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        int len = chain.User.GetMessageBufferLength();
+                        await sendTextMessage(chat, "" + len);
+                    }
+                    catch { }
                     break;
 
                 default:

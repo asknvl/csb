@@ -13,16 +13,22 @@
         "VictimLink": "0",
         "ChannelLink": "0",
         "ReplacedWords": [
-          "Persigue tu sueño"
+          "МТЛБ",
+          "Persigue tu sueño",
+          "Beginners"
         ]
       }
     ],
     "User": {
       "FilteredWords": [],
-      "TimeInterval": 0.016666666666666666
+      "TimeInterval": 0.016666666666666666,
+      "MessageBufferLength": 1,
+      "MatchingPercentageTreshold": 70
     },
     "ReplacedWords": [
-      "Persigue tu sueño"
+      "МТЛБ",
+      "Persigue tu sueño",
+      "Beginners"
     ],
     "State": 0
   }

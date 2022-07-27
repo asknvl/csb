@@ -38,7 +38,7 @@ namespace csb.usr_listener
         List<(ChatBase, int)[]> mediaIDs = new();
         Random rand = new Random();
 
-        ITextMatchingAnalyzer textMatsingAnalyzer = new TextMatchingAnalyzer(8);
+        ITextMatchingAnalyzer textMatchingAnalyzer;
 
         #endregion
 
@@ -88,6 +88,11 @@ namespace csb.usr_listener
                 }
             }
         }
+
+        [JsonProperty]
+        public int MessageBufferLength { get; set; }
+        [JsonProperty]
+        public int MatchingPercentageTreshold { get; set; }
         #endregion
 
         string Config(string what)
@@ -123,6 +128,10 @@ namespace csb.usr_listener
         public UserListener_v1(string phonenumber)
         {
             PhoneNumber = phonenumber;
+            if (MessageBufferLength == 0)
+                MessageBufferLength = 8;
+
+            textMatchingAnalyzer = new TextMatchingAnalyzer(MessageBufferLength);
 
             timer = new();
             timer.Interval = 60 * TimeInterval * 1000;
@@ -222,14 +231,14 @@ namespace csb.usr_listener
                                 break;
                         }
 #if MULT_INP
-                        int percentage = textMatsingAnalyzer.Check(m.message);
+                        int percentage = textMatchingAnalyzer.Check(m.message);
                         Console.WriteLine(percentage);
-                        if (percentage > 70)
+                        if (percentage > MatchingPercentageTreshold)
                         {
                             filterFlag = true;
                             break;
                         } else
-                            textMatsingAnalyzer.Add(m.message);
+                            textMatchingAnalyzer.Add(m.message);
 #endif
 
                     }
@@ -316,12 +325,12 @@ namespace csb.usr_listener
 
                 if (message != null)
                 {
-                    int percentage = textMatsingAnalyzer.Check(message.message);
+                    int percentage = textMatchingAnalyzer.Check(message.message);
                     Console.WriteLine(percentage);
-                    if (percentage > 70)
+                    if (percentage > MatchingPercentageTreshold)
                         return;
                     else
-                        textMatsingAnalyzer.Add(message.message);
+                        textMatchingAnalyzer.Add(message.message);
                 }               
 
 
@@ -481,6 +490,17 @@ namespace csb.usr_listener
                 resolvedBots.Add(await user.Contacts_ResolveUsername(item));                
             }
 
+        }
+
+        public void SetMessageBufferLength(int len)
+        {
+            MessageBufferLength = len;
+            textMatchingAnalyzer.Capacity = MessageBufferLength;
+        }
+
+        public int GetMessageBufferLength()
+        {
+            return textMatchingAnalyzer.Capacity;
         }
 
         public void Start()

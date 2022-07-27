@@ -64,10 +64,7 @@ namespace csb.matching
                 Console.WriteLine(max);
             }
 
-            //return (max * 100) / length;
-
-            return 0;
-
+            return (max * 100) / length;
 
         }
         #endregion
