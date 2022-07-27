@@ -528,6 +528,23 @@ namespace csb.users
                 }
             }
 
+            if (msg.Contains("/settreshold"))
+            {
+                try
+                {
+                    string val = msg.Replace("/settreshold", "").Trim();
+                    int t = int.Parse(val);
+                    var chain = chainsProcessor.Get(currentChainID);
+                    chain.User.SetMatchingTreshold(t);
+                    chainsProcessor.Save();
+
+                }
+                catch (Exception ex)
+                {
+                    await sendTextMessage(chat, ex.Message);
+                }
+            }
+
             switch (msg)
             {
                 case "/start":
@@ -565,7 +582,17 @@ namespace csb.users
                     {
                         var chain = chainsProcessor.Get(currentChainID);
                         int len = chain.User.GetMessageBufferLength();
-                        await sendTextMessage(chat, "" + len);
+                        await sendTextMessage(chat, "BufferLength=" + len);
+                    }
+                    catch { }
+                    break;
+
+                case "/gettreshold":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        int t = chain.User.GetMatchingTreshold();
+                        await sendTextMessage(chat, "MatchingTreshold=" + t);
                     }
                     catch { }
                     break;

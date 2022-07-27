@@ -23,7 +23,7 @@
       "FilteredWords": [],
       "TimeInterval": 0.016666666666666666,
       "MessageBufferLength": 1,
-      "MatchingPercentageTreshold": 70
+      "MatchingPercentageTreshold": 80
     },
     "ReplacedWords": [
       "МТЛБ",

@@ -1,13 +1,14 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/chains/Chain.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/usr_listener/UserListener_v1.cs">
     <Files>
       <File FileName="csb/bot_poster/BotPoster_api.cs" Line="332" Column="17" />
-      <File FileName="csb/usr_listener/UserListener_v1.cs" Line="128" Column="16" />
-      <File FileName="csb/matching/TextMatchingAnalyzer.cs" Line="68" Column="1" />
+      <File FileName="csb/usr_listener/UserListener_v1.cs" Line="68" Column="42" />
+      <File FileName="csb/matching/TextMatchingAnalyzer.cs" Line="9" Column="18" />
       <File FileName="csb/matching/ITextMatchingAnalyzer.cs" Line="11" Column="33" />
-      <File FileName="csb/users/User.cs" Line="522" Column="44" />
-      <File FileName="csb/chains/Chain.cs" Line="63" Column="28" />
+      <File FileName="csb/users/User.cs" Line="771" Column="39" />
+      <File FileName="csb/chains/Chain.cs" Line="161" Column="21" />
+      <File FileName="csb/chains/IChain.cs" Line="29" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,12 +16,12 @@
           <Node name="csb" expanded="True">
             <Node name="csb" expanded="True">
               <Node name="bot_poster" expanded="True" />
-              <Node name="chains" expanded="True">
-                <Node name="Chain.cs" selected="True" />
-              </Node>
+              <Node name="chains" expanded="True" />
               <Node name="matching" expanded="True" />
               <Node name="users" expanded="True" />
-              <Node name="usr_listener" expanded="True" />
+              <Node name="usr_listener" expanded="True">
+                <Node name="UserListener_v1.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
@@ -30,9 +31,7 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/usr_listener/UserListener_v1.cs" relfile="csb/usr_listener/UserListener_v1.cs" line="130" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

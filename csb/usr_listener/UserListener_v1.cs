@@ -90,9 +90,9 @@ namespace csb.usr_listener
         }
 
         [JsonProperty]
-        public int MessageBufferLength { get; set; }
+        public int MessageBufferLength { get; set; } = 8;
         [JsonProperty]
-        public int MatchingPercentageTreshold { get; set; }
+        public int MatchingPercentageTreshold { get; set; } = 70;
         #endregion
 
         string Config(string what)
@@ -128,11 +128,7 @@ namespace csb.usr_listener
         public UserListener_v1(string phonenumber)
         {
             PhoneNumber = phonenumber;
-            if (MessageBufferLength == 0)
-                MessageBufferLength = 8;
-
-            textMatchingAnalyzer = new TextMatchingAnalyzer(MessageBufferLength);
-
+          
             timer = new();
             timer.Interval = 60 * TimeInterval * 1000;
             timer.Elapsed += Timer_Elapsed;
@@ -503,6 +499,16 @@ namespace csb.usr_listener
             return textMatchingAnalyzer.Capacity;
         }
 
+        public void SetMatchingTreshold(int t)
+        {
+            MatchingPercentageTreshold = t;
+        }
+
+        public int GetMatchingTreshold()
+        {
+            return MatchingPercentageTreshold;
+        }
+
         public void Start()
         {
             if (IsRunning)
@@ -511,6 +517,9 @@ namespace csb.usr_listener
                 StartedEvent?.Invoke(PhoneNumber);
                 return;
             }
+
+
+            textMatchingAnalyzer = new TextMatchingAnalyzer(MessageBufferLength);
 
             mediaGroup = new();
 
