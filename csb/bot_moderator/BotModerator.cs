@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using csb.server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,12 @@ namespace csb.bot_moderator
         #region vars
         ITelegramBotClient bot;
         CancellationTokenSource cts;
+
+#if DEBUG
+        TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
+#else
+        TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
+#endif
         #endregion
 
         #region properties
@@ -55,6 +62,25 @@ namespace csb.bot_moderator
                     Console.WriteLine($"join request: {Name} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName}");
                     bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                     Console.WriteLine("Result=" + res);
+
+                    if (res)
+                    {
+                        List<Follower> followers = new();
+                        followers.Add(new Follower()
+                        {
+                            tg_chat_id = chatJoinRequest.Chat.Id,
+                            tg_user_id = chatJoinRequest.From.Id,
+                            username = chatJoinRequest.From.Username,
+                            firstname = chatJoinRequest.From.FirstName,
+                            lastname = chatJoinRequest.From.LastName,
+                            invite_link = chatJoinRequest.InviteLink.InviteLink,
+                            tg_geolocation = GeoTag
+
+                        });
+                        await statApi.AddFollowers(followers);
+                    }
+
+
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using csb.server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,7 +65,7 @@ namespace csb.bot_poster
 
         [JsonIgnore]
         public bool IsRunning { get; set; }
-        #endregion
+#endregion
         [JsonIgnore]
         public long AllowedID { get; set; }
 
@@ -113,19 +114,20 @@ namespace csb.bot_poster
             if (update == null)
                 return;
 
-            if (update.ChatJoinRequest != null)
-            {
-                try
-                {
-                    var chatJoinRequest = update.ChatJoinRequest;
-                    Console.WriteLine($"join request: {Name} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName}");
-                    bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    Console.WriteLine("Result=" + res);
-                } catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
+            //if (update.ChatJoinRequest != null)
+            //{
+            //    try
+            //    {
+            //        var chatJoinRequest = update.ChatJoinRequest;
+            //        Console.WriteLine($"join request: {Name} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName}");
+            //        bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+            //        Console.WriteLine("Result=" + res);                    
+
+            //    } catch (Exception ex)
+            //    {
+            //        Console.WriteLine(ex.Message);
+            //    }
+            //}
 
             if (update.Message == null)
                 return;
