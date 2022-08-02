@@ -92,7 +92,7 @@ namespace csb.bot_poster
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.ChatJoinRequest, UpdateType.ChatMember }
+                AllowedUpdates = new UpdateType[] { UpdateType.Message }
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
@@ -113,21 +113,6 @@ namespace csb.bot_poster
 
             if (update == null)
                 return;
-
-            //if (update.ChatJoinRequest != null)
-            //{
-            //    try
-            //    {
-            //        var chatJoinRequest = update.ChatJoinRequest;
-            //        Console.WriteLine($"join request: {Name} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName}");
-            //        bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-            //        Console.WriteLine("Result=" + res);                    
-
-            //    } catch (Exception ex)
-            //    {
-            //        Console.WriteLine(ex.Message);
-            //    }
-            //}
 
             if (update.Message == null)
                 return;
