@@ -112,7 +112,7 @@ namespace csb.bot_manager
                         if (msg == null)
                             return;
 
-                        if (msg.Equals("5555"))
+                        if (msg.Equals("7777"))
                         {
                             string name = $"{update.Message.Chat.FirstName} {update.Message.Chat.LastName}";
                             userManager.Add(chat, name);
