@@ -60,6 +60,21 @@ namespace csb.bot_moderator
             if (update == null)
                 return;
 
+            if (update.ChatMember != null)
+            {
+                var member = update.ChatMember;
+
+                string info = $"{DateTime.Now} {Name}: " +
+                    $"mem link={member.InviteLink?.InviteLink} " +
+                    $"chat={member.Chat?.InviteLink} {member.Chat?.Username}"+
+                    $"from={member.From?.FirstName} {member.From?.LastName} {member.From?.Username}" +
+                    $"newmem={member.NewChatMember?.Status} " +
+                    $"oldmem={member.OldChatMember?.Status} " +
+                    $"date={member.Date}";
+
+                Console.WriteLine(info);
+            }
+
             if (update.ChatJoinRequest != null)
             {
                 try
@@ -92,7 +107,7 @@ namespace csb.bot_moderator
                         ApisendsCounter++;
                     }
 
-                    string info = $"{DateTime.Now} {Name}: req {RequestsCounter.ToString().PadLeft(6)} from {chatJoinRequest.From.Username} approved={res} approves={ApprovesCounter.ToString().PadLeft(6)} apicntr={ApisendsCounter.ToString().PadLeft(6)}";
+                    string info = $"{DateTime.Now} {Name}: req {RequestsCounter.ToString().PadLeft(6)} link={chatJoinRequest.InviteLink.InviteLink} from {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} approved={res} approves={ApprovesCounter.ToString().PadLeft(6)} apicntr={ApisendsCounter.ToString().PadLeft(6)}";
                     Console.WriteLine(info);
 
                 }
