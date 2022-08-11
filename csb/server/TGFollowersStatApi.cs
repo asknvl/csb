@@ -27,7 +27,7 @@ namespace csb.server
         }
 
         #region public
-        public virtual async Task AddFollowers(List<Follower> followers)
+        public virtual async Task UpdateFollowers(List<Follower> followers)
         {
             try
             {

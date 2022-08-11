@@ -11,7 +11,6 @@ namespace csb.server.serialization
     {
         [JsonProperty("users")]
         public List<Follower> users { get; set; }
-
         public sfollowers(List<Follower> followers)
         {
             this.users = followers;

@@ -21,10 +21,10 @@ namespace csb.bot_moderator
         CancellationTokenSource cts;
 
 #if DEBUG
-        TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
+        protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
 #else
         //TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
-        TGStatApi statApi = new TGStatApi("http://192.168.72.51:4000");        
+        protected TGStatApi statApi = new TGStatApi("http://192.168.72.51:4000");        
 
 #endif
         #endregion
@@ -55,7 +55,7 @@ namespace csb.bot_moderator
         }
 
         #region private
-        async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
+        protected virtual async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
             if (update == null)
                 return;
@@ -103,7 +103,7 @@ namespace csb.bot_moderator
                             tg_geolocation = GeoTag
 
                         });
-                        await statApi.AddFollowers(followers);
+                        await statApi.UpdateFollowers(followers);
                         ApisendsCounter++;
                     }
 

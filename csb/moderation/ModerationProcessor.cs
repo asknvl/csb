@@ -13,11 +13,11 @@ namespace csb.moderation
     {
         #region vars
         string path;
-        List<BotModerator> moderatorBotsList = new();
+        List<BotModerator_v1> moderatorBotsList = new();
         #endregion
 
         #region properties
-        public List<BotModerator> ModeratorBots => moderatorBotsList;
+        public List<BotModerator_v1> ModeratorBots => moderatorBotsList;
         #endregion
 
         public ModerationProcessor(string userId)
@@ -37,7 +37,7 @@ namespace csb.moderation
                 Save();
             }
             string rd = File.ReadAllText(path);
-            moderatorBotsList = JsonConvert.DeserializeObject<List<BotModerator>>(rd);
+            moderatorBotsList = JsonConvert.DeserializeObject<List<BotModerator_v1>>(rd);
         }
 
         public void Save()
@@ -62,7 +62,7 @@ namespace csb.moderation
             if (found)
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
 
-            var mbot = new BotModerator(token, geotag);
+            var mbot = new BotModerator_v1(token, geotag);
             mbot.Start();
             moderatorBotsList.Add(mbot);
             Save();            
