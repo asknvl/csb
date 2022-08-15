@@ -16,7 +16,7 @@ namespace csb.server
         public string lastname { get; set; }
         public string invite_link { get; set; }
         public string tg_geolocation { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public bool is_subscribed { get; set; }
 
         public override string ToString()
