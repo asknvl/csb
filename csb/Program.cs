@@ -15,10 +15,13 @@ namespace csb
         {
 
 
-            Console.WriteLine("Вдудь 2.0.10");
+            Console.WriteLine("Вдудь 2.0.11");
 
             BotManager manager = new BotManager();
             manager.Start();
+
+            //csb.server.TGStatApi api = new csb.server.TGStatApi("http://136.243.74.153:4000");
+            //var res = api.GetFollowerGeoTags(1481806946);
 
 
             //ITextMatchingAnalyzer analyzer = new TextMatchingAnalyzer(4);

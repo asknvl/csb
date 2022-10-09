@@ -99,6 +99,53 @@ namespace csb.server
 
             return followersNumber;
         }
+
+
+        class geoTagDto
+        {
+            public int id { get; set; }
+            public string code { get; set; }
+        }
+
+        class tgUserDto
+        {
+            public string tg_user_id { get; set; } 
+            public List<geoTagDto> geolocations { get; set; }
+        }
+
+        public virtual async Task<List<string>> GetFollowerGeoTags(long id)
+        {
+            List<string> tags = new List<string>();
+
+            try
+            {           
+                var client = new RestClient($"{url}/v1/telegram/userByID/{id}");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+                var response = client.Execute(request);
+                var json = JObject.Parse(response.Content);
+                bool res = json["success"].ToObject<bool>();
+                if (res)
+                {
+                    var data = json["telegramUser"];
+                    if (data != null)
+                    {
+                        var d = data.ToObject<tgUserDto>();
+                        tags = d.geolocations.Select(g => g.code).ToList();
+                    }
+
+                } else
+                {
+                    throw new TGFollowersStatException($"Не удалось получить геотеги для id={id}");
+                }
+
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return tags;
+        }
         #endregion
     }
 }

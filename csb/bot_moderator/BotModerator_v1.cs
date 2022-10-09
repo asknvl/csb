@@ -85,9 +85,22 @@ namespace csb.bot_moderator
                 {
                     DeltaRequestsCounter++;
                     var chatJoinRequest = update.ChatJoinRequest;
-                    bool res = await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
 
+                    var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
+                    string tags = "";
+                    foreach (var item in user_geotags)
+                        tags += $"{item} ";
 
+                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length))
+                    {
+                        Console.WriteLine($"{DateTime.Now} {GeoTag} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                        await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+                    } else                    
+                    {
+                        Console.WriteLine($"{DateTime.Now} {GeoTag} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                        await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+                    }
+                    
                     //string info = $"{DateTime.Now} {GeoTag}: " +
                     //              $"req {RequestsCounter.ToString().PadLeft(6)} " +
                     //              $"link={chatJoinRequest.InviteLink.InviteLink} " +
