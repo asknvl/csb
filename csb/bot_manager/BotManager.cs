@@ -1,4 +1,5 @@
-﻿using csb.bot_poster;
+﻿using csb.addme_service;
+using csb.bot_poster;
 using csb.chains;
 using csb.settings;
 using csb.settings.validators;
@@ -51,7 +52,7 @@ namespace csb.bot_manager
         ITelegramBotClient bot;
         CancellationToken cancellationToken;
         //ChainProcessor chainsProcessor = new ChainProcessor("chains.json");        
-
+        AddMeService addMe = AddMeService.getInstance();
         UserManager userManager;
 
         #endregion
@@ -61,7 +62,7 @@ namespace csb.bot_manager
 
 
 #if DEBUG
-            bot = new TelegramBotClient("5386081110:AAH71hl90ItlSNK7XSLguxUOC_e8gJNxRiQ");
+            bot = new TelegramBotClient("5732538181:AAF8np-AP9RBfg75OjQRkmltRcAo4MQw5vU");
 #elif LATAM
             //Latam
             bot = new TelegramBotClient("5597155386:AAEvPn9KUuWRPCECuOTJDHdh6RiY_IVbpWM");             
@@ -111,6 +112,21 @@ namespace csb.bot_manager
                         string msg = update.Message.Text;
                         if (msg == null)
                             return;
+
+                        if (msg.Equals("/addme"))
+                        {
+                            try
+                            {
+                                addMe.Add(chat);
+                            } catch (Exception ex)
+                            {
+                                await bot.SendTextMessageAsync(
+                                  chatId: chat,
+                                  text: ex.Message,
+                                  cancellationToken: cancellationToken);
+                            }
+                            return;
+                        }
 
                         if (msg.Equals("7777"))
                         {

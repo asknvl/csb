@@ -25,6 +25,7 @@ namespace csb.server
             var status = (is_subscribed) ? "JOIN" : "LEFT";
 
             string usrnm = !string.IsNullOrEmpty(username) ? $"@{username}" : "";
+            string link = !string.IsNullOrEmpty(invite_link) ? $"link={invite_link}" : "NOLINK";
 
             return $"{DateTime.Now} " +
                    $"{tg_geolocation} " +
@@ -33,7 +34,8 @@ namespace csb.server
                    $"{tg_user_id} " +
                    $"{firstname} " +
                    $"{lastname} " +
-                   $"{usrnm}";
+                   $"{usrnm} " +
+                   $"{link} ";
 
         }
     }
