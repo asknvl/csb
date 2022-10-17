@@ -1,5 +1,6 @@
 ﻿using csb.addme_service;
 using csb.server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,19 @@ using Telegram.Bot.Types;
 
 namespace csb.bot_moderator
 {
-    public class BotModerator_v1 : BotModerator
+    public class BotModerator_v2 : BotModerator
     {
 
         #region vars
         AddMeService addMe = AddMeService.getInstance();
         #endregion
 
-        #region properties       
-        int DeltaFollowersCounter { get; set; } = 0;
-        int DeltaRequestsCounter { get; set; } = 0;
+        #region properties               
+        [JsonProperty]
+        public GreetingsData Greetings { get; set; } = new();
         #endregion
 
-        public BotModerator_v1(string token, string geotag) : base(token, geotag) { }
+        public BotModerator_v2(string token, string geotag) : base(token, geotag) { }
 
         #region override
         protected override async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
@@ -73,29 +74,25 @@ namespace csb.bot_moderator
 
                                 }
                             }
-
-                            //Hello message here
-                            DeltaFollowersCounter++;
-                            DeltaRequestsCounter--;
                             break;
 
                         case Telegram.Bot.Types.Enums.ChatMemberStatus.Left:
+
+                            await bot.SendTextMessageAsync(
+                            member.From.Id,
+                            text: "Bye text",
+                            cancellationToken: cancellationToken);
+
                             follower.is_subscribed = false;
                             followers.Add(follower);
                             await statApi.UpdateFollowers(followers);
-                            Console.WriteLine("Updated DB-");
-
-                            //Goodbye message here
-
-                            DeltaFollowersCounter--;
+                            Console.WriteLine("Updated DB-");                                                        
                             break;
                     }
 
                     Console.WriteLine(follower);
-
-                    Console.WriteLine($"{GeoTag} dRequests={DeltaRequestsCounter}, dFollowes={DeltaFollowersCounter}");
-                }
-                catch (Exception ex)
+                    
+                } catch (Exception ex)
                 {
                     Console.WriteLine($"------------------------ {DateTime.Now} {ex.Message} --------------------------------");
                 }
@@ -104,9 +101,15 @@ namespace csb.bot_moderator
             if (update.ChatJoinRequest != null)
             {
                 try
-                {
-                    DeltaRequestsCounter++;
+                {                    
                     var chatJoinRequest = update.ChatJoinRequest;
+
+                    await bot.SendTextMessageAsync(
+                             chatJoinRequest.From.Id,
+                             text : "Hello text",
+                             disableWebPagePreview:true,
+                             cancellationToken: cancellationToken);
+
 
                     var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
                     string tags = "";
@@ -126,17 +129,16 @@ namespace csb.bot_moderator
                     {
                         Console.WriteLine($"{DateTime.Now} {GeoTag} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                         await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    } else                    
+                    } else
                     {
                         Console.WriteLine($"{DateTime.Now} {GeoTag} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                         await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    }                  
-                }
-                catch (Exception ex)
+                    }
+                } catch (Exception ex)
                 {
                     Console.WriteLine($"------------------------ {DateTime.Now} {ex.Message} --------------------------------");
                 }
-            }            
+            }
         }
         #endregion
     }

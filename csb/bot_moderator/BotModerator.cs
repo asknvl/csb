@@ -40,7 +40,9 @@ namespace csb.bot_moderator
         public bool IsRunning { get; set; }
         [JsonIgnore]
         public uint RequestsCounter { get; set; }
+        [JsonIgnore]
         public uint ApprovesCounter { get; set; }
+        [JsonIgnore]
         public uint ApisendsCounter { get; set; }
         #endregion
 
