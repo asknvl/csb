@@ -68,6 +68,14 @@ namespace csb.moderation
             Save();            
         }
         
+        public GreetingsData Greetings(string geotag)
+        {
+            var found = moderatorBotsList.FirstOrDefault(o => o.GeoTag.Equals(geotag));
+            if (found == null)
+                throw new Exception("Бота-модератора с таким геотегом не существует");
+            return found.Greetings;
+        }
+
         public BotModerator Get(string geotag)
         {
             var found = moderatorBotsList.FirstOrDefault(o => o.GeoTag.Equals(geotag));

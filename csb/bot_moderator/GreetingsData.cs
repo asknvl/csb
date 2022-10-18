@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 
 namespace csb.bot_moderator
 {
+
+    public class Button {
+        [JsonProperty]
+        public string? Name { get; set; } = null;
+        [JsonProperty]
+        public string? Link { get; set; } = null;
+    }
+
     public class GreetingsData
     {
         [JsonProperty]
         public string? HelloMessage { get; set; } = null;
         [JsonProperty]
-        public string? ReisterLink { get; set; } = null;
+        public List<Button> Buttons { get; set; } = new();
         [JsonProperty]
-        public string? MessageMeLink { get; set; } = null;
-        [JsonProperty]
-        public string? ChannelOpenLink { get; set; } = null;
-        [JsonProperty]
-        public string? AlternativeLink { get; set; } = null;
+        public string? ByeMessage { get; set; } = null;
     }
 }
