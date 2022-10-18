@@ -171,6 +171,13 @@ namespace csb.users
                 }
             })},
 
+             {"finishEddingGreetings", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Завершить", callbackData: "finishEddingGreetings"),
+                }
+            })},
+
         };
         #endregion
 
@@ -873,8 +880,8 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await sendTextMessage(Id, $"Модератор {currentModeratorGeoTag} запущен");
 
-                                string helloReqMsg = "Скопируйте сюда приветственное сообщение, если оно не требуется введите нажмите Отмена";
-                                await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, helloReqMsg, "addModeratorCancel"));
+                                string helloReqMsg = "Перешлите (forward) сюда приветственное \U0001F4B0 сообщение, если оно не требуется нажмите Отмена";
+                                await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
 
                                 //var chain = chainsProcessor.Get(currentChainID);
                                 //chain.AddBot(token);
@@ -893,12 +900,16 @@ namespace csb.users
                         case BotState.waitingModeratorHelloMessage:
                             try
                             {
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = msg;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Text = update.Message.Text;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Entities = update.Message.Entities;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
-                                string regBtnMsg = "Введите через двоеточие название кнопки и ссылку (пример MSGME:https://t.me/+-IS_3EXgm4FlMTM6).";
-                                await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, regBtnMsg, "addModeratorCancel"));
-                                State = BotState.waitingModeratorNewButton;
+
+                                string helloReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, если оно не требуется нажмите Отмена";
+                                await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
+
+                                State = BotState.waitingModeratorByeMessage;
                             }
                             catch (Exception ex)
                             {
@@ -907,45 +918,23 @@ namespace csb.users
                             }
                             break;
 
-                        case BotState.waitingModeratorHelloMessageEdit:
+                        case BotState.waitingModeratorByeMessage:
                             try
                             {
-                                if (!msg.Equals("0"))
-                                {
-                                    moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = msg;
-                                    moderationProcessor.Save();
-                                    await sendTextMessage(chat, "Приветственное сообщение изменено");
-                                }
-                                State = BotState.free;
-                            }
-                            catch (Exception ex) {
-                                await sendTextMessage(chat, ex.Message);
-                                return;
-                            }
-                            break;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.Text = update.Message.Text;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.Entities = update.Message.Entities;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.ReplyMarkup = update.Message.ReplyMarkup;
 
-                        case BotState.waitingModeratorNewButton:
-                            try
-                            {
-                                string[] splt = msg.Split("=>");
-
-                                var button = new Button() {
-                                    Name = splt[0],
-                                    Link = splt[1]
-                                };
-                                moderationProcessor.Greetings(currentModeratorGeoTag).Buttons.Add(button);
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
 
-                                string regBtnMsg = "Введите через => название кнопки и ссылку (пример MSGME=>https://t.me/+-IS_3EXgm4FlMTM6).";
-                                await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, regBtnMsg, "addModeratorCancel"));
-
+                                State = BotState.free;
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            break;
+                            break;                        
 
                     }
                     break;
@@ -1368,11 +1357,10 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 break;
 
-                            case BotState.waitingModeratorHelloMessage:
-                            case BotState.waitingModeratorNewButton:
+                            case BotState.waitingModeratorHelloMessage:                            
                             case BotState.waitingModerarotAlternativeLink:
                             case BotState.waitingModeratorByeMessage:
-                                await messagesProcessor.Back(chat);
+                                //await messagesProcessor.Back(chat);
                                 currentModeratorGeoTag = "";
                                 break;
                         }
@@ -1397,6 +1385,12 @@ namespace csb.users
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
+                case "finishEddingGreetings":
+                    State = BotState.waitingModeratorByeMessage;
+                    await messagesProcessor.Back(chat);
+                    await messagesProcessor.Delete(chat, "finishEddingGreetings");
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
 
                 case "":
                     break;

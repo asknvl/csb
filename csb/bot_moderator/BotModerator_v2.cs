@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.bot_moderator
@@ -27,20 +29,9 @@ namespace csb.bot_moderator
 
         public BotModerator_v2(string token, string geotag) : base(token, geotag) { }
 
-
-        //ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
-        //{
-        //    new KeyboardButton[] { "One", "Two" },
-        //    new KeyboardButton[] { "Three", "Four" },
-        //})
-        //{
-        //    ResizeKeyboard = true
-        //};
-
-
         #region helpers
         private InlineKeyboardMarkup getButtonsMarkup(List<Button> buttons)
-        {           
+        {
             int first = buttons.Count % 2;
             InlineKeyboardButton[][] _buttons = new InlineKeyboardButton[first + buttons.Count / 2][];
             if (first == 1)
@@ -49,13 +40,14 @@ namespace csb.bot_moderator
                     InlineKeyboardButton.WithUrl(text: buttons[0].Name, url: $"{buttons[0].Link}"),
                 };
             }
-            for (int i = 0; i < (buttons.Count-first) / 2; i++)            {
+            for (int i = 0; i < (buttons.Count - first) / 2; i++)
+            {
                 _buttons[i + first] = new InlineKeyboardButton[] {
                     InlineKeyboardButton.WithUrl(text: buttons[i * 2 + first].Name, url: $"{buttons[i * 2 + first].Link}"),
                     InlineKeyboardButton.WithUrl(text: buttons[i * 2 + 1 + first].Name, url: $"{buttons[i * 2 + 1 + first].Link}")
                 };
             }
-            InlineKeyboardMarkup inlineKeyboard = new(_buttons);            
+            InlineKeyboardMarkup inlineKeyboard = new(_buttons);
             return inlineKeyboard;
         }
         #endregion
@@ -112,20 +104,24 @@ namespace csb.bot_moderator
 
                         case Telegram.Bot.Types.Enums.ChatMemberStatus.Left:
 
-                            await bot.SendTextMessageAsync(
-                            member.From.Id,
-                            text: "Bye text",
-                            cancellationToken: cancellationToken);
+                            if (Greetings.ByeMessage != null)
+                                await bot.SendTextMessageAsync(
+                                         member.From.Id,
+                                         text: Greetings.ByeMessage.Text,
+                                         replyMarkup: Greetings.ByeMessage.ReplyMarkup,
+                                         entities: Greetings.ByeMessage.Entities,
+                                         disableWebPagePreview: true,
+                                         cancellationToken: cancellationToken);
 
                             follower.is_subscribed = false;
                             followers.Add(follower);
                             await statApi.UpdateFollowers(followers);
-                            Console.WriteLine("Updated DB-");                                                        
+                            Console.WriteLine("Updated DB-");
                             break;
                     }
 
                     Console.WriteLine(follower);
-                    
+
                 } catch (Exception ex)
                 {
                     Console.WriteLine($"------------------------ {DateTime.Now} {ex.Message} --------------------------------");
@@ -135,15 +131,17 @@ namespace csb.bot_moderator
             if (update.ChatJoinRequest != null)
             {
                 try
-                {                    
+                {
                     var chatJoinRequest = update.ChatJoinRequest;
 
-                    await bot.SendTextMessageAsync(
-                             chatJoinRequest.From.Id,
-                             text : Greetings.HelloMessage,
-                             replyMarkup: getButtonsMarkup(Greetings.Buttons),
-                             disableWebPagePreview:true,
-                             cancellationToken: cancellationToken);
+                    if (Greetings.HelloMessage != null)
+                        await bot.SendTextMessageAsync(
+                                 chatJoinRequest.From.Id,
+                                 text: Greetings.HelloMessage.Text,
+                                 replyMarkup: Greetings.HelloMessage.ReplyMarkup,
+                                 entities: Greetings.HelloMessage.Entities,
+                                 disableWebPagePreview: true,
+                                 cancellationToken: cancellationToken);
 
 
                     var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
@@ -174,7 +172,7 @@ namespace csb.bot_moderator
                     Console.WriteLine($"------------------------ {DateTime.Now} {ex.Message} --------------------------------");
                 }
             }
-        }
+        }        
         #endregion
     }
 

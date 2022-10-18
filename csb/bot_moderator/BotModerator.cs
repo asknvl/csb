@@ -17,8 +17,8 @@ namespace csb.bot_moderator
     public class BotModerator : IBotModerator
     {
         #region vars
-        ITelegramBotClient bot;
-        CancellationTokenSource cts;
+        protected ITelegramBotClient bot;
+        protected CancellationTokenSource cts;
 
 #if DEBUG
         protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
@@ -134,14 +134,14 @@ namespace csb.bot_moderator
         #endregion
 
         #region public
-        public void Start()
+        public virtual void Start()
         {
             if (IsRunning)
                 return;
 
             bot = new TelegramBotClient(Token);
             User u = bot.GetMeAsync().Result;
-            Name = u.Username;
+            Name = u.Username;            
 
             cts = new CancellationTokenSource();
 
@@ -156,7 +156,7 @@ namespace csb.bot_moderator
             Console.WriteLine($"Moderator {Name} started");
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             cts.Cancel();
             IsRunning = false;

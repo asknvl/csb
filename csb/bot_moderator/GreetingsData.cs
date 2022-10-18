@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.bot_moderator
 {
@@ -15,15 +13,21 @@ namespace csb.bot_moderator
         public string? Link { get; set; } = null;
     }
 
+    public class TextMessage
+    {
+        [JsonProperty]
+        public string Text { get; set; } = null;
+        [JsonProperty]
+        public MessageEntity[]? Entities { get; set; } = null;
+        [JsonProperty]
+        public InlineKeyboardMarkup? ReplyMarkup { get; set; } = null;        
+    }
+
     public class GreetingsData
     {
         [JsonProperty]
-        public string? HelloMessage { get; set; } = null;
+        public TextMessage HelloMessage { get; set; } = new();
         [JsonProperty]
-        public List<Button> Buttons { get; set; } = new();
-        [JsonProperty]
-        public string? ByeMessage { get; set; } = null;
-        [JsonProperty]
-        public string? AlternativeLink { get; set; } = null;
+        public TextMessage ByeMessage { get; set; } = new();
     }
 }
