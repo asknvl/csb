@@ -18,3 +18,4 @@ D:\WORK\xtime\Sources\csb\csb\obj\Release\net6.0\refint\csb.dll
 D:\WORK\xtime\Sources\csb\csb\obj\Release\net6.0\csb.pdb
 D:\WORK\xtime\Sources\csb\csb\obj\Release\net6.0\csb.genruntimeconfig.cache
 D:\WORK\xtime\Sources\csb\csb\obj\Release\net6.0\ref\csb.dll
+D:\WORK\xtime\Sources\csb\csb\bin\Release\net6.0\RestSharp.dll
