@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.bot_moderator
 {
@@ -25,6 +26,39 @@ namespace csb.bot_moderator
         #endregion
 
         public BotModerator_v2(string token, string geotag) : base(token, geotag) { }
+
+
+        //ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
+        //{
+        //    new KeyboardButton[] { "One", "Two" },
+        //    new KeyboardButton[] { "Three", "Four" },
+        //})
+        //{
+        //    ResizeKeyboard = true
+        //};
+
+
+        #region helpers
+        private InlineKeyboardMarkup getButtonsMarkup(List<Button> buttons)
+        {           
+            int first = buttons.Count % 2;
+            InlineKeyboardButton[][] _buttons = new InlineKeyboardButton[first + buttons.Count / 2][];
+            if (first == 1)
+            {
+                _buttons[0] = new InlineKeyboardButton[] {
+                    InlineKeyboardButton.WithUrl(text: buttons[0].Name, url: $"{buttons[0].Link}"),
+                };
+            }
+            for (int i = 0; i < (buttons.Count-first) / 2; i++)            {
+                _buttons[i + first] = new InlineKeyboardButton[] {
+                    InlineKeyboardButton.WithUrl(text: buttons[i * 2 + first].Name, url: $"{buttons[i * 2 + first].Link}"),
+                    InlineKeyboardButton.WithUrl(text: buttons[i * 2 + 1 + first].Name, url: $"{buttons[i * 2 + 1 + first].Link}")
+                };
+            }
+            InlineKeyboardMarkup inlineKeyboard = new(_buttons);            
+            return inlineKeyboard;
+        }
+        #endregion
 
         #region override
         protected override async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
@@ -106,7 +140,8 @@ namespace csb.bot_moderator
 
                     await bot.SendTextMessageAsync(
                              chatJoinRequest.From.Id,
-                             text : "Hello text",
+                             text : Greetings.HelloMessage,
+                             replyMarkup: getButtonsMarkup(Greetings.Buttons),
                              disableWebPagePreview:true,
                              cancellationToken: cancellationToken);
 

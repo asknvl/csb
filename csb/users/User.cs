@@ -1372,12 +1372,13 @@ namespace csb.users
                             case BotState.waitingModeratorNewButton:
                             case BotState.waitingModerarotAlternativeLink:
                             case BotState.waitingModeratorByeMessage:
+                                await messagesProcessor.Back(chat);
                                 currentModeratorGeoTag = "";
                                 break;
                         }
 
                         State = BotState.free;
-                        if (!currentModeratorGeoTag.Equals(""))
+                        if (!string.IsNullOrEmpty(currentModeratorGeoTag))
                         {
                             try
                             {
@@ -1392,6 +1393,8 @@ namespace csb.users
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
+
+                    await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
 

@@ -23,5 +23,7 @@ namespace csb.bot_moderator
         public List<Button> Buttons { get; set; } = new();
         [JsonProperty]
         public string? ByeMessage { get; set; } = null;
+        [JsonProperty]
+        public string? AlternativeLink { get; set; } = null;
     }
 }
