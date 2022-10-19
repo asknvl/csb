@@ -104,14 +104,17 @@ namespace csb.bot_moderator
 
                         case Telegram.Bot.Types.Enums.ChatMemberStatus.Left:
 
-                            if (Greetings.ByeMessage != null)
-                                await bot.SendTextMessageAsync(
-                                         member.From.Id,
-                                         text: Greetings.ByeMessage.Text,
-                                         replyMarkup: Greetings.ByeMessage.ReplyMarkup,
-                                         entities: Greetings.ByeMessage.Entities,
-                                         disableWebPagePreview: true,
-                                         cancellationToken: cancellationToken);
+                            try
+                            {
+                                if (Greetings.ByeMessage != null)
+                                    await bot.SendTextMessageAsync(
+                                             member.From.Id,
+                                             text: Greetings.ByeMessage.Text,
+                                             replyMarkup: Greetings.ByeMessage.ReplyMarkup,
+                                             entities: Greetings.ByeMessage.Entities,
+                                             disableWebPagePreview: true,
+                                             cancellationToken: cancellationToken);
+                            } catch (Exception ex) { }
 
                             follower.is_subscribed = false;
                             followers.Add(follower);
@@ -134,14 +137,17 @@ namespace csb.bot_moderator
                 {
                     var chatJoinRequest = update.ChatJoinRequest;
 
-                    if (Greetings.HelloMessage != null)
-                        await bot.SendTextMessageAsync(
-                                 chatJoinRequest.From.Id,
-                                 text: Greetings.HelloMessage.Text,
-                                 replyMarkup: Greetings.HelloMessage.ReplyMarkup,
-                                 entities: Greetings.HelloMessage.Entities,
-                                 disableWebPagePreview: true,
-                                 cancellationToken: cancellationToken);
+                    try
+                    {
+                        if (Greetings.HelloMessage != null)
+                            await bot.SendTextMessageAsync(
+                                     chatJoinRequest.From.Id,
+                                     text: Greetings.HelloMessage.Text,
+                                     replyMarkup: Greetings.HelloMessage.ReplyMarkup,
+                                     entities: Greetings.HelloMessage.Entities,
+                                     disableWebPagePreview: true,
+                                     cancellationToken: cancellationToken);
+                    } catch (Exception ex) { }
 
 
                     var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);

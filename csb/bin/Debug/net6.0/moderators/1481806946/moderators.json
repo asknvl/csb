@@ -1,0 +1,127 @@
+[
+  {
+    "Greetings": {
+      "HelloMessage": {
+        "Text": null,
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": null,
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "GeoTag": "T1",
+    "Name": "t1_asknvl_bot",
+    "Token": "5497811276:AAHfULbDJH3j-kONIBsYXXKL05epDmR3rbg"
+  },
+  {
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "❗️MESSAGE FOR NEW SUBSCRIBERS❗️\n\n🤩 Hi My name is Amir and in this channel I teach people how to make money from Aviator game. If you take my work seriously - then without any problem you can learn to earn from 15-20k rupees a day. Read all the information below carefully and then you can start!\n\n☑️Maybe you've already tried to make money from it, or maybe you're tackling it all for the first time and don't understand anything 🤔 Don't worry, I'll help!\n\n☑️ To start earning, you need to register at REGISTER IN Now my software and analytics work only with this product.\n\n☑️ After registration, you need to replenish your balance.\n\n☑️ Have you increased the balance? Great 👍🏼 Let's move on... I have a free CANAL where you read this post. Every day you can get ~ three predictions on it. Never bet all-in!\n☑️ On a free channel, I do my best so that everyone can make some money and learn a little bit about making money on Aviator.\nBut for those who don't want to limit themselves to that, there are paid services. You can find information about them every day on the channel 🤝\n☑️ If you have any doubts, I have a CHANNEL WITH FEEDBACK from all the people who are already working with me with good results. You can write to each of them, talk to them in person and make sure that everything is real and not complicated 😉 For example - \n1. https://t.me/feebback/5231\n2. https://t.me/feebback/5215\n3. https://t.me/feebback/5193\n\n☑️ If you want detailed instructions on how to start working with me, go to my TRAINING CHANNEL\n Watch the training video, read all the information carefully and let's make money together 💸\n\n\n☑️ Still have questions? Don't be shy and write me personally: @amirrsallah\n\nI'm always happy to help you 😉",
+        "Entities": [
+          {
+            "type": "bold",
+            "offset": 2,
+            "length": 27
+          },
+          {
+            "type": "italic",
+            "offset": 36,
+            "length": 147
+          },
+          {
+            "type": "bold",
+            "offset": 184,
+            "length": 47
+          },
+          {
+            "type": "code",
+            "offset": 232,
+            "length": 64
+          },
+          {
+            "type": "text_link",
+            "offset": 504,
+            "length": 11,
+            "url": "https://1wgve.top/"
+          },
+          {
+            "type": "text_link",
+            "offset": 713,
+            "length": 5,
+            "url": "https://t.me/+egZtd-TUyI9lODhi"
+          },
+          {
+            "type": "text_link",
+            "offset": 1121,
+            "length": 21,
+            "url": "https://t.me/feebback"
+          },
+          {
+            "type": "text_link",
+            "offset": 1347,
+            "length": 26,
+            "url": "https://t.me/feebback/5231"
+          },
+          {
+            "type": "text_link",
+            "offset": 1377,
+            "length": 26,
+            "url": "https://t.me/feebback/5215"
+          },
+          {
+            "type": "text_link",
+            "offset": 1407,
+            "length": 26,
+            "url": "https://t.me/feebback/5193"
+          },
+          {
+            "type": "text_link",
+            "offset": 1514,
+            "length": 16,
+            "url": "https://t.me/+IQ5zBmd97N82NmNi"
+          },
+          {
+            "type": "mention",
+            "offset": 1691,
+            "length": 12
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "💎MAIN CHANNEL",
+                "url": "https://t.me/+egZtd-TUyI9lODhi"
+              },
+              {
+                "text": "💰FEEDBACK",
+                "url": "https://t.me/+IQ5zBmd97N82NmNi"
+              }
+            ],
+            [
+              {
+                "text": "🏆REGISTER",
+                "url": "https://1wgve.top/"
+              },
+              {
+                "text": "✅TRAINING",
+                "url": "https://t.me/+IQ5zBmd97N82NmNi"
+              }
+            ]
+          ]
+        }
+      },
+      "ByeMessage": {
+        "Text": null,
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "GeoTag": "T2",
+    "Name": "t2_asknvl_bot",
+    "Token": "5744458528:AAE3ivhvfwdPcoqT53IDZfYxvUwgw1eEwgc"
+  }
+]

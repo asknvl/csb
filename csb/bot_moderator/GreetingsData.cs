@@ -16,7 +16,7 @@ namespace csb.bot_moderator
     public class TextMessage
     {
         [JsonProperty]
-        public string Text { get; set; } = null;
+        public string? Text { get; set; } = null;
         [JsonProperty]
         public MessageEntity[]? Entities { get; set; } = null;
         [JsonProperty]
@@ -26,8 +26,8 @@ namespace csb.bot_moderator
     public class GreetingsData
     {
         [JsonProperty]
-        public TextMessage HelloMessage { get; set; } = new();
+        public TextMessage? HelloMessage { get; set; } = new();
         [JsonProperty]
-        public TextMessage ByeMessage { get; set; } = new();
+        public TextMessage? ByeMessage { get; set; } = new();
     }
 }
