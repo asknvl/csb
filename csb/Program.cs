@@ -15,7 +15,7 @@ namespace csb
         {
 
 
-            Console.WriteLine("Вдудь 3.0.0");
+            Console.WriteLine("Вдудь 3.0.1");
 
             BotManager manager = new BotManager();
             manager.Start();

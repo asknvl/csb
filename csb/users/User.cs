@@ -110,6 +110,13 @@ namespace csb.users
             })},
 
             {"editModerator", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить Join сообщение", callbackData: "editJoinMessage"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить Leave сообщение", callbackData: "editLeaveMessage"),
+                },
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteModerator"),
@@ -118,15 +125,36 @@ namespace csb.users
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 }
-                
-                //new[] {
-                //    InlineKeyboardButton.WithCallbackData(text: "Запустить", callbackData: "startChain"),
-                //    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "deleteChain"),
-                //},
-                //new[] {
-                //    InlineKeyboardButton.WithCallbackData(text: "Назад", callbackData: "back"),
-                //}
+            })},
 
+            {"editJoinMessageMenu", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_join_show"),                  
+                },
+                new[] {                    
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_join_add"),                  
+                },
+                new[] {                    
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_join_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
+            {"editLeaveMessageMenu", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_leave_show"),                    
+                },
+                new[] {                    
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_leave_add"),                  
+                },
+                new[] {                    
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_leave_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
             })},
 
             {"back", new(new[] {
@@ -880,13 +908,9 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await sendTextMessage(Id, $"Модератор {currentModeratorGeoTag} запущен");
 
-                                string helloReqMsg = "Перешлите (forward) сюда приветственное \U0001F4B0 сообщение, если оно не требуется нажмите Отмена";
+                                string helloReqMsg = "Перешлите (forward) сюда приветственное \U0001F4B0 сообщение, если оно не требуется нажмите Завершить";
                                 await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
 
-                                //var chain = chainsProcessor.Get(currentChainID);
-                                //chain.AddBot(token);
-                                //await messagesProcessor.Back(chat);
-                                //await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
                             }
                             catch (Exception ex)
                             {
@@ -906,12 +930,28 @@ namespace csb.users
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
 
-                                string helloReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, если оно не требуется нажмите Отмена";
+                                string helloReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, если оно не требуется нажмите Завершить";
                                 await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
 
                                 State = BotState.waitingModeratorByeMessage;
                             }
                             catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingModeratorHelloMessageEdit:
+                            try
+                            {
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Text = update.Message.Text;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Entities = update.Message.Entities;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
+                                moderationProcessor.Save();
+                                await messagesProcessor.Back(chat);
+                                
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -934,7 +974,25 @@ namespace csb.users
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
-                            break;                        
+                            break;
+
+                        case BotState.waitingModeratorByeMessageEdit:
+                            try
+                            {
+                                moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.Text = update.Message.Text;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.Entities = update.Message.Entities;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.ReplyMarkup = update.Message.ReplyMarkup;
+
+                                moderationProcessor.Save();
+                                await messagesProcessor.Back(chat);
+
+                                State = BotState.free;
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
 
                     }
                     break;
@@ -1392,6 +1450,20 @@ namespace csb.users
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
+                case "editJoinMessage":
+                    //await messagesProcessor.Back(chat);
+                    //await messagesProcessor.Delete(chat, "editJoinMessage");                    
+                    await messagesProcessor.Add(chat, "editJoinMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Join сообщение нажмите Добавить", "editJoinMessageMenu")); 
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "editLeaveMessage":
+                    //await messagesProcessor.Back(chat);
+                    //await messagesProcessor.Delete(chat, "editLeaveMessage");
+                    await messagesProcessor.Add(chat, "editLeaveMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Leave сообщение нажмите Добавить", "editLeaveMessageMenu"));
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
                 case "":
                     break;
 
@@ -1569,6 +1641,95 @@ namespace csb.users
 
                         }
                         catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("greetings"))
+                    {
+                        try
+                        {
+
+                            string[] splt = data.Split("_");
+                            string type = splt[1];
+                            string cmd = splt[2];
+
+                            switch (cmd)
+                            {
+                                case "show":                                    
+                                    try
+                                    {
+                                        var greetings = moderationProcessor.Greetings(currentModeratorGeoTag);
+                                        TextMessage greetingsMsg = null;
+                                        switch (type)
+                                        {
+                                            case "join":
+                                                greetingsMsg = greetings.HelloMessage;
+                                                break;
+                                            case "leave":
+                                                greetingsMsg = greetings.ByeMessage;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+
+                                        await bot.SendTextMessageAsync(
+                                               Id,
+                                               text: greetingsMsg.Text,
+                                               replyMarkup: greetingsMsg.ReplyMarkup,
+                                               entities: greetingsMsg.Entities,
+                                               disableWebPagePreview: true,
+                                               cancellationToken: cancellationToken);
+                                        
+                                    } catch (Exception ex)
+                                    {
+                                        await sendTextMessage(Id, "Сообщение не задано");
+                                    }
+                                    await bot.AnswerCallbackQueryAsync(query.Id);
+                                    break;
+
+                                case "add":
+                                    switch (type)
+                                    {
+                                        case "join":
+                                            State = BotState.waitingModeratorHelloMessageEdit;
+                                            string helloReqMsg = "Перешлите (forward) сюда приветственное \U0001F4B0 сообщение, для отмены нажмите Завершить";
+                                            await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
+                                            break;
+                                        case "leave":
+                                            State = BotState.waitingModeratorByeMessageEdit;
+                                            string byeReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, для отмены нажмите Завершить";
+                                            await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, byeReqMsg, "finishEddingGreetings"));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    await bot.AnswerCallbackQueryAsync(query.Id);
+                                    break;
+
+                                case "delete":
+                                    switch (type)
+                                    {
+                                        case "join":
+                                            moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = new();
+                                            break;
+                                        case "leave":
+                                            moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage = new();                                            
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    moderationProcessor.Save();
+                                    await sendTextMessage(Id, "Сообщение удалено");
+                                    await bot.AnswerCallbackQueryAsync(query.Id);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }

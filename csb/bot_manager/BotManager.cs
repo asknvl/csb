@@ -40,12 +40,12 @@ namespace csb.bot_manager
         waitingModeratorGeoTag,
         waitingModeratorToken,
 
-        waitingModeratorHelloMessage,                
-        waitingModeratorNewButton,
+        waitingModeratorHelloMessage,                        
         waitingModerarotAlternativeLink,
         waitingModeratorByeMessage,
 
         waitingModeratorHelloMessageEdit,
+        waitingModeratorByeMessageEdit,
 
         waitingReplacedWord,
     }

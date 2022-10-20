@@ -2,12 +2,12 @@
   {
     "Greetings": {
       "HelloMessage": {
-        "Text": null,
+        "Text": "T111",
         "Entities": null,
         "ReplyMarkup": null
       },
       "ByeMessage": {
-        "Text": null,
+        "Text": "T1leave",
         "Entities": null,
         "ReplyMarkup": null
       }
