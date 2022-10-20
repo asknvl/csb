@@ -137,19 +137,6 @@ namespace csb.bot_moderator
                 {
                     var chatJoinRequest = update.ChatJoinRequest;
 
-                    try
-                    {
-                        if (Greetings.HelloMessage != null)
-                            await bot.SendTextMessageAsync(
-                                     chatJoinRequest.From.Id,
-                                     text: Greetings.HelloMessage.Text,
-                                     replyMarkup: Greetings.HelloMessage.ReplyMarkup,
-                                     entities: Greetings.HelloMessage.Entities,
-                                     disableWebPagePreview: true,
-                                     cancellationToken: cancellationToken);
-                    } catch (Exception ex) { }
-
-
                     var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
                     string tags = "";
                     foreach (var item in user_geotags)
@@ -166,8 +153,20 @@ namespace csb.bot_moderator
 
                     if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme)
                     {
-                        Console.WriteLine($"{DateTime.Now} {GeoTag} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                        try
+                        {
+                            if (Greetings.HelloMessage != null)
+                                await bot.SendTextMessageAsync(
+                                         chatJoinRequest.From.Id,
+                                         text: Greetings.HelloMessage.Text,
+                                         replyMarkup: Greetings.HelloMessage.ReplyMarkup,
+                                         entities: Greetings.HelloMessage.Entities,
+                                         disableWebPagePreview: true,
+                                         cancellationToken: cancellationToken);
+                        }
+                        catch (Exception ex) { }
                         await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+                        Console.WriteLine($"{DateTime.Now} {GeoTag} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                     } else
                     {
                         Console.WriteLine($"{DateTime.Now} {GeoTag} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
