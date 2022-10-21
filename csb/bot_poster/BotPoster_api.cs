@@ -171,6 +171,7 @@ namespace csb.bot_poster
                             await bot.SendPhotoAsync(ChannelID,
                                 doc.Media,
                                 caption: doc.Caption,
+                                replyMarkup:message.ReplyMarkup,
                                 captionEntities: doc.CaptionEntities);
                             //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                             break;
@@ -227,7 +228,8 @@ namespace csb.bot_poster
 
                             await bot.SendVideoAsync(ChannelID,
                                 doc.Media,
-                                caption: doc.Caption,                                
+                                caption: doc.Caption,
+                                replyMarkup: message.ReplyMarkup,
                                 captionEntities: doc.CaptionEntities);
                             //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                             break;

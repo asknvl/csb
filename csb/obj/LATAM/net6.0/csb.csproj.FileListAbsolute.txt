@@ -39,3 +39,4 @@ D:\WORK\xtime\Sources\csb\csb\obj\Latam\net6.0\refint\csb.dll
 D:\WORK\xtime\Sources\csb\csb\obj\Latam\net6.0\csb.pdb
 D:\WORK\xtime\Sources\csb\csb\obj\Latam\net6.0\csb.genruntimeconfig.cache
 D:\WORK\xtime\Sources\csb\csb\obj\Latam\net6.0\ref\csb.dll
+C:\KONOVALOV\Sources\csb\csb\obj\Latam\net6.0\csb.csproj.AssemblyReference.cache
