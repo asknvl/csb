@@ -150,7 +150,7 @@ namespace csb.bot_poster
 
                             (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
                             imp.Caption = text;
-                            imp.CaptionEntities = entities;
+                            imp.CaptionEntities = entities;                            
                         }
 
                         if (message.MediaGroupId == null)
@@ -227,7 +227,7 @@ namespace csb.bot_poster
 
                             await bot.SendVideoAsync(ChannelID,
                                 doc.Media,
-                                caption: doc.Caption,
+                                caption: doc.Caption,                                
                                 captionEntities: doc.CaptionEntities);
                             //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                             break;
@@ -534,7 +534,7 @@ namespace csb.bot_poster
             {
                 await bot.SendMediaGroupAsync(
                     chatId: ChannelID,
-                    media: mediaList,
+                    media: mediaList,                    
                     cancellationToken: cts.Token);
 
             } catch (Exception ex)
