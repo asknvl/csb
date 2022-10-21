@@ -389,39 +389,7 @@ namespace csb.bot_poster
                         text = text.Replace(item.Value, newlink);
             }
 
-            //foreach (var p in replace_patterns_change_links)
-            //{
-            //    text = Regex.Replace(text, p, "");
-            //}
-
-
-            //pattern = @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?";
-            //regex = new Regex(pattern);
-            //m = regex.Matches(text);
-            //foreach (Match item in m)
-            //{
-            //    Console.WriteLine(item.Index);
-            //    text = text.Replace(item.Value, "");
-            //}
-
-            //pattern = @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)";
-            //regex = new Regex(pattern);
-            //m = regex.Matches(text);
-            //foreach (Match item in m)
-            //{
-            //    Console.WriteLine(item.Index);
-            //    text = text.Replace(item.Value, "");
-            //}
-
-            //pattern = @"^\s.*[.](com|ru)?";
-            //regex = new Regex(pattern);
-            //m = regex.Matches(text);
-            //foreach (Match item in m)
-            //{
-            //    Console.WriteLine(item.Index);
-            //    text = text.Replace(item.Value, "");
-            //}
-
+            //return text.Replace(oldlink.Replace("@", ""), newlink.Replace("@", ""));
 
 
             return text;
