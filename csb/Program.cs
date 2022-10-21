@@ -15,7 +15,7 @@ namespace csb
         {
 
 
-            Console.WriteLine("Вдудь 3.0.2delay");
+            Console.WriteLine("Вдудь 3.0.3");
 
             BotManager manager = new BotManager();
             manager.Start();
