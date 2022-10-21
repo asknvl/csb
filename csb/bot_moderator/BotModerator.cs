@@ -136,24 +136,24 @@ namespace csb.bot_moderator
         #region public
         public virtual void Start()
         {
-            if (IsRunning)
-                return;
+            //if (IsRunning)
+            //    return;
 
-            bot = new TelegramBotClient(Token);
-            User u = bot.GetMeAsync().Result;
-            Name = u.Username;            
+            //bot = new TelegramBotClient(Token);
+            //User u = bot.GetMeAsync().Result;
+            //Name = u.Username;            
 
-            cts = new CancellationTokenSource();
+            //cts = new CancellationTokenSource();
 
-            var receiverOptions = new ReceiverOptions
-            {
-                AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember }
-            };
+            //var receiverOptions = new ReceiverOptions
+            //{
+            //    AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember }
+            //};
 
-            bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
+            //bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
-            IsRunning = true;
-            Console.WriteLine($"Moderator {Name} started");
+            //IsRunning = true;
+            Console.WriteLine($"Moderator {Name} NOT started");
         }
 
         public virtual void Stop()
