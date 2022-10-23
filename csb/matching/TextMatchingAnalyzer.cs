@@ -31,10 +31,10 @@ namespace csb.matching
         #region public
         public void Add(string message)
         {
-            if (messageQueue.Count >= Capacity)
-                messageQueue.Dequeue();
-            string[] splt = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            messageQueue.Enqueue(splt);
+            //if (messageQueue.Count >= Capacity)
+            //    messageQueue.Dequeue();
+            //string[] splt = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            //messageQueue.Enqueue(splt);
         }
 
         public int Check(string text)

@@ -142,7 +142,7 @@ namespace csb.chains
 
                 item.NeedVerifyCodeEvent += Chain_NeedVerifyCodeEvent;
                 item.UserStartedEvent += Chain_UserStartedEvent;
-                item.Start();
+                //item.Start();
             }
         }
         #endregion

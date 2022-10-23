@@ -1,0 +1,27 @@
+[
+  {
+    "Owner": 0,
+    "Name": "T1",
+    "Id": 1,
+    "PhoneNumber": "+79687273046",
+    "Bots": [
+      {
+        "Token": "5497811276:AAHfULbDJH3j-kONIBsYXXKL05epDmR3rbg",
+        "Name": "t1_asknvl_bot",
+        "ChannelID": -1001515136824,
+        "ChannelTitle": "OUT",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@asknvl",
+        "ReplacedWords": []
+      }
+    ],
+    "User": {
+      "FilteredWords": [],
+      "TimeInterval": 0.016666666666666666,
+      "MessageBufferLength": 10,
+      "MatchingPercentageTreshold": 71
+    },
+    "ReplacedWords": [],
+    "State": 0
+  }
+]
