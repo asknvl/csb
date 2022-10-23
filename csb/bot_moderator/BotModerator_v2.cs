@@ -112,7 +112,7 @@ namespace csb.bot_moderator
                                              text: Greetings.ByeMessage.Text,
                                              replyMarkup: Greetings.ByeMessage.ReplyMarkup,
                                              entities: Greetings.ByeMessage.Entities,
-                                             disableWebPagePreview: true,
+                                             disableWebPagePreview: false,
                                              cancellationToken: cancellationToken);
                             } catch (Exception ex) { }
 
