@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using csb.matching;
+using csb.usr_push;
 
 namespace csb
 {
@@ -15,29 +16,38 @@ namespace csb
         {
 
 
-            Console.WriteLine("Вдудь 3.0.3nochstart");
+            //Console.WriteLine("Вдудь 3.0.3nochstart");
+            //BotManager manager = new BotManager();
+            //manager.Start();
 
-            BotManager manager = new BotManager();
-            manager.Start();
+            IUserPushManager manager = new UserPushManager<TestUser>();
+            manager.Add(new TestUser("1"));
+            manager.Add(new TestUser("2"));
+            manager.Add(new TestUser("3"));
 
-            //csb.server.TGStatApi api = new csb.server.TGStatApi("http://136.243.74.153:4000");
-            //var res = api.GetFollowerGeoTags(1481806946);
+            foreach (var user in manager.Users)
+            {
+                user.VerifyCodeRequestEvent += User_VerifyCodeRequestEvent1;
+            }
 
+            manager.StartAll();
 
-            //ITextMatchingAnalyzer analyzer = new TextMatchingAnalyzer(4);
+            string text = "";
+            do
+            {
+                var found = manager.Get(text);
+                if (found != null)
+                    found.SetVerifyCode(text);
 
-            //analyzer.Add("aaa, bbb, ccc");
-            //analyzer.Add("ddd eee fff.");
-            //analyzer.Add("ggg, hhh.iii,\n");
-            //analyzer.Add("ggg\n hhh. iii");
-
-            //analyzer.Check("aaa bbb ccc");
-
-
-
-
-
-            Console.ReadLine();
+                text = Console.ReadLine();
+            } while (!text.Equals("quit"));
         }
+
+        private static void User_VerifyCodeRequestEvent1(ITGUser arg)
+        {
+            Console.WriteLine($"Введите код для {arg.phone_number}");
+        }
+
+        
     }
 }

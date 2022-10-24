@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 using TL;
 using WTelegram;
 
-
-
 namespace csb.usr_listener
 {
     public class UserListener_v1
@@ -531,7 +529,6 @@ namespace csb.usr_listener
                 StartedEvent?.Invoke(PhoneNumber);
                 return;
             }
-
 
             textMatchingAnalyzer = new TextMatchingAnalyzer(MessageBufferLength);
 
