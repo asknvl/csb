@@ -15,7 +15,7 @@ namespace csb.usr_push
         void Delete(T user);
         void StartAll();
 
-        event Action<T> VerificationCodeRequestEvent;
+        event Action<string> VerificationCodeRequestEvent;
     }
 
     public class UserPushManagerException : Exception
