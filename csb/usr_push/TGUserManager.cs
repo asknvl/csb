@@ -35,19 +35,25 @@ namespace csb.usr_push
                 storage.save(Users);
             }
             else throw new UserPushManagerException($"Номер {user.phone_number} уже зарегестрирован в системе");
-
         }
 
-        public void Remove(T user)
+        public void Delete(T user)
         {
             var users = Users.ToList();
             users.Remove(user);
             storage.save(Users);
-        } 
+        }
 
-        public ITGUser Get(string phone)
+        public void Delete(string geotag)
         {
-            return Users.FirstOrDefault(u => u.phone_number.Equals(phone));
+            var users = Users.ToList();
+            users.RemoveAll(u => u.geotag.Equals(geotag));
+            storage.save(Users);
+        }
+
+        public ITGUser Get(string geotag)
+        {
+            return Users.FirstOrDefault(u => u.geotag.Equals(geotag));
         }
 
         public async void StartAll()
@@ -55,6 +61,10 @@ namespace csb.usr_push
             foreach (var user in Users) 
                 await user.Start();
         }
+        #endregion
+
+        #region events
+        public event Action<T> NeedVerificationCodeEvent;
         #endregion
 
     }

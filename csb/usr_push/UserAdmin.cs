@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TL;
 
 namespace csb.usr_push
 {
-    public class UserPush : TGUserBase
+    public class UserAdmin : TGUserBase
     {
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
@@ -15,10 +16,16 @@ namespace csb.usr_push
         #region properties        
         #endregion
 
-        public UserPush()
+        public UserAdmin(string api_id, string api_hash, string phone_number, string geotag) : base(api_id, api_hash, phone_number, geotag)
         {
-
         }
+
+        #region protected
+        protected override void processUpdate(Update update)
+        {
+            
+        }
+        #endregion
 
         #region public        
         #endregion

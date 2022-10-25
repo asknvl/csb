@@ -2,7 +2,9 @@
 using csb.bot_moderator;
 using csb.chains;
 using csb.moderation;
+using csb.settings;
 using csb.settings.validators;
+using csb.usr_push;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -129,12 +131,12 @@ namespace csb.users
 
             {"editJoinMessageMenu", new(new[] {
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_join_show"),                  
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_join_show"),
                 },
-                new[] {                    
-                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_join_add"),                  
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_join_add"),
                 },
-                new[] {                    
+                new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_join_delete"),
                 },
                  new[] {
@@ -144,12 +146,12 @@ namespace csb.users
 
             {"editLeaveMessageMenu", new(new[] {
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_leave_show"),                    
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_leave_show"),
                 },
-                new[] {                    
-                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_leave_add"),                  
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_leave_add"),
                 },
-                new[] {                    
+                new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_leave_delete"),
                 },
                  new[] {
@@ -206,12 +208,20 @@ namespace csb.users
                 }
             })},
 
+             {"addAdminCancel", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addAdminCancel"),
+                }
+            })},
+
         };
         #endregion
 
         #region vars          
         int currentChainID;
         string currentModeratorGeoTag;
+        string currentAdminGeoTag;
         BotState State;
         #endregion
 
@@ -242,6 +252,9 @@ namespace csb.users
         public ModerationProcessor moderationProcessor { get; set; }
 
         [JsonIgnore]
+        public TGUserManager<UserAdmin> adminManager { get; set; }
+
+        [JsonIgnore]
         public CancellationToken cancellationToken { get; set; }
         #endregion
 
@@ -269,28 +282,6 @@ namespace csb.users
 
         InlineKeyboardMarkup getMyChainsMarkUp()
         {
-
-            //List<InlineKeyboardButton> chains = new();
-
-            //foreach (var item in chainsProcessor.Chains)
-            //{
-            //    chains.Add(InlineKeyboardButton.WithCallbackData(text: item.ToString(), callbackData: $"chain_{item.Id}"));
-            //}
-
-            //InlineKeyboardMarkup inlineKeyboard = new(new[]
-
-            //        {
-            //            // first row
-            //            new []
-            //            {
-            //                 InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain"),
-            //            },
-
-            //            chains.ToArray()
-
-            //        });
-            //return inlineKeyboard;
-
             var chains = chainprocessor.Chains;
             int number = chains.Count;
 
@@ -303,12 +294,9 @@ namespace csb.users
 
             chains_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить цепочку", callbackData: "newchain") };
 
-
-
             InlineKeyboardMarkup inlineKeyboard = new(chains_buttons);
 
             return inlineKeyboard;
-
         }
 
         InlineKeyboardMarkup getMyModeratorsMarkUp()
@@ -326,12 +314,9 @@ namespace csb.users
 
             moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить модератора", callbackData: "newmoderator") };
 
-
-
             InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
 
             return inlineKeyboard;
-
         }
 
         async Task<InlineKeyboardMarkup> getMyChannelsMarkUp(IChain chain)
@@ -433,6 +418,26 @@ namespace csb.users
             return inlineKeyboard;
         }
 
+        InlineKeyboardMarkup getMyChannelAdminsMarkUp()
+        {
+
+            var admins = adminManager.Users.ToArray();
+            int number = admins.Length;
+
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 2][];
+
+            for (int i = 0; i < number; i++)
+            {
+                moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: admins[i].geotag, callbackData: $"admin_{admins[i].geotag}") };
+            }
+
+            moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить администратора", callbackData: "newadmin") };
+            moderators_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
+
+            return inlineKeyboard;
+        }
         async Task<Message> sendTextMessage(long chat, string message)
         {
             return await bot.SendTextMessageAsync(
@@ -537,6 +542,16 @@ namespace csb.users
                 replyMarkup: markup,
                 cancellationToken: cancellationToken));
         }
+
+        async Task showMyAdmins(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "/myadmins", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Управление администраторами:",
+                replyMarkup: getMyChannelAdminsMarkUp(),
+                cancellationToken: cancellationToken));
+        }
         #endregion
 
         #region public
@@ -557,8 +572,7 @@ namespace csb.users
                     chain.User.SetMessageBufferLength(len);
                     chainsProcessor.Save();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     await sendTextMessage(chat, ex.Message);
                 }
@@ -574,8 +588,7 @@ namespace csb.users
                     chain.User.SetMatchingTreshold(t);
                     chainsProcessor.Save();
 
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     await sendTextMessage(chat, ex.Message);
                 }
@@ -593,8 +606,7 @@ namespace csb.users
                     {
                         await messagesProcessor.Clear(chat);
                         await showMyChains(chat);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(chat, ex.Message);
                         return;
@@ -607,8 +619,21 @@ namespace csb.users
                     {
                         await messagesProcessor.Clear(chat);
                         await showMyModerators(chat);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(chat, ex.Message);
+                        return;
                     }
-                    catch (Exception ex)
+                    break;
+
+                case "/myadmins":
+                    State = BotState.free;
+                    try
+                    {
+                        await messagesProcessor.Clear(chat);
+                        await showMyAdmins(chat);
+
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(chat, ex.Message);
                         return;
@@ -621,8 +646,7 @@ namespace csb.users
                         var chain = chainsProcessor.Get(currentChainID);
                         int len = chain.User.GetMessageBufferLength();
                         await sendTextMessage(chat, "BufferLength=" + len);
-                    }
-                    catch { }
+                    } catch { }
                     break;
 
                 case "/gettreshold":
@@ -631,8 +655,7 @@ namespace csb.users
                         var chain = chainsProcessor.Get(currentChainID);
                         int t = chain.User.GetMatchingTreshold();
                         await sendTextMessage(chat, "MatchingTreshold=" + t);
-                    }
-                    catch { }
+                    } catch { }
                     break;
 
                 default:
@@ -644,8 +667,7 @@ namespace csb.users
                             {
                                 currentChainID = chainsProcessor.Add(msg);
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -667,8 +689,7 @@ namespace csb.users
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
                                 chain.PhoneNumber = phoneNumber;
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -701,8 +722,7 @@ namespace csb.users
                                 await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
 
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -722,8 +742,7 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingOutputVictimLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), КОТОРЫЙ требуется заменить во входящих сообщениях. Введите 0, если требуется заменять все аккаунты:", "addChainCancel"));
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -747,8 +766,7 @@ namespace csb.users
                                 bot.VictimLink = msg;
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingOutputChannelLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), НА КОТОРЫЙ будут заменяться телеграм акаунты во входящих сообщениях. Введите 0, если ссылки на аккаунты нужно удалять:", "addChainCancel"));
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -773,8 +791,7 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "startsave", await sendTextButtonMessage(chat, "Регистрация завершена. Выберите действие:", "startsave"));
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                             }
@@ -787,8 +804,7 @@ namespace csb.users
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
                                 chain.SetVerifyCode(msg);
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -802,8 +818,7 @@ namespace csb.users
                                 await chain.User.AddInputChannel(msg.Trim());
                                 await messagesProcessor.Delete(chat, "saveInputChannel");
                                 await messagesProcessor.Add(chat, "saveInputChannels", await sendTextButtonMessage(chat, "Добавьте еще входной канал или нажмите \"Завершить\"", "saveInputChannels"));
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -818,8 +833,7 @@ namespace csb.users
                                 await messagesProcessor.Delete(chat, "saveInputChannel");
                                 await messagesProcessor.Add(chat, "saveFilteredWords", await sendTextButtonMessage(chat, "Добавьте еще фильтр или нажмите \"Сохранить\"", "saveFilteredWords"));
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 var chain = chainsProcessor.Get(currentChainID);
@@ -835,8 +849,7 @@ namespace csb.users
                                 await messagesProcessor.Delete(chat, "saveInputChannel");
                                 await messagesProcessor.Add(chat, "saveReplacedWords", await sendTextButtonMessage(chat, "Добавьте еще удаляемую фразу или нажмите \"Сохранить\"", "saveReplacedWords"));
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 var chain = chainsProcessor.Get(currentChainID);
@@ -853,8 +866,7 @@ namespace csb.users
                                 chainprocessor.Save();
                                 await messagesProcessor.Delete(chat, "setMessagingPeriod");
                                 State = BotState.free;
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -883,10 +895,9 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingModeratorToken", await sendTextButtonMessage(chat, moderatorTokenMsg, "addModeratorCancel"));
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
-                                await sendTextMessage(chat, ex.Message);                            
+                                await sendTextMessage(chat, ex.Message);
                                 return;
                             }
 
@@ -911,8 +922,7 @@ namespace csb.users
                                 string helloReqMsg = "Перешлите (forward) сюда приветственное \U0001F4B0 сообщение, если оно не требуется нажмите Завершить";
                                 await messagesProcessor.Add(chat, "waitingModeratorHelloMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
 
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -934,8 +944,7 @@ namespace csb.users
                                 await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
 
                                 State = BotState.waitingModeratorByeMessage;
-                            }
-                            catch (Exception ex)
+                            } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -950,7 +959,7 @@ namespace csb.users
                                 moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
-                                
+
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
@@ -994,18 +1003,55 @@ namespace csb.users
                             }
                             break;
 
-                    }
-                    break;
+                        case BotState.waitingAdminGeoTag:
+                            try
+                            {
+                                string geotag = msg.Trim();
+                                var found = adminManager.Get(geotag);
+                                if (found != null)
+                                {
+                                    throw new Exception("Администратор с таким геотегом уже существует. Введите другой геотег:");
+                                }
 
-                case "/edithello": // /edithello:TAG
-                    try
-                    {
-                        string[] splt = msg.Split(":");
-                        currentModeratorGeoTag = splt[0];
-                        await sendTextMessage(chat, "Введите новый текст приветственного сообщения:");
-                        State = BotState.waitingModeratorHelloMessageEdit;
+                                currentAdminGeoTag = geotag;
+
+                                string adminPhoneMsg = "Введите номер телефона аккаунта админа:";
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingModeratorToken", await sendTextButtonMessage(chat, adminPhoneMsg, "addAdminCancel"));
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+
+                            State = BotState.waitingAdminPhoneNumber;
+                            break;
+
+                        case BotState.waitingAdminPhoneNumber:
+                            try
+                            {
+                                string phone_number = msg.Trim();
+                                ph_vl = new PhoneNumberValidator();
+                                if (!ph_vl.IsValid(phone_number))
+                                {
+                                    await sendTextMessage(chat, ph_vl.Message);
+                                    return;
+                                }
+
+                                var globals = GlobalSettings.getInstance();
+                                UserAdmin admin = new UserAdmin(globals.push_api_id, globals.push_api_hash, phone_number, currentAdminGeoTag);
+                                adminManager.Add(admin);
+                                await admin.Start();
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
                     }
-                    catch { }
                     break;
             }
         }
@@ -1026,8 +1072,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "newchain", await sendTextButtonMessage(chat, "Введите имя новой цепочки", "addChainCancel"));
                         await messagesProcessor.Delete(chat, "/mychains");
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1041,8 +1086,7 @@ namespace csb.users
                         await messagesProcessor.Delete(chat, "startsave");
                         await showMyChains(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Цепочка сохранена");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1070,8 +1114,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "back", await sendTextButtonMessage(chat, info, "back"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1085,8 +1128,7 @@ namespace csb.users
                         //await messagesProcessor.Delete(chat, "startsave");
                         //await showMyChains(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Запуск...");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1098,8 +1140,7 @@ namespace csb.users
                         chainsProcessor.Start(currentChainID);
                         //await messagesProcessor.Back(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Запуск...");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1111,8 +1152,7 @@ namespace csb.users
                         chainsProcessor.Stop(currentChainID);
                         await messagesProcessor.Back(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Цепочка остановлена");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1125,8 +1165,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "editChain", await sendTextButtonMessage(chat, $"Редактирование цепочки {chain.ToString()}", "editChain"));
                         await bot.AnswerCallbackQueryAsync(query.Id, "Начато редактирование");
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1138,8 +1177,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "addInputChannel", await sendTextButtonMessage(chat, "Введите ссылку на канала в формате @channel, t․me/joinchat/channel или t․me/+XYZxyz", "back"));
                         State = BotState.waitingAddInputChannel;
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1156,8 +1194,7 @@ namespace csb.users
                         await showListChannels(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1169,8 +1206,7 @@ namespace csb.users
                         var chain = chainsProcessor.Get(currentChainID);
                         await showDeleteChannel(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Выберите канал для удаления");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1186,8 +1222,7 @@ namespace csb.users
                         State = BotState.waitingToken;
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1200,8 +1235,7 @@ namespace csb.users
                         await showDeleteBot(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Выберите");
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1215,8 +1249,7 @@ namespace csb.users
                         await messagesProcessor.Back(chat);
                         await showMyChains(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Цепочка удалена");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1228,8 +1261,7 @@ namespace csb.users
                         State = BotState.free;
                         await messagesProcessor.Back(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1277,8 +1309,7 @@ namespace csb.users
                             chainsProcessor.Delete(currentChainID);
 
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
 
                     }
@@ -1290,8 +1321,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "addFilteredWords", await sendTextButtonMessage(chat, "Введите текст. Сообщения, содержащие данный текст, будут отфильтрованы и не будут пересылаться в выходной канал:", "back"));
                         State = BotState.waitingFilteredWord;
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1304,8 +1334,7 @@ namespace csb.users
                         await showFilteredWords(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Выберите фильтр, который нужно удалить");
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
 
                     }
@@ -1326,8 +1355,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "addReplacedWord", await sendTextButtonMessage(chat, "Введите текст. Данный текст будет являться исключением, он будет удален из всех сообщений:", "back"));
                         State = BotState.waitingReplacedWord;
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1340,8 +1368,7 @@ namespace csb.users
                         await showReplacedWords(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Выберите исключение, который нужно удалить");
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
 
                     }
@@ -1363,8 +1390,7 @@ namespace csb.users
                         State = BotState.waitingMessagingPeriod;
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1377,8 +1403,7 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "newmoderator", await sendTextButtonMessage(chat, "Введите геотег нового модератора", "addModeratorCancel"));
                         await messagesProcessor.Delete(chat, "/mymoderators");
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -1392,12 +1417,11 @@ namespace csb.users
                         await messagesProcessor.Back(chat);
                         await showMyModerators(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id, "Модератор удален");
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
-                    break;                    
+                    break;
 
                 case "addModeratorCancel":
                     try
@@ -1415,7 +1439,7 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 break;
 
-                            case BotState.waitingModeratorHelloMessage:                            
+                            case BotState.waitingModeratorHelloMessage:
                             case BotState.waitingModerarotAlternativeLink:
                             case BotState.waitingModeratorByeMessage:
                                 //await messagesProcessor.Back(chat);
@@ -1430,17 +1454,60 @@ namespace csb.users
                             {
                                 var moderator = moderationProcessor.Get(currentModeratorGeoTag);
                                 moderationProcessor.Delete(currentModeratorGeoTag);
-                            }
-                            catch { };
+                            } catch { };
                         }
 
-                    }
-                    catch (Exception ex)
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
 
                     await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "newadmin":
+                    State = BotState.waitingAdminGeoTag;
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "newmoderator", await sendTextButtonMessage(chat, "Введите геотег нового администратора", "addAdminCancel"));
+                        await messagesProcessor.Delete(chat, "/myadministrators");
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "addAdminCancel":
+                    try
+                    {
+
+                        switch (State)
+                        {
+                            case BotState.waitingAdminGeoTag:
+                                await messagesProcessor.Back(chat);                                
+                                return;
+
+                            case BotState.waitingAdminPhoneNumber:
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Back(chat);
+                                return;
+                        }
+
+                        State = BotState.free;
+                        if (!string.IsNullOrEmpty(currentAdminGeoTag))
+                        {
+                            try
+                            {                                
+                                adminManager.Delete(currentAdminGeoTag);
+                            } catch { };
+                        }
+                        currentAdminGeoTag = "";
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
                     break;
 
                 case "finishEddingGreetings":
@@ -1453,7 +1520,7 @@ namespace csb.users
                 case "editJoinMessage":
                     //await messagesProcessor.Back(chat);
                     //await messagesProcessor.Delete(chat, "editJoinMessage");                    
-                    await messagesProcessor.Add(chat, "editJoinMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Join сообщение нажмите Добавить", "editJoinMessageMenu")); 
+                    await messagesProcessor.Add(chat, "editJoinMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Join сообщение нажмите Добавить", "editJoinMessageMenu"));
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
@@ -1484,16 +1551,14 @@ namespace csb.users
                             if (chain.IsRunning)
                             {
                                 await messagesProcessor.Add(chat, "running_chain_actions", await sendTextButtonMessage(chat, m, "running_chain_actions"));
-                            }
-                            else
+                            } else
                             {
                                 await messagesProcessor.Add(chat, "idle_chain_actions", await sendTextButtonMessage(chat, m, "idle_chain_actions"));
                             }
 
                             await bot.AnswerCallbackQueryAsync(query.Id);
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1512,8 +1577,7 @@ namespace csb.users
                             await bot.AnswerCallbackQueryAsync(query.Id, "Канал удален");
 
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1528,8 +1592,7 @@ namespace csb.users
                             await bot.AnswerCallbackQueryAsync(query.Id, $"Id={id}");
 
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1548,8 +1611,7 @@ namespace csb.users
                             await bot.AnswerCallbackQueryAsync(query.Id, "Бот удален");
 
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1567,8 +1629,7 @@ namespace csb.users
                             await showFilteredWords(chat, chain);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Фильтр удален");
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1587,8 +1648,7 @@ namespace csb.users
                             await showReplacedWords(chat, chain);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Исключение удалено");
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1604,8 +1664,7 @@ namespace csb.users
                             await messagesProcessor.Back(chat);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Фильтры удалены");
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1622,8 +1681,7 @@ namespace csb.users
                             await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
                             await bot.AnswerCallbackQueryAsync(query.Id);
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1639,8 +1697,7 @@ namespace csb.users
                             await messagesProcessor.Back(chat);
                             await bot.AnswerCallbackQueryAsync(query.Id, "Исключения удалены");
 
-                        }
-                        catch (Exception ex)
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
@@ -1657,7 +1714,7 @@ namespace csb.users
 
                             switch (cmd)
                             {
-                                case "show":                                    
+                                case "show":
                                     try
                                     {
                                         var greetings = moderationProcessor.Greetings(currentModeratorGeoTag);
@@ -1681,7 +1738,7 @@ namespace csb.users
                                                entities: greetingsMsg.Entities,
                                                disableWebPagePreview: true,
                                                cancellationToken: cancellationToken);
-                                        
+
                                     } catch (Exception ex)
                                     {
                                         await sendTextMessage(Id, "Сообщение не задано");
@@ -1715,7 +1772,7 @@ namespace csb.users
                                             moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = new();
                                             break;
                                         case "leave":
-                                            moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage = new();                                            
+                                            moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage = new();
                                             break;
                                         default:
                                             break;

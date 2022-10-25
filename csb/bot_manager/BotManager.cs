@@ -47,7 +47,13 @@ namespace csb.bot_manager
         waitingModeratorHelloMessageEdit,
         waitingModeratorByeMessageEdit,
 
+        waitingAdminGeoTag,
+        waitingAdminPhoneNumber,
+        waitingAdminVerificationCode,
+
         waitingReplacedWord,
+
+
     }
     
     

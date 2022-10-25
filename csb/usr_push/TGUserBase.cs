@@ -64,6 +64,8 @@ namespace csb.usr_push
                 default: return null;
             }
         }
+
+        abstract protected void processUpdate(Update update);
         #endregion
 
         #region private
@@ -72,7 +74,7 @@ namespace csb.usr_push
             if (arg is not Updates { updates: var updates }) return;
             foreach (var update in updates)
             {
-
+                processUpdate(update);
             }
         }
         #endregion

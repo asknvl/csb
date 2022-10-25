@@ -25,6 +25,8 @@ namespace csb.settings
             listener_api_id = "13180345";
             listener_api_hash = "df78e4859fb0cbd03dc5cf83d5d0c0cb";
 #endif
+            push_api_id = "23400467";
+            push_api_hash = "af8d86630f308931e5bcbdf045724f7c";
         }
         public static GlobalSettings getInstance()
         {

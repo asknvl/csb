@@ -1,6 +1,7 @@
 ﻿using csb.chains;
 using csb.moderation;
 using csb.storage;
+using csb.usr_push;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -59,14 +60,15 @@ namespace csb.users
                 user.moderationProcessor = new ModerationProcessor($"{user.Id}");
                 user.moderationProcessor.Load();
                 user.moderationProcessor.StartAll();
+
+                user.adminManager = new TGUserManager<UserAdmin>("admins.json");
+                user.adminManager.StartAll();
             }
         }
         public void Add(long userId, string name)
         {
             if (!users.Any(u => u.Id == userId))
             {
-                //users.Add(new User(bot, chainsProcessor, cancellationToken) { Id = id, Name = name });
-
                 User newUser = new User()
                 {
                     Id = userId,
@@ -74,6 +76,7 @@ namespace csb.users
                     messagesProcessor = new MessagesProcessor(bot),
                     chainsProcessor = new ChainProcessor($"{userId}"),
                     moderationProcessor = new ModerationProcessor($"{userId}"),
+                    adminManager = new TGUserManager<UserAdmin>("admins.json"),
                     cancellationToken = cancellationToken,                    
                     Name = name
                 };
@@ -85,12 +88,9 @@ namespace csb.users
 
         public async Task UpdateCallbackQuery(CallbackQuery? query)
         {
-            //query.Message.Chat.Id
-
             var user = users.FirstOrDefault(u => u.Id == query.Message.Chat.Id);
             if (user != null)
                 await user.processCallbackQuery(query);
-
         }
 
         public async Task UpdateMessage(Update update)

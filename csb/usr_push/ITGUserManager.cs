@@ -11,7 +11,11 @@ namespace csb.usr_push
         IEnumerable<T> Users { get; }        
         void Add(T user);
         ITGUser Get(string phone);
+        void Delete(string geotag);
+        void Delete(T user);
         void StartAll();
+
+        event Action<T> NeedVerificationCodeEvent;
     }
 
     public class UserPushManagerException : Exception

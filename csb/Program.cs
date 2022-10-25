@@ -16,29 +16,22 @@ namespace csb
         {
 
 
-            //Console.WriteLine("Вдудь 3.0.3nochstart");
-            //BotManager manager = new BotManager();
-            //manager.Start();
+            Console.WriteLine("Вдудь 3.1.0");
+            BotManager manager = new BotManager();
+            manager.Start();
 
-            var manager = new TGUserManager<TestUser>("push.json");
-            //manager.Add(new TestUser("1"));
-            //manager.Add(new TestUser("2"));
-            //manager.Add(new TestUser("3"));
+            //var manager = new TGUserManager<TestUser>("push.json");            
 
-            foreach (var user in manager.Users)
-            {
-                user.VerifyCodeRequestEvent += User_VerifyCodeRequestEvent;
-            }
+            //foreach (var user in manager.Users)
+            //{
+            //    user.VerifyCodeRequestEvent += User_VerifyCodeRequestEvent;
+            //}
 
-            manager.StartAll();
+            //manager.StartAll();
 
             string text = "";
             do
             {
-                var found = manager.Get(text);
-                if (found != null)
-                    found.SetVerifyCode(text);
-
                 text = Console.ReadLine();
             } while (!text.Equals("quit"));
         }
