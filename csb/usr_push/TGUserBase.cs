@@ -16,8 +16,7 @@ namespace csb.usr_push
         #region vars
         Client user;
         readonly ManualResetEventSlim verifyCodeReady = new();
-        string verifyCode;
-        bool isRunning;
+        string verifyCode;        
         #endregion
 
         #region properties
@@ -25,12 +24,18 @@ namespace csb.usr_push
         public string api_id { get; set; }
         [JsonProperty]
         public string api_hash { get; set; }
+        [JsonProperty]        
+        public string phone_number { get; set; }
         [JsonProperty]
-        public string phone_number { get; set; }        
+        public string geotag { get; set; }        
         #endregion
 
-        public TGUserBase()
+        public TGUserBase(string api_id, string api_hash, string phone_number, string geotag)
         {
+            this.api_id = api_id;
+            this.api_hash = api_hash;
+            this.phone_number = phone_number;
+            this.geotag = geotag;
         }
 
         #region protected

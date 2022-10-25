@@ -28,8 +28,8 @@ namespace csb.bot_poster
         {
             switch (what)
             {
-                case "api_id": return globals.api_id;
-                case "api_hash": return globals.api_hash;
+                case "api_id": return globals.listener_api_id;
+                case "api_hash": return globals.listener_api_hash;
                 case "bot_token": return Token;
                 case "session_pathname":return "bot.session";
                 default: return null;

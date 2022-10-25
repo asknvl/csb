@@ -47,7 +47,6 @@ C:\KONOVALOV\Sources\csb\csb\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\KONOVALOV\Sources\csb\csb\bin\Debug\net6.0\Telegram.Bot.dll
 C:\KONOVALOV\Sources\csb\csb\bin\Debug\net6.0\Telegram.Bot.Extensions.Polling.dll
 C:\KONOVALOV\Sources\csb\csb\bin\Debug\net6.0\WTelegramClient.dll
-C:\KONOVALOV\Sources\csb\csb\obj\Debug\net6.0\csb.csproj.AssemblyReference.cache
 C:\KONOVALOV\Sources\csb\csb\obj\Debug\net6.0\csb.GeneratedMSBuildEditorConfig.editorconfig
 C:\KONOVALOV\Sources\csb\csb\obj\Debug\net6.0\csb.AssemblyInfoInputs.cache
 C:\KONOVALOV\Sources\csb\csb\obj\Debug\net6.0\csb.AssemblyInfo.cs
@@ -79,3 +78,4 @@ D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.genruntimeconfig.cache
 D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\ref\csb.dll
 D:\WORK\xtime\Sources\csb\csb\bin\Debug\net6.0\RestSharp.dll
 C:\KONOVALOV\Sources\csb\csb\bin\Debug\net6.0\RestSharp.dll
+C:\KONOVALOV\Sources\csb\csb\obj\Debug\net6.0\csb.csproj.AssemblyReference.cache

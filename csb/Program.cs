@@ -20,14 +20,14 @@ namespace csb
             //BotManager manager = new BotManager();
             //manager.Start();
 
-            IUserPushManager manager = new UserPushManager<TestUser>();
-            manager.Add(new TestUser("1"));
-            manager.Add(new TestUser("2"));
-            manager.Add(new TestUser("3"));
+            var manager = new TGUserManager<TestUser>("push.json");
+            //manager.Add(new TestUser("1"));
+            //manager.Add(new TestUser("2"));
+            //manager.Add(new TestUser("3"));
 
             foreach (var user in manager.Users)
             {
-                user.VerifyCodeRequestEvent += User_VerifyCodeRequestEvent1;
+                user.VerifyCodeRequestEvent += User_VerifyCodeRequestEvent;
             }
 
             manager.StartAll();
@@ -43,7 +43,7 @@ namespace csb
             } while (!text.Equals("quit"));
         }
 
-        private static void User_VerifyCodeRequestEvent1(ITGUser arg)
+        private static void User_VerifyCodeRequestEvent(ITGUser arg)
         {
             Console.WriteLine($"Введите код для {arg.phone_number}");
         }

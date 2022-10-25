@@ -9,8 +9,10 @@ namespace csb.settings
     public class GlobalSettings
     {
         #region properties
-        public string api_id { get; set; }
-        public string api_hash { get; set; }
+        public string listener_api_id { get; set; }
+        public string listener_api_hash { get; set; }
+        public string push_api_id { get; set; }
+        public string push_api_hash { get; set; }
         #endregion
 
         static GlobalSettings instance;
@@ -20,8 +22,8 @@ namespace csb.settings
             api_hash = "05a55aa70deae546f5eb4b2892a56606";
 #endif
 #if DEBUG
-            api_id = "13180345";
-            api_hash = "df78e4859fb0cbd03dc5cf83d5d0c0cb";
+            listener_api_id = "13180345";
+            listener_api_hash = "df78e4859fb0cbd03dc5cf83d5d0c0cb";
 #endif
         }
         public static GlobalSettings getInstance()

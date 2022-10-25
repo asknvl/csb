@@ -11,7 +11,10 @@ namespace csb.usr_push
     public class TestUser : ITGUser
     {
         #region properties
+        public string geotag { get; set; }
         public string phone_number { get; set; }
+        public string api_id { get; set; }
+        public string api_hash { get; set; }
         #endregion
 
         #region vars
@@ -30,18 +33,22 @@ namespace csb.usr_push
             verifyCodeReady.Set();
         }
 
-        public Task Start()
+        public async Task Start()
         {
             User usr = null;
-            return Task.Run(async () => {                
+            await Task.Run(() => {                
                 VerifyCodeRequestEvent?.Invoke(this);
                 verifyCodeReady.Reset();
                 verifyCodeReady.Wait();
 
-            }).ContinueWith(t => {
+            }).ContinueWith(t =>
+            {
                 Console.WriteLine($"Введен код для {phone_number} = {verifyCode}");
                 UserStartedResultEvent?.Invoke(usr);
             });
+
+            //Console.WriteLine($"Введен код для {phone_number} = {verifyCode}");
+            //UserStartedResultEvent?.Invoke(usr);
         }
 
         public event Action<ITGUser> VerifyCodeRequestEvent;

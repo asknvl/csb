@@ -113,8 +113,8 @@ namespace csb.usr_listener
 
             switch (what)
             {
-                case "api_id": return globals.api_id;
-                case "api_hash": return globals.api_hash;
+                case "api_id": return globals.listener_api_id;
+                case "api_hash": return globals.listener_api_hash;
                 case "session_pathname": return $"{dir}/{PhoneNumber}.session";
                 case "phone_number": return PhoneNumber;
                 //case "verification_code": /*return "65420";*/Console.Write("Code: "); return Console.ReadLine();
