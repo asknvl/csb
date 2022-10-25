@@ -21,7 +21,7 @@ namespace csb.usr_push
         Task Start();
         void SetVerifyCode(string code);
 
-        public event Action<ITGUser> VerifyCodeRequestEvent;
+        public event Action<ITGUser> VerificationCodeRequestEvent;
         public event Action<User> UserStartedResultEvent;
     }
 }

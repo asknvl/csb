@@ -32,6 +32,9 @@ namespace csb.usr_push
             if (!found)
             {
                 Users = Users.Append(user);
+                user.VerificationCodeRequestEvent += (geotag) => {
+                    VerificationCodeRequestEvent?.Invoke(geotag);
+                };
                 storage.save(Users);
             }
             else throw new UserPushManagerException($"Номер {user.phone_number} уже зарегестрирован в системе");
@@ -51,7 +54,7 @@ namespace csb.usr_push
             storage.save(Users);
         }
 
-        public ITGUser Get(string geotag)
+        public T Get(string geotag)
         {
             return Users.FirstOrDefault(u => u.geotag.Equals(geotag));
         }
@@ -61,10 +64,11 @@ namespace csb.usr_push
             foreach (var user in Users) 
                 await user.Start();
         }
+
         #endregion
 
-        #region events
-        public event Action<T> NeedVerificationCodeEvent;
+        #region events        
+        public event Action<string> VerificationCodeRequestEvent;
         #endregion
 
     }

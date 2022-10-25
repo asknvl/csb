@@ -37,7 +37,7 @@ namespace csb.usr_push
         {
             User usr = null;
             await Task.Run(() => {                
-                VerifyCodeRequestEvent?.Invoke(this);
+                VerificationCodeRequestEvent?.Invoke(this);
                 verifyCodeReady.Reset();
                 verifyCodeReady.Wait();
 
@@ -51,7 +51,7 @@ namespace csb.usr_push
             //UserStartedResultEvent?.Invoke(usr);
         }
 
-        public event Action<ITGUser> VerifyCodeRequestEvent;
+        public event Action<ITGUser> VerificationCodeRequestEvent;
         public event Action<User> UserStartedResultEvent;
     }
 }
