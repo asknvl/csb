@@ -251,8 +251,16 @@ namespace csb.users
         [JsonIgnore]
         public ModerationProcessor moderationProcessor { get; set; }
 
+        TGUserManager<UserAdmin> adminmanager;
         [JsonIgnore]
-        public TGUserManager<UserAdmin> adminManager { get; set; }
+        public TGUserManager<UserAdmin> adminManager {
+            get => adminmanager;
+            set
+            {
+                adminmanager = value;
+                adminmanager.VerificationCodeRequestEvent += Adminmanager_VerificationCodeRequestEvent;
+            }
+        }
 
         [JsonIgnore]
         public CancellationToken cancellationToken { get; set; }
@@ -278,7 +286,12 @@ namespace csb.users
             //await showMyChains(Id);
 
         }
-
+        private async void Adminmanager_VerificationCodeRequestEvent(string geotag)
+        {
+            currentAdminGeoTag = geotag;
+            await sendTextMessage(Id, $"Введите код авторизации для админиcтратора {geotag}:");
+            State = BotState.waitingAdminVerificationCode;
+        }
 
         InlineKeyboardMarkup getMyChainsMarkUp()
         {
@@ -1045,6 +1058,20 @@ namespace csb.users
                                 await admin.Start();
 
                             } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingAdminVerificationCode:
+                            try
+                            {
+                                var admin = adminManager.Get(currentModeratorGeoTag);
+                                if (admin != null)
+                                    admin.SetVerifyCode(msg);
+                            }
+                            catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;

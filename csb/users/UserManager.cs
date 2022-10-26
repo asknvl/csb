@@ -100,11 +100,6 @@ namespace csb.users
                 await user.processMessage(update);
         }
 
-        //public User? Get(long id)
-        //{
-        //    return users.Find(u => u.Id == id);
-        //} 
-
         public bool Check(long id)
         {
             bool res = users.Any(u => u.Id == id);

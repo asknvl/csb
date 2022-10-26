@@ -1,14 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "Qz71VAPhx3zJyEHU9I8IB3m6dZKWORL1R5EGH1pgDZtr/UyzoX+JP6/PAdGJ3hEAQ9m1kXJV1420IDS4gASSXQ==",
+  "dgSpecHash": "x3NF0NpJ+kOy4WXsVRN7mH49sJMf87gAnkbOtTiXPLYHxeLvup/OKc3jTqC0RnKCrFXuOOuucLK+kUQo3/7Lpw==",
   "success": true,
-  "projectFilePath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
+  "projectFilePath": "C:\\KONOVALOV\\Sources\\csb\\csb\\csb.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Никита\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\restsharp\\106.10.0\\restsharp.106.10.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
+    "C:\\Users\\konovalov.a\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\konovalov.a\\.nuget\\packages\\restsharp\\106.10.0\\restsharp.106.10.0.nupkg.sha512",
+    "C:\\Users\\konovalov.a\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\konovalov.a\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512",
+    "C:\\Users\\konovalov.a\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }

@@ -54,7 +54,7 @@ namespace csb.usr_push
                 case "session_pathname": return $"{dir}/{phone_number}.session";
                 case "phone_number": return phone_number;
                 case "verification_code":
-                    VerificationCodeRequestEvent?.Invoke(this);
+                    VerificationCodeRequestEvent?.Invoke(geotag);
                     verifyCodeReady.Reset();
                     verifyCodeReady.Wait();
                     return verifyCode;
@@ -100,7 +100,7 @@ namespace csb.usr_push
         #endregion
 
         #region events
-        public event Action<ITGUser> VerificationCodeRequestEvent;
+        public event Action<string> VerificationCodeRequestEvent;
         public event Action<User> UserStartedResultEvent;
         #endregion
     }
