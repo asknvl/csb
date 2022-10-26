@@ -71,8 +71,10 @@ namespace csb.usr_push
         #region private
         private void User_Update(TL.IObject arg)
         {
-            if (arg is not Updates { updates: var updates }) return;
-            foreach (var update in updates)
+            if (arg is not UpdatesBase updates)
+                return;
+
+            foreach (var update in updates.UpdateList)
             {
                 processUpdate(update);
             }
@@ -88,7 +90,7 @@ namespace csb.usr_push
                 usr = await user.LoginUserIfNeeded();                
                 user.Update += User_Update;
             }).ContinueWith(t => {               
-                    UserStartedResultEvent?.Invoke(usr);
+                    UserStartedResultEvent?.Invoke(geotag, usr);
             });
         }
 
@@ -106,7 +108,7 @@ namespace csb.usr_push
 
         #region events
         public event Action<string> VerificationCodeRequestEvent;
-        public event Action<User> UserStartedResultEvent;
+        public event Action<string, User> UserStartedResultEvent;
         #endregion
     }
 }

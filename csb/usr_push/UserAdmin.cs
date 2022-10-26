@@ -23,7 +23,18 @@ namespace csb.usr_push
         #region protected
         protected override void processUpdate(Update update)
         {
-            
+            try
+            {
+                switch (update)
+                {
+                    case UpdateNewMessage unm:
+                        Console.WriteLine(unm.message.Peer.ID);
+                        break;
+                }
+            } catch (Exception ex)
+            {
+
+            }
         }
         #endregion
 

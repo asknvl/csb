@@ -23,6 +23,6 @@ namespace csb.usr_push
         void SetVerifyCode(string code);
 
         public event Action<string> VerificationCodeRequestEvent;
-        public event Action<User> UserStartedResultEvent;
+        public event Action<string, User> UserStartedResultEvent;
     }
 }

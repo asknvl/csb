@@ -273,6 +273,7 @@ namespace csb.users
             {
                 adminmanager = value;
                 adminmanager.VerificationCodeRequestEvent += Adminmanager_VerificationCodeRequestEvent;
+                adminmanager.UserStartedResultEvent += Adminmanager_UserStartedResultEvent;
             }
         }
 
@@ -307,6 +308,12 @@ namespace csb.users
             State = BotState.waitingAdminVerificationCode;
         }
 
+        private async void Adminmanager_UserStartedResultEvent(string geotag, TL.User user)
+        {
+            if (State == BotState.waitingAdminVerificationCode)
+                State = BotState.free;
+            await sendTextMessage(Id, $"Администратор {geotag} запущен");            
+        }
         InlineKeyboardMarkup getMyChainsMarkUp()
         {
             var chains = chainprocessor.Chains;
@@ -1083,7 +1090,7 @@ namespace csb.users
                             {
                                 var admin = adminManager.Get(currentAdminGeoTag);
                                 if (admin != null)
-                                    admin.SetVerifyCode(msg);
+                                    admin.SetVerifyCode(msg);                                
                             }
                             catch (Exception ex)
                             {
@@ -1636,7 +1643,6 @@ namespace csb.users
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
-
                     }
 
                     if (data.Contains("privateChannel_"))

@@ -24,13 +24,23 @@ namespace csb.usr_push
             storage = new Storage<IEnumerable<T>>(jsonfilename, Users);
             Users = storage.load();
             foreach (var user in Users)
+            {
                 user.VerificationCodeRequestEvent += User_VerificationCodeRequestEvent;
+                user.UserStartedResultEvent += User_UserStartedResultEvent;
+            }
+        }
+
+        #region private
+        private void User_UserStartedResultEvent(string geotag, TL.User user)
+        {
+            UserStartedResultEvent?.Invoke(geotag, user);
         }
 
         private void User_VerificationCodeRequestEvent(string geotag)
         {
             VerificationCodeRequestEvent?.Invoke(geotag);
         }
+        #endregion
 
         #region public        
         public void Add(T user)
@@ -40,6 +50,7 @@ namespace csb.usr_push
             {
                 Users = Users.Append(user);
                 user.VerificationCodeRequestEvent += User_VerificationCodeRequestEvent;
+                user.UserStartedResultEvent += User_UserStartedResultEvent;
                 storage.save(Users);
             }
             else throw new UserPushManagerException($"Номер {user.phone_number} уже зарегестрирован в системе");
@@ -76,6 +87,7 @@ namespace csb.usr_push
 
         #region events        
         public event Action<string> VerificationCodeRequestEvent;
+        public event Action<string, TL.User> UserStartedResultEvent;
         #endregion
 
     }

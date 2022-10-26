@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TL;
 
 namespace csb.usr_push
 {
@@ -16,6 +17,8 @@ namespace csb.usr_push
         void StartAll();
 
         event Action<string> VerificationCodeRequestEvent;
+        public event Action<string, User> UserStartedResultEvent;
+
     }
 
     public class UserPushManagerException : Exception

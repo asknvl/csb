@@ -44,7 +44,7 @@ namespace csb.usr_push
             }).ContinueWith(t =>
             {
                 Console.WriteLine($"Введен код для {phone_number} = {verifyCode}");
-                UserStartedResultEvent?.Invoke(usr);
+                UserStartedResultEvent?.Invoke(geotag, usr);
             });
 
             //Console.WriteLine($"Введен код для {phone_number} = {verifyCode}");
@@ -57,6 +57,6 @@ namespace csb.usr_push
         }
 
         public event Action<string> VerificationCodeRequestEvent;
-        public event Action<User> UserStartedResultEvent;
+        public event Action<string, User> UserStartedResultEvent;
     }
 }
