@@ -23,6 +23,13 @@ namespace csb.usr_push
         public TGUserManager(string jsonfilename) {
             storage = new Storage<IEnumerable<T>>(jsonfilename, Users);
             Users = storage.load();
+            foreach (var user in Users)
+                user.VerificationCodeRequestEvent += User_VerificationCodeRequestEvent;
+        }
+
+        private void User_VerificationCodeRequestEvent(string geotag)
+        {
+            VerificationCodeRequestEvent?.Invoke(geotag);
         }
 
         #region public        
@@ -32,9 +39,7 @@ namespace csb.usr_push
             if (!found)
             {
                 Users = Users.Append(user);
-                user.VerificationCodeRequestEvent += (geotag) => {
-                    VerificationCodeRequestEvent?.Invoke(geotag);
-                };
+                user.VerificationCodeRequestEvent += User_VerificationCodeRequestEvent;
                 storage.save(Users);
             }
             else throw new UserPushManagerException($"Номер {user.phone_number} уже зарегестрирован в системе");
@@ -42,15 +47,17 @@ namespace csb.usr_push
 
         public void Delete(T user)
         {
-            var users = Users.ToList();
-            users.Remove(user);
-            storage.save(Users);
+            throw new NotImplementedException("Метод не реализован");
         }
 
         public void Delete(string geotag)
         {
+            var user = Get(geotag);
+            user?.Stop();
+
             var users = Users.ToList();
             users.RemoveAll(u => u.geotag.Equals(geotag));
+            Users = users;
             storage.save(Users);
         }
 

@@ -51,6 +51,11 @@ namespace csb.usr_push
             //UserStartedResultEvent?.Invoke(usr);
         }
 
+        public void Stop()
+        {
+            
+        }
+
         public event Action<string> VerificationCodeRequestEvent;
         public event Action<User> UserStartedResultEvent;
     }

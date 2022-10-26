@@ -97,6 +97,11 @@ namespace csb.usr_push
             verifyCode = code;
             verifyCodeReady.Set();
         }
+
+        public void Stop()
+        {
+            user?.Dispose();
+        }
         #endregion
 
         #region events

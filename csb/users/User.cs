@@ -159,6 +159,20 @@ namespace csb.users
                 }
             })},
 
+            {"editAdmin", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить push сообщение", callbackData: "editPushMessage"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteAdmin"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
             {"back", new(new[] {
 
                 new[] {
@@ -1067,7 +1081,7 @@ namespace csb.users
                         case BotState.waitingAdminVerificationCode:
                             try
                             {
-                                var admin = adminManager.Get(currentModeratorGeoTag);
+                                var admin = adminManager.Get(currentAdminGeoTag);
                                 if (admin != null)
                                     admin.SetVerifyCode(msg);
                             }
@@ -1537,6 +1551,20 @@ namespace csb.users
                     }
                     break;
 
+                case "deleteAdmin":
+                    try
+                    {
+                        adminManager.Delete(currentAdminGeoTag);
+                        await messagesProcessor.Back(chat);
+                        await messagesProcessor.Back(chat);
+                        await showMyAdmins(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Админ удален");
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
                 case "finishEddingGreetings":
                     State = BotState.waitingModeratorByeMessage;
                     await messagesProcessor.Back(chat);
@@ -1812,6 +1840,22 @@ namespace csb.users
                                 default:
                                     break;
                             }
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("admin_"))
+                    {
+                        try
+                        {
+                            currentAdminGeoTag = data.Replace("admin_", "");
+                            var admin = adminManager.Get(currentAdminGeoTag);
+                            string m = $"Выбран администратор {admin.geotag}. Что сделать?";
+                            await messagesProcessor.Add(chat, "editAdmin", await sendTextButtonMessage(chat, m, "editAdmin"));
+                            await bot.AnswerCallbackQueryAsync(query.Id);
 
                         } catch (Exception ex)
                         {

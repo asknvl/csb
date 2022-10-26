@@ -19,6 +19,7 @@ namespace csb.usr_push
         [JsonProperty]
         string phone_number { get; set; }
         Task Start();
+        void Stop();
         void SetVerifyCode(string code);
 
         public event Action<string> VerificationCodeRequestEvent;
