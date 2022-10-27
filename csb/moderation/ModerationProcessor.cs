@@ -13,11 +13,11 @@ namespace csb.moderation
     {
         #region vars
         string path;
-        List<BotModerator_v2> moderatorBotsList = new();
+        List<BotModerator_v3> moderatorBotsList = new();
         #endregion
 
         #region properties
-        public List<BotModerator_v2> ModeratorBots => moderatorBotsList;
+        public List<BotModerator_v3> ModeratorBots => moderatorBotsList;
         #endregion
 
         public ModerationProcessor(string userId)
@@ -37,7 +37,7 @@ namespace csb.moderation
                 Save();
             }
             string rd = File.ReadAllText(path);
-            moderatorBotsList = JsonConvert.DeserializeObject<List<BotModerator_v2>>(rd);
+            moderatorBotsList = JsonConvert.DeserializeObject<List<BotModerator_v3>>(rd);
         }
 
         public void Save()
@@ -62,7 +62,7 @@ namespace csb.moderation
             if (found)
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
 
-            var mbot = new BotModerator_v2(token, geotag);
+            var mbot = new BotModerator_v3(token, geotag);
             mbot.Start();
             moderatorBotsList.Add(mbot);
             Save();            
@@ -74,6 +74,14 @@ namespace csb.moderation
             if (found == null)
                 throw new Exception("Бота-модератора с таким геотегом не существует");
             return found.Greetings;
+        }
+
+        public PushData PushData(string geotag)
+        {
+            var found = moderatorBotsList.FirstOrDefault(o => o.GeoTag.Equals(geotag));
+            if (found == null)
+                throw new Exception("Бота-модератора с таким геотегом не существует");
+            return found.PushData;
         }
 
         public BotModerator Get(string geotag)

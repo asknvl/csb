@@ -51,6 +51,9 @@ namespace csb.bot_manager
         waitingAdminPhoneNumber,
         waitingAdminVerificationCode,
 
+        waitingNewPushTimePeriod,
+        waitingNewPushMessage,
+
         waitingReplacedWord,
 
 

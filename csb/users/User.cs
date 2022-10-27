@@ -121,6 +121,10 @@ namespace csb.users
                 },
 
                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить Push сообщения", callbackData: "editPushMessages"),
+                },
+
+                new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteModerator"),
                 },
 
@@ -165,7 +169,7 @@ namespace csb.users
                 },
 
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteAdmin"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить админа", callbackData: "deleteAdmin"),
                 },
 
                 new[] {
@@ -229,6 +233,25 @@ namespace csb.users
                 }
             })},
 
+             {"editPushMessage", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "push_message_show"),
+                },                
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "push_message_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
+             {"addNewPushCancel", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addNewPushCancel"),
+                }
+            })},
+
         };
         #endregion
 
@@ -236,6 +259,7 @@ namespace csb.users
         int currentChainID;
         string currentModeratorGeoTag;
         string currentAdminGeoTag;
+        PushMessage currentPushMessage;
         BotState State;
         #endregion
 
@@ -244,7 +268,6 @@ namespace csb.users
         public long Id { get; set; }
         [JsonProperty]
         public string Name { get; set; }
-
         [JsonIgnore]
         public ITelegramBotClient bot { get; set; }
         [JsonIgnore]
@@ -472,6 +495,28 @@ namespace csb.users
 
             return inlineKeyboard;
         }
+
+        InlineKeyboardMarkup getMyPushMessagesMarkUp()
+        {
+
+            var pushes = moderationProcessor.PushData(currentModeratorGeoTag).Messages;
+            int number = pushes.Count;
+
+            InlineKeyboardButton[][] push_buttons = new InlineKeyboardButton[number + 2][];
+
+            for (int i = 0; i < number; i++)
+            {
+                push_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{pushes[i].TimePeriod} часовое", callbackData: $"push_{pushes[i].TimePeriod}") };
+            }
+
+            push_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить push сообщение", callbackData: "addpush") };
+            push_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(push_buttons);
+
+            return inlineKeyboard;
+        }
+
         async Task<Message> sendTextMessage(long chat, string message)
         {
             return await bot.SendTextMessageAsync(
@@ -584,6 +629,16 @@ namespace csb.users
                 chatId: chat,
                 text: "Управление администраторами:",
                 replyMarkup: getMyChannelAdminsMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showMyPushMessages(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "showMyPushMessages", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Управление push-сообщениями:",
+                replyMarkup: getMyPushMessagesMarkUp(),
                 cancellationToken: cancellationToken));
         }
         #endregion
@@ -1099,6 +1154,47 @@ namespace csb.users
                             }
                             break;
 
+                        case BotState.waitingNewPushTimePeriod:
+                            try
+                            {
+                                currentPushMessage.TimePeriod = int.Parse(msg);                                                                
+                                State = BotState.waitingNewPushMessage;
+                                string helloReqMsg = "Перешлите (forward) сюда push \U0001F9B5 сообщение:";
+                                await messagesProcessor.Add(chat, "waitingPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "addNewPushCancel"));
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingNewPushMessage:
+                            try
+                            {
+                                TextMessage txtmsg = new TextMessage();
+                                txtmsg.Text = update.Message.Text;
+                                txtmsg.Entities = update.Message.Entities;
+                                txtmsg.ReplyMarkup = update.Message.ReplyMarkup;
+
+                                currentPushMessage.TextMessage = txtmsg;
+
+                                moderationProcessor.PushData(currentModeratorGeoTag).Messages.RemoveAll(m => m.TimePeriod == currentPushMessage.TimePeriod);
+                                moderationProcessor.PushData(currentModeratorGeoTag).Messages.Add(currentPushMessage);
+                                moderationProcessor.PushData(currentModeratorGeoTag).Messages.OrderBy(m => m.TimePeriod);
+
+                                moderationProcessor.Save();
+
+                                State = BotState.free;
+                                await sendTextMessage(chat, "Push-сообщение создано");
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
                     }
                     break;
             }
@@ -1593,6 +1689,54 @@ namespace csb.users
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
+                case "editPushMessages":
+                    try
+                    {
+                        await showMyPushMessages(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }                    
+                    break;
+
+                case "addpush":
+                    State = BotState.waitingNewPushTimePeriod;
+                    currentPushMessage = new PushMessage();
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Введите период вывода сообщения в часах, если вы хотите заменить существующее сообщение, введите период, сообщение для которого требуется заменить:", "addNewPushCancel"));
+                        await messagesProcessor.Delete(chat, "editPushMessages");
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "addNewPushCancel":
+                    try
+                    {
+                        switch (State) { 
+                            case BotState.waitingNewPushTimePeriod:
+                                await messagesProcessor.Back(chat);
+                                break;
+
+                            case BotState.waitingNewPushMessage:
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Back(chat);
+                                break;
+                        }
+
+                        State = BotState.free;
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
                 case "":
                     break;
 
@@ -1768,7 +1912,6 @@ namespace csb.users
                     {
                         try
                         {
-
                             string[] splt = data.Split("_");
                             string type = splt[1];
                             string cmd = splt[2];
@@ -1862,6 +2005,20 @@ namespace csb.users
                             string m = $"Выбран администратор {admin.geotag}. Что сделать?";
                             await messagesProcessor.Add(chat, "editAdmin", await sendTextButtonMessage(chat, m, "editAdmin"));
                             await bot.AnswerCallbackQueryAsync(query.Id);
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("push_"))
+                    {
+                        try
+                        {
+                            string t = data.Replace("push_", "");
+                            int timePeriod = int.Parse(t);
+                            currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod)
 
                         } catch (Exception ex)
                         {

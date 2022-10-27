@@ -1,5 +1,4 @@
-﻿using csb.addme_service;
-using csb.server;
+﻿using csb.server;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,48 +7,46 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.bot_moderator
 {
-    public class BotModerator_v2 : BotModerator
+    public class BotModerator_v3 : BotModerator_v2
     {
-
         #region vars
-        protected AddMeService addMe = AddMeService.getInstance();        
+        System.Timers.Timer pushTimer = new System.Timers.Timer();
         #endregion
 
-        #region properties               
+        #region properties
         [JsonProperty]
-        public GreetingsData Greetings { get; set; } = new();
+        public PushData PushData { get; set; } = new();
         #endregion
 
-        public BotModerator_v2(string token, string geotag) : base(token, geotag) {         
+        public BotModerator_v3(string token, string geotag) : base(token, geotag)
+        {
+            pushTimer.Interval = 5000;
+            pushTimer.AutoReset = true;
+            pushTimer.Elapsed += PushTimer_Elapsed;
+            pushTimer.Start();
         }
 
-        #region helpers
-        private InlineKeyboardMarkup getButtonsMarkup(List<Button> buttons)
+        #region private
+        private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            int first = buttons.Count % 2;
-            InlineKeyboardButton[][] _buttons = new InlineKeyboardButton[first + buttons.Count / 2][];
-            if (first == 1)
-            {
-                _buttons[0] = new InlineKeyboardButton[] {
-                    InlineKeyboardButton.WithUrl(text: buttons[0].Name, url: $"{buttons[0].Link}"),
-                };
-            }
-            for (int i = 0; i < (buttons.Count - first) / 2; i++)
-            {
-                _buttons[i + first] = new InlineKeyboardButton[] {
-                    InlineKeyboardButton.WithUrl(text: buttons[i * 2 + first].Name, url: $"{buttons[i * 2 + first].Link}"),
-                    InlineKeyboardButton.WithUrl(text: buttons[i * 2 + 1 + first].Name, url: $"{buttons[i * 2 + 1 + first].Link}")
-                };
-            }
-            InlineKeyboardMarkup inlineKeyboard = new(_buttons);
-            return inlineKeyboard;
+            //ChatId id = new ChatId(1669011167);
+
+            //try
+            //{
+
+            //    await bot.SendTextMessageAsync(
+            //        id,
+            //        text: "Push message",
+            //        cancellationToken: new CancellationToken());
+            //} catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+
         }
         #endregion
 
@@ -152,7 +149,7 @@ namespace csb.bot_moderator
                         Console.WriteLine($"IsApproved? {ex.Message}");
                     }
 
-                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme )
+                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme)
                     {
                         try
                         {
@@ -164,8 +161,8 @@ namespace csb.bot_moderator
                                          entities: Greetings.HelloMessage.Entities,
                                          disableWebPagePreview: true,
                                          cancellationToken: cancellationToken);
-                        }
-                        catch (Exception ex) {
+                        } catch (Exception ex)
+                        {
                             Console.WriteLine(ex.Message);
                         }
                         await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
@@ -181,8 +178,7 @@ namespace csb.bot_moderator
                     Console.WriteLine($"------------------------ {DateTime.Now} {ex.Message} --------------------------------");
                 }
             }
-        }        
+        }
         #endregion
     }
-
 }

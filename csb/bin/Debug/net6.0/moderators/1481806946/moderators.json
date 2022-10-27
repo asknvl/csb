@@ -1,5 +1,30 @@
 [
   {
+    "PushData": {
+      "Messages": [
+        {
+          "TimePeriod": 3,
+          "TextMessage": {
+            "Text": "​Quer trabalhar em condições VIP?👑\nSe você depositar 100 reais ou mais, então me envie uma mensagem particular  @felixbond777",
+            "Entities": [
+              {
+                "type": "text_link",
+                "offset": 0,
+                "length": 1,
+                "url": "https://telegra.ph/file/325418719579b176b37d3.mp4"
+              },
+              {
+                "type": "text_link",
+                "offset": 114,
+                "length": 12,
+                "url": "https://t.me/felixbond777"
+              }
+            ],
+            "ReplyMarkup": null
+          }
+        }
+      ]
+    },
     "Greetings": {
       "HelloMessage": {
         "Text": "HELLO",
