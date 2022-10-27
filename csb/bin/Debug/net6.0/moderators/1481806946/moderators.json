@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "HELLO",
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": "GOODBYE",
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "GeoTag": "TEST1",
+    "Name": "bot_1_asknvl_bot",
+    "Token": "5438092932:AAF3UhXM5SWXpPG3-kotIG0wbHIvgg4iCcM"
+  }
+]
