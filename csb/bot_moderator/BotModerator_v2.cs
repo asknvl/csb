@@ -20,6 +20,7 @@ namespace csb.bot_moderator
 
         #region vars
         AddMeService addMe = AddMeService.getInstance();
+        System.Timers.Timer pushTimer = new System.Timers.Timer();        
         #endregion
 
         #region properties               
@@ -27,7 +28,32 @@ namespace csb.bot_moderator
         public GreetingsData Greetings { get; set; } = new();
         #endregion
 
-        public BotModerator_v2(string token, string geotag) : base(token, geotag) { }
+        public BotModerator_v2(string token, string geotag) : base(token, geotag) {
+            pushTimer.Interval = 5000;
+            pushTimer.AutoReset = true;
+            pushTimer.Elapsed += PushTimer_Elapsed;
+            pushTimer.Start();
+        }
+
+        private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+
+            //ChatId id = new ChatId(1669011167);
+
+            //try
+            //{
+
+            //    await bot.SendTextMessageAsync(
+            //        id,
+            //        text: "Push message",
+            //        cancellationToken: new CancellationToken());
+            //} catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+
+        }
 
         #region helpers
         private InlineKeyboardMarkup getButtonsMarkup(List<Button> buttons)
@@ -151,7 +177,7 @@ namespace csb.bot_moderator
                         Console.WriteLine($"IsApproved? {ex.Message}");
                     }
 
-                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme)
+                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme )
                     {
                         try
                         {
@@ -164,7 +190,9 @@ namespace csb.bot_moderator
                                          disableWebPagePreview: true,
                                          cancellationToken: cancellationToken);
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex) {
+                            Console.WriteLine(ex.Message);
+                        }
                         await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                         Console.WriteLine($"{DateTime.Now} {GeoTag} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
 

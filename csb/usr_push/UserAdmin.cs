@@ -28,7 +28,7 @@ namespace csb.usr_push
                 switch (update)
                 {
                     case UpdateNewMessage unm:
-                        Console.WriteLine(unm.message.Peer.ID);
+                        long id = unm.message.Peer.ID;                        
                         break;
                 }
             } catch (Exception ex)
