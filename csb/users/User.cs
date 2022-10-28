@@ -1970,7 +1970,7 @@ namespace csb.users
                                                text: greetingsMsg.Text,
                                                replyMarkup: greetingsMsg.ReplyMarkup,
                                                entities: greetingsMsg.Entities,
-                                               disableWebPagePreview: true,
+                                               disableWebPagePreview: false,
                                                cancellationToken: cancellationToken);
 
                                     } catch (Exception ex)
