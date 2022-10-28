@@ -2018,7 +2018,10 @@ namespace csb.users
                         {
                             string t = data.Replace("push_", "");
                             int timePeriod = int.Parse(t);
-                            currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod)
+                            currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
+                            string m = $"Выбрано {currentPushMessage.TimePeriod} часовое push-сообщение. Что сделать?";
+                            await messagesProcessor.Add(chat, "editPushMessage", await sendTextButtonMessage(chat, m, "editPushMessage"));
+                            await bot.AnswerCallbackQueryAsync(query.Id);
 
                         } catch (Exception ex)
                         {
