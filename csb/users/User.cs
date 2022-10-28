@@ -164,9 +164,6 @@ namespace csb.users
             })},
 
             {"editAdmin", new(new[] {
-                new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Настроить push сообщение", callbackData: "editPushMessage"),
-                },
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить админа", callbackData: "deleteAdmin"),
@@ -1710,6 +1707,39 @@ namespace csb.users
                         await messagesProcessor.Delete(chat, "editPushMessages");
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "push_message_show":
+                    try
+                    {
+                        await bot.SendTextMessageAsync(
+                                                   Id,
+                                                   text: currentPushMessage.TextMessage.Text,
+                                                   replyMarkup: currentPushMessage.TextMessage.ReplyMarkup,
+                                                   entities: currentPushMessage.TextMessage.Entities,
+                                                   disableWebPagePreview: true,
+                                                   cancellationToken: cancellationToken);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "push_message_delete":
+                    try
+                    {
+                        //adminManager.Delete(currentAdminGeoTag);
+                        moderationProcessor.PushData(currentModeratorGeoTag).Messages.Remove(currentPushMessage);
+                        moderationProcessor.Save();
+                        await messagesProcessor.Back(chat);
+                        await messagesProcessor.Back(chat);
+                        await showMyAdmins(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Админ удален");
+                    }
+                    catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
