@@ -152,8 +152,8 @@ namespace csb.server
         {
             public string tg_user_id { get; set; }
             public string tg_chat_id { get;set; }
-            public int? push_send_hours { get; set; }
-            public int? push_delivered_hours { get; set; }
+            public double? push_send_hours { get; set; }
+            public double? push_delivered_hours { get; set; }
             public double time_after_subscribe { get; set; }
         }
         public class tgUsersPushResultDto
@@ -228,6 +228,76 @@ namespace csb.server
                 } else
                     throw new Exception($"Не удалось пометить фидбэк подписчика");
 
+            });
+        }
+
+        public class tgUserPushSentDto
+        {
+            public long tg_user_id { get; set;}
+            public string tg_geolocation { get; set; }
+            public double push_send_hours { get; set; }
+        }
+
+        public class tgUsersPushesSentDto
+        {
+            public List<tgUserPushSentDto> users { get; set; } = new();
+        }
+
+        public class tgUserPushDeliveredDto
+        {
+            public long tg_user_id { get; set;}
+            public string tg_geolocation { get; set; }
+            public double push_delivered_hours { get; set; }
+        }
+
+        public class tgUsersPushesDeliveredDto
+        {
+            public List <tgUserPushDeliveredDto> users { get; set; } = new();
+        }
+
+        public virtual async Task MarkFollowerWasPushed(string geotag, long id, double hours, bool result)
+        {
+            await Task.Run(() => {
+
+                var client = new RestClient($"{url}/v1/telegram/userByGeo");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+
+                if (result)
+                {
+                    tgUsersPushesDeliveredDto delivered = new();
+                    delivered.users.Add(new tgUserPushDeliveredDto()
+                    {
+                        tg_user_id = id,
+                        tg_geolocation = geotag,
+                        push_delivered_hours = hours
+                    });
+                    string jdelivered = JsonConvert.SerializeObject(delivered);
+                    request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
+
+                } else
+                {
+                    tgUsersPushesSentDto sent = new();
+                    sent.users.Add(new tgUserPushSentDto()
+                    {
+                        tg_user_id = id,
+                        tg_geolocation = geotag,
+                        push_send_hours = hours
+                    });
+                    string jsent = JsonConvert.SerializeObject(sent);
+                    request.AddParameter("application/json", jsent, ParameterType.RequestBody);
+                }
+
+                var response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var json = JObject.Parse(response.Content);
+                    bool res = json["success"].ToObject<bool>();
+                    if (!res)
+                        throw new Exception($"MarkFollowerWasPushed success={res}");
+
+                } else
+                    throw new Exception($"Не удалось пометить результат push подписчика");
             });
         }
         #endregion

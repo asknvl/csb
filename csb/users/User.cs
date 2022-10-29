@@ -1163,7 +1163,7 @@ namespace csb.users
                         case BotState.waitingNewPushTimePeriod:
                             try
                             {
-                                currentPushMessage.TimePeriod = int.Parse(msg);                                                                
+                                currentPushMessage.TimePeriod = double.Parse(msg.Trim());                                                                
                                 State = BotState.waitingNewPushMessage;
                                 string helloReqMsg = "Перешлите (forward) сюда push \U0001F9B5 сообщение:";
                                 await messagesProcessor.Add(chat, "waitingPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "addNewPushCancel"));
@@ -2056,7 +2056,7 @@ namespace csb.users
                         try
                         {
                             string t = data.Replace("push_", "");
-                            int timePeriod = int.Parse(t);
+                            double timePeriod = double.Parse(t);
                             currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
                             currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
                             string m = $"Выбрано {currentPushMessage.TimePeriod} часовое push-сообщение. Что сделать?";

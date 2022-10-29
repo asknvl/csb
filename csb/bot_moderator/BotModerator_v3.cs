@@ -39,6 +39,46 @@ namespace csb.bot_moderator
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
                 var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
 
+                foreach (var subscriber in subs)
+                {
+
+
+
+                    double lastPushTime = (subscriber.push_send_hours != null) ? (double)subscriber.push_send_hours : subscriber.time_after_subscribe;
+
+                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > lastPushTime);
+
+                    if (pushmessage != null)
+                    {
+
+                        long id = long.Parse(subscriber.tg_user_id);
+
+                        try
+                        {
+
+                            await bot.SendTextMessageAsync(
+                                                 id,
+                                                 text: pushmessage.TextMessage.Text,
+                                                 replyMarkup: pushmessage.TextMessage.ReplyMarkup,
+                                                 entities: pushmessage.TextMessage.Entities,
+                                                 disableWebPagePreview: false,
+                                                 cancellationToken: new CancellationToken());
+
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, lastPushTime, true);
+                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {lastPushTime} hour message");
+
+                        } catch (Exception ex)
+                        {
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, lastPushTime, false);
+                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} WASN'T pushed");
+                        }
+
+                    } else
+                    {
+                        Console.WriteLine($"PUSH: no push messages for {subscriber.tg_user_id}");
+                    }
+                }
+
             } catch (Exception ex)
             {
                 Console.WriteLine($"------------------------ {ex.Message} --------------------------------");

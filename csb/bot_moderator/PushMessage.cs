@@ -10,7 +10,7 @@ namespace csb.bot_moderator
     public class PushMessage
     {
         [JsonProperty]
-        public int TimePeriod { get; set; }
+        public double TimePeriod { get; set; }
         [JsonProperty]
         public TextMessage TextMessage { get; set; }
     }
