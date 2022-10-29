@@ -14,7 +14,7 @@ namespace csb.bot_moderator
     public class BotModerator_v3 : BotModerator_v2
     {
         #region vars
-        System.Timers.Timer pushTimer = new System.Timers.Timer();
+        System.Timers.Timer pushTimer = new System.Timers.Timer();        
         #endregion
 
         #region properties
@@ -24,7 +24,7 @@ namespace csb.bot_moderator
 
         public BotModerator_v3(string token, string geotag) : base(token, geotag)
         {
-            pushTimer.Interval = 5000;
+            pushTimer.Interval = 10000;
             pushTimer.AutoReset = true;
             pushTimer.Elapsed += PushTimer_Elapsed;
             pushTimer.Start();
@@ -33,19 +33,16 @@ namespace csb.bot_moderator
         #region private
         private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            //ChatId id = new ChatId(1669011167);
+            try
+            {
+                string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+                string date_to = DateTime.Now.ToString("yyyy-MM-dd");
+                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
 
-            //try
-            //{
-
-            //    await bot.SendTextMessageAsync(
-            //        id,
-            //        text: "Push message",
-            //        cancellationToken: new CancellationToken());
-            //} catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
+            } catch (Exception ex)
+            {
+                Console.WriteLine($"------------------------ {ex.Message} --------------------------------");
+            }
 
         }
         #endregion
@@ -149,7 +146,7 @@ namespace csb.bot_moderator
                         Console.WriteLine($"IsApproved? {ex.Message}");
                     }
 
-                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme)
+                    if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme || GeoTag.ToLower().Contains("test"))
                     {
                         try
                         {

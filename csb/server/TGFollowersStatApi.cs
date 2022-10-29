@@ -146,6 +146,90 @@ namespace csb.server
 
             return tags;
         }
+
+
+        public class tgUserPushInfoDto
+        {
+            public string tg_user_id { get; set; }
+            public string tg_chat_id { get;set; }
+            public int? push_send_hours { get; set; }
+            public int? push_delivered_hours { get; set; }
+            public double time_after_subscribe { get; set; }
+        }
+        public class tgUsersPushResultDto
+        {
+            public bool success { get; set; }
+            public string geo { get; set; }
+            public List<tgUserPushInfoDto> data { get; set; } = new();
+        }
+
+        public virtual async Task<List<tgUserPushInfoDto>> GetNoFeedbackFollowers(string geotag, string date_from, string date_to)
+        {
+
+            List<tgUserPushInfoDto> users = new();
+
+            await Task.Run(() =>
+            {
+                var client = new RestClient($"{url}/v1/telegram/usersWithoutFeedback?date_from={date_from}&date_to={date_to}&geo={geotag}");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+                var response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var resp = JsonConvert.DeserializeObject<tgUsersPushResultDto>(response.Content);
+                    if (resp.success)
+                        users = resp.data;
+                    else
+                        throw new Exception($"GetNoFeedBackUsers success={resp.success}");
+
+                } else
+                    throw new Exception($"Не удалось получить информацию о фидбеках подписчиков geotag={geotag}");
+            });
+
+            return users;
+        }
+
+        public class tgUserFeedbackDto
+        {
+            public long tg_user_id { get; set; }
+            public string tg_geolocation { get; set; }  
+            public bool is_user_send_msg { get; set; }  
+        }
+        public class tgUsersFeedbackDto
+        {
+            public List<tgUserFeedbackDto> users { get; set; } = new();
+        }
+        public virtual async Task MarkFollowerMadeFeedback(string geotag, long id)
+        {
+            await Task.Run(() => {
+
+                var client = new RestClient($"{url}/v1/telegram/userByGeo");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+
+                tgUsersFeedbackDto feedback = new();
+                feedback.users.Add(new tgUserFeedbackDto() { 
+                    tg_user_id = id,
+                    tg_geolocation = geotag,
+                    is_user_send_msg = true
+                });
+
+                string jfeedback = JsonConvert.SerializeObject(feedback);
+                request.AddParameter("application/json", jfeedback, ParameterType.RequestBody);
+
+                var response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var json = JObject.Parse(response.Content);
+                    bool res = json["success"].ToObject<bool>();
+                    if (!res)
+                        throw new Exception($"MarkFollowerMadeFeedback success={res}");
+
+                } else
+                    throw new Exception($"Не удалось пометить фидбэк подписчика");
+
+            });
+        }
         #endregion
     }
 }

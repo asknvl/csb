@@ -1,4 +1,6 @@
-﻿using System;
+﻿using csb.logger;
+using csb.server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,8 @@ namespace csb.usr_push
     {
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
+        protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
+        ILogger log = Logger.getInstance();
         #endregion
 
         #region properties        
@@ -21,14 +25,16 @@ namespace csb.usr_push
         }
 
         #region protected
-        protected override void processUpdate(Update update)
+        protected override async void processUpdate(Update update)
         {
             try
             {
                 switch (update)
                 {
                     case UpdateNewMessage unm:
-                        long id = unm.message.Peer.ID;                        
+                        long id = unm.message.Peer.ID;
+                        await statApi.MarkFollowerMadeFeedback(geotag, id);
+                        log.dbg($"{DateTime.Now} FEEDBACK on {geotag} from {id}");
                         break;
                 }
             } catch (Exception ex)

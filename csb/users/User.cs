@@ -98,6 +98,11 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Удалить исключение", callbackData: "deleteReplacedWord"),
                 },
 
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить автозамену", callbackData: "addSwap"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить автозамену", callbackData: "deleteSwap"),
+                },
+
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 },
@@ -1026,6 +1031,8 @@ namespace csb.users
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
 
+                                await sendTextMessage(chat, "Приветственное сообщение создано");
+
                                 string helloReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, если оно не требуется нажмите Завершить";
                                 await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
 
@@ -1062,6 +1069,8 @@ namespace csb.users
 
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
+
+                                await sendTextMessage(chat, "Прощальное сообщение создано");
 
                                 State = BotState.free;
                             } catch (Exception ex)
@@ -1717,10 +1726,10 @@ namespace csb.users
                     {
                         await bot.SendTextMessageAsync(
                                                    Id,
-                                                   text: currentPushMessage.TextMessage.Text,
-                                                   replyMarkup: currentPushMessage.TextMessage.ReplyMarkup,
-                                                   entities: currentPushMessage.TextMessage.Entities,
-                                                   disableWebPagePreview: true,
+                                                   text: currentPushMessage?.TextMessage.Text,
+                                                   replyMarkup: currentPushMessage?.TextMessage.ReplyMarkup,
+                                                   entities: currentPushMessage?.TextMessage.Entities,
+                                                   disableWebPagePreview: false,
                                                    cancellationToken: cancellationToken);
                     } catch (Exception ex)
                     {
@@ -1736,8 +1745,8 @@ namespace csb.users
                         moderationProcessor.Save();
                         await messagesProcessor.Back(chat);
                         await messagesProcessor.Back(chat);
-                        await showMyAdmins(chat);
-                        await bot.AnswerCallbackQueryAsync(query.Id, "Админ удален");
+                        await showMyPushMessages(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Сообщение удалено");
                     }
                     catch (Exception ex)
                     {
@@ -2048,6 +2057,7 @@ namespace csb.users
                         {
                             string t = data.Replace("push_", "");
                             int timePeriod = int.Parse(t);
+                            currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
                             currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
                             string m = $"Выбрано {currentPushMessage.TimePeriod} часовое push-сообщение. Что сделать?";
                             await messagesProcessor.Add(chat, "editPushMessage", await sendTextButtonMessage(chat, m, "editPushMessage"));
