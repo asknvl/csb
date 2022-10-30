@@ -574,8 +574,12 @@ namespace csb.usr_listener
         public void Stop()
         {
             timer?.Stop();
-            user.Update -= User_Update;            
-            user.Dispose();
+            if (user != null)
+            {
+                user.Update -= User_Update;
+                user.Dispose();
+            }
+
             IsRunning = false;
         }
 #endregion

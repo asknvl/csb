@@ -1,16 +1,16 @@
 [
   {
     "Owner": 0,
-    "Name": "T1",
+    "Name": "TEST01",
     "Id": 1,
-    "PhoneNumber": "+79687273046",
+    "PhoneNumber": "+79154456740",
     "Bots": [
       {
-        "Token": "5497811276:AAHfULbDJH3j-kONIBsYXXKL05epDmR3rbg",
-        "Name": "t1_asknvl_bot",
-        "ChannelID": -1001515136824,
-        "ChannelTitle": "OUT",
-        "VictimLink": "@booowos",
+        "Token": "5583915296:AAHUEjwm_SD1UhQFl-XqM8-9TNnoqKFC8DY",
+        "Name": "test01_out_bot",
+        "ChannelID": -1001739002779,
+        "ChannelTitle": "test_channel",
+        "VictimLink": "@@felixbond777",
         "ChannelLink": "@asknvl",
         "ReplacedWords": []
       }

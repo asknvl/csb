@@ -24,7 +24,7 @@ namespace csb.bot_moderator
 
         public BotModerator_v3(string token, string geotag) : base(token, geotag)
         {
-            pushTimer.Interval = 10000;
+            pushTimer.Interval = 10 * 60 * 100;
             pushTimer.AutoReset = true;
             pushTimer.Elapsed += PushTimer_Elapsed;
             pushTimer.Start();
@@ -39,14 +39,14 @@ namespace csb.bot_moderator
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
                 var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
 
-                foreach (var subscriber in subs)
-                {
+                foreach (var subscriber in subs)               {
 
 
+                    double lastPushSendHours = (subscriber.push_send_hours != null) ? (double)subscriber.push_send_hours : 0;
+                    double lastPushDeliveredHours = (subscriber.push_delivered_hours != null) ? (double)subscriber.push_delivered_hours : 0;
+                    double lastPushHours = Math.Max(lastPushSendHours, lastPushDeliveredHours);
 
-                    double lastPushTime = (subscriber.push_send_hours != null) ? (double)subscriber.push_send_hours : subscriber.time_after_subscribe;
-
-                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > lastPushTime);
+                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod < subscriber.time_after_subscribe && m.TimePeriod > lastPushHours);
 
                     if (pushmessage != null)
                     {
@@ -64,18 +64,18 @@ namespace csb.bot_moderator
                                                  disableWebPagePreview: false,
                                                  cancellationToken: new CancellationToken());
 
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, lastPushTime, true);
-                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {lastPushTime} hour message");
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);
+                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {pushmessage.TimePeriod} hour message");
 
                         } catch (Exception ex)
                         {
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, lastPushTime, false);
-                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} WASN'T pushed");
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
+                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message");
                         }
 
                     } else
                     {
-                        Console.WriteLine($"PUSH: no push messages for {subscriber.tg_user_id}");
+                        //Console.WriteLine($"PUSH: no push messages for {subscriber.tg_user_id}");
                     }
                 }
 
