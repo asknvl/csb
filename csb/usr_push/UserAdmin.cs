@@ -41,12 +41,12 @@ namespace csb.usr_push
                     case UpdateNewMessage unm:
                         long id = unm.message.Peer.ID;
                         await statApi.MarkFollowerMadeFeedback(geotag, id);
-                        log.dbg($"{DateTime.Now} FEEDBACK on {geotag} from {id}");
+                        Console.WriteLine($"{DateTime.Now} FEEDBACK on {geotag} from {id}");                        
                         break;
                 }
             } catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
 #endregion

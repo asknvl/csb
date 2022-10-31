@@ -86,9 +86,10 @@ namespace csb.usr_push
         {
             User usr = null;
             return Task.Run(async () => {
-                user = new Client(Config);
-                usr = await user.LoginUserIfNeeded();                
-                user.Update += User_Update;
+                    user = new Client(Config);
+                    usr = await user.LoginUserIfNeeded();
+                    user.Update -= User_Update;
+                    user.Update += User_Update;                
             }).ContinueWith(t => {               
                     UserStartedResultEvent?.Invoke(geotag, usr);
             });
@@ -101,7 +102,7 @@ namespace csb.usr_push
         }
 
         public void Stop()
-        {
+        {            
             user?.Dispose();
         }
         #endregion
