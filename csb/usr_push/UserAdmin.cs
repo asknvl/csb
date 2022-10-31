@@ -13,18 +13,25 @@ namespace csb.usr_push
     {
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
+#if DEBUG
         protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
-        ILogger log = Logger.getInstance();
-        #endregion
+#else
+        //TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
+        protected TGStatApi statApi = new TGStatApi("http://192.168.72.51:4000");
 
-        #region properties        
-        #endregion
+#endif
+
+        ILogger log = Logger.getInstance();
+#endregion
+
+#region properties        
+#endregion
 
         public UserAdmin(string api_id, string api_hash, string phone_number, string geotag) : base(api_id, api_hash, phone_number, geotag)
         {
         }
 
-        #region protected
+#region protected
         protected override async void processUpdate(Update update)
         {
             try
@@ -42,9 +49,9 @@ namespace csb.usr_push
 
             }
         }
-        #endregion
+#endregion
 
-        #region public        
-        #endregion
+#region public        
+#endregion
     }
 }
