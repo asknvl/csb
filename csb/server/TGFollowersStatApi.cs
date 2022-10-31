@@ -155,6 +155,7 @@ namespace csb.server
             public double? push_send_hours { get; set; }
             public double? push_delivered_hours { get; set; }
             public double time_after_subscribe { get; set; }
+            public double time_diff_last_push_subscr { get; set; }  
         }
         public class tgUsersPushResultDto
         {

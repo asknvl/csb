@@ -3,140 +3,27 @@
     "PushData": {
       "Messages": [
         {
+          "TimePeriod": 0.1666,
+          "TextMessage": {
+            "Text": "10 мин",
+            "Entities": null,
+            "ReplyMarkup": null
+          }
+        },
+        {
           "TimePeriod": 0.5,
           "TextMessage": {
-            "Text": "​​Listen bro, why are you still not playing with me?  \n\nJust look at what profit came out, if you bet 1000, you will earn more than 14 thousand, don't you want to earn money and make your life better? 🤑\n\n I will help you to do this and it is very easy so write to me and I will help you achieve the same results, because those who have been playing with me for a long time, they make excellent results and their life has changed a lot😏\n\nI wait only you 😎\n\n@amirrsallah",
-            "Entities": [
-              {
-                "type": "text_link",
-                "offset": 0,
-                "length": 2,
-                "url": "https://telegra.ph/file/cd998037608a014d7c91d.jpg"
-              },
-              {
-                "type": "bold",
-                "offset": 2,
-                "length": 52
-              },
-              {
-                "type": "italic",
-                "offset": 56,
-                "length": 147
-              },
-              {
-                "type": "underline",
-                "offset": 206,
-                "length": 232
-              },
-              {
-                "type": "bold",
-                "offset": 439,
-                "length": 18
-              },
-              {
-                "type": "mention",
-                "offset": 459,
-                "length": 12
-              }
-            ],
-            "ReplyMarkup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "💬TEXT ME💬",
-                    "url": "https://t.me/amirrsallah"
-                  }
-                ]
-              ]
-            }
+            "Text": "30 мин",
+            "Entities": null,
+            "ReplyMarkup": null
           }
         },
         {
           "TimePeriod": 1.0,
           "TextMessage": {
-            "Text": "​​Bro you are missing this opportunity👊\n\n😎You just look at my weekly report where I withmy brothers were able to make over 100k and it's only a week\n\n I've been playing this game for a very long time, so if you want to change your life and close your debts and just want to have a lot of money, then I'm waiting for you, write to me and I'll be happy to tell you everything and show you and help to do the same 😏\n\n@amirrsallah",
-            "Entities": [
-              {
-                "type": "text_link",
-                "offset": 0,
-                "length": 2,
-                "url": "https://telegra.ph/file/c778733783d7a90e38e91.jpg"
-              },
-              {
-                "type": "bold",
-                "offset": 2,
-                "length": 38
-              },
-              {
-                "type": "italic",
-                "offset": 44,
-                "length": 106
-              },
-              {
-                "type": "underline",
-                "offset": 153,
-                "length": 262
-              },
-              {
-                "type": "mention",
-                "offset": 417,
-                "length": 12
-              }
-            ],
-            "ReplyMarkup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "🤑MONEY HERE🤑",
-                    "url": "https://t.me/amirrsallah"
-                  }
-                ]
-              ]
-            }
-          }
-        },
-        {
-          "TimePeriod": 1.5,
-          "TextMessage": {
-            "Text": "​​Bro, I play every day and give profitable signals, as you can see😎\n\nI earn cool money, you just need to bet with me and you can earn a lot, I have my own strategy by which I play and improve it, I play twice a day, afternoon and evening🙌\n\nSo I will wait for you, because you can be very rich with me, look at my personal life that I show in my channel😏\n\n@amirrsallah",
-            "Entities": [
-              {
-                "type": "text_link",
-                "offset": 0,
-                "length": 2,
-                "url": "https://telegra.ph/file/5a4d5bf757c8f55354cca.jpg"
-              },
-              {
-                "type": "code",
-                "offset": 2,
-                "length": 67
-              },
-              {
-                "type": "underline",
-                "offset": 71,
-                "length": 170
-              },
-              {
-                "type": "bold",
-                "offset": 243,
-                "length": 116
-              },
-              {
-                "type": "mention",
-                "offset": 359,
-                "length": 12
-              }
-            ],
-            "ReplyMarkup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "💬TEXT ME💬",
-                    "url": "https://t.me/amirrsallah"
-                  }
-                ]
-              ]
-            }
+            "Text": "1 час",
+            "Entities": null,
+            "ReplyMarkup": null
           }
         }
       ]

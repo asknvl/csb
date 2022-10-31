@@ -24,18 +24,21 @@ namespace csb.bot_moderator
 
         public BotModerator_v3(string token, string geotag) : base(token, geotag)
         {
-            pushTimer.Interval = 10 * 60 * 100;
+            pushTimer.Interval =  10 * 60 * 1000;
             pushTimer.AutoReset = true;
             pushTimer.Elapsed += PushTimer_Elapsed;
             pushTimer.Start();
         }
+
+
+        Dictionary<string, double> tl = new Dictionary<string, double>();
 
         #region private
         private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
             {
-                string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+                string date_from = DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd");
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
                 var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
 
@@ -46,15 +49,30 @@ namespace csb.bot_moderator
                     double lastPushDeliveredHours = (subscriber.push_delivered_hours != null) ? (double)subscriber.push_delivered_hours : 0;
                     double lastPushHours = Math.Max(lastPushSendHours, lastPushDeliveredHours);
 
-                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod < subscriber.time_after_subscribe && m.TimePeriod > lastPushHours);
+                    double Tc = subscriber.time_after_subscribe;
+                    double Tp = lastPushHours;
+
+                    double Tl = subscriber.time_diff_last_push_subscr;
+                    //double Tl = 0;
+                    //if (tl.ContainsKey(subscriber.tg_user_id))
+                    //    Tl = tl[subscriber.tg_user_id];
+                    //else
+                    //    tl.Add(subscriber.tg_user_id, 0);
+
+                    Console.WriteLine($"Tp={Tp} Tc={Tc} Tl={Tl}, Tc-Tl+Tp={Tc - Tl + Tp}");
+
+                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > Tp && m.TimePeriod < Tc - Tl + Tp);
 
                     if (pushmessage != null)
                     {
+
+                        tl[subscriber.tg_user_id] = pushmessage.TimePeriod;
 
                         long id = long.Parse(subscriber.tg_user_id);
 
                         try
                         {
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
 
                             await bot.SendTextMessageAsync(
                                                  id,
