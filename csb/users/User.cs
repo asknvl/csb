@@ -333,11 +333,14 @@ namespace csb.users
             State = BotState.waitingAdminVerificationCode;
         }
 
-        private async void Adminmanager_UserStartedResultEvent(string geotag, TL.User user)
+        private async void Adminmanager_UserStartedResultEvent(string geotag, bool res)
         {
             if (State == BotState.waitingAdminVerificationCode)
                 State = BotState.free;
-            await sendTextMessage(Id, $"Администратор {geotag} запущен");            
+            if (res)
+                await sendTextMessage(Id, $"Администратор {geotag} запущен");            
+            else
+                await sendTextMessage(Id, $"Администратор {geotag} не запущен");
         }
         InlineKeyboardMarkup getMyChainsMarkUp()
         {
@@ -1137,7 +1140,7 @@ namespace csb.users
                                 var globals = GlobalSettings.getInstance();
                                 UserAdmin admin = new UserAdmin(globals.push_api_id, globals.push_api_hash, phone_number, currentAdminGeoTag);
                                 adminManager.Add(admin);
-                                await admin.Start();
+                                admin.Start();
 
                             } catch (Exception ex)
                             {
@@ -1165,6 +1168,7 @@ namespace csb.users
                             {
                                 currentPushMessage.TimePeriod = double.Parse(msg.Trim());                                                                
                                 State = BotState.waitingNewPushMessage;
+                                await messagesProcessor.Back(chat);
                                 string helloReqMsg = "Перешлите (forward) сюда push \U0001F9B5 сообщение:";
                                 await messagesProcessor.Add(chat, "waitingPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "addNewPushCancel"));
 
@@ -1187,12 +1191,14 @@ namespace csb.users
 
                                 moderationProcessor.PushData(currentModeratorGeoTag).Messages.RemoveAll(m => m.TimePeriod == currentPushMessage.TimePeriod);
                                 moderationProcessor.PushData(currentModeratorGeoTag).Messages.Add(currentPushMessage);
-                                moderationProcessor.PushData(currentModeratorGeoTag).Messages.OrderBy(m => m.TimePeriod);
-
+                                var pd = moderationProcessor.PushData(currentModeratorGeoTag).Messages.OrderBy(m => m.TimePeriod);
+                                moderationProcessor.PushData(currentModeratorGeoTag).Messages = pd.ToList();
                                 moderationProcessor.Save();
 
                                 State = BotState.free;
-                                await sendTextMessage(chat, "Push-сообщение создано");
+                                await messagesProcessor.Back(chat);
+                                //await sendTextMessage(chat, "Push-сообщение создано");
+                                await showMyPushMessages(chat);
 
                             } catch (Exception ex)
                             {
@@ -1712,8 +1718,8 @@ namespace csb.users
                     currentPushMessage = new PushMessage();
                     try
                     {
-                        await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Введите период вывода сообщения в часах, если вы хотите заменить существующее сообщение, введите период, сообщение для которого требуется заменить:", "addNewPushCancel"));
-                        await messagesProcessor.Delete(chat, "editPushMessages");
+                        await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Введите период вывода сообщения в часах, если вы хотите заменить существующее сообщение, введите период, сообщение для которого требуется заменить:", "addNewPushCancel"));                        
+                        await messagesProcessor.Delete(chat, "editPushMessages");                        
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
                     {

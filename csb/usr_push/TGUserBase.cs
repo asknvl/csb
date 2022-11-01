@@ -85,13 +85,18 @@ namespace csb.usr_push
         public Task Start()
         {
             User usr = null;
-            return Task.Run(async () => {
-                    user = new Client(Config);
-                    usr = await user.LoginUserIfNeeded();
-                    user.Update -= User_Update;
-                    user.Update += User_Update;                
-            }).ContinueWith(t => {               
-                    UserStartedResultEvent?.Invoke(geotag, usr);
+            bool res = false;
+
+            return Task.Run(async () =>
+            {
+                user = new Client(Config);
+                usr = await user.LoginUserIfNeeded();
+                user.Update -= User_Update;
+                user.Update += User_Update;
+                res = true;
+            }).ContinueWith(t =>
+            {
+                UserStartedResultEvent?.Invoke(geotag, res);
             });
         }
 
@@ -109,7 +114,7 @@ namespace csb.usr_push
 
         #region events
         public event Action<string> VerificationCodeRequestEvent;
-        public event Action<string, User> UserStartedResultEvent;
+        public event Action<string, bool> UserStartedResultEvent;
         #endregion
     }
 }

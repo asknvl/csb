@@ -19,6 +19,15 @@ namespace csb.storage
             this.t = t;
         }
 
+        public Storage(string filename, string subdir, T t)
+        {
+            string userPath = Path.Combine(Directory.GetCurrentDirectory(), subdir);
+            if (!Directory.Exists(userPath))
+                Directory.CreateDirectory(userPath);
+            this.path = Path.Combine(userPath, filename);
+            this.t = t;
+        }
+
         #region public
         public T load() {
 

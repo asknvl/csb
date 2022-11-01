@@ -17,7 +17,7 @@ namespace csb.usr_push
         void StartAll();
 
         event Action<string> VerificationCodeRequestEvent;
-        public event Action<string, User> UserStartedResultEvent;
+        public event Action<string, bool> UserStartedResultEvent;
 
     }
 

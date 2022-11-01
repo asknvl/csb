@@ -3,6 +3,7 @@ using csb.users;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,10 @@ namespace csb.usr_push
         public IEnumerable<T> Users { get; private set; } = new List<T>();
         #endregion
 
-        public TGUserManager(string jsonfilename) {
-            storage = new Storage<IEnumerable<T>>(jsonfilename, Users);
+        public TGUserManager(string ownerid) {
+
+            string subdir = Path.Combine("admins", ownerid);
+            storage = new Storage<IEnumerable<T>>("admins.json", subdir, Users);
             Users = storage.load();
             foreach (var user in Users)
             {
@@ -31,9 +34,9 @@ namespace csb.usr_push
         }
 
         #region private
-        private void User_UserStartedResultEvent(string geotag, TL.User user)
+        private void User_UserStartedResultEvent(string geotag, bool res)
         {
-            UserStartedResultEvent?.Invoke(geotag, user);
+            UserStartedResultEvent?.Invoke(geotag, res);
         }
 
         private void User_VerificationCodeRequestEvent(string geotag)
@@ -87,7 +90,7 @@ namespace csb.usr_push
 
         #region events        
         public event Action<string> VerificationCodeRequestEvent;
-        public event Action<string, TL.User> UserStartedResultEvent;
+        public event Action<string, bool> UserStartedResultEvent;
         #endregion
 
     }

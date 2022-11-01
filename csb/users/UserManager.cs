@@ -61,7 +61,7 @@ namespace csb.users
                 user.moderationProcessor.Load();
                 user.moderationProcessor.StartAll();
 
-                user.adminManager = new TGUserManager<UserAdmin>("admins.json");
+                user.adminManager = new TGUserManager<UserAdmin>($"{user.Id}");
                 user.adminManager.StartAll();
             }
         }

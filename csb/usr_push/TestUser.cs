@@ -36,15 +36,17 @@ namespace csb.usr_push
         public async Task Start()
         {
             User usr = null;
+            bool res = false;
             await Task.Run(() => {                
                 VerificationCodeRequestEvent?.Invoke(geotag);
                 verifyCodeReady.Reset();
                 verifyCodeReady.Wait();
+                res = true;
 
             }).ContinueWith(t =>
             {
                 Console.WriteLine($"Введен код для {phone_number} = {verifyCode}");
-                UserStartedResultEvent?.Invoke(geotag, usr);
+                UserStartedResultEvent?.Invoke(geotag, res);
             });
 
             //Console.WriteLine($"Введен код для {phone_number} = {verifyCode}");
@@ -57,6 +59,6 @@ namespace csb.usr_push
         }
 
         public event Action<string> VerificationCodeRequestEvent;
-        public event Action<string, User> UserStartedResultEvent;
+        public event Action<string, bool> UserStartedResultEvent;
     }
 }
