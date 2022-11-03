@@ -227,7 +227,7 @@ namespace csb.server
                         throw new Exception($"MarkFollowerMadeFeedback success={res}");
 
                 } else
-                    throw new Exception($"Не удалось пометить фидбэк подписчика");
+                    throw new Exception($"Не удалось пометить фидбэк подписчика code={response.StatusCode} text={response.Content}");
 
             });
         }
