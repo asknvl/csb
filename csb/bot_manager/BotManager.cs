@@ -93,7 +93,7 @@ namespace csb.bot_manager
             userManager = new UserManager(bot, cancellationToken);
             userManager.Init();
 
-            //chainsProcessor.StartAll();
+            //chainsProcessor.StartAll(); 
             
         }
 

@@ -62,6 +62,8 @@ namespace csb.bot_poster
         public string ChannelLink { get; set; }
         [JsonProperty]
         public List<string> ReplacedWords { get; set; } = new();
+        [JsonProperty]
+        public List<AutoChange> AutoChanges { get; set; } = new();
 
         [JsonIgnore]
         public bool IsRunning { get; set; }
@@ -421,60 +423,60 @@ namespace csb.bot_poster
         async Task postTextAndWebPage(Message message, CancellationToken cts)
         {
             string text = message.Text;
-            MessageEntity[] entities;
+            //MessageEntity[] entities;
 
-            int tagLenCntr = 0;
-            string insertUrl = "";
-            bool needPreview = false;
+            //int tagLenCntr = 0;
+            //string insertUrl = "";
+            //bool needPreview = false;
 
-            if (message.Entities != null)
-            {
-                foreach (var item in message.Entities)
-                {
-                    switch (item.Type)
-                    {
-                        case MessageEntityType.Italic:
-                            insertTag("i", item.Offset, item.Length, ref text, ref tagLenCntr);
-                            break;
-                        case MessageEntityType.Bold:
-                            insertTag("b", item.Offset, item.Length, ref text, ref tagLenCntr);
-                            break;
-                        case MessageEntityType.Underline:
-                            insertTag("u", item.Offset, item.Length, ref text, ref tagLenCntr);
-                            break;
-                        case MessageEntityType.Strikethrough:
-                            insertTag("s", item.Offset, item.Length, ref text, ref tagLenCntr);
-                            break;
-                        case MessageEntityType.TextLink:
+            //if (message.Entities != null)
+            //{
+            //    foreach (var item in message.Entities)
+            //    {
+            //        switch (item.Type)
+            //        {
+            //            case MessageEntityType.Italic:
+            //                insertTag("i", item.Offset, item.Length, ref text, ref tagLenCntr);
+            //                break;
+            //            case MessageEntityType.Bold:
+            //                insertTag("b", item.Offset, item.Length, ref text, ref tagLenCntr);
+            //                break;
+            //            case MessageEntityType.Underline:
+            //                insertTag("u", item.Offset, item.Length, ref text, ref tagLenCntr);
+            //                break;
+            //            case MessageEntityType.Strikethrough:
+            //                insertTag("s", item.Offset, item.Length, ref text, ref tagLenCntr);
+            //                break;
+            //            case MessageEntityType.TextLink:
 
-                            if (item.Url.Contains("jpg") || item.Url.Contains("jpeg") || item.Url.Contains(""))
-                            {
+            //                if (item.Url.Contains("jpg") || item.Url.Contains("jpeg") || item.Url.Contains(""))
+            //                {
 
-                            } else
-                                if (item.Url.Contains(""))
-                            {
-                                item.Url = "";
-                            }
+            //                } else
+            //                    if (item.Url.Contains(""))
+            //                {
+            //                    item.Url = "";
+            //                }
 
-                            //TODO
-                            break;
+            //                //TODO
+            //                break;
 
-                        case MessageEntityType.Url:
+            //            case MessageEntityType.Url:
 
 
-                            break;
-                    }
-                }
+            //                break;
+            //        }
+            //    }
 
-                var wp = message.Entities.FirstOrDefault(o => o.Url != null);
-                if (wp != null && !wp.Url.Contains("t.me"))
-                {
-                    string webPage = wp.Url;
-                    var u = "\"" + webPage + "\"";
-                    insertUrl = "<a href=" + u + ">&#8288;</a>";
-                    needPreview = true;
-                }
-            }
+            //    var wp = message.Entities.FirstOrDefault(o => o.Url != null);
+            //    if (wp != null && !wp.Url.Contains("t.me"))
+            //    {
+            //        string webPage = wp.Url;
+            //        var u = "\"" + webPage + "\"";
+            //        insertUrl = "<a href=" + u + ">&#8288;</a>";
+            //        needPreview = true;
+            //    }
+            //}
 
 
             string t;
@@ -486,15 +488,14 @@ namespace csb.bot_poster
                 (t, e) = getUpdatedText(text, null);
             }
 
-            t += insertUrl;
+            //t += insertUrl;
 
-            await bot.SendTextMessageAsync(
-            //chatId: channelName,
+            await bot.SendTextMessageAsync(            
             chatId: ChannelID,
             text: t,
-            disableWebPagePreview: !needPreview,
-            replyMarkup: message.ReplyMarkup,
-            parseMode: ParseMode.Html,
+            entities:message.Entities,
+            disableWebPagePreview: false,
+            replyMarkup: message.ReplyMarkup,            
             cancellationToken: cts);
         }
 
