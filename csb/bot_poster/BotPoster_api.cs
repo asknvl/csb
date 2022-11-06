@@ -490,11 +490,24 @@ namespace csb.bot_poster
 
             //t += insertUrl;
 
+
+            bool disablePreview = false;            
+
+            foreach (var e in message.Entities)
+            {
+                if (e.Url != null && e.Url.Contains("http://carlosmansl.com/"))
+                {
+                    disablePreview = true;
+                    break;
+                }
+
+            }
+
             await bot.SendTextMessageAsync(            
             chatId: ChannelID,
             text: t,
             entities:message.Entities,
-            disableWebPagePreview: false,
+            disableWebPagePreview: disablePreview,
             replyMarkup: message.ReplyMarkup,            
             cancellationToken: cts);
         }
