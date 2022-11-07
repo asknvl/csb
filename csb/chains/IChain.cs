@@ -17,6 +17,7 @@ namespace csb.chains
         List<BotPoster_api> Bots { get; set; }
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
+        public List<AutoChange> AutoChanges { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -40,7 +41,7 @@ namespace csb.chains
         void ClearReplacedWords();
 
         void AddAutoChange(AutoChange autochange);
-        void RemoveAutoChange(AutoChange autochange);
+        void RemoveAutoChange(int index);
         void ClearAutoChanges();
 
     }

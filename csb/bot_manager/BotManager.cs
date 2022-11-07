@@ -58,6 +58,7 @@ namespace csb.bot_manager
 
         waitingAutoChangeOldText,
         waitingAutoChangeNewText,
+        waitingAutoChangeDelete
 
 
     }

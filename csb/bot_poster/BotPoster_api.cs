@@ -391,27 +391,36 @@ namespace csb.bot_poster
             if (text == null)
                 return null;
 
-            string pattern = @"[@][[a-zA-Z0-9_]{5,32}";
-            Regex regex = new Regex(pattern);
-            var m = regex.Matches(text);
-            foreach (Match item in m)
-            {                
+            //string pattern = @"[@][[a-zA-Z0-9_]{5,32}";
+            //Regex regex = new Regex(pattern);
+            //var m = regex.Matches(text);
+            //foreach (Match item in m)
+            //{
 
-                if (newlink == "0")
-                    text = text.Replace(item.Value, "");
-                else
-                    if (item.Value.Equals(oldlink))
-                        text = text.Replace(item.Value, newlink);
+            //    if (newlink == "0")
+            //        text = text.Replace(item.Value, "");
+            //    else
+            //        if (item.Value.Equals(oldlink))
+            //        {                        
+            //            text = text.Replace(item.Value, newlink);
+            //        }
+            //}
+
+            if (newlink.Length < oldlink.Length)
+            {
+                int delta = oldlink.Length - newlink.Length;
+                string spaces = new string(' ', delta);
+                newlink = newlink + spaces;
             }
 
-            //return text.Replace(oldlink.Replace("@", ""), newlink.Replace("@", ""));
-
-
-            return text;
+            return text.Replace(oldlink, newlink);
         }
 
-        string autoChange(string text)
+        string? autoChange(string text)
         {
+
+            if (text == null)
+                return null;
 
             string res = text;
 

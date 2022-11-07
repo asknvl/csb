@@ -1,7 +1,7 @@
 [
   {
     "Owner": 0,
-    "Name": "T!",
+    "Name": "T1",
     "Id": 1,
     "PhoneNumber": "+79154456740",
     "Bots": [
@@ -10,19 +10,25 @@
         "Name": "test01_out_bot",
         "ChannelID": -1001515136824,
         "ChannelTitle": "OUT",
-        "VictimLink": "@Bruno_Aviator",
-        "ChannelLink": "@Bruno_Aviator",
-        "ReplacedWords": [
-          "123"
-        ],
+        "VictimLink": "@booowos",
+        "ChannelLink": "@ceoxtime",
+        "ReplacedWords": [],
         "AutoChanges": [
           {
-            "OldText": "https://aviatorsignals.com/TOPBR",
-            "NewText": "https://rolf-probeg.ru/cars/nissan/qashqai+2/"
+            "OldText": "123",
+            "NewText": "321"
           },
           {
-            "OldText": "http://carlosmansl.com/",
-            "NewText": "www.pornhub.com"
+            "OldText": "456",
+            "NewText": "654"
+          },
+          {
+            "OldText": "https://aviatorsignals.com/TOPBR",
+            "NewText": "https://aviatorsignals.com/XTIMETEAM"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@asknvl"
           }
         ]
       }
@@ -33,8 +39,24 @@
       "MessageBufferLength": 10,
       "MatchingPercentageTreshold": 71
     },
-    "ReplacedWords": [
-      "123"
+    "ReplacedWords": [],
+    "AutoChanges": [
+      {
+        "OldText": "123",
+        "NewText": "321"
+      },
+      {
+        "OldText": "456",
+        "NewText": "654"
+      },
+      {
+        "OldText": "https://aviatorsignals.com/TOPBR",
+        "NewText": "www.guns.ru"
+      },
+      {
+        "OldText": "@booowos",
+        "NewText": "@asknvl"
+      }
     ],
     "State": 0
   }

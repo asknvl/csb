@@ -27,6 +27,8 @@ namespace csb.chains
         public UserListener_v1 User { get; private set; }
         [JsonProperty]
         public List<string> ReplacedWords { get; set; } = new();
+        [JsonProperty]
+        public List<AutoChange> AutoChanges { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -215,6 +217,7 @@ namespace csb.chains
 
         public void AddAutoChange(AutoChange autochange)
         {
+            AutoChanges.Add(autochange);
             foreach (var bot in Bots)
             {
                 if (!bot.AutoChanges.Contains(autochange))
@@ -222,16 +225,23 @@ namespace csb.chains
             }
         }
 
-        public void RemoveAutoChange(AutoChange autochange)
+        public List<AutoChange> GetAutoChanges()
         {
+            return AutoChanges;
+        }
+
+        public void RemoveAutoChange(int index)
+        {
+            AutoChanges.RemoveAt(index);
             foreach (var bot in Bots)
             {
-                bot.AutoChanges.RemoveAll(a => a.OldText.Equals(autochange.OldText) && a.NewText.Equals(autochange.NewText));
+                bot.AutoChanges.RemoveAt(index);
             }
         }
 
         public void ClearAutoChanges()
         {
+            AutoChanges.Clear();
             foreach (var bot in Bots)
             {
                 bot.AutoChanges.Clear();                

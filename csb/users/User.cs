@@ -538,6 +538,7 @@ namespace csb.users
                 chatId: chat,
                 text: message,
                 replyMarkup: inlineKeyboards[key],
+                disableWebPagePreview:true,
                 cancellationToken: cancellationToken);
         }
 
@@ -647,6 +648,22 @@ namespace csb.users
                 text: "Управление push-сообщениями:",
                 replyMarkup: getMyPushMessagesMarkUp(),
                 cancellationToken: cancellationToken));
+        }
+
+        async Task showDeleteAutoChanges(long chat)
+        {
+            var autochanges = chainprocessor.Get(currentChainID).AutoChanges;
+
+            string ach = (autochanges.Count > 0) ? "Введите номер автозамены, которую требуется удалить (введите 0, чтобы удалить все):\n" : "Список автозамен пуст";
+
+            int cntr = 0;
+            foreach (var autochange in autochanges)
+            {
+                cntr++;
+                ach += $"{cntr}\n {autochange.OldText} → {autochange.NewText}\n";
+            }
+
+            await messagesProcessor.Add(chat, "deleteAutoChange", await sendTextButtonMessage(chat, ach, "back"));
         }
         #endregion
 
@@ -1236,6 +1253,33 @@ namespace csb.users
                                 var chain = chainsProcessor.Get(currentChainID);
                                 chain.AddAutoChange(autoChange);
                                 chainprocessor.Save();
+
+                                await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
+                                await messagesProcessor.Back(chat);
+                                State = BotState.waitingAutoChangeOldText;
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingAutoChangeDelete:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                int index = int.Parse(msg);
+                                if (index > 0)
+                                {                                    
+                                    chain.RemoveAutoChange(index - 1);                                            
+                                } else
+                                {
+                                    chain.ClearAutoChanges();
+                                }
+                                chainprocessor.Save();
+                                await showDeleteAutoChanges(chat);
+
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
@@ -1823,6 +1867,22 @@ namespace csb.users
                     {
                         await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
                         State = BotState.waitingAutoChangeOldText;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "deleteAutoChange":
+                    try
+                    {
+
+                        await showDeleteAutoChanges(chat);
+
+                        State = BotState.waitingAutoChangeDelete;
+
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)
