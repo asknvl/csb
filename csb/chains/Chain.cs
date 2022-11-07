@@ -212,5 +212,31 @@ namespace csb.chains
             foreach (var item in Bots)
                 item.ReplacedWords.Clear();
         }
+
+        public void AddAutoChange(AutoChange autochange)
+        {
+            foreach (var bot in Bots)
+            {
+                if (!bot.AutoChanges.Contains(autochange))
+                    bot.AutoChanges.Add(autochange);
+            }
+        }
+
+        public void RemoveAutoChange(AutoChange autochange)
+        {
+            foreach (var bot in Bots)
+            {
+                bot.AutoChanges.RemoveAll(a => a.OldText.Equals(autochange.OldText) && a.NewText.Equals(autochange.NewText));
+            }
+        }
+
+        public void ClearAutoChanges()
+        {
+            foreach (var bot in Bots)
+            {
+                bot.AutoChanges.Clear();                
+            }
+            
+        }
     }
 }

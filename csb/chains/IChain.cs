@@ -24,17 +24,25 @@ namespace csb.chains
         public void Stop();
 
         void SetVerifyCode(string code);
+
         Task AddBot(string token);
         void RemoveBot(string name);
+
         void AddFilteredWord(string text);
         void RemoveFilteredWord(int index);
         void ClearFilteredWords();
+
         void SetMessagingPeriod(double period);
         double GetMessagingPeriod();
 
         void AddReplacedWord(string word);
         void RemoveReplacedWord(int index);
         void ClearReplacedWords();
+
+        void AddAutoChange(AutoChange autochange);
+        void RemoveAutoChange(AutoChange autochange);
+        void ClearAutoChanges();
+
     }
 
 

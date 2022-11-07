@@ -11,8 +11,20 @@
         "ChannelID": -1001515136824,
         "ChannelTitle": "OUT",
         "VictimLink": "@Bruno_Aviator",
-        "ChannelLink": "@asknvl",
-        "ReplacedWords": []
+        "ChannelLink": "@Bruno_Aviator",
+        "ReplacedWords": [
+          "123"
+        ],
+        "AutoChanges": [
+          {
+            "OldText": "https://aviatorsignals.com/TOPBR",
+            "NewText": "https://rolf-probeg.ru/cars/nissan/qashqai+2/"
+          },
+          {
+            "OldText": "http://carlosmansl.com/",
+            "NewText": "www.pornhub.com"
+          }
+        ]
       }
     ],
     "User": {
@@ -21,7 +33,9 @@
       "MessageBufferLength": 10,
       "MatchingPercentageTreshold": 71
     },
-    "ReplacedWords": [],
+    "ReplacedWords": [
+      "123"
+    ],
     "State": 0
   }
 ]

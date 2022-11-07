@@ -1,5 +1,6 @@
 ﻿using csb.bot_manager;
 using csb.bot_moderator;
+using csb.bot_poster;
 using csb.chains;
 using csb.moderation;
 using csb.settings;
@@ -99,8 +100,8 @@ namespace csb.users
                 },
 
                  new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Добавить автозамену", callbackData: "addSwap"),
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить автозамену", callbackData: "deleteSwap"),
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить автозамену", callbackData: "addAutoChange"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить автозамену", callbackData: "deleteAutoChange"),
                 },
 
                 new[] {
@@ -262,6 +263,7 @@ namespace csb.users
         string currentModeratorGeoTag;
         string currentAdminGeoTag;
         PushMessage currentPushMessage;
+        string oldText;
         BotState State;
         #endregion
 
@@ -1207,6 +1209,40 @@ namespace csb.users
                             }
                             break;
 
+                        case BotState.waitingAutoChangeOldText:
+                            try
+                            {
+                                oldText = msg;
+                                await messagesProcessor.Add(chat, "addAutoChangeNewText", await sendTextButtonMessage(chat, "Введите новую ссылку:", "back"));
+                                State = BotState.waitingAutoChangeNewText;
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingAutoChangeNewText:
+                            try
+                            {
+                                string newText = msg;
+                                AutoChange autoChange = new AutoChange()
+                                {
+                                    OldText = oldText,
+                                    NewText = newText
+                                };
+
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.AddAutoChange(autoChange);
+                                chainprocessor.Save();
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
                     }
                     break;
             }
@@ -1775,6 +1811,19 @@ namespace csb.users
                         }
 
                         State = BotState.free;
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "addAutoChange":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
+                        State = BotState.waitingAutoChangeOldText;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)
                     {

@@ -56,6 +56,9 @@ namespace csb.bot_manager
 
         waitingReplacedWord,
 
+        waitingAutoChangeOldText,
+        waitingAutoChangeNewText,
+
 
     }
     
