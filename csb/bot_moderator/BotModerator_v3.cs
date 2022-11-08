@@ -42,9 +42,11 @@ namespace csb.bot_moderator
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
                 var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
 
-                foreach (var subscriber in subs)               {
+                foreach (var subscriber in subs)         
+                {
 
-
+                    
+                    
                     double lastPushSendHours = (subscriber.push_send_hours != null) ? (double)subscriber.push_send_hours : 0;
                     double lastPushDeliveredHours = (subscriber.push_delivered_hours != null) ? (double)subscriber.push_delivered_hours : 0;
                     double lastPushHours = Math.Max(lastPushSendHours, lastPushDeliveredHours);
