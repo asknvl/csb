@@ -432,6 +432,32 @@ namespace csb.bot_poster
             return res;
 
             //return text.Replace(oldtext, newtext);
+        }    
+
+        (string, MessageEntity[]? entities) autoChange(string text, MessageEntity[]? entities)
+        {
+            string resText = text;
+            List<MessageEntity> resEntities = entities.ToList();
+
+            foreach (var autochange in AutoChanges)
+            {
+                resEntities = resEntities?.OrderBy(e => e.Offset).ToList();
+                int index = resText.IndexOf(autochange.OldText);
+                
+                if (resEntities != null)
+                {
+                    int delta = autochange.NewText.Length - autochange.OldText.Length;
+                    var found = resEntities.Where(e => e.Offset == index).ToList();
+
+                    if (found != null)
+                    {
+                        
+                    }
+
+                }
+            }
+
+            return (resText, ent);
         }
 
         MessageEntity[]? filterEntities(MessageEntity[] input)

@@ -45,8 +45,6 @@ namespace csb.bot_moderator
                 foreach (var subscriber in subs)         
                 {
 
-                    
-                    
                     double lastPushSendHours = (subscriber.push_send_hours != null) ? (double)subscriber.push_send_hours : 0;
                     double lastPushDeliveredHours = (subscriber.push_delivered_hours != null) ? (double)subscriber.push_delivered_hours : 0;
                     double lastPushHours = Math.Max(lastPushSendHours, lastPushDeliveredHours);
