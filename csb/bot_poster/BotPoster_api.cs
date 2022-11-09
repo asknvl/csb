@@ -85,7 +85,7 @@ namespace csb.bot_poster
             User u = bot.GetMeAsync().Result;
             Name = u.Username;
 
-            //AutoChanges.Add(new AutoChange() { OldText = VictimLink, NewText = ChannelLink });
+            AutoChanges.Add(new AutoChange() { OldText = VictimLink, NewText = ChannelLink });
 
             cts = new CancellationTokenSource();
 
@@ -167,28 +167,28 @@ namespace csb.bot_poster
                         {
                             InputMediaDocument doc = new InputMediaDocument(imp.Media);
 
-                            if (!ChannelLink.Equals("0"))
-                            {
-                                //doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
-                                //doc.Caption = autoChange(doc.Caption);
+                            //if (!ChannelLink.Equals("0"))
+                            //{
+                            //    //doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
+                            //    //doc.Caption = autoChange(doc.Caption);
 
-                                //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            //    //doc.CaptionEntities = filterEntities(message.CaptionEntities);
 
-                                (doc.Caption, doc.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
+                            //    (doc.Caption, doc.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
 
-                            }
-                            else
-                            {
-                                (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-                                doc.Caption = text;
-                                doc.CaptionEntities = entities;
-                            }
+                            //}
+                            //else
+                            //{
+                            //    (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                            //    doc.Caption = text;
+                            //    doc.CaptionEntities = entities;
+                            //}
 
                             await bot.SendPhotoAsync(ChannelID,
                                 doc.Media,
-                                caption: doc.Caption,
+                                caption: imp.Caption,
                                 replyMarkup:message.ReplyMarkup,
-                                captionEntities: doc.CaptionEntities);
+                                captionEntities: imp.CaptionEntities);
                             //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                             break;
                         }
@@ -224,7 +224,8 @@ namespace csb.bot_poster
 
                             (imv.Caption, imv.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
 
-                        } else
+                        }
+                        else
                         {
 
                             (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
@@ -236,29 +237,29 @@ namespace csb.bot_poster
                         {
                             InputMediaDocument doc = new InputMediaDocument(imv.Media);
 
-                            if (!ChannelLink.Equals("0"))
-                            {
-                                //doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
+                            //if (!ChannelLink.Equals("0"))
+                            //{
+                            //    //doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
 
-                                //doc.Caption = autoChange(doc.Caption);
+                            //    //doc.Caption = autoChange(doc.Caption);
 
-                                //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                            //    //doc.CaptionEntities = filterEntities(message.CaptionEntities);
 
                                 
-                                (doc.Caption, doc.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
-                            } else
-                            {
+                            //    (doc.Caption, doc.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
+                            //} else
+                            //{
 
-                                (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-                                doc.Caption = text;
-                                doc.CaptionEntities = entities;
-                            }
+                            //    (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
+                            //    doc.Caption = text;
+                            //    doc.CaptionEntities = entities;
+                            //}
 
                             await bot.SendVideoAsync(ChannelID,
                                 doc.Media,
-                                caption: doc.Caption,
+                                caption: imv.Caption,
                                 replyMarkup: message.ReplyMarkup,
-                                captionEntities: doc.CaptionEntities);
+                                captionEntities: imv.CaptionEntities);
                             //await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                             break;
                         }
@@ -490,7 +491,7 @@ namespace csb.bot_poster
                     if (found != null && found.Count > 0)
                     {
                         var indexEntity = resEntities.IndexOf(found[0]);
-                        for (int i = indexEntity; i < resEntities.Count; i++)
+                        for (int i = indexEntity + 1; i < resEntities.Count; i++)
                         {
                             if (resEntities[i].Offset > indexReplace)
                                 resEntities[i].Offset += delta;
@@ -527,24 +528,25 @@ namespace csb.bot_poster
 
 
 
-            var entities = input;            
-            //try
-            //{
-            //    foreach (var item in entities)
-            //    {
-                    
-            //        switch (item.Type)
-            //        {   
-            //            case MessageEntityType.TextLink:
-            //                item.Url = autoChange(item.Url);
-            //                break;
-            //        }
-            //    }                    
+            var entities = input;
+            try
+            {
+                foreach (var item in entities)
+                {
 
-            //} catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
+                    switch (item.Type)
+                    {
+                        case MessageEntityType.TextLink:
+                            item.Url = autoChange(item.Url);
+                            break;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return entities;
         }
 
