@@ -85,6 +85,8 @@ namespace csb.bot_poster
             User u = bot.GetMeAsync().Result;
             Name = u.Username;
 
+            //AutoChanges.Add(new AutoChange() { OldText = VictimLink, NewText = ChannelLink });
+
             cts = new CancellationTokenSource();
 
             mediaTimer = new System.Timers.Timer();
@@ -145,11 +147,14 @@ namespace csb.bot_poster
 
                         if (!ChannelLink.Equals("0"))
                         {
-                            imp.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
+                            //imp.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
 
-                            imp.Caption = autoChange(imp.Caption);
+                            //imp.Caption = autoChange(imp.Caption);
 
-                            imp.CaptionEntities = filterEntities(message.CaptionEntities);
+                            //imp.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            (imp.Caption, imp.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
+
                         } else
                         {
 
@@ -164,11 +169,15 @@ namespace csb.bot_poster
 
                             if (!ChannelLink.Equals("0"))
                             {
-                                doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
-                                doc.Caption = autoChange(doc.Caption);
+                                //doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
+                                //doc.Caption = autoChange(doc.Caption);
 
-                                doc.CaptionEntities = filterEntities(message.CaptionEntities);
-                            } else
+                                //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                                (doc.Caption, doc.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
+
+                            }
+                            else
                             {
                                 (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
                                 doc.Caption = text;
@@ -207,11 +216,14 @@ namespace csb.bot_poster
                         InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
                         if (!ChannelLink.Equals("0"))
                         {
-                            imv.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
+                            //imv.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
 
-                            imv.Caption = autoChange(imv.Caption);
+                            //imv.Caption = autoChange(imv.Caption);
 
-                            imv.CaptionEntities = filterEntities(message.CaptionEntities);
+                            //imv.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            (imv.Caption, imv.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
+
                         } else
                         {
 
@@ -226,11 +238,14 @@ namespace csb.bot_poster
 
                             if (!ChannelLink.Equals("0"))
                             {
-                                doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
+                                //doc.Caption = swapTextLink(message.Caption, VictimLink, ChannelLink);
 
-                                doc.Caption = autoChange(doc.Caption);
+                                //doc.Caption = autoChange(doc.Caption);
 
-                                doc.CaptionEntities = filterEntities(message.CaptionEntities);
+                                //doc.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                                
+                                (doc.Caption, doc.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
                             } else
                             {
 
@@ -274,8 +289,17 @@ namespace csb.bot_poster
 
                         if (!ChannelLink.Equals("0"))
                         {
-                            text = swapTextLink(text, VictimLink, ChannelLink);
-                            entities = filterEntities(entities);
+                            //text = swapTextLink(text, VictimLink, ChannelLink);
+                            //entities = filterEntities(entities);
+
+                            //text = swapTextLink(text, VictimLink, ChannelLink);
+
+                            //imv.Caption = autoChange(imv.Caption);
+
+                            //imv.CaptionEntities = filterEntities(message.CaptionEntities);
+
+                            (text, entities) = autoChange(text, filterEntities(entities), AutoChanges);
+
 
                         } else
                         {
@@ -434,30 +458,49 @@ namespace csb.bot_poster
             //return text.Replace(oldtext, newtext);
         }    
 
-        (string, MessageEntity[]? entities) autoChange(string text, MessageEntity[]? entities)
+        (string, MessageEntity[]? entities) autoChange(string text, MessageEntity[]? entities, List<AutoChange> autoChanges)
         {
+           
             string resText = text;
-            List<MessageEntity> resEntities = entities.ToList();
+            List<MessageEntity>? resEntities = entities?.ToList();
 
-            foreach (var autochange in AutoChanges)
+            if (text == null)
+                return (null, null);
+
+            foreach (var autochange in autoChanges)
             {
                 resEntities = resEntities?.OrderBy(e => e.Offset).ToList();
-                int index = resText.IndexOf(autochange.OldText);
-                
+                int indexReplace = resText.IndexOf(autochange.OldText);
+                if (indexReplace == -1)
+                    continue;
+
+                resText = resText.Replace(autochange.OldText, autochange.NewText);
+
                 if (resEntities != null)
                 {
                     int delta = autochange.NewText.Length - autochange.OldText.Length;
-                    var found = resEntities.Where(e => e.Offset == index).ToList();
+                    var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
 
-                    if (found != null)
+                    foreach (var item in found)
                     {
-                        
+                        int ind = resEntities.IndexOf(item);
+                        resEntities[ind].Length += delta;
+                    }
+
+                    if (found != null && found.Count > 0)
+                    {
+                        var indexEntity = resEntities.IndexOf(found[0]);
+                        for (int i = indexEntity; i < resEntities.Count; i++)
+                        {
+                            if (resEntities[i].Offset > indexReplace)
+                                resEntities[i].Offset += delta;
+                        }
                     }
 
                 }
             }
 
-            return (resText, ent);
+            return (resText, resEntities?.ToArray());
         }
 
         MessageEntity[]? filterEntities(MessageEntity[] input)
@@ -485,23 +528,23 @@ namespace csb.bot_poster
 
 
             var entities = input;            
-            try
-            {
-                foreach (var item in entities)
-                {
+            //try
+            //{
+            //    foreach (var item in entities)
+            //    {
                     
-                    switch (item.Type)
-                    {   
-                        case MessageEntityType.TextLink:
-                            item.Url = autoChange(item.Url);
-                            break;
-                    }
-                }                    
+            //        switch (item.Type)
+            //        {   
+            //            case MessageEntityType.TextLink:
+            //                item.Url = autoChange(item.Url);
+            //                break;
+            //        }
+            //    }                    
 
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            //} catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
             return entities;
         }
 
@@ -563,12 +606,15 @@ namespace csb.bot_poster
             //    }
             //}
 
+            MessageEntity[]? messageEntities;
 
-            string t;
+            string t = text;
             if (!ChannelLink.Equals("0"))
             {
-                t = swapTextLink(text, VictimLink, ChannelLink);
-                t = autoChange(t);
+                //t = swapTextLink(text, VictimLink, ChannelLink);
+                //t = autoChange(t);
+
+                (t, messageEntities) = autoChange(t, message.Entities, AutoChanges);
 
             } else
             {

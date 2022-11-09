@@ -1,0 +1,47 @@
+[
+  {
+    "Owner": 0,
+    "Name": "T1",
+    "Id": 1,
+    "PhoneNumber": "+79918437350",
+    "Bots": [
+      {
+        "Token": "5583915296:AAHUEjwm_SD1UhQFl-XqM8-9TNnoqKFC8DY",
+        "Name": "test01_out_bot",
+        "ChannelID": -1001515136824,
+        "ChannelTitle": "OUT",
+        "VictimLink": "@felixbond777",
+        "ChannelLink": "@Bruno_Aviator",
+        "ReplacedWords": [],
+        "AutoChanges": [
+          {
+            "OldText": "https://aviatorsignals.com/TOPBR",
+            "NewText": "https://1wwrvd.top/casino/list?open=register"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@asknvl"
+          }
+        ]
+      }
+    ],
+    "User": {
+      "FilteredWords": [],
+      "TimeInterval": 0.016666666666666666,
+      "MessageBufferLength": 10,
+      "MatchingPercentageTreshold": 71
+    },
+    "ReplacedWords": [],
+    "AutoChanges": [
+      {
+        "OldText": "https://aviatorsignals.com/TOPBR",
+        "NewText": "https://1wwrvd.top/casino/list?open=register"
+      },
+      {
+        "OldText": "@booowos",
+        "NewText": "@asknvl"
+      }
+    ],
+    "State": 0
+  }
+]

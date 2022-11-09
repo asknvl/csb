@@ -1,29 +1,32 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/usr_listener/UserListener_v1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/bot_poster/BotPoster_api.cs">
     <Files>
-      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="332" Column="17" />
-      <File FileName="csb/usr_listener/UserListener_v1.cs" Line="68" Column="42" />
-      <File FileName="csb/matching/TextMatchingAnalyzer.cs" Line="9" Column="18" />
-      <File FileName="csb/matching/ITextMatchingAnalyzer.cs" Line="11" Column="33" />
-      <File FileName="csb/users/User.cs" Line="771" Column="39" />
-      <File FileName="csb/chains/Chain.cs" Line="161" Column="21" />
-      <File FileName="csb/chains/IChain.cs" Line="29" Column="14" />
+      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="457" Column="1" />
+      <File FileName="csb/usr_listener/UserListener_v1.cs" />
+      <File FileName="csb/matching/TextMatchingAnalyzer.cs" />
+      <File FileName="csb/matching/ITextMatchingAnalyzer.cs" />
+      <File FileName="csb/users/User.cs" />
+      <File FileName="csb/chains/Chain.cs" />
+      <File FileName="csb/chains/IChain.cs" />
+      <File FileName="csb/Program.cs" Line="35" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="csb" expanded="True">
             <Node name="csb" expanded="True">
-              <Node name="bot_poster" expanded="True" />
-              <Node name="chains" expanded="True" />
-              <Node name="matching" expanded="True" />
-              <Node name="users" expanded="True" />
-              <Node name="usr_listener" expanded="True">
-                <Node name="UserListener_v1.cs" selected="True" />
+              <Node name="bot_poster" expanded="True">
+                <Node name="BotPoster_api.cs" selected="True" />
               </Node>
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>indexReplace</Value>
+          <Value>text.Length</Value>
         </State>
       </Pad>
     </Pads>
@@ -31,7 +34,9 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/bot_poster/BotPoster_api.cs" relfile="csb/bot_poster/BotPoster_api.cs" line="457" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>
