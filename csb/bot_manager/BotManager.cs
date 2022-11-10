@@ -4,6 +4,7 @@ using csb.chains;
 using csb.settings;
 using csb.settings.validators;
 using csb.users;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,9 @@ namespace csb.bot_manager
     public enum BotState
     {
         free,
-        waitingChainName,        
+        waitingChainName,
         waitingPhoneNumber,
-        waitingToken,     
+        waitingToken,
         waitingOutputChannelId,
         waitingVictimChannelLink,
         waitingOutputChannelLink,
@@ -40,7 +41,7 @@ namespace csb.bot_manager
         waitingModeratorGeoTag,
         waitingModeratorToken,
 
-        waitingModeratorHelloMessage,                        
+        waitingModeratorHelloMessage,
         waitingModerarotAlternativeLink,
         waitingModeratorByeMessage,
 
@@ -62,8 +63,8 @@ namespace csb.bot_manager
 
 
     }
-    
-    
+
+
 
     public class BotManager
     {
@@ -98,10 +99,10 @@ namespace csb.bot_manager
             userManager.Init();
 
             //chainsProcessor.StartAll(); 
-            
+
         }
 
-       
+
 
         public async void Start()
         {
@@ -111,7 +112,7 @@ namespace csb.bot_manager
             {
                 AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.CallbackQuery }
             };
-            bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, new CancellationToken());            
+            bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, new CancellationToken());
         }
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
@@ -124,14 +125,17 @@ namespace csb.bot_manager
                     await userManager.UpdateCallbackQuery(update.CallbackQuery);
                     break;
 
-                    case UpdateType.Message:
+                case UpdateType.Message:
 
-                    await Task.Run(async () => {
+                    await Task.Run(async () =>
+                    {
 
                         var chat = update.Message.Chat.Id;
                         string msg = update.Message.Text;
                         if (msg == null)
                             return;
+
+                    
 
                         if (msg.Equals("/addme"))
                         {
@@ -165,10 +169,10 @@ namespace csb.bot_manager
 
                             await bot.SendTextMessageAsync(
                                    chatId: chat,
-                                   text: helloText,                                   
+                                   text: helloText,
                                    cancellationToken: cancellationToken);
                             return;
-                            
+
                         }
 
                         if (!userManager.Check(chat) && !msg.Equals("/start"))
@@ -195,11 +199,11 @@ namespace csb.bot_manager
 
 
                     break;
-            }            
+            }
         }
 
-                
-        
+
+
 
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {

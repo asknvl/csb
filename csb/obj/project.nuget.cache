@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "I0TWbJ3ciOH1cF46An/rGHEcuJzKugR+3kDjbdiXRheUsaycWPzIjZ9bpevprRGzN4mUxXD5QoO3J0kMQXgNzw==",
+  "dgSpecHash": "Qz71VAPhx3zJyEHU9I8IB3m6dZKWORL1R5EGH1pgDZtr/UyzoX+JP6/PAdGJ3hEAQ9m1kXJV1420IDS4gASSXQ==",
   "success": true,
   "projectFilePath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
   "expectedPackageFiles": [
@@ -8,11 +8,7 @@
     "C:\\Users\\Никита\\.nuget\\packages\\restsharp\\106.10.0\\restsharp.106.10.0.nupkg.sha512",
     "C:\\Users\\Никита\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
     "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.15\\microsoft.netcore.app.host.win-x64.5.0.15.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512"
+    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }

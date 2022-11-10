@@ -627,10 +627,10 @@ namespace csb.bot_poster
             //t += insertUrl;
 
 
-            bool? isTextLink = message.Entities?.Any(e => e.Type == MessageEntityType.TextLink);
-            bool? isTextLinkReplaced = message.Entities?.Any(e => AutoChanges.Any(a => !string.IsNullOrEmpty(e.Url) && e.Url.Equals(a.OldText)));
+            //bool? isTextLink = message.Entities?.Any(e => e.Type == MessageEntityType.TextLink);
+            //bool? isTextLinkReplaced = message.Entities?.Any(e => AutoChanges.Any(a => !string.IsNullOrEmpty(e.Url) && e.Url.Equals(a.OldText)));
 
-            var disablePreview = !isTextLink | isTextLinkReplaced;
+            //var disablePreview = !isTextLink | isTextLinkReplaced;
             
 
             //bool disablePreview = false;
@@ -652,7 +652,7 @@ namespace csb.bot_poster
             chatId: ChannelID,
             text: t,
             entities: filterEntities(message.Entities),
-            disableWebPagePreview: disablePreview,
+            //disableWebPagePreview: disablePreview,
             replyMarkup: message.ReplyMarkup,            
             cancellationToken: cts);
         }
