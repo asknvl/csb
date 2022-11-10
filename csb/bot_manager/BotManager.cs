@@ -25,6 +25,8 @@ namespace csb.bot_manager
         free,
         waitingChainName,        
         waitingPhoneNumber,
+
+        waitingBotGeoTag,
         waitingToken,     
         waitingOutputChannelId,
         waitingVictimChannelLink,
@@ -58,7 +60,10 @@ namespace csb.bot_manager
 
         waitingAutoChangeOldText,
         waitingAutoChangeNewText,
-        waitingAutoChangeDelete
+        waitingAutoChangeDelete,
+
+        waitingAddDaily,
+        waitingDeleteDaily
 
 
     }

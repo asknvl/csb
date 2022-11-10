@@ -1,26 +1,31 @@
 [
   {
     "Owner": 0,
-    "Name": "T1",
+    "Name": "BRA",
     "Id": 1,
-    "PhoneNumber": "+79918437350",
+    "PhoneNumber": "+77076783092",
     "Bots": [
       {
+        "GeoTag": "BRA",
         "Token": "5583915296:AAHUEjwm_SD1UhQFl-XqM8-9TNnoqKFC8DY",
         "Name": "test01_out_bot",
         "ChannelID": -1001515136824,
         "ChannelTitle": "OUT",
         "VictimLink": "@felixbond777",
-        "ChannelLink": "@Bruno_Aviator",
+        "ChannelLink": "@asknvl",
         "ReplacedWords": [],
         "AutoChanges": [
+          {
+            "OldText": "@felixbond777",
+            "NewText": "@asknvl"
+          },
           {
             "OldText": "https://aviatorsignals.com/TOPBR",
             "NewText": "https://1wwrvd.top/casino/list?open=register"
           },
           {
-            "OldText": "@booowos",
-            "NewText": "@asknvl"
+            "OldText": "https://t.me/c/1165620963/6145",
+            "NewText": "https://t.me/c/1569571405/124"
           }
         ]
       }
@@ -38,10 +43,11 @@
         "NewText": "https://1wwrvd.top/casino/list?open=register"
       },
       {
-        "OldText": "@booowos",
-        "NewText": "@asknvl"
+        "OldText": "https://t.me/c/1165620963/6145",
+        "NewText": "https://t.me/c/1569571405/124"
       }
     ],
+    "DailyPushMessages": [],
     "State": 0
   }
 ]

@@ -34,4 +34,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="messaging\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="messaging\" />
+  </ItemGroup>
 </Project>

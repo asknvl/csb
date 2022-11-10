@@ -1,4 +1,5 @@
 ﻿using csb.bot_poster;
+using csb.messaging;
 using csb.usr_listener;
 using Newtonsoft.Json;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace csb.chains
 {
@@ -29,6 +31,8 @@ namespace csb.chains
         public List<string> ReplacedWords { get; set; } = new();
         [JsonProperty]
         public List<AutoChange> AutoChanges { get; set; } = new();
+        [JsonProperty]
+        public List<DailyPushMessage> DailyPushMessages { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -248,5 +252,22 @@ namespace csb.chains
             }
             
         }
+
+        public void AddDailyPushMessage(DailyPushMessage message)
+        {
+            DailyPushMessages.Add(message);
+        }
+
+        public void RemoveDailyPushMessage(int index)
+        {
+            
+        }
+
+        public void ClearDailyPushMessages()
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

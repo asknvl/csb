@@ -1,10 +1,12 @@
 ﻿using csb.bot_poster;
+using csb.messaging;
 using csb.usr_listener;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace csb.chains
 {
@@ -18,6 +20,7 @@ namespace csb.chains
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
         public List<AutoChange> AutoChanges { get; set; }
+        public List<DailyPushMessage> DailyPushMessages { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -43,6 +46,11 @@ namespace csb.chains
         void AddAutoChange(AutoChange autochange);
         void RemoveAutoChange(int index);
         void ClearAutoChanges();
+
+        void AddDailyPushMessage(DailyPushMessage message);
+        void RemoveDailyPushMessage(int index);
+        void ClearDailyPushMessages();
+
 
     }
 

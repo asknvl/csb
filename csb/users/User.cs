@@ -104,6 +104,10 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Удалить автозамену", callbackData: "deleteAutoChange"),
                 },
 
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настройка периодических уведомлений", callbackData: "editDailyPushes"),
+                },
+
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 },
@@ -163,6 +167,21 @@ namespace csb.users
                 },
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_leave_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
+            {"editDailyPushesMenu", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "daily_show"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "daily_add"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "daily_delete"),
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
@@ -832,15 +851,32 @@ namespace csb.users
                                 var chain = chainsProcessor.Get(currentChainID);
                                 chain.AddBot(token);
                                 await messagesProcessor.Back(chat);
-                                await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
-
-
+                                await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Введите геотег бота:", "addChainCancel"));
                             } catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
 
+                            State = BotState.waitingBotGeoTag;
+                            break;
+
+                        case BotState.waitingBotGeoTag:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                var bot = chain.Bots.Last();
+                                bot.GeoTag = msg;
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
+                                //await messagesProcessor.Add(chat, "waitingOutputVictimLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), КОТОРЫЙ требуется заменить во входящих сообщениях. Введите 0, если требуется заменять все аккаунты:", "addChainCancel"));
+
+                            }
+                            catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
                             State = BotState.waitingOutputChannelId;
                             break;
 
@@ -900,6 +936,9 @@ namespace csb.users
                                 var chain = chainsProcessor.Get(currentChainID);
                                 var bot = chain.Bots.Last();
                                 bot.ChannelLink = msg;
+
+                                bot.AutoChanges.Add(new AutoChange() { OldText = bot.VictimLink, NewText = bot.ChannelLink });
+
                                 chain.State = ChainState.X;
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "startsave", await sendTextButtonMessage(chat, "Регистрация завершена. Выберите действие:", "startsave"));
@@ -1279,6 +1318,24 @@ namespace csb.users
                                 }
                                 chainprocessor.Save();
                                 await showDeleteAutoChanges(chat);
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingAddDaily:
+                            try
+                            {
+
+                                var chain = chainsProcessor.Get(currentChainID);
+
+
+                                Message message = update.Message;
+                                
+
 
                             } catch (Exception ex)
                             {
@@ -1885,6 +1942,30 @@ namespace csb.users
 
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "editDailyPushes":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка периодических уведомлений:", "editDailyPushesMenu"));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "daily_add":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, "Перешлите (forward) сюда исходное сообщение для цепочки:", "back"));
+                        State = BotState.waitingAddDaily;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
