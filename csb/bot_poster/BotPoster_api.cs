@@ -467,14 +467,11 @@ namespace csb.bot_poster
             bool disablePreview = true;
             if (messageEntities != null && messageEntities.Length > 0)
             {
-                disablePreview = messageEntities[0].Type != MessageEntityType.TextLink;
+                disablePreview = messageEntities[0].Type != MessageEntityType.TextLink;   
             }
 
-           
-            //bool disablePreview = false;
-
-            //if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
-            //    disablePreview = true;
+            if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
+                disablePreview = true;
 
             await bot.SendTextMessageAsync(            
             chatId: ChannelID,

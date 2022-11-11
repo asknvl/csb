@@ -1332,7 +1332,7 @@ namespace csb.users
                             {
 
                                 var chain = chainsProcessor.Get(currentChainID);
-
+                                
 
                                 //DailyPushMessage message = (Message)update.Message;
                                 

@@ -32,7 +32,7 @@ namespace csb.chains
         [JsonProperty]
         public List<AutoChange> AutoChanges { get; set; } = new();
         [JsonProperty]
-        public List<DailyPushMessage> DailyPushMessages { get; set; } = new();
+        public List<DailyPushMessageBase> DailyPushMessages { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -253,7 +253,7 @@ namespace csb.chains
             
         }
 
-        public void AddDailyPushMessage(DailyPushMessage message)
+        public void AddDailyPushMessage(DailyPushMessageBase message)
         {
             DailyPushMessages.Add(message);
         }

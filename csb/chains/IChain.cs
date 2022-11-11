@@ -20,7 +20,7 @@ namespace csb.chains
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
         public List<AutoChange> AutoChanges { get; set; }
-        public List<DailyPushMessage> DailyPushMessages { get; set; }
+        public List<DailyPushMessageBase> DailyPushMessages { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -47,7 +47,7 @@ namespace csb.chains
         void RemoveAutoChange(int index);
         void ClearAutoChanges();
 
-        void AddDailyPushMessage(DailyPushMessage message);
+        void AddDailyPushMessage(DailyPushMessageBase message);
         void RemoveDailyPushMessage(int index);
         void ClearDailyPushMessages();
 
