@@ -99,7 +99,7 @@ namespace csb.bot_poster
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
-            Console.WriteLine(Name + "started");
+            Console.WriteLine(GeoTag + "output bot" + "started");
 
             IsRunning = true;
         }
@@ -367,6 +367,15 @@ namespace csb.bot_poster
 
         (string, MessageEntity[]? entities) autoChange(string text, MessageEntity[]? entities, List<AutoChange> autoChanges)
         {
+
+            AutoChange pmChange = new AutoChange()
+            {
+                OldText = VictimLink,
+                NewText = ChannelLink
+            };
+
+            if (!autoChanges.Any(a => a.OldText.Equals(pmChange.OldText) && a.NewText.Equals(pmChange.NewText)))
+                autoChanges.Add(pmChange);
 
             string resText = text;
             List<MessageEntity>? resEntities = entities?.ToList();

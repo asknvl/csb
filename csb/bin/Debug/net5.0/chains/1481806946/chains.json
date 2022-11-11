@@ -11,21 +11,17 @@
         "Name": "test01_out_bot",
         "ChannelID": -1001515136824,
         "ChannelTitle": "OUT",
-        "VictimLink": "@felixbond777",
+        "VictimLink": "@Amirrsallah",
         "ChannelLink": "@asknvl",
         "ReplacedWords": [],
         "AutoChanges": [
           {
-            "OldText": "@felixbond777",
-            "NewText": "@asknvl"
+            "OldText": "https://t.me/feebback",
+            "NewText": "www.guns.ru"
           },
           {
-            "OldText": "https://aviatorsignals.com/TOPBR",
-            "NewText": "https://1wwrvd.top/casino/list?open=register"
-          },
-          {
-            "OldText": "https://t.me/c/1165620963/6145",
-            "NewText": "https://t.me/c/1569571405/124"
+            "OldText": "666",
+            "NewText": "777"
           }
         ]
       }
@@ -39,12 +35,12 @@
     "ReplacedWords": [],
     "AutoChanges": [
       {
-        "OldText": "https://aviatorsignals.com/TOPBR",
-        "NewText": "https://1wwrvd.top/casino/list?open=register"
+        "OldText": "https://t.me/feebback",
+        "NewText": "www.guns.ru"
       },
       {
-        "OldText": "https://t.me/c/1165620963/6145",
-        "NewText": "https://t.me/c/1569571405/124"
+        "OldText": "666",
+        "NewText": "777"
       }
     ],
     "DailyPushMessages": [],

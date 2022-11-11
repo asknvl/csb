@@ -937,7 +937,7 @@ namespace csb.users
                                 var bot = chain.Bots.Last();
                                 bot.ChannelLink = msg;
 
-                                bot.AutoChanges.Add(new AutoChange() { OldText = bot.VictimLink, NewText = bot.ChannelLink });
+                                //bot.AutoChanges.Add(new AutoChange() { OldText = bot.VictimLink, NewText = bot.ChannelLink });
 
                                 chain.State = ChainState.X;
                                 await messagesProcessor.Back(chat);
