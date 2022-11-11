@@ -6,11 +6,11 @@ namespace csb.messaging
 {
     public class DailyPushMessage : Message
     {
-        [JsonProperty]
-        public int Id { get; set; }
+        //[JsonProperty]
+        //public int Id { get; set; }
 
-        public DailyPushMessage() : base()
-        {
-        }
+        //public DailyPushMessage() : base()
+        //{
+        //}
     }
 }

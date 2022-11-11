@@ -105,6 +105,8 @@ namespace csb.bot_moderator
         }
         #endregion
 
+        int appCntr = 0;
+        int decCntr = 0;
         #region override
         protected override async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
@@ -184,8 +186,6 @@ namespace csb.bot_moderator
                 }
             }
 
-            int appCntr = 0;
-            int decCntr = 0;
             if (update.ChatJoinRequest != null)
             {
                 try

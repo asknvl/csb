@@ -463,14 +463,23 @@ namespace csb.bot_poster
                 (t, e) = getUpdatedText(text, null);
             }
 
-            bool disablePreview = false;
-            if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
-                disablePreview = true;
+
+            bool disablePreview = true;
+            if (messageEntities != null && messageEntities.Length > 0)
+            {
+                disablePreview = messageEntities[0].Type != MessageEntityType.TextLink;
+            }
+
+           
+            //bool disablePreview = false;
+
+            //if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
+            //    disablePreview = true;
 
             await bot.SendTextMessageAsync(            
             chatId: ChannelID,
             text: t,
-            entities: filterEntities(message.Entities),
+            entities: filterEntities(messageEntities),
             disableWebPagePreview: disablePreview,
             replyMarkup: message.ReplyMarkup,            
             cancellationToken: cts);

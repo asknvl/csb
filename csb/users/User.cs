@@ -2,6 +2,7 @@
 using csb.bot_moderator;
 using csb.bot_poster;
 using csb.chains;
+using csb.messaging;
 using csb.moderation;
 using csb.settings;
 using csb.settings.validators;
@@ -1333,7 +1334,7 @@ namespace csb.users
                                 var chain = chainsProcessor.Get(currentChainID);
 
 
-                                Message message = update.Message;
+                                //DailyPushMessage message = (Message)update.Message;
                                 
 
 

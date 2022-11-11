@@ -1,15 +1,22 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/users/User.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/messaging/DailyPushMessage.cs">
     <Files>
-      <File FileName="csb/chains/Chain.cs" Line="271" Column="9" />
-      <File FileName="csb/chains/IChain.cs" Line="50" Column="50" />
-      <File FileName="csb/Program.cs" Line="17" Column="1" />
-      <File FileName="csb/messaging/TGMessageBase.cs" Line="7" Column="34" />
-      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="467" Column="1" />
-      <File FileName="csb/bot_poster/AutoChange.cs" Line="10" Column="18" />
-      <File FileName="csb/users/User.cs" Line="1" Column="1" />
+      <File FileName="csb/chains/Chain.cs" Line="271" Column="9" NotebookId="1" />
+      <File FileName="csb/chains/IChain.cs" Line="50" Column="50" NotebookId="1" />
+      <File FileName="csb/Program.cs" Line="17" Column="1" NotebookId="1" />
+      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="468" Column="38" NotebookId="1" />
+      <File FileName="csb/bot_poster/AutoChange.cs" Line="10" Column="18" NotebookId="1" />
+      <File FileName="csb/users/User.cs" Line="1336" Column="66" NotebookId="1" />
+      <File FileName="csb/bot_moderator/BotModerator_v3.cs" Line="109" Column="25" NotebookId="1" />
     </Files>
+    <FloatingWindows>
+      <FloatingWindow WindowId="1" X="-215" Y="115" Width="640" Height="480">
+        <Files>
+          <File FileName="csb/messaging/TGMessageBase.cs" Line="7" Column="34" />
+        </Files>
+      </FloatingWindow>
+    </FloatingWindows>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -19,10 +26,10 @@
               <Node name="bot_moderator" expanded="True" />
               <Node name="bot_poster" expanded="True" />
               <Node name="chains" expanded="True" />
-              <Node name="messaging" expanded="True" />
-              <Node name="users" expanded="True">
-                <Node name="User.cs" selected="True" />
+              <Node name="messaging" expanded="True">
+                <Node name="DailyPushMessage.cs" selected="True" />
               </Node>
+              <Node name="users" expanded="True" />
             </Node>
           </Node>
         </State>
