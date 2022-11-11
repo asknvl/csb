@@ -99,7 +99,7 @@ namespace csb.bot_poster
             };
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
-            Console.WriteLine(GeoTag + "output bot" + "started");
+            Console.WriteLine(Name + "output bot" + "started");
 
             IsRunning = true;
         }
@@ -131,7 +131,7 @@ namespace csb.bot_poster
             if (message.ReplyMarkup != null)
                 swapMarkupLink(message.ReplyMarkup, ChannelLink);
 
-            Console.WriteLine(GeoTag + " " + message.Text);            
+            Console.WriteLine(Name + " " + message.Text);            
 
             try
             {
@@ -463,7 +463,9 @@ namespace csb.bot_poster
                 (t, e) = getUpdatedText(text, null);
             }
 
-            bool disablePreview = GeoTag.Contains("BRAA");
+            bool disablePreview = false;
+            if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
+                disablePreview = true;
 
             await bot.SendTextMessageAsync(            
             chatId: ChannelID,

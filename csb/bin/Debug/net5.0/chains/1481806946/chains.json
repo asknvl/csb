@@ -6,7 +6,6 @@
     "PhoneNumber": "+77076783092",
     "Bots": [
       {
-        "GeoTag": "BRA",
         "Token": "5583915296:AAHUEjwm_SD1UhQFl-XqM8-9TNnoqKFC8DY",
         "Name": "test01_out_bot",
         "ChannelID": -1001515136824,
@@ -22,6 +21,14 @@
           {
             "OldText": "666",
             "NewText": "777"
+          },
+          {
+            "OldText": "@Amirrsallah",
+            "NewText": "@asknvl"
+          },
+          {
+            "OldText": "111",
+            "NewText": "222"
           }
         ]
       }
@@ -41,6 +48,10 @@
       {
         "OldText": "666",
         "NewText": "777"
+      },
+      {
+        "OldText": "111",
+        "NewText": "222"
       }
     ],
     "DailyPushMessages": [],
