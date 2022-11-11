@@ -463,7 +463,7 @@ namespace csb.bot_poster
                 (t, e) = getUpdatedText(text, null);
             }
 
-            bool disablePreview = GeoTag.Contains("BRA");
+            bool disablePreview = GeoTag.Contains("BRAA");
 
             await bot.SendTextMessageAsync(            
             chatId: ChannelID,
