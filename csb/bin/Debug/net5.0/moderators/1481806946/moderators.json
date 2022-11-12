@@ -1,1 +1,75 @@
-[]
+[
+  {
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 1620,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668254659,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "daily 123"
+          }
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 1621,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668254940,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "this is @asknvl",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 7
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "PushData": {
+      "Messages": []
+    },
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "hi brra",
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": "bye bra",
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "GeoTag": "BRAA",
+    "Name": "braa_moderator_bot",
+    "Token": "5576076240:AAFKhOeoBLzN3b2nSJemg8SnZoPtJ_pRKm8"
+  }
+]

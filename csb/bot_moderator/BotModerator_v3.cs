@@ -1,4 +1,5 @@
-﻿using csb.server;
+﻿using csb.messaging;
+using csb.server;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,6 @@ namespace csb.bot_moderator
             pushTimer.Start();
         }
 
-
-        Dictionary<string, double> tl = new Dictionary<string, double>();
-
         #region private
         private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -51,22 +49,14 @@ namespace csb.bot_moderator
 
                     double Tc = subscriber.time_after_subscribe;
                     double Tp = lastPushHours;
-
                     double Tl = subscriber.time_diff_last_push_subscr;
-                    //double Tl = 0;
-                    //if (tl.ContainsKey(subscriber.tg_user_id))
-                    //    Tl = tl[subscriber.tg_user_id];
-                    //else
-                    //    tl.Add(subscriber.tg_user_id, 0);
-
+                    
                     Console.WriteLine($"Tp={Tp} Tc={Tc} Tl={Tl}, Tc-Tl+Tp={Tc - Tl + Tp}");
 
                     var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > Tp && m.TimePeriod < Tc - Tl + Tp);
 
                     if (pushmessage != null)
                     {
-
-                        tl[subscriber.tg_user_id] = pushmessage.TimePeriod;
 
                         long id = long.Parse(subscriber.tg_user_id);
 

@@ -1,5 +1,6 @@
 ﻿using csb.bot_poster;
 using csb.messaging;
+using csb.moderation;
 using csb.usr_listener;
 using Newtonsoft.Json;
 using System;
@@ -32,7 +33,7 @@ namespace csb.chains
         [JsonProperty]
         public List<AutoChange> AutoChanges { get; set; } = new();
         [JsonProperty]
-        public List<DailyPushMessageBase> DailyPushMessages { get; set; } = new();
+        public List<DailyPushMessage> DailyPushMessages { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -253,12 +254,30 @@ namespace csb.chains
             
         }
 
-        public void AddDailyPushMessage(DailyPushMessageBase message)
+        public void AddDailyPushMessage(DailyPushMessage pattern, ModerationProcessor moderators)
         {
-            DailyPushMessages.Add(message);
+            DailyPushMessages.Add(pattern);
+            
+            foreach (var outbot in Bots)
+            {
+                string geotag = outbot.GeoTag;
+                DailyPushMessage message = new DailyPushMessage();
+                message.Message = pattern.Message;
+
+                AutoChange pmAutochange = new AutoChange()
+                {
+                    OldText = outbot.VictimLink,
+                    NewText = outbot.ChannelLink
+                };
+                message.MakeAutochange(new List<AutoChange>() { pmAutochange });
+                moderators.DailyPushData(geotag).Messages.Add(message);
+                
+            }
+            moderators.Save();
+
         }
 
-        public void RemoveDailyPushMessage(int index)
+        public void RemoveDailyPushMessage(int index, ModerationProcessor moderators)
         {
             
         }

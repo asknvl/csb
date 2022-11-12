@@ -1,5 +1,6 @@
 ﻿using csb.bot_poster;
 using csb.messaging;
+using csb.moderation;
 using csb.usr_listener;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace csb.chains
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
         public List<AutoChange> AutoChanges { get; set; }
-        public List<DailyPushMessageBase> DailyPushMessages { get; set; }
+        public List<DailyPushMessage> DailyPushMessages { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -47,8 +48,8 @@ namespace csb.chains
         void RemoveAutoChange(int index);
         void ClearAutoChanges();
 
-        void AddDailyPushMessage(DailyPushMessageBase message);
-        void RemoveDailyPushMessage(int index);
+        void AddDailyPushMessage(DailyPushMessage message, ModerationProcessor moderators);
+        void RemoveDailyPushMessage(int index, ModerationProcessor moderators);
         void ClearDailyPushMessages();
 
 

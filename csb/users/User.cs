@@ -1332,10 +1332,12 @@ namespace csb.users
                             {
 
                                 var chain = chainsProcessor.Get(currentChainID);
-                                
+                                DailyPushMessage pattern = new DailyPushMessage()
+                                {
+                                    Message = update.Message
+                                };
 
-                                //DailyPushMessage message = (Message)update.Message;
-                                
+                                chain.AddDailyPushMessage(pattern, moderationProcessor);
 
 
                             } catch (Exception ex)

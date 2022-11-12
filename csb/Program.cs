@@ -10,8 +10,11 @@ using csb.usr_push;
 
 namespace csb
 {
+    
     internal class Program
     {
+
+       
         static void Main(string[] args)
         {
             Console.WriteLine("Вдудь 3.1.5_1");

@@ -1,19 +1,24 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/messaging/DailyPushMessage.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/bot_moderator/BotModerator_v4.cs">
     <Files>
-      <File FileName="csb/chains/Chain.cs" Line="271" Column="9" NotebookId="1" />
-      <File FileName="csb/chains/IChain.cs" Line="50" Column="50" NotebookId="1" />
-      <File FileName="csb/Program.cs" Line="17" Column="1" NotebookId="1" />
-      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="468" Column="38" NotebookId="1" />
-      <File FileName="csb/bot_poster/AutoChange.cs" Line="10" Column="18" NotebookId="1" />
-      <File FileName="csb/users/User.cs" Line="1336" Column="66" NotebookId="1" />
-      <File FileName="csb/bot_moderator/BotModerator_v3.cs" Line="109" Column="25" NotebookId="1" />
+      <File FileName="csb/chains/Chain.cs" Line="17" Column="26" NotebookId="2" />
+      <File FileName="csb/chains/IChain.cs" Line="24" Column="37" NotebookId="2" />
+      <File FileName="csb/Program.cs" Line="22" Column="13" NotebookId="2" />
+      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="420" Column="10" NotebookId="2" />
+      <File FileName="csb/bot_poster/AutoChange.cs" Line="10" Column="18" NotebookId="2" />
+      <File FileName="csb/users/User.cs" Line="1341" Column="1" NotebookId="2" />
+      <File FileName="csb/bot_moderator/BotModerator_v3.cs" Line="18" Column="9" NotebookId="2" />
+      <File FileName="csb/moderation/ModerationProcessor.cs" Line="91" Column="73" NotebookId="2" />
+      <File FileName="csb/bot_moderator/PushData.cs" Line="10" Column="18" NotebookId="2" />
+      <File FileName="csb/bot_moderator/DailyPushData.cs" Line="11" Column="70" NotebookId="2" />
+      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="11" Column="4" NotebookId="3" />
     </Files>
     <FloatingWindows>
-      <FloatingWindow WindowId="1" X="-215" Y="115" Width="640" Height="480">
+      <FloatingWindow WindowId="1" X="0" Y="0" Width="1440" Height="900">
         <Files>
-          <File FileName="csb/messaging/TGMessageBase.cs" Line="7" Column="34" />
+          <File FileName="csb/messaging/DailyPushMessage.cs" Line="22" Column="8" IsPinned="True" />
+          <File FileName="csb/messaging/TGMessageBase.cs" Line="22" Column="62" NotebookId="1" />
         </Files>
       </FloatingWindow>
     </FloatingWindows>
@@ -23,12 +28,13 @@
           <Node name="csb" expanded="True">
             <Node name="csb" expanded="True">
               <Node name="bot_manager" expanded="True" />
-              <Node name="bot_moderator" expanded="True" />
+              <Node name="bot_moderator" expanded="True">
+                <Node name="BotModerator_v4.cs" selected="True" />
+              </Node>
               <Node name="bot_poster" expanded="True" />
               <Node name="chains" expanded="True" />
-              <Node name="messaging" expanded="True">
-                <Node name="DailyPushMessage.cs" selected="True" />
-              </Node>
+              <Node name="messaging" expanded="True" />
+              <Node name="moderation" expanded="True" />
               <Node name="users" expanded="True" />
             </Node>
           </Node>
@@ -40,6 +46,7 @@
           <Value>text.Length</Value>
           <Value>resText.Length</Value>
           <Value>t.Length</Value>
+          <Value>messageEntities[0].Type</Value>
         </State>
       </Pad>
     </Pads>
