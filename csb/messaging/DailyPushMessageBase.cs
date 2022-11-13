@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,10 +15,26 @@ namespace csb.messaging
 {
     public abstract class DailyPushMessageBase
     {
+        #region vars
+        FileStream fileStream = null;
+        #endregion
+
+        #region properties
         [JsonProperty]
         public int Id { get; set; }
         [JsonProperty]
         public Message Message { get; set; }
+        [JsonProperty]
+        public string FilePath { get; set; }
+        [JsonProperty]
+        public string fileId { get; set; } = null;
+        #endregion
+
+        public DailyPushMessageBase()
+        {
+            Console.WriteLine($"dpm created {Id}");
+            
+        }
 
         #region helpers
         protected (string, MessageEntity[]? entities) autoChange(string text, MessageEntity[]? entities, List<AutoChange> autoChanges)
@@ -145,7 +162,94 @@ namespace csb.messaging
                     captionEntities: imp.CaptionEntities);
 
         }
+
+        async Task sendVideoMessage(long id, ITelegramBotClient bot)
+        {
+            //InputMediaVideo imv = new InputMediaVideo(new InputMedia(Message.Video.FileId));
+
+            //imv.Caption = Message.Caption;
+            //imv.CaptionEntities = Message.CaptionEntities;
+
+            //InputMediaDocument doc = new InputMediaDocument(imv.Media);
+            //if (!string.IsNullOrEmpty(FilePath))
+            //    if (fileStream == null)
+
+            if (fileId == null)
+            {
+
+                fileStream = System.IO.File.OpenRead(FilePath);
+
+                var sent = await bot.SendVideoAsync(id,
+                        fileStream,
+                        caption: Message.Caption,
+                        replyMarkup: Message.ReplyMarkup,
+                        captionEntities: Message.CaptionEntities);
+
+                fileId = sent.Video.FileId;
+            }
+            else
+            {
+                InputMediaVideo imv = new InputMediaVideo(new InputMedia(fileId));
+
+                imv.Caption = Message.Caption;
+                imv.CaptionEntities = Message.CaptionEntities;
+
+                InputMediaDocument doc = new InputMediaDocument(imv.Media);
+
+                await bot.SendVideoAsync(id,
+                       doc.Media,
+                       caption: Message.Caption,
+                       replyMarkup: Message.ReplyMarkup,
+                       captionEntities: Message.CaptionEntities);
+            }
+
+
+
+        }
         #endregion
+
+        public static async Task<DailyPushMessage> Create(long id, ITelegramBotClient bot, Message pattern, string chainName)
+        {
+            DailyPushMessage res = new DailyPushMessage();
+            res.Message = pattern;
+
+            string fileId;
+            Telegram.Bot.Types.File fileInfo;
+            string filePath = null;
+
+            await Task.Run(async () => { 
+
+                switch (res.Message.Type)
+                {
+                    case MessageType.Photo:
+                        break;
+                    case MessageType.Video:
+                        fileId = res.Message.Video.FileId;
+                        fileInfo = await bot.GetFileAsync(fileId);
+                        filePath = fileInfo.FilePath;
+                        break;
+                }
+
+                var fileName = filePath.Split('/').Last();
+
+                string destinationFilePath = Path.Combine(Directory.GetCurrentDirectory(), "chains", $"{id}", chainName);
+                if (!Directory.Exists(destinationFilePath))
+                    Directory.CreateDirectory(destinationFilePath);
+
+                destinationFilePath = Path.Combine(destinationFilePath, fileName);
+
+                await using FileStream fileStream = System.IO.File.OpenWrite(destinationFilePath);
+                await bot.DownloadFileAsync(
+                    filePath: filePath,
+                    destination: fileStream);
+
+                res.FilePath = destinationFilePath;
+
+            });
+
+            return res;
+
+        }
 
         public virtual void MakeAutochange(List<AutoChange> autoChanges)
         {
@@ -159,8 +263,10 @@ namespace csb.messaging
                     (Message.Text, Message.Entities) = autoChange(Message.Text, filterEntities(Message.Entities, autoChanges), autoChanges);
                     break;
 
+                case MessageType.Photo:
                 case MessageType.Video:
-                    (Message.Text, Message.Entities) = autoChange(Message.Text, filterEntities(Message.Entities, autoChanges), autoChanges);
+                case MessageType.Document:
+                    (Message.Caption, Message.CaptionEntities) = autoChange(Message.Caption, filterEntities(Message.CaptionEntities, autoChanges), autoChanges);
                     break;
 
             }
@@ -180,6 +286,7 @@ namespace csb.messaging
                         break;
 
                     case MessageType.Video:
+                        await sendVideoMessage(id, bot);
                         break;
                 }
             });

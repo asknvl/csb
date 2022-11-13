@@ -1,12 +1,12 @@
 [
   {
     "Owner": 0,
-    "Name": "IND",
+    "Name": "TEST",
     "Id": 1,
-    "PhoneNumber": "+77076783092",
+    "PhoneNumber": "+79918437350",
     "Bots": [
       {
-        "GeoTag": "BRAA",
+        "GeoTag": "TEST",
         "Token": "5583915296:AAHUEjwm_SD1UhQFl-XqM8-9TNnoqKFC8DY",
         "Name": "test01_out_bot",
         "ChannelID": -1001515136824,
@@ -14,28 +14,7 @@
         "VictimLink": "@Amirrsallah",
         "ChannelLink": "@asknvl",
         "ReplacedWords": [],
-        "AutoChanges": [
-          {
-            "OldText": "https://t.me/feebback",
-            "NewText": "https://t.me/feedback_Avi"
-          },
-          {
-            "OldText": "666",
-            "NewText": "777"
-          },
-          {
-            "OldText": "@Amirrsallah",
-            "NewText": "@asknvl"
-          },
-          {
-            "OldText": "111",
-            "NewText": "222"
-          },
-          {
-            "OldText": "https://aviatorsignals.com/TOPBR",
-            "NewText": "https://1wwrvd.top/casino/list?open=register"
-          }
-        ]
+        "AutoChanges": []
       }
     ],
     "User": {
@@ -45,24 +24,7 @@
       "MatchingPercentageTreshold": 71
     },
     "ReplacedWords": [],
-    "AutoChanges": [
-      {
-        "OldText": "https://t.me/feebback",
-        "NewText": "www.guns.ru"
-      },
-      {
-        "OldText": "666",
-        "NewText": "777"
-      },
-      {
-        "OldText": "111",
-        "NewText": "222"
-      },
-      {
-        "OldText": "https://aviatorsignals.com/TOPBR",
-        "NewText": "https://1wwrvd.top/casino/list?open=register"
-      }
-    ],
+    "AutoChanges": [],
     "DailyPushMessages": [],
     "State": 0
   }

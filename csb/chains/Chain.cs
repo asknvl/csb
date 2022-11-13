@@ -261,16 +261,15 @@ namespace csb.chains
             foreach (var outbot in Bots)
             {
                 string geotag = outbot.GeoTag;
-                DailyPushMessage message = new DailyPushMessage();
-                message.Message = pattern.Message;
-
+                
                 AutoChange pmAutochange = new AutoChange()
                 {
                     OldText = outbot.VictimLink,
                     NewText = outbot.ChannelLink
                 };
-                message.MakeAutochange(new List<AutoChange>() { pmAutochange });
-                moderators.DailyPushData(geotag).Messages.Add(message);
+
+                pattern.MakeAutochange(new List<AutoChange>() { pmAutochange });
+                moderators.DailyPushData(geotag).Messages.Add(pattern);
                 
             }
             moderators.Save();

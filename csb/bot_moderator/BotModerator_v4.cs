@@ -44,7 +44,7 @@ namespace csb.bot_moderator
 
                     var message = DailyPushData.Messages[cntr];
                     cntr++;
-                    cntr %= cntr % DailyPushData.Messages.Count;
+                    cntr %= DailyPushData.Messages.Count;
 
                     if (message != null)
                         await message.Send(id, bot);
@@ -52,7 +52,7 @@ namespace csb.bot_moderator
 
             } catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
     }

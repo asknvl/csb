@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.users
@@ -690,10 +691,12 @@ namespace csb.users
         #region public
         public async Task processMessage(Update update)
         {
+
             var chat = update.Message.Chat.Id;
-            string msg = update.Message.Text;
-            if (msg == null)
-                return;
+
+            string msg = (update.Message.Text != null) ? update.Message.Text : "";
+            //if (msg == null)
+            //    return;
 
             if (msg.Contains("/setbufferlength"))
             {
@@ -1327,30 +1330,48 @@ namespace csb.users
                             }
                             break;
 
-                        case BotState.waitingAddDaily:
-                            try
-                            {
+                    }
+                    break;
+            }
 
-                                var chain = chainsProcessor.Get(currentChainID);
-                                DailyPushMessage pattern = new DailyPushMessage()
-                                {
-                                    Message = update.Message
-                                };
+            switch (State)
+            {
+                case BotState.waitingAddDaily:
+                    try
+                    {
 
-                                chain.AddDailyPushMessage(pattern, moderationProcessor);
+                        var chain = chainsProcessor.Get(currentChainID);
+
+                        DailyPushMessage pattern = await DailyPushMessage.Create(chat, bot, update.Message, chain.Name);
+
+                        //DailyPushMessage pattern = new DailyPushMessage()
+                        //{
+                        //    Message = update.Message
+
+                        //};
+
+                        //switch (update.Message.Type)
+                        //{
+                        //    case MessageType.Video:
+                        //        var fileId = update.Message.Video.FileId;
+                        //        var fileInfo = await bot.GetFileAsync(fileId);
+                        //        var filePath = fileInfo.FilePath;
+                        //        break;
+                        //}
 
 
-                            } catch (Exception ex)
-                            {
-                                await sendTextMessage(chat, ex.Message);
-                                return;
-                            }
-                            break;
+                        chain.AddDailyPushMessage(pattern, moderationProcessor);
 
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(chat, ex.Message);
+                        return;
                     }
                     break;
             }
         }
+
         public async Task processCallbackQuery(CallbackQuery query)
         {
 

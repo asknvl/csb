@@ -134,10 +134,8 @@ namespace csb.bot_manager
                     await Task.Run(async () => {
 
                         var chat = update.Message.Chat.Id;
-                        string msg = update.Message.Text;
-                        if (msg == null)
-                            return;
-
+                        string msg = (update.Message.Text != null) ? update.Message.Text : "";
+                      
                         if (msg.Equals("/addme"))
                         {
                             try
@@ -202,9 +200,6 @@ namespace csb.bot_manager
                     break;
             }            
         }
-
-                
-        
 
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
