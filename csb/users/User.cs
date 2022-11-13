@@ -1070,7 +1070,37 @@ namespace csb.users
                             }
                             try
                             {
-                                moderationProcessor.Add(moder_token, currentModeratorGeoTag);
+                                IChain chain = null;
+                                string victimLink;
+                                string channelLink;
+
+                                try
+                                {
+                                    chain = chainsProcessor.Get(currentModeratorGeoTag);
+                                } catch (Exception ex)
+                                {
+
+                                }
+                                if (chain != null)
+                                {
+                                    var outbot = chain.Bots.FirstOrDefault(b => b.GeoTag.Equals(currentModeratorGeoTag));
+                                    if (outbot != null)
+                                    {
+                                        victimLink = outbot.VictimLink;
+                                        channelLink = outbot.ChannelLink;
+                                    }
+
+                                    AutoChange pmAutochange = new AutoChange()
+                                    {
+                                        OldText = outbot.VictimLink,
+                                        NewText = outbot.ChannelLink
+                                    };
+
+                                    moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, new List<AutoChange> { pmAutochange });
+
+                                } else
+                                    moderationProcessor.Add(moder_token, currentModeratorGeoTag);
+
                                 //moderationProcessor.Start(currentModeratorGeoTag);
                                 await messagesProcessor.Back(chat);
                                 await sendTextMessage(Id, $"Модератор {currentModeratorGeoTag} запущен");
@@ -1360,7 +1390,8 @@ namespace csb.users
                         //}
 
 
-                        chain.AddDailyPushMessage(pattern, moderationProcessor);
+                        chain.AddDailyPushMessage(pattern.Clone(), moderationProcessor);
+                        chainprocessor.Save();
 
                     }
                     catch (Exception ex)
@@ -1990,6 +2021,20 @@ namespace csb.users
                         await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, "Перешлите (forward) сюда исходное сообщение для цепочки:", "back"));
                         State = BotState.waitingAddDaily;
                         await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "daily_delete":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        chain.ClearDailyPushMessages(moderationProcessor);
+                        chainsProcessor.Save();
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                        await sendTextMessage(chat, "Ежедневные сообщения удалены");
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);

@@ -1,4 +1,6 @@
 ﻿using csb.bot_moderator;
+using csb.bot_poster;
+using csb.messaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -67,7 +69,26 @@ namespace csb.moderation
             moderatorBotsList.Add(mbot);
             Save();            
         }
-        
+
+        public void Add(string token, string geotag, DailyPushData patternPushData, List<AutoChange> autoChanges)
+        {
+            bool found = moderatorBotsList.Any(o => o.Token.Equals(token) || o.GeoTag.Equals(geotag));
+            if (found)
+                throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
+
+            var mbot = new BotModerator_v4(token, geotag);
+
+            foreach (var pattern in patternPushData.Messages)
+            {
+                pattern.MakeAutochange(autoChanges);
+                mbot.DailyPushData.Messages.Add(pattern.Clone());
+            }
+
+            mbot.Start();
+            moderatorBotsList.Add(mbot);
+            Save();
+        }
+
         public GreetingsData Greetings(string geotag)
         {
             var found = moderatorBotsList.FirstOrDefault(o => o.GeoTag.Equals(geotag));

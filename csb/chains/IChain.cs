@@ -1,4 +1,5 @@
-﻿using csb.bot_poster;
+﻿using csb.bot_moderator;
+using csb.bot_poster;
 using csb.messaging;
 using csb.moderation;
 using csb.usr_listener;
@@ -21,7 +22,7 @@ namespace csb.chains
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
         public List<AutoChange> AutoChanges { get; set; }
-        public List<DailyPushMessage> DailyPushMessages { get; set; }
+        public DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -50,7 +51,7 @@ namespace csb.chains
 
         void AddDailyPushMessage(DailyPushMessage message, ModerationProcessor moderators);
         void RemoveDailyPushMessage(int index, ModerationProcessor moderators);
-        void ClearDailyPushMessages();
+        void ClearDailyPushMessages(ModerationProcessor moderators);
 
 
     }

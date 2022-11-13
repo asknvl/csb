@@ -292,5 +292,11 @@ namespace csb.messaging
             });
         }
 
+        public DailyPushMessage Clone()
+        {
+            var serialized = JsonConvert.SerializeObject(this);
+            return JsonConvert.DeserializeObject<DailyPushMessage>(serialized);
+        }
+
     }
 }

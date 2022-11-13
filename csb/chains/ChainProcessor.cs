@@ -90,6 +90,14 @@ namespace csb.chains
             return found;
         }
 
+        public IChain Get(string outbotgeotag)
+        {
+            var found = chainList.FirstOrDefault(c => c.Bots.Any(b => b.GeoTag.Equals(outbotgeotag)));
+            if (found == null)
+                throw new Exception($"Цепочки, имеющей выводного бота с геотегом {outbotgeotag}, не существует");
+            return found;
+        }
+
         public void Start(int id)
         {
             var found = chainList.FirstOrDefault(x => x.Id == id);

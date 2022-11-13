@@ -55,5 +55,11 @@ namespace csb.bot_moderator
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public override void Stop()
+        {
+            base.Stop();
+            dailyPushTimer.Stop();
+        }
     }
 }

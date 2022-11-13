@@ -1,4 +1,5 @@
-﻿using csb.bot_poster;
+﻿using csb.bot_moderator;
+using csb.bot_poster;
 using csb.messaging;
 using csb.moderation;
 using csb.usr_listener;
@@ -33,7 +34,7 @@ namespace csb.chains
         [JsonProperty]
         public List<AutoChange> AutoChanges { get; set; } = new();
         [JsonProperty]
-        public List<DailyPushMessage> DailyPushMessages { get; set; } = new();
+        public DailyPushData DailyPushData { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -256,7 +257,7 @@ namespace csb.chains
 
         public void AddDailyPushMessage(DailyPushMessage pattern, ModerationProcessor moderators)
         {
-            DailyPushMessages.Add(pattern);
+            DailyPushData.Messages.Add(pattern);
             
             foreach (var outbot in Bots)
             {
@@ -268,11 +269,20 @@ namespace csb.chains
                     NewText = outbot.ChannelLink
                 };
 
-                pattern.MakeAutochange(new List<AutoChange>() { pmAutochange });
-                moderators.DailyPushData(geotag).Messages.Add(pattern);
+                var patternCpy = pattern.Clone();
+
+                patternCpy.MakeAutochange(new List<AutoChange>() { pmAutochange });
+                try
+                {
+                    moderators.DailyPushData(geotag).Messages.Add(patternCpy);
+                } catch (Exception ex)
+                {
+
+                }
                 
             }
             moderators.Save();
+            
 
         }
 
@@ -281,9 +291,22 @@ namespace csb.chains
             
         }
 
-        public void ClearDailyPushMessages()
+        public void ClearDailyPushMessages(ModerationProcessor moderators)
         {
-            throw new NotImplementedException();
+            DailyPushData.Messages.Clear();
+            foreach (var outbot in Bots)
+            {
+                string geotag = outbot.GeoTag;
+                try
+                {
+                    moderators.DailyPushData(geotag).Messages.Clear();
+                } catch (Exception ex)
+                {
+
+                }
+            }
+            moderators.Save();
+                
         }
 
         

@@ -5,7 +5,7 @@
         {
           "Id": 0,
           "Message": {
-            "message_id": 1966,
+            "message_id": 2334,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -13,7 +13,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668305588,
+            "date": 1668378265,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -21,89 +21,100 @@
               "first_name": "Alexey"
             },
             "forward_from_chat": {
-              "id": -1001782937231,
+              "id": -1001692610611,
               "type": "channel",
-              "title": "🤑CASADORES DEL ÉXITO 🤑"
+              "title": "OUT1"
             },
-            "forward_from_message_id": 2086,
-            "forward_date": 1667064781,
+            "forward_from_message_id": 4,
+            "forward_date": 1668368300,
             "video": {
-              "width": 720,
-              "height": 1280,
-              "duration": 45,
+              "width": 640,
+              "height": 640,
+              "duration": 29,
               "thumb": {
-                "width": 180,
+                "width": 320,
                 "height": 320,
-                "file_id": "AAMCAgADGQEAAgeuY3BStC5Q9fRijL9_lPctm5am98AAAtAjAAJ9HvFKgV335Sk6yVEBAAdtAAMrBA",
-                "file_unique_id": "AQAD0CMAAn0e8Upy",
-                "file_size": 8484
+                "file_id": "AAMCAgADGQEAAgkeY3FumVQrjuaG0L6eYiXwYS5KKjEAAqogAALZKChLYnqEuwwFsiUBAAdtAAMrBA",
+                "file_unique_id": "AQADqiAAAtkoKEty",
+                "file_size": 19154
               },
-              "file_name": "IMG_6545.MP4",
+              "file_name": "IMG_6784.MP4",
               "mime_type": "video/mp4",
-              "file_id": "BAACAgIAAxkBAAIHrmNwUrQuUPX0Yoy_f5T3LZuWpvfAAALQIwACfR7xSoFd9-UpOslRKwQ",
-              "file_unique_id": "AgAD0CMAAn0e8Uo",
-              "file_size": 14492678
+              "file_id": "BAACAgIAAxkBAAIJHmNxbplUK47mhtC-nmIl8GEuSioxAAKqIAAC2SgoS2J6hLsMBbIlKwQ",
+              "file_unique_id": "AgADqiAAAtkoKEs",
+              "file_size": 2741574
             },
-            "caption": "🤩 FAMILIA ATENCIÓN ❗️ \n \nMe acaba de llegar este video de uno de mis suscriptores.🤯\n \nNo saben lo feliz que me pongo al escuchar que les esta yendo muy bien con mi canal, cómo pueden ver y escuchar es un Feliz ganador 🏆  \n \nQue gracias a todas las buenas inversiones ha podido salir adelante y pagar todas sus deudas 😎🔥 \n \n💎Familia todo esto lo hago por ustedes, esto es una gran motivación que me  recarga de energía para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida 💎 simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS @SantiagoSannchez \n \n✅Vamos con toda la motivación para ganar 🏆",
+            "caption": "Comienza hoy mismo a escribir la historia de tu éxito.💸\n\n🤑Hoy una de nuestras subscriptoras nos envía este video de agradecimiento 🤑 \n\n🤯Fijá tus metas y seguirás  hasta que se conviertan en realidad. Vos tenés que creer en ello aún antes de verlo. Cualquier cosa que tu mente pueda recibir y entender, se puede lograr.🔥\n \n💎Tus tomas la decisión para poder cambiar tu estilo de vida💎\nPuedes contactar con el  y hacer cualquier pregunta \n\n👇👇👇👇👇👇👇\n@mariagutierrea\n\nYo se que todo lo nuevo nos hace sentir miedo pero en esta Familia todos nos ayudamos a GANAR   mutuamente para mejor información.🤑    \n\n✍️ESCRIBEME✍️\n@output1",
             "caption_entities": [
               {
                 "type": "bold",
-                "offset": 3,
-                "length": 17
+                "offset": 0,
+                "length": 54
               },
               {
-                "type": "underline",
-                "offset": 26,
-                "length": 57
+                "type": "italic",
+                "offset": 140,
+                "length": 182
               },
               {
-                "type": "code",
-                "offset": 88,
-                "length": 134
-              },
-              {
-                "type": "underline",
-                "offset": 330,
-                "length": 144
+                "type": "italic",
+                "offset": 329,
+                "length": 61
               },
               {
                 "type": "bold",
-                "offset": 536,
-                "length": 33
+                "offset": 390,
+                "length": 54
               },
               {
-                "type": "bold",
-                "offset": 630,
-                "length": 8
+                "type": "underline",
+                "offset": 390,
+                "length": 54
               },
               {
                 "type": "mention",
-                "offset": 639,
-                "length": 17
+                "offset": 459,
+                "length": 15
+              },
+              {
+                "type": "underline",
+                "offset": 476,
+                "length": 88
+              },
+              {
+                "type": "underline",
+                "offset": 564,
+                "length": 41
               },
               {
                 "type": "bold",
-                "offset": 652,
-                "length": 4
+                "offset": 564,
+                "length": 5
               },
               {
                 "type": "bold",
-                "offset": 660,
-                "length": 32
+                "offset": 616,
+                "length": 9
+              },
+              {
+                "type": "mention",
+                "offset": 628,
+                "length": 8
               }
             ],
             "reply_markup": {
               "inline_keyboard": [
                 [
                   {
-                    "text": "🤩MOTIVACIÓN PURA🤩",
-                    "url": "http://t.me/SantiagoSannchez"
+                    "text": "🤯TU TAMBIÉN PUEDES 🤯",
+                    "url": "http://t.me/output1"
                   }
                 ]
               ]
             }
           },
-          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_0.MP4"
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
+          "fileId": "BAACAgIAAxkDAANIY3FutOj8v8_eIXzW5M7k0QztoLAAAq4nAAJEVohLUuBodnmSfLorBA"
         }
       ]
     },
@@ -112,18 +123,156 @@
     },
     "Greetings": {
       "HelloMessage": {
-        "Text": "hi",
+        "Text": "hi test1",
         "Entities": null,
         "ReplyMarkup": null
       },
       "ByeMessage": {
-        "Text": "bye",
+        "Text": "bye test1",
         "Entities": null,
         "ReplyMarkup": null
       }
     },
-    "GeoTag": "TEST",
-    "Name": "braa_moderator_bot",
-    "Token": "5576076240:AAFKhOeoBLzN3b2nSJemg8SnZoPtJ_pRKm8"
+    "GeoTag": "TEST1",
+    "Name": "test_moderator_1_bot",
+    "Token": "5699556980:AAHeepQ57cH8Am6YiWeNHdMZHTrNiko0keI"
+  },
+  {
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2334,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668378265,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from_chat": {
+              "id": -1001692610611,
+              "type": "channel",
+              "title": "OUT1"
+            },
+            "forward_from_message_id": 4,
+            "forward_date": 1668368300,
+            "video": {
+              "width": 640,
+              "height": 640,
+              "duration": 29,
+              "thumb": {
+                "width": 320,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgkeY3FumVQrjuaG0L6eYiXwYS5KKjEAAqogAALZKChLYnqEuwwFsiUBAAdtAAMrBA",
+                "file_unique_id": "AQADqiAAAtkoKEty",
+                "file_size": 19154
+              },
+              "file_name": "IMG_6784.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIJHmNxbplUK47mhtC-nmIl8GEuSioxAAKqIAAC2SgoS2J6hLsMBbIlKwQ",
+              "file_unique_id": "AgADqiAAAtkoKEs",
+              "file_size": 2741574
+            },
+            "caption": "Comienza hoy mismo a escribir la historia de tu éxito.💸\n\n🤑Hoy una de nuestras subscriptoras nos envía este video de agradecimiento 🤑 \n\n🤯Fijá tus metas y seguirás  hasta que se conviertan en realidad. Vos tenés que creer en ello aún antes de verlo. Cualquier cosa que tu mente pueda recibir y entender, se puede lograr.🔥\n \n💎Tus tomas la decisión para poder cambiar tu estilo de vida💎\nPuedes contactar con el  y hacer cualquier pregunta \n\n👇👇👇👇👇👇👇\n@mariagutierrea\n\nYo se que todo lo nuevo nos hace sentir miedo pero en esta Familia todos nos ayudamos a GANAR   mutuamente para mejor información.🤑    \n\n✍️ESCRIBEME✍️\n@output2",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 54
+              },
+              {
+                "type": "italic",
+                "offset": 140,
+                "length": 182
+              },
+              {
+                "type": "italic",
+                "offset": 329,
+                "length": 61
+              },
+              {
+                "type": "bold",
+                "offset": 390,
+                "length": 54
+              },
+              {
+                "type": "underline",
+                "offset": 390,
+                "length": 54
+              },
+              {
+                "type": "mention",
+                "offset": 459,
+                "length": 15
+              },
+              {
+                "type": "underline",
+                "offset": 476,
+                "length": 88
+              },
+              {
+                "type": "underline",
+                "offset": 564,
+                "length": 41
+              },
+              {
+                "type": "bold",
+                "offset": 564,
+                "length": 5
+              },
+              {
+                "type": "bold",
+                "offset": 616,
+                "length": 9
+              },
+              {
+                "type": "mention",
+                "offset": 628,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🤯TU TAMBIÉN PUEDES 🤯",
+                    "url": "http://t.me/output1"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
+          "fileId": null
+        }
+      ]
+    },
+    "PushData": {
+      "Messages": []
+    },
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "hi output2",
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": "bye output2",
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "GeoTag": "TEST2",
+    "Name": "test_moderator_2_bot",
+    "Token": "5698515521:AAHlZ663NoR2iVU9RsJzZLB5T2pERSv2E5o"
   }
 ]

@@ -159,6 +159,7 @@ namespace csb.bot_moderator
         public virtual void Stop()
         {
             cts.Cancel();
+            
             IsRunning = false;
             Console.WriteLine($"Moderator {Name} stopped");
         }
