@@ -5,7 +5,7 @@
         {
           "Id": 0,
           "Message": {
-            "message_id": 2399,
+            "message_id": 2473,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -13,132 +13,18 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668380556,
+            "date": 1668451938,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "forward_from_chat": {
-              "id": -1001692610611,
-              "type": "channel",
-              "title": "OUT1"
-            },
-            "forward_from_message_id": 4,
-            "forward_date": 1668368300,
-            "video": {
-              "width": 640,
-              "height": 640,
-              "duration": 29,
-              "thumb": {
-                "width": 320,
-                "height": 320,
-                "file_id": "AAMCAgADGQEAAglfY3F3jF3z7t80H_pUzZwt3ju39SgAAqogAALZKChLYnqEuwwFsiUBAAdtAAMrBA",
-                "file_unique_id": "AQADqiAAAtkoKEty",
-                "file_size": 19154
-              },
-              "file_name": "IMG_6784.MP4",
-              "mime_type": "video/mp4",
-              "file_id": "BAACAgIAAxkBAAIJX2Nxd4xd8-7fNB_6VM2cLd47t_UoAAKqIAAC2SgoS2J6hLsMBbIlKwQ",
-              "file_unique_id": "AgADqiAAAtkoKEs",
-              "file_size": 2741574
-            },
-            "caption": "Comienza hoy mismo a escribir la historia de tu éxito.💸\n\n🤑Hoy una de nuestras subscriptoras nos envía este video de agradecimiento 🤑 \n\n🤯Fijá tus metas y seguirás  hasta que se conviertan en realidad. Vos tenés que creer en ello aún antes de verlo. Cualquier cosa que tu mente pueda recibir y entender, se puede lograr.🔥\n \n💎Tus tomas la decisión para poder cambiar tu estilo de vida💎\nPuedes contactar con el  y hacer cualquier pregunta \n\n👇👇👇👇👇👇👇\n@mariagutierrea\n\nYo se que todo lo nuevo nos hace sentir miedo pero en esta Familia todos nos ayudamos a GANAR   mutuamente para mejor información.🤑    \n\n✍️ESCRIBEME✍️\n@output1",
-            "caption_entities": [
-              {
-                "type": "bold",
-                "offset": 0,
-                "length": 54
-              },
-              {
-                "type": "italic",
-                "offset": 140,
-                "length": 182
-              },
-              {
-                "type": "italic",
-                "offset": 329,
-                "length": 61
-              },
-              {
-                "type": "bold",
-                "offset": 390,
-                "length": 54
-              },
-              {
-                "type": "underline",
-                "offset": 390,
-                "length": 54
-              },
-              {
-                "type": "mention",
-                "offset": 459,
-                "length": 15
-              },
-              {
-                "type": "underline",
-                "offset": 476,
-                "length": 88
-              },
-              {
-                "type": "underline",
-                "offset": 564,
-                "length": 41
-              },
-              {
-                "type": "bold",
-                "offset": 564,
-                "length": 5
-              },
-              {
-                "type": "bold",
-                "offset": 616,
-                "length": 9
-              },
-              {
-                "type": "mention",
-                "offset": 628,
-                "length": 8
-              }
-            ],
-            "reply_markup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "🤯TU TAMBIÉN PUEDES 🤯",
-                    "url": "http://t.me/output1"
-                  }
-                ]
-              ]
-            }
-          },
-          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
-          "fileId": "BAACAgIAAxkDAAO2Y3H_eOajl8DO_AILVhKwJB_mocQAAisfAAJEVpBLJrhGVBohsfIrBA"
-        },
-        {
-          "Id": 0,
-          "Message": {
-            "message_id": 2401,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1668380573,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "message 2 @output1",
+            "text": "message1 @output1",
             "entities": [
               {
                 "type": "mention",
-                "offset": 10,
+                "offset": 9,
                 "length": 8
               }
             ]
@@ -149,7 +35,7 @@
         {
           "Id": 0,
           "Message": {
-            "message_id": 2403,
+            "message_id": 2475,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -157,37 +43,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668380583,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "message 3 @output1",
-            "entities": [
-              {
-                "type": "mention",
-                "offset": 10,
-                "length": 8
-              }
-            ]
-          },
-          "FilePath": null,
-          "fileId": null
-        },
-        {
-          "Id": 0,
-          "Message": {
-            "message_id": 2463,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1668415724,
+            "date": 1668451949,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -195,68 +51,175 @@
               "first_name": "Alexey"
             },
             "forward_from_chat": {
-              "id": -1001639014776,
+              "id": -1001782937231,
               "type": "channel",
-              "title": "PERX"
+              "title": "🤑CASADORES DEL ÉXITO 🤑"
             },
-            "forward_from_message_id": 305,
-            "forward_date": 1667321760,
-            "text": "​​📣FAMILIAAA 📣 \n \n👀Me siguen llegando videos de nuestros suscriptores dándome las gracias de sus buenos resultados gracias a él mejor canal de apuestas de todo Latinoamérica, 🤯🔥 \nY esto me llena de mucha energía, porque son muy positivos todos estos testimonios \n \n🚀Familia recuerden  el que no gana dinero es porque no quiere🚀  \n \n💎 todo esto lo hago por ustedes, esto es una gran motivación  para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS\n👇👇👇👇👇👇👇👇 \n@booowos",
+            "forward_from_message_id": 2157,
+            "forward_date": 1667690640,
+            "text": "​​‼️ Nunca dejes para mañana lo que puedes hacer hoy ‼️\n \nQuiero dejarles esta frase para que el día para  empezar sea hoy.💰💸\n\nFamilia hoy todas las apuestas estuvieron en un nivel muy alto,  sigo trabajando para ustedes con toda la energía para que ustedes ostentan los mejores resultados  \n \n🔥Anímate a cambiar tu estilo de vida y con esta gran familia lo podrás empezar hacer hoy,💯 te invito a que me escribas y poder hacer relamidas todos tus sueños ✍️ ESCRÍBEME ✍️ @SantiagoSannchez",
             "entities": [
               {
                 "type": "text_link",
                 "offset": 0,
                 "length": 2,
-                "url": "https://telegra.ph/file/1167377d20f7cd854721f.mp4"
+                "url": "https://telegra.ph/file/efcc878f1b061db694594.mp4"
               },
               {
                 "type": "bold",
-                "offset": 4,
-                "length": 9
-              },
-              {
-                "type": "italic",
-                "offset": 22,
-                "length": 244
-              },
-              {
-                "type": "bold",
-                "offset": 272,
-                "length": 62
+                "offset": 5,
+                "length": 47
               },
               {
                 "type": "underline",
-                "offset": 272,
-                "length": 60
+                "offset": 129,
+                "length": 166
               },
               {
-                "type": "code",
-                "offset": 458,
-                "length": 147
-              },
-              {
-                "type": "code",
-                "offset": 605,
-                "length": 8
+                "type": "bold",
+                "offset": 461,
+                "length": 9
               },
               {
                 "type": "mention",
-                "offset": 632,
-                "length": 8
+                "offset": 474,
+                "length": 17
               }
             ],
             "reply_markup": {
               "inline_keyboard": [
                 [
                   {
-                    "text": "🏆MOTIVACIÓN 🏆",
-                    "url": "https://t.me/booowos"
+                    "text": "🔥LUCHA POR TUS SUEÑOS🔥",
+                    "url": "http://t.me/SantiagoSannchez"
                   }
                 ]
               ]
             }
           },
           "FilePath": null,
+          "fileId": null
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2477,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668451959,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from_chat": {
+              "id": -1001782937231,
+              "type": "channel",
+              "title": "🤑CASADORES DEL ÉXITO 🤑"
+            },
+            "forward_from_message_id": 2150,
+            "forward_date": 1667608860,
+            "photo": [
+              {
+                "width": 90,
+                "height": 67,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADcwADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEt4",
+                "file_size": 1586
+              },
+              {
+                "width": 320,
+                "height": 240,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADbQADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEty",
+                "file_size": 21953
+              },
+              {
+                "width": 800,
+                "height": 600,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADeAADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEt9",
+                "file_size": 94765
+              },
+              {
+                "width": 1280,
+                "height": 960,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADeQADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEt-",
+                "file_size": 125844
+              }
+            ],
+            "caption": "SE TRABAJA HASTA TARDE..👏🏻\n\n👨🏻‍💻🔍Me encuentro analizándo las apuestas de hoy y dando el 200% de mi día a día🔋\n\n🤷🏻‍♂️Las personas solo ven la gloria pero no ven todo el trabajo qué hay detrás de todo esto y realmente es agotador 🥵\n\n👏🏻Mi éxito se debe por el gran esfuerzo y pasión que le tengo a mi trabajo ❤️😍\n\n📲CONTACTO: @SantiagoSannchez ✅️",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 39
+              },
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 22
+              },
+              {
+                "type": "bold",
+                "offset": 85,
+                "length": 29
+              },
+              {
+                "type": "underline",
+                "offset": 85,
+                "length": 29
+              },
+              {
+                "type": "bold",
+                "offset": 138,
+                "length": 61
+              },
+              {
+                "type": "underline",
+                "offset": 138,
+                "length": 61
+              },
+              {
+                "type": "bold",
+                "offset": 245,
+                "length": 46
+              },
+              {
+                "type": "underline",
+                "offset": 245,
+                "length": 46
+              },
+              {
+                "type": "bold",
+                "offset": 324,
+                "length": 12
+              },
+              {
+                "type": "mention",
+                "offset": 336,
+                "length": 17
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💎TRABAJA DURO💎",
+                    "url": "http://t.me/SantiagoSannchez"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_3.jpg",
           "fileId": null
         }
       ]
@@ -286,7 +249,7 @@
         {
           "Id": 0,
           "Message": {
-            "message_id": 2399,
+            "message_id": 2473,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -294,132 +257,18 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668380556,
+            "date": 1668451938,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "forward_from_chat": {
-              "id": -1001692610611,
-              "type": "channel",
-              "title": "OUT1"
-            },
-            "forward_from_message_id": 4,
-            "forward_date": 1668368300,
-            "video": {
-              "width": 640,
-              "height": 640,
-              "duration": 29,
-              "thumb": {
-                "width": 320,
-                "height": 320,
-                "file_id": "AAMCAgADGQEAAglfY3F3jF3z7t80H_pUzZwt3ju39SgAAqogAALZKChLYnqEuwwFsiUBAAdtAAMrBA",
-                "file_unique_id": "AQADqiAAAtkoKEty",
-                "file_size": 19154
-              },
-              "file_name": "IMG_6784.MP4",
-              "mime_type": "video/mp4",
-              "file_id": "BAACAgIAAxkBAAIJX2Nxd4xd8-7fNB_6VM2cLd47t_UoAAKqIAAC2SgoS2J6hLsMBbIlKwQ",
-              "file_unique_id": "AgADqiAAAtkoKEs",
-              "file_size": 2741574
-            },
-            "caption": "Comienza hoy mismo a escribir la historia de tu éxito.💸\n\n🤑Hoy una de nuestras subscriptoras nos envía este video de agradecimiento 🤑 \n\n🤯Fijá tus metas y seguirás  hasta que se conviertan en realidad. Vos tenés que creer en ello aún antes de verlo. Cualquier cosa que tu mente pueda recibir y entender, se puede lograr.🔥\n \n💎Tus tomas la decisión para poder cambiar tu estilo de vida💎\nPuedes contactar con el  y hacer cualquier pregunta \n\n👇👇👇👇👇👇👇\n@mariagutierrea\n\nYo se que todo lo nuevo nos hace sentir miedo pero en esta Familia todos nos ayudamos a GANAR   mutuamente para mejor información.🤑    \n\n✍️ESCRIBEME✍️\n@output2",
-            "caption_entities": [
-              {
-                "type": "bold",
-                "offset": 0,
-                "length": 54
-              },
-              {
-                "type": "italic",
-                "offset": 140,
-                "length": 182
-              },
-              {
-                "type": "italic",
-                "offset": 329,
-                "length": 61
-              },
-              {
-                "type": "bold",
-                "offset": 390,
-                "length": 54
-              },
-              {
-                "type": "underline",
-                "offset": 390,
-                "length": 54
-              },
-              {
-                "type": "mention",
-                "offset": 459,
-                "length": 15
-              },
-              {
-                "type": "underline",
-                "offset": 476,
-                "length": 88
-              },
-              {
-                "type": "underline",
-                "offset": 564,
-                "length": 41
-              },
-              {
-                "type": "bold",
-                "offset": 564,
-                "length": 5
-              },
-              {
-                "type": "bold",
-                "offset": 616,
-                "length": 9
-              },
-              {
-                "type": "mention",
-                "offset": 628,
-                "length": 8
-              }
-            ],
-            "reply_markup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "🤯TU TAMBIÉN PUEDES 🤯",
-                    "url": "http://t.me/output1"
-                  }
-                ]
-              ]
-            }
-          },
-          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
-          "fileId": "BAACAgIAAxkDAANwY3H_eOuikNcj6_KRhFPK0xla93gAAm4kAAJk1pFLXdKMZbPNycMrBA"
-        },
-        {
-          "Id": 0,
-          "Message": {
-            "message_id": 2401,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1668380573,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "message 2 @output2",
+            "text": "message1 @output2",
             "entities": [
               {
                 "type": "mention",
-                "offset": 10,
+                "offset": 9,
                 "length": 8
               }
             ]
@@ -430,7 +279,7 @@
         {
           "Id": 0,
           "Message": {
-            "message_id": 2403,
+            "message_id": 2475,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -438,37 +287,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668380583,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "message 3 @output2",
-            "entities": [
-              {
-                "type": "mention",
-                "offset": 10,
-                "length": 8
-              }
-            ]
-          },
-          "FilePath": null,
-          "fileId": null
-        },
-        {
-          "Id": 0,
-          "Message": {
-            "message_id": 2463,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1668415724,
+            "date": 1668451949,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -476,68 +295,175 @@
               "first_name": "Alexey"
             },
             "forward_from_chat": {
-              "id": -1001639014776,
+              "id": -1001782937231,
               "type": "channel",
-              "title": "PERX"
+              "title": "🤑CASADORES DEL ÉXITO 🤑"
             },
-            "forward_from_message_id": 305,
-            "forward_date": 1667321760,
-            "text": "​​📣FAMILIAAA 📣 \n \n👀Me siguen llegando videos de nuestros suscriptores dándome las gracias de sus buenos resultados gracias a él mejor canal de apuestas de todo Latinoamérica, 🤯🔥 \nY esto me llena de mucha energía, porque son muy positivos todos estos testimonios \n \n🚀Familia recuerden  el que no gana dinero es porque no quiere🚀  \n \n💎 todo esto lo hago por ustedes, esto es una gran motivación  para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS\n👇👇👇👇👇👇👇👇 \n@booowos",
+            "forward_from_message_id": 2157,
+            "forward_date": 1667690640,
+            "text": "​​‼️ Nunca dejes para mañana lo que puedes hacer hoy ‼️\n \nQuiero dejarles esta frase para que el día para  empezar sea hoy.💰💸\n\nFamilia hoy todas las apuestas estuvieron en un nivel muy alto,  sigo trabajando para ustedes con toda la energía para que ustedes ostentan los mejores resultados  \n \n🔥Anímate a cambiar tu estilo de vida y con esta gran familia lo podrás empezar hacer hoy,💯 te invito a que me escribas y poder hacer relamidas todos tus sueños ✍️ ESCRÍBEME ✍️ @SantiagoSannchez",
             "entities": [
               {
                 "type": "text_link",
                 "offset": 0,
                 "length": 2,
-                "url": "https://telegra.ph/file/1167377d20f7cd854721f.mp4"
+                "url": "https://telegra.ph/file/efcc878f1b061db694594.mp4"
               },
               {
                 "type": "bold",
-                "offset": 4,
-                "length": 9
-              },
-              {
-                "type": "italic",
-                "offset": 22,
-                "length": 244
-              },
-              {
-                "type": "bold",
-                "offset": 272,
-                "length": 62
+                "offset": 5,
+                "length": 47
               },
               {
                 "type": "underline",
-                "offset": 272,
-                "length": 60
+                "offset": 129,
+                "length": 166
               },
               {
-                "type": "code",
-                "offset": 458,
-                "length": 147
-              },
-              {
-                "type": "code",
-                "offset": 605,
-                "length": 8
+                "type": "bold",
+                "offset": 461,
+                "length": 9
               },
               {
                 "type": "mention",
-                "offset": 632,
-                "length": 8
+                "offset": 474,
+                "length": 17
               }
             ],
             "reply_markup": {
               "inline_keyboard": [
                 [
                   {
-                    "text": "🏆MOTIVACIÓN 🏆",
-                    "url": "https://t.me/booowos"
+                    "text": "🔥LUCHA POR TUS SUEÑOS🔥",
+                    "url": "http://t.me/SantiagoSannchez"
                   }
                 ]
               ]
             }
           },
           "FilePath": null,
+          "fileId": null
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2477,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668451959,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from_chat": {
+              "id": -1001782937231,
+              "type": "channel",
+              "title": "🤑CASADORES DEL ÉXITO 🤑"
+            },
+            "forward_from_message_id": 2150,
+            "forward_date": 1667608860,
+            "photo": [
+              {
+                "width": 90,
+                "height": 67,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADcwADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEt4",
+                "file_size": 1586
+              },
+              {
+                "width": 320,
+                "height": 240,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADbQADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEty",
+                "file_size": 21953
+              },
+              {
+                "width": 800,
+                "height": 600,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADeAADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEt9",
+                "file_size": 94765
+              },
+              {
+                "width": 1280,
+                "height": 960,
+                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADeQADKwQ",
+                "file_unique_id": "AQADm8IxG9koKEt-",
+                "file_size": 125844
+              }
+            ],
+            "caption": "SE TRABAJA HASTA TARDE..👏🏻\n\n👨🏻‍💻🔍Me encuentro analizándo las apuestas de hoy y dando el 200% de mi día a día🔋\n\n🤷🏻‍♂️Las personas solo ven la gloria pero no ven todo el trabajo qué hay detrás de todo esto y realmente es agotador 🥵\n\n👏🏻Mi éxito se debe por el gran esfuerzo y pasión que le tengo a mi trabajo ❤️😍\n\n📲CONTACTO: @SantiagoSannchez ✅️",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 39
+              },
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 22
+              },
+              {
+                "type": "bold",
+                "offset": 85,
+                "length": 29
+              },
+              {
+                "type": "underline",
+                "offset": 85,
+                "length": 29
+              },
+              {
+                "type": "bold",
+                "offset": 138,
+                "length": 61
+              },
+              {
+                "type": "underline",
+                "offset": 138,
+                "length": 61
+              },
+              {
+                "type": "bold",
+                "offset": 245,
+                "length": 46
+              },
+              {
+                "type": "underline",
+                "offset": 245,
+                "length": 46
+              },
+              {
+                "type": "bold",
+                "offset": 324,
+                "length": 12
+              },
+              {
+                "type": "mention",
+                "offset": 336,
+                "length": 17
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💎TRABAJA DURO💎",
+                    "url": "http://t.me/SantiagoSannchez"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_3.jpg",
           "fileId": null
         }
       ]

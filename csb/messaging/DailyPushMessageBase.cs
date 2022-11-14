@@ -148,32 +148,39 @@ namespace csb.messaging
 
         async Task sendPhotoMessage(long id, ITelegramBotClient bot)
         {
-            InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(Message.Photo[0].FileId));
-           
-            imp.Caption = Message.Caption;
-            imp.CaptionEntities = Message.CaptionEntities;
+            if (fileId == null)
+            {
 
-            InputMediaDocument doc = new InputMediaDocument(imp.Media);
+                fileStream = System.IO.File.OpenRead(FilePath);
 
-            await bot.SendPhotoAsync(id,
-                    doc.Media,
-                    caption: imp.Caption,
-                    replyMarkup: Message.ReplyMarkup,
-                    captionEntities: imp.CaptionEntities);
+                var sent = await bot.SendPhotoAsync(id,
+                        fileStream,
+                        caption: Message.Caption,
+                        replyMarkup: Message.ReplyMarkup,
+                        captionEntities: Message.CaptionEntities);
+
+                fileId = sent.Photo.Last().FileId;
+            }
+            else
+            {
+                InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(fileId));
+
+                imp.Caption = Message.Caption;
+                imp.CaptionEntities = Message.CaptionEntities;
+
+                InputMediaDocument doc = new InputMediaDocument(imp.Media);
+
+                await bot.SendPhotoAsync(id,
+                       doc.Media,
+                       caption: Message.Caption,
+                       replyMarkup: Message.ReplyMarkup,
+                       captionEntities: Message.CaptionEntities);
+            }
 
         }
 
         async Task sendVideoMessage(long id, ITelegramBotClient bot)
-        {
-            //InputMediaVideo imv = new InputMediaVideo(new InputMedia(Message.Video.FileId));
-
-            //imv.Caption = Message.Caption;
-            //imv.CaptionEntities = Message.CaptionEntities;
-
-            //InputMediaDocument doc = new InputMediaDocument(imv.Media);
-            //if (!string.IsNullOrEmpty(FilePath))
-            //    if (fileStream == null)
-
+        { 
             if (fileId == null)
             {
 
@@ -202,8 +209,6 @@ namespace csb.messaging
                        replyMarkup: Message.ReplyMarkup,
                        captionEntities: Message.CaptionEntities);
             }
-
-
 
         }
         #endregion
