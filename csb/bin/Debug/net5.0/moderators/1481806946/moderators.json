@@ -114,7 +114,7 @@
             }
           },
           "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
-          "fileId": null
+          "fileId": "BAACAgIAAxkDAAO2Y3H_eOajl8DO_AILVhKwJB_mocQAAisfAAJEVpBLJrhGVBohsfIrBA"
         },
         {
           "Id": 0,
@@ -172,6 +172,89 @@
                 "length": 8
               }
             ]
+          },
+          "FilePath": null,
+          "fileId": null
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2463,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668415724,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 305,
+            "forward_date": 1667321760,
+            "text": "​​📣FAMILIAAA 📣 \n \n👀Me siguen llegando videos de nuestros suscriptores dándome las gracias de sus buenos resultados gracias a él mejor canal de apuestas de todo Latinoamérica, 🤯🔥 \nY esto me llena de mucha energía, porque son muy positivos todos estos testimonios \n \n🚀Familia recuerden  el que no gana dinero es porque no quiere🚀  \n \n💎 todo esto lo hago por ustedes, esto es una gran motivación  para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS\n👇👇👇👇👇👇👇👇 \n@booowos",
+            "entities": [
+              {
+                "type": "text_link",
+                "offset": 0,
+                "length": 2,
+                "url": "https://telegra.ph/file/1167377d20f7cd854721f.mp4"
+              },
+              {
+                "type": "bold",
+                "offset": 4,
+                "length": 9
+              },
+              {
+                "type": "italic",
+                "offset": 22,
+                "length": 244
+              },
+              {
+                "type": "bold",
+                "offset": 272,
+                "length": 62
+              },
+              {
+                "type": "underline",
+                "offset": 272,
+                "length": 60
+              },
+              {
+                "type": "code",
+                "offset": 458,
+                "length": 147
+              },
+              {
+                "type": "code",
+                "offset": 605,
+                "length": 8
+              },
+              {
+                "type": "mention",
+                "offset": 632,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🏆MOTIVACIÓN 🏆",
+                    "url": "https://t.me/booowos"
+                  }
+                ]
+              ]
+            }
           },
           "FilePath": null,
           "fileId": null
@@ -312,7 +395,7 @@
             }
           },
           "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
-          "fileId": null
+          "fileId": "BAACAgIAAxkDAANwY3H_eOuikNcj6_KRhFPK0xla93gAAm4kAAJk1pFLXdKMZbPNycMrBA"
         },
         {
           "Id": 0,
@@ -370,6 +453,89 @@
                 "length": 8
               }
             ]
+          },
+          "FilePath": null,
+          "fileId": null
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2463,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668415724,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 305,
+            "forward_date": 1667321760,
+            "text": "​​📣FAMILIAAA 📣 \n \n👀Me siguen llegando videos de nuestros suscriptores dándome las gracias de sus buenos resultados gracias a él mejor canal de apuestas de todo Latinoamérica, 🤯🔥 \nY esto me llena de mucha energía, porque son muy positivos todos estos testimonios \n \n🚀Familia recuerden  el que no gana dinero es porque no quiere🚀  \n \n💎 todo esto lo hago por ustedes, esto es una gran motivación  para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS\n👇👇👇👇👇👇👇👇 \n@booowos",
+            "entities": [
+              {
+                "type": "text_link",
+                "offset": 0,
+                "length": 2,
+                "url": "https://telegra.ph/file/1167377d20f7cd854721f.mp4"
+              },
+              {
+                "type": "bold",
+                "offset": 4,
+                "length": 9
+              },
+              {
+                "type": "italic",
+                "offset": 22,
+                "length": 244
+              },
+              {
+                "type": "bold",
+                "offset": 272,
+                "length": 62
+              },
+              {
+                "type": "underline",
+                "offset": 272,
+                "length": 60
+              },
+              {
+                "type": "code",
+                "offset": 458,
+                "length": 147
+              },
+              {
+                "type": "code",
+                "offset": 605,
+                "length": 8
+              },
+              {
+                "type": "mention",
+                "offset": 632,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🏆MOTIVACIÓN 🏆",
+                    "url": "https://t.me/booowos"
+                  }
+                ]
+              ]
+            }
           },
           "FilePath": null,
           "fileId": null
