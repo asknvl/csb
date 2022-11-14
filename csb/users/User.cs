@@ -86,6 +86,7 @@ namespace csb.users
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Добавить бота", callbackData: "addOutputBot"),
+                    InlineKeyboardButton.WithCallbackData(text: "Обновить гео бота", callbackData: "editBotGeotag"),
                     InlineKeyboardButton.WithCallbackData(text: "Удалить бота", callbackData: "deleteOutputBot"),
                 },
                  new[] {
@@ -183,7 +184,7 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "daily_add"),
                 },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "daily_delete"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить все", callbackData: "daily_delete"),
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
@@ -284,6 +285,7 @@ namespace csb.users
         string currentModeratorGeoTag;
         string currentAdminGeoTag;
         PushMessage currentPushMessage;
+        string currentBotName;
         string oldText;
         BotState State;
         #endregion
@@ -447,7 +449,7 @@ namespace csb.users
             return inlineKeyboard;
         }
 
-        InlineKeyboardMarkup getMyBotsMarkUp(IChain chain)
+        InlineKeyboardMarkup getMyBotsDeleteMarkUp(IChain chain)
         {
             var bots = chain.Bots;
             int number = bots.Count;
@@ -456,7 +458,25 @@ namespace csb.users
 
             for (int i = 0; i < number; i++)
             {
-                bots_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: bots[i].Name, callbackData: $"bot_{bots[i].Name}") };
+                bots_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{bots[i].GeoTag} {bots[i].Name}", callbackData: $"bot_delete_{bots[i].Name}") };
+            }
+            bots_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(bots_buttons);
+
+            return inlineKeyboard;
+        }
+
+        InlineKeyboardMarkup getMyBotsGeoTagMarkUp(IChain chain)
+        {
+            var bots = chain.Bots;
+            int number = bots.Count;
+
+            InlineKeyboardButton[][] bots_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
+            {
+                bots_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{bots[i].GeoTag} {bots[i].Name}", callbackData: $"bot_geotag_{bots[i].Name}") };
             }
             bots_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
 
@@ -609,7 +629,7 @@ namespace csb.users
 
         async Task showDeleteBot(long chat, IChain chain)
         {
-            var markup = getMyBotsMarkUp(chain);
+            var markup = getMyBotsDeleteMarkUp(chain);
 
             await messagesProcessor.Add(chat, "deleteOutputBot", await bot.SendTextMessageAsync(
                 chatId: chat,
@@ -618,13 +638,13 @@ namespace csb.users
                 cancellationToken: cancellationToken));
         }
 
-        async Task showOutputBots(long chat, IChain chain)
+        async Task showEditGeoTagBots(long chat, IChain chain)
         {
-            var markup = getMyBotsMarkUp(chain);
+            var markup = getMyBotsGeoTagMarkUp(chain);
 
-            await messagesProcessor.Add(chat, "showOutputBots", await bot.SendTextMessageAsync(
+            await messagesProcessor.Add(chat, "showEditGeoTagBots", await bot.SendTextMessageAsync(
                 chatId: chat,
-                text: "Выходные боты:",
+                text: "Выберите бота, геотег которого нужно обновить:",
                 replyMarkup: markup,
                 cancellationToken: cancellationToken));
         }
@@ -953,6 +973,20 @@ namespace csb.users
                             }
 
                             State = BotState.free;
+                            break;
+
+                        case BotState.waitingBotGeoTagEdit:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.EditBotGeotag(currentBotName, msg);
+                                chainsProcessor.Save();
+                                await showEditGeoTagBots(chat, chain);
+                            }
+                            catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                            }
                             break;
 
                         case BotState.waitingVerificationCode:
@@ -1374,24 +1408,11 @@ namespace csb.users
 
                         DailyPushMessage pattern = await DailyPushMessage.Create(chat, bot, update.Message, chain.Name);
 
-                        //DailyPushMessage pattern = new DailyPushMessage()
-                        //{
-                        //    Message = update.Message
-
-                        //};
-
-                        //switch (update.Message.Type)
-                        //{
-                        //    case MessageType.Video:
-                        //        var fileId = update.Message.Video.FileId;
-                        //        var fileInfo = await bot.GetFileAsync(fileId);
-                        //        var filePath = fileInfo.FilePath;
-                        //        break;
-                        //}
-
-
                         chain.AddDailyPushMessage(pattern.Clone(), moderationProcessor);
                         chainprocessor.Save();
+
+                        int cntr = chain.DailyPushData.Messages.Count;
+                        await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, $"Добавлено {cntr} сообщений. Перешлите (forward) сюда следующее сообщение для цепочки:", "back"));
 
                     }
                     catch (Exception ex)
@@ -1574,6 +1595,21 @@ namespace csb.users
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
+                    break;
+
+                case "editBotGeotag":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await showEditGeoTagBots(chat, chain);
+                        await bot.AnswerCallbackQueryAsync(query.Id, "Выберите");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
                     break;
 
                 case "deleteOutputBot":
@@ -2041,6 +2077,9 @@ namespace csb.users
                     }
                     break;
 
+                case "daily_show":
+                    break;
+
                 case "":
                     break;
 
@@ -2108,11 +2147,11 @@ namespace csb.users
 
                     }
 
-                    if (data.Contains("bot_"))
+                    if (data.Contains("bot_delete_"))
                     {
                         try
                         {
-                            string name = data.Replace("bot_", "");
+                            string name = data.Replace("bot_delete_", "");
                             var chain = chainsProcessor.Get(currentChainID);
                             chain.RemoveBot(name);
                             chainsProcessor.Save();
@@ -2120,6 +2159,23 @@ namespace csb.users
                             await bot.AnswerCallbackQueryAsync(query.Id, "Бот удален");
 
 
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("bot_geotag_"))
+                    {
+                        try
+                        {
+                            
+                            string name = data.Replace("bot_geotag_", "");
+                            currentBotName = name;
+                            await messagesProcessor.Add(chat, "bot_geotag_", await sendTextButtonMessage(chat, $"Введите новый геотег бота {name}:", "back"));
+                            State = BotState.waitingBotGeoTagEdit;
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+                            
                         } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);

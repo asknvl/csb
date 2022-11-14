@@ -33,6 +33,7 @@ namespace csb.chains
 
         Task AddBot(string token);
         void RemoveBot(string name);
+        void EditBotGeotag(string name, string newgeotag);
 
         void AddFilteredWord(string text);
         void RemoveFilteredWord(int index);

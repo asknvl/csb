@@ -32,6 +32,7 @@ namespace csb.bot_manager
         waitingVictimChannelLink,
         waitingOutputChannelLink,
         waitingVerificationCode,
+        waitingBotGeoTagEdit,
 
         waitingAddInputChannel,
 

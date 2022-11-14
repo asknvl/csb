@@ -166,6 +166,15 @@ namespace csb.chains
             }
         }
 
+        public void EditBotGeotag(string name, string newgeotag)
+        {
+            var found = Bots.FirstOrDefault(t => t.Name.Equals(name));
+            if (found != null)
+            {
+                found.GeoTag = newgeotag;
+            }
+        }
+
         public void AddFilteredWord(string text)
         {
             if (!User.FilteredWords.Contains(text))
@@ -283,7 +292,6 @@ namespace csb.chains
             }
             moderators.Save();
             
-
         }
 
         public void RemoveDailyPushMessage(int index, ModerationProcessor moderators)

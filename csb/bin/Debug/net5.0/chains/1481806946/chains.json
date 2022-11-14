@@ -46,7 +46,7 @@
         {
           "Id": 0,
           "Message": {
-            "message_id": 2334,
+            "message_id": 2399,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -54,7 +54,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668378265,
+            "date": 1668380556,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -75,13 +75,13 @@
               "thumb": {
                 "width": 320,
                 "height": 320,
-                "file_id": "AAMCAgADGQEAAgkeY3FumVQrjuaG0L6eYiXwYS5KKjEAAqogAALZKChLYnqEuwwFsiUBAAdtAAMrBA",
+                "file_id": "AAMCAgADGQEAAglfY3F3jF3z7t80H_pUzZwt3ju39SgAAqogAALZKChLYnqEuwwFsiUBAAdtAAMrBA",
                 "file_unique_id": "AQADqiAAAtkoKEty",
                 "file_size": 19154
               },
               "file_name": "IMG_6784.MP4",
               "mime_type": "video/mp4",
-              "file_id": "BAACAgIAAxkBAAIJHmNxbplUK47mhtC-nmIl8GEuSioxAAKqIAAC2SgoS2J6hLsMBbIlKwQ",
+              "file_id": "BAACAgIAAxkBAAIJX2Nxd4xd8-7fNB_6VM2cLd47t_UoAAKqIAAC2SgoS2J6hLsMBbIlKwQ",
               "file_unique_id": "AgADqiAAAtkoKEs",
               "file_size": 2741574
             },
@@ -155,6 +155,66 @@
             }
           },
           "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4",
+          "fileId": null
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2401,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668380573,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "message 2 @victimlink",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 10,
+                "length": 11
+              }
+            ]
+          },
+          "FilePath": null,
+          "fileId": null
+        },
+        {
+          "Id": 0,
+          "Message": {
+            "message_id": 2403,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668380583,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "message 3 @victimlink",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 10,
+                "length": 11
+              }
+            ]
+          },
+          "FilePath": null,
           "fileId": null
         }
       ]

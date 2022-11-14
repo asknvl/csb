@@ -213,7 +213,7 @@ namespace csb.messaging
             DailyPushMessage res = new DailyPushMessage();
             res.Message = pattern;
 
-            string fileId;
+            string fileId = null;
             Telegram.Bot.Types.File fileInfo;
             string filePath = null;
 
@@ -221,29 +221,36 @@ namespace csb.messaging
 
                 switch (res.Message.Type)
                 {
+                    case MessageType.Text:
+                        break;
                     case MessageType.Photo:
+                        fileId = res.Message.Photo.Last().FileId;
                         break;
                     case MessageType.Video:
                         fileId = res.Message.Video.FileId;
-                        fileInfo = await bot.GetFileAsync(fileId);
-                        filePath = fileInfo.FilePath;
                         break;
                 }
 
-                var fileName = filePath.Split('/').Last();
+                if (fileId != null)
+                {
+                    fileInfo = await bot.GetFileAsync(fileId);
+                    filePath = fileInfo.FilePath;
 
-                string destinationFilePath = Path.Combine(Directory.GetCurrentDirectory(), "chains", $"{id}", chainName);
-                if (!Directory.Exists(destinationFilePath))
-                    Directory.CreateDirectory(destinationFilePath);
+                    var fileName = filePath.Split('/').Last();
 
-                destinationFilePath = Path.Combine(destinationFilePath, fileName);
+                    string destinationFilePath = Path.Combine(Directory.GetCurrentDirectory(), "chains", $"{id}", chainName);
+                    if (!Directory.Exists(destinationFilePath))
+                        Directory.CreateDirectory(destinationFilePath);
 
-                await using FileStream fileStream = System.IO.File.OpenWrite(destinationFilePath);
-                await bot.DownloadFileAsync(
-                    filePath: filePath,
-                    destination: fileStream);
+                    destinationFilePath = Path.Combine(destinationFilePath, fileName);
 
-                res.FilePath = destinationFilePath;
+                    await using FileStream fileStream = System.IO.File.OpenWrite(destinationFilePath);
+                    await bot.DownloadFileAsync(
+                        filePath: filePath,
+                        destination: fileStream);
+
+                    res.FilePath = destinationFilePath;
+                }
 
             });
 
