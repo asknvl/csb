@@ -21,7 +21,7 @@ namespace csb.bot_moderator
 
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
-            dailyPushTimer.Interval = 30 * 1000;
+            dailyPushTimer.Interval = 2 * 60 * 1000;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed; ;
             dailyPushTimer.Start();
@@ -58,7 +58,7 @@ namespace csb.bot_moderator
                         }
                     } catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        Console.WriteLine($"{GeoTag} {subscriber.tg_user_id} {subscriber?.notification_delivered_id} {ex.Message}");
                     }
                 }
 

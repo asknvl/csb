@@ -1,46 +1,21 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/server/TGFollowersStatApi.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/bot_moderator/BotModerator_v4.cs">
     <Files>
       <File FileName="csb/users/User.cs" Line="1411" Column="50" />
-      <File FileName="csb/bot_moderator/BotModerator_v3.cs" Line="147" Column="1" />
+      <File FileName="csb/bot_moderator/BotModerator_v3.cs" />
       <File FileName="csb/bot_moderator/PushData.cs" />
       <File FileName="csb/bot_moderator/DailyPushData.cs" />
-      <File FileName="csb/bot_manager/BotManager.cs" Line="35" Column="9" />
-      <File FileName="csb/messaging/DailyPushMessageBase.cs" Line="179" Column="1" />
-      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="62" Column="35" NotebookId="1" />
-      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="146" Column="1" NotebookId="1" />
-      <File FileName="csb/moderation/ModerationProcessor.cs" Line="75" Column="1" NotebookId="1" />
-      <File FileName="csb/chains/ChainProcessor.cs" Line="91" Column="1" NotebookId="1" />
-      <File FileName="csb/chains/IChain.cs" Line="53" Column="14" NotebookId="1" />
-      <File FileName="csb/chains/Chain.cs" Line="284" Column="19" NotebookId="1" />
-      <File FileName="csb/server/TGFollowersStatApi.cs" Line="187" Column="1" NotebookId="1" />
+      <File FileName="csb/bot_manager/BotManager.cs" />
+      <File FileName="csb/messaging/DailyPushMessageBase.cs" />
+      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="61" Column="90" NotebookId="1" />
+      <File FileName="csb/bot_poster/BotPoster_api.cs" NotebookId="1" />
+      <File FileName="csb/moderation/ModerationProcessor.cs" NotebookId="1" />
+      <File FileName="csb/chains/ChainProcessor.cs" NotebookId="1" />
+      <File FileName="csb/chains/IChain.cs" NotebookId="1" />
+      <File FileName="csb/chains/Chain.cs" NotebookId="1" />
+      <File FileName="csb/server/TGFollowersStatApi.cs" NotebookId="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="csb" expanded="True">
-            <Node name="csb" expanded="True">
-              <Node name="chains" expanded="True" />
-              <Node name="messaging" expanded="True" />
-              <Node name="server" expanded="True">
-                <Node name="TGFollowersStatApi.cs" selected="True" />
-              </Node>
-              <Node name="users" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>indexReplace</Value>
-          <Value>text.Length</Value>
-          <Value>resText.Length</Value>
-          <Value>t.Length</Value>
-          <Value>messageEntities[0].Type</Value>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

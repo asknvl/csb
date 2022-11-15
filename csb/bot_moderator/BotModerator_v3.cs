@@ -51,7 +51,7 @@ namespace csb.bot_moderator
                     double Tp = lastPushHours;
                     double Tl = subscriber.time_diff_last_push_subscr;
                     
-                    Console.WriteLine($"Tp={Tp} Tc={Tc} Tl={Tl}, Tc-Tl+Tp={Tc - Tl + Tp}");
+                    //Console.WriteLine($"Tp={Tp} Tc={Tc} Tl={Tl}, Tc-Tl+Tp={Tc - Tl + Tp}");
 
                     var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > Tp && m.TimePeriod < Tc - Tl + Tp);
 
@@ -73,12 +73,12 @@ namespace csb.bot_moderator
                                                  cancellationToken: new CancellationToken());
 
                             await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);
-                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {pushmessage.TimePeriod} hour message");
+                            //Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {pushmessage.TimePeriod} hour message");
 
                         } catch (Exception ex)
                         {
                             await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
-                            Console.WriteLine($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message");
+                            //Console.WriteLine($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message");
                         }
 
                     } else

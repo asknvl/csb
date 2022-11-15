@@ -32,8 +32,6 @@ namespace csb.messaging
 
         public DailyPushMessageBase()
         {
-            Console.WriteLine($"dpm created {Id}");
-            
         }
 
         #region helpers
@@ -131,7 +129,7 @@ namespace csb.messaging
                 foreach (var item in button)
                 {
                     foreach (var autochange in autoChanges)
-                        item.Url = item.Url.Replace(autochange.OldText, autochange.NewText).Replace("@", "");
+                        item.Url = item.Url.Replace(autochange.OldText.Replace("@", ""), autochange.NewText.Replace("@", ""));
                 }
             }
         }

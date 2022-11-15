@@ -125,6 +125,10 @@ namespace csb.users
             })},
 
             {"editModerator", new(new[] {
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Изменить геотег", callbackData: "editModeratorGeoTag"),
+                },
+
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Настроить Join сообщение", callbackData: "editJoinMessage"),
                 },
@@ -1227,6 +1231,23 @@ namespace csb.users
                             }
                             break;
 
+                        case BotState.waitingModeratorGeoTagEdit:
+                            try
+                            {
+                                var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                                moderator.GeoTag = msg;
+                                moderationProcessor.Save();
+                                await messagesProcessor.Back(chat);
+                                await showMyModerators(chat);
+                                State = BotState.free;
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
                         case BotState.waitingAdminGeoTag:
                             try
                             {
@@ -1926,6 +1947,12 @@ namespace csb.users
                     //await messagesProcessor.Back(chat);
                     //await messagesProcessor.Delete(chat, "editLeaveMessage");
                     await messagesProcessor.Add(chat, "editLeaveMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Leave сообщение нажмите Добавить", "editLeaveMessageMenu"));
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "editModeratorGeoTag":
+                    await messagesProcessor.Add(chat, "editModeratorGeoTag", await sendTextButtonMessage(chat, $"Текущий геотег модератора - {currentModeratorGeoTag}. Введите новый геотег:", "back"));
+                    State = BotState.waitingModeratorGeoTagEdit;
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
