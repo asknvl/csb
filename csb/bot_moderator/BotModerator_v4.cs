@@ -21,7 +21,7 @@ namespace csb.bot_moderator
 
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
-            dailyPushTimer.Interval = 2 * 60 * 1000;
+            dailyPushTimer.Interval = 10 * 60 * 1000;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed; ;
             dailyPushTimer.Start();
@@ -32,11 +32,14 @@ namespace csb.bot_moderator
         { 
             try
             {
-                Console.WriteLine($"GetSubs {GeoTag}");
-                var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 0.0166);
+                Console.WriteLine($"{DateTime.Now} GetSubs {GeoTag}");
+                var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 24);
+                int cntr = 0;
                 foreach (var s in subs)
-                    Console.WriteLine($"{GeoTag} {s.tg_user_id} {s.notification_delivered_id}");
-
+                {
+                    Console.WriteLine($"{++cntr} {GeoTag} {s.tg_user_id} {s.notification_delivered_id}");
+                    
+                }
                 foreach (var subscriber in subs)
                 {
                     try
@@ -56,7 +59,8 @@ namespace csb.bot_moderator
                         {
                             await statApi.MarkFollowerWasDailyPushed(GeoTag, id, 0, DailyPushState.disable);
                         }
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         Console.WriteLine($"{GeoTag} {subscriber.tg_user_id} {subscriber?.notification_delivered_id} {ex.Message}");
                     }
