@@ -62,9 +62,9 @@
     "DailyPushData": {
       "Messages": [
         {
-          "Id": 0,
+          "Id": 1,
           "Message": {
-            "message_id": 2473,
+            "message_id": 2501,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -72,18 +72,18 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668451938,
+            "date": 1668454422,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "message1 @victimlink",
+            "text": "m1 @victimlink",
             "entities": [
               {
                 "type": "mention",
-                "offset": 9,
+                "offset": 3,
                 "length": 11
               }
             ]
@@ -92,9 +92,9 @@
           "fileId": null
         },
         {
-          "Id": 0,
+          "Id": 2,
           "Message": {
-            "message_id": 2475,
+            "message_id": 2503,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -102,67 +102,29 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668451949,
+            "date": 1668454427,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "forward_from_chat": {
-              "id": -1001782937231,
-              "type": "channel",
-              "title": "🤑CASADORES DEL ÉXITO 🤑"
-            },
-            "forward_from_message_id": 2157,
-            "forward_date": 1667690640,
-            "text": "​​‼️ Nunca dejes para mañana lo que puedes hacer hoy ‼️\n \nQuiero dejarles esta frase para que el día para  empezar sea hoy.💰💸\n\nFamilia hoy todas las apuestas estuvieron en un nivel muy alto,  sigo trabajando para ustedes con toda la energía para que ustedes ostentan los mejores resultados  \n \n🔥Anímate a cambiar tu estilo de vida y con esta gran familia lo podrás empezar hacer hoy,💯 te invito a que me escribas y poder hacer relamidas todos tus sueños ✍️ ESCRÍBEME ✍️ @SantiagoSannchez",
+            "text": "m2 @victimlink",
             "entities": [
               {
-                "type": "text_link",
-                "offset": 0,
-                "length": 2,
-                "url": "https://telegra.ph/file/efcc878f1b061db694594.mp4"
-              },
-              {
-                "type": "bold",
-                "offset": 5,
-                "length": 47
-              },
-              {
-                "type": "underline",
-                "offset": 129,
-                "length": 166
-              },
-              {
-                "type": "bold",
-                "offset": 461,
-                "length": 9
-              },
-              {
                 "type": "mention",
-                "offset": 474,
-                "length": 17
+                "offset": 3,
+                "length": 11
               }
-            ],
-            "reply_markup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "🔥LUCHA POR TUS SUEÑOS🔥",
-                    "url": "http://t.me/SantiagoSannchez"
-                  }
-                ]
-              ]
-            }
+            ]
           },
           "FilePath": null,
           "fileId": null
         },
         {
-          "Id": 0,
+          "Id": 3,
           "Message": {
-            "message_id": 2477,
+            "message_id": 2505,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -170,115 +132,53 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1668451959,
+            "date": 1668454434,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "forward_from_chat": {
-              "id": -1001782937231,
-              "type": "channel",
-              "title": "🤑CASADORES DEL ÉXITO 🤑"
-            },
-            "forward_from_message_id": 2150,
-            "forward_date": 1667608860,
-            "photo": [
-              {
-                "width": 90,
-                "height": 67,
-                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADcwADKwQ",
-                "file_unique_id": "AQADm8IxG9koKEt4",
-                "file_size": 1586
-              },
-              {
-                "width": 320,
-                "height": 240,
-                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADbQADKwQ",
-                "file_unique_id": "AQADm8IxG9koKEty",
-                "file_size": 21953
-              },
-              {
-                "width": 800,
-                "height": 600,
-                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADeAADKwQ",
-                "file_unique_id": "AQADm8IxG9koKEt9",
-                "file_size": 94765
-              },
-              {
-                "width": 1280,
-                "height": 960,
-                "file_id": "AgACAgIAAxkBAAIJrWNyjndsvngwpEW5cfwK9w09gYpxAAKbwjEb2SgoS5F8fejE9GDJAQADAgADeQADKwQ",
-                "file_unique_id": "AQADm8IxG9koKEt-",
-                "file_size": 125844
-              }
-            ],
-            "caption": "SE TRABAJA HASTA TARDE..👏🏻\n\n👨🏻‍💻🔍Me encuentro analizándo las apuestas de hoy y dando el 200% de mi día a día🔋\n\n🤷🏻‍♂️Las personas solo ven la gloria pero no ven todo el trabajo qué hay detrás de todo esto y realmente es agotador 🥵\n\n👏🏻Mi éxito se debe por el gran esfuerzo y pasión que le tengo a mi trabajo ❤️😍\n\n📲CONTACTO: @SantiagoSannchez ✅️",
-            "caption_entities": [
-              {
-                "type": "bold",
-                "offset": 0,
-                "length": 39
-              },
-              {
-                "type": "underline",
-                "offset": 0,
-                "length": 22
-              },
-              {
-                "type": "bold",
-                "offset": 85,
-                "length": 29
-              },
-              {
-                "type": "underline",
-                "offset": 85,
-                "length": 29
-              },
-              {
-                "type": "bold",
-                "offset": 138,
-                "length": 61
-              },
-              {
-                "type": "underline",
-                "offset": 138,
-                "length": 61
-              },
-              {
-                "type": "bold",
-                "offset": 245,
-                "length": 46
-              },
-              {
-                "type": "underline",
-                "offset": 245,
-                "length": 46
-              },
-              {
-                "type": "bold",
-                "offset": 324,
-                "length": 12
-              },
+            "text": "m3 @victimlink",
+            "entities": [
               {
                 "type": "mention",
-                "offset": 336,
-                "length": 17
+                "offset": 3,
+                "length": 11
               }
-            ],
-            "reply_markup": {
-              "inline_keyboard": [
-                [
-                  {
-                    "text": "💎TRABAJA DURO💎",
-                    "url": "http://t.me/SantiagoSannchez"
-                  }
-                ]
-              ]
-            }
+            ]
           },
-          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_3.jpg",
+          "FilePath": null,
+          "fileId": null
+        },
+        {
+          "Id": 4,
+          "Message": {
+            "message_id": 2527,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1668470005,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "output4 @victimlink",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 11
+              }
+            ]
+          },
+          "FilePath": null,
           "fileId": null
         }
       ]

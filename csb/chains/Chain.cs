@@ -266,7 +266,9 @@ namespace csb.chains
 
         public void AddDailyPushMessage(DailyPushMessage pattern, ModerationProcessor moderators)
         {
+
             DailyPushData.Messages.Add(pattern);
+            pattern.Id = DailyPushData.Messages.Count;
             
             foreach (var outbot in Bots)
             {
@@ -279,6 +281,7 @@ namespace csb.chains
                 };
 
                 var patternCpy = pattern.Clone();
+                //patternCpy.Id = DailyPushData.Messages.Count;
 
                 patternCpy.MakeAutochange(new List<AutoChange>() { pmAutochange });
                 try

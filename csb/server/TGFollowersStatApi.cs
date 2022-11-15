@@ -301,6 +301,147 @@ namespace csb.server
                     throw new Exception($"Не удалось пометить результат push подписчика");
             });
         }
+
+        public class tgUserDailyPushInfo
+        {
+            public string tg_user_id { get; set; }
+            public int? notification_delivered_id { get; set; } 
+        }
+
+        public class tgUserDailyPushResultDto
+        {
+            public bool success { get; set; }
+            public int count_telegram_users { get; set; }
+            public string geo { get; set; }
+            public List<tgUserDailyPushInfo> data { get; set; }
+        }
+
+        public virtual async Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours)
+        {
+            List<tgUserDailyPushInfo> users = new();
+            await Task.Run(() =>
+            {
+                var client = new RestClient($"{url}/v1/telegram/usersNotification?min_hours_after_last_push={hours}&geo={geotag}");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+                var response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var resp = JsonConvert.DeserializeObject<tgUserDailyPushResultDto>(response.Content);
+                    if (resp.success)
+                        users = resp.data;
+                    else
+                        throw new Exception($"GetUsersNeedDailyPush success={resp.success}");
+
+                }
+                else
+                    throw new Exception($"Не удалось получить список подписчиков для ежедневного {hours} пуш сообщения geotag={geotag}");
+            });
+
+            return users;
+        }
+
+        public enum DailyPushState
+        {
+            sent,
+            delivered,
+            disable
+        }
+
+        public class tgUserDailyPushSentDto
+        {
+            public long tg_user_id { get; set; }
+            public string tg_geolocation { get; set; }
+            public int notification_send_id { get; set; }
+        }
+
+        public class tgUsersDailyPushSentDto
+        {
+            public List<tgUserDailyPushSentDto> users { get; set; } = new();
+        }
+
+        public class tgUserDailyPushDeliveredDto
+        {
+            public long tg_user_id { get; set; }
+            public string tg_geolocation { get; set; }
+            public int notification_delivered_id { get; set; }
+        }
+
+        public class tgUsersDailyPushDeliveredDto
+        {
+            public List<tgUserDailyPushDeliveredDto> users { get; set; } = new();
+        }
+
+        public class tgUserDailyPushDisableDto
+        {
+            public long tg_user_id { get; set; }
+            public string tg_geolocation { get; set; }
+            public bool notification_enabled { get; set; }
+        }
+
+        public class tgUsersDailyPushDisableDto
+        {
+            public List<tgUserDailyPushDisableDto> users { get; set; } = new();
+        }
+
+        public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId,  DailyPushState pushState)
+        {
+            await Task.Run(() => {
+
+                var client = new RestClient($"{url}/v1/telegram/userByGeo");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+
+                switch (pushState)
+                {
+                    case DailyPushState.sent:
+                        tgUsersDailyPushSentDto sent = new();
+                        sent.users.Add(new tgUserDailyPushSentDto() {
+                            tg_geolocation = geotag,
+                            tg_user_id = userId,
+                            notification_send_id = pushId
+                        });
+                        string jsent = JsonConvert.SerializeObject(sent);
+                        request.AddParameter("application/json", jsent, ParameterType.RequestBody);
+                        break;
+                    case DailyPushState.delivered:
+                        tgUsersDailyPushDeliveredDto delivered = new();
+                        delivered.users.Add(new tgUserDailyPushDeliveredDto() {
+                            tg_geolocation = geotag,
+                            tg_user_id = userId,
+                            notification_delivered_id = pushId
+                        });
+                        string jdelivered = JsonConvert.SerializeObject(delivered);
+                        request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
+                        break;
+                    case DailyPushState.disable:
+                        tgUsersDailyPushDisableDto disable = new();
+                        disable.users.Add(new tgUserDailyPushDisableDto() {
+                            tg_geolocation = geotag,
+                            tg_user_id = userId,
+                            notification_enabled = false
+                        });
+                        string jdisable = JsonConvert.SerializeObject(disable);
+                        request.AddParameter("application/json", jdisable, ParameterType.RequestBody);
+                        break;
+                    default:
+                        throw new Exception("MarkFolloweWasDailyPushed Unknown DailyPushState");
+                        
+                }
+
+                var response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var json = JObject.Parse(response.Content);
+                    bool res = json["success"].ToObject<bool>();
+                    if (!res)
+                        throw new Exception($"MarkFollowerWasDailyPushed success={res}");
+
+                }
+                else
+                    throw new Exception($"Не удалось пометить результат daily push подписчика geotag={geotag} userid={userId} pushid={pushId}");
+            });
+        }
         #endregion
     }
 }

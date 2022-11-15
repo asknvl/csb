@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using csb.messaging;
 using Newtonsoft.Json;
+using static csb.server.TGFollowersStatApi;
 
 namespace csb.bot_moderator
 {
@@ -20,7 +21,7 @@ namespace csb.bot_moderator
 
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
-            dailyPushTimer.Interval = 60 * 1000;
+            dailyPushTimer.Interval = 30 * 1000;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed; ;
             dailyPushTimer.Start();
@@ -28,26 +29,37 @@ namespace csb.bot_moderator
 
         int cntr = 0;
         private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-
+        { 
             try
             {
-                string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
-                string date_to = DateTime.Now.ToString("yyyy-MM-dd");
-                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
+                Console.WriteLine($"GetSubs {GeoTag}");
+                var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 0.0166);
+                foreach (var s in subs)
+                    Console.WriteLine($"{GeoTag} {s.tg_user_id} {s.notification_delivered_id}");
 
                 foreach (var subscriber in subs)
                 {
-                    long id = long.Parse(subscriber.tg_user_id);
+                    try
+                    {
+                        long id = long.Parse(subscriber.tg_user_id);
+                        int pushId_prev = (subscriber.notification_delivered_id == null) ? 0 : (int)subscriber.notification_delivered_id;
+                        var message = DailyPushData.Messages.FirstOrDefault(m => m.Id > pushId_prev);
 
-                    //var message = DailyPushData.Messages.FirstOrDefault(m => m.Id >= 0);
-
-                    var message = DailyPushData.Messages[cntr];
-                    cntr++;
-                    cntr %= DailyPushData.Messages.Count;
-
-                    if (message != null)
-                        await message.Send(id, bot);
+                        if (message != null)
+                        {
+                            await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.sent);
+                            await message.Send(id, bot);
+                            Console.WriteLine($"{GeoTag} {id} was pushed {message.Id}");
+                            await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.delivered);
+                        }
+                        else
+                        {
+                            await statApi.MarkFollowerWasDailyPushed(GeoTag, id, 0, DailyPushState.disable);
+                        }
+                    } catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
 
             } catch (Exception ex)
