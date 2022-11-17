@@ -100,6 +100,7 @@ namespace csb.bot_moderator
         #region override
         protected override async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
+
             if (update == null)
                 return;
 
@@ -178,6 +179,7 @@ namespace csb.bot_moderator
 
             if (update.ChatJoinRequest != null)
             {
+                
                 try
                 {
                     var chatJoinRequest = update.ChatJoinRequest;
@@ -188,7 +190,7 @@ namespace csb.bot_moderator
                     string tags = "";
                     foreach (var item in user_geotags)
                     {
-                        chNumsFromGeoTags.Add(item.Substring(item.Length - 2, item.Length - 1));
+                        chNumsFromGeoTags.Add(item.Substring(item.Length - 2, 2));
                         tags += $"{item} ";
                     }
 
@@ -203,7 +205,7 @@ namespace csb.bot_moderator
 
                     //if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme || GeoTag.ToLower().Contains("test"))
 
-                    string chNum = GeoTag.Substring(GeoTag.Length - 2, GeoTag.Length - 1);
+                    string chNum = GeoTag.Substring(GeoTag.Length - 2, 2);
 
                     if (!chNumsFromGeoTags.Any(n => !n.Equals(chNum)))
                     {

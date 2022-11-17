@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {
+    "net6.0": {
       "Newtonsoft.Json/12.0.2": {
         "type": "package",
         "compile": {
@@ -23,10 +23,10 @@
       "System.Threading.Channels/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/netcoreapp3.1/System.Threading.Channels.dll": {}
+          "lib/net6.0/System.Threading.Channels.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/System.Threading.Channels.dll": {}
+          "lib/net6.0/System.Threading.Channels.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -170,37 +170,38 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net5.0": [
+    "net6.0": [
       "RestSharp >= 106.10.0",
       "Telegram.Bot >= 18.0.0",
       "Telegram.Bot.Extensions.Polling >= 1.0.2"
     ]
   },
   "packageFolders": {
-    "/Users/alexeykonovalov/.nuget/packages/": {}
+    "C:\\Users\\Никита\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alexeykonovalov/work/csb/csb/csb.csproj",
+      "projectUniqueName": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
       "projectName": "csb",
-      "projectPath": "/Users/alexeykonovalov/work/csb/csb/csb.csproj",
-      "packagesPath": "/Users/alexeykonovalov/.nuget/packages/",
-      "outputPath": "/Users/alexeykonovalov/work/csb/csb/obj/",
+      "projectPath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
+      "packagesPath": "C:\\Users\\Никита\\.nuget\\packages\\",
+      "outputPath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/alexeykonovalov/.config/NuGet/NuGet.Config"
+        "C:\\Users\\Никита\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net5.0"
+        "net6.0"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {},
         "https://nuget.avaloniaui.net/repository/avalonia-all/index.json": {}
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "projectReferences": {}
         }
       },
@@ -211,8 +212,8 @@
       }
     },
     "frameworks": {
-      "net5.0": {
-        "targetAlias": "net5.0",
+      "net6.0": {
+        "targetAlias": "net6.0",
         "dependencies": {
           "RestSharp": {
             "target": "Package",
@@ -242,7 +243,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/x64/sdk/6.0.104/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

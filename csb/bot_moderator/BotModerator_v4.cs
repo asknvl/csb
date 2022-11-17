@@ -32,14 +32,10 @@ namespace csb.bot_moderator
         { 
             try
             {
-                Console.WriteLine($"{DateTime.Now} GetSubs {GeoTag}");
+                
                 var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 24);
-                int cntr = 0;
-                foreach (var s in subs)
-                {
-                    Console.WriteLine($"{++cntr} {GeoTag} {s.tg_user_id} {s.notification_delivered_id}");
-                    
-                }
+                Console.WriteLine($"{DateTime.Now} GetSubs {GeoTag} {subs.Count}");
+
                 foreach (var subscriber in subs)
                 {
                     try
