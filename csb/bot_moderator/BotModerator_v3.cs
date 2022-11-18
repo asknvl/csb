@@ -185,12 +185,12 @@ namespace csb.bot_moderator
                     var chatJoinRequest = update.ChatJoinRequest;
 
                     var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
-                    List<string> chNumsFromGeoTags = new();
+                    List<string> chGeoPrefx = new();
 
                     string tags = "";
                     foreach (var item in user_geotags)
                     {
-                        chNumsFromGeoTags.Add(item.Substring(item.Length - 2, 2));
+                        chGeoPrefx.Add(item.Substring(0, 4));
                         tags += $"{item} ";
                     }
 
@@ -205,9 +205,10 @@ namespace csb.bot_moderator
 
                     //if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme || GeoTag.ToLower().Contains("test"))
 
-                    string chNum = GeoTag.Substring(GeoTag.Length - 2, 2);
+                    string geoPrefx = GeoTag.Substring(0, 4);
 
-                    if (!chNumsFromGeoTags.Any(n => !n.Equals(chNum)))
+                    //if (!chNumsFromGeoTags.Any(n => !n.Equals(chNum)))
+                    if (!chGeoPrefx.Any(n => n.Equals(geoPrefx)))
                     {
                         try
                         {
