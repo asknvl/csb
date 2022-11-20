@@ -129,7 +129,7 @@ namespace csb.bot_poster
             MessageEntity[]? entities;
 
             if (message.ReplyMarkup != null)
-                swapMarkupLink(message.ReplyMarkup, ChannelLink);
+                swapMarkupLink(message.ReplyMarkup, AutoChanges);
 
             Console.WriteLine(Name + " " + message.Text);            
 
@@ -139,7 +139,6 @@ namespace csb.bot_poster
                 switch (message.Type)
                 {
                     
-
                     case MessageType.Photo:
 
                         InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
@@ -269,13 +268,26 @@ namespace csb.bot_poster
             }
         }
 
-        void swapMarkupLink(InlineKeyboardMarkup markup, string newlink)
+        void swapMarkupLink(InlineKeyboardMarkup markup, List<AutoChange> autoChanges)
         {
+
+            AutoChange pmChange = new AutoChange()
+            {
+                OldText = VictimLink,
+                NewText = ChannelLink
+            };
+
+            if (!autoChanges.Any(a => a.OldText.Equals(pmChange.OldText) && a.NewText.Equals(pmChange.NewText)))
+                autoChanges.Add(pmChange);
+
             foreach (var button in markup.InlineKeyboard)
             {
                 foreach (var item in button)
                 {
-                    item.Url = $"http://t.me/{newlink.Replace("@", "")}";
+                    //item.Url = $"http://t.me/{newlink.Replace("@", "")}";
+                    foreach (var autochange in autoChanges)
+                        item.Url = item.Url.Replace(autochange.OldText.Replace("@", ""), autochange.NewText.Replace("@", ""));
+
                 }
             }
         }
@@ -473,9 +485,13 @@ namespace csb.bot_poster
             if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
                 disablePreview = true;
 
+            //var reply = message.ReplyToMessage;
+            //int? replyId = message.ReplyToMessage?.MessageId;
+
             await bot.SendTextMessageAsync(            
             chatId: ChannelID,
             text: t,
+            //replyToMessageId:replyId, 
             entities: filterEntities(messageEntities),
             disableWebPagePreview: disablePreview,
             replyMarkup: message.ReplyMarkup,            

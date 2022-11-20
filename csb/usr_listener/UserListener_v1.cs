@@ -313,6 +313,8 @@ namespace csb.usr_listener
         async Task sendText()
         {
 
+            Message message = null;
+
             if (nomediaIDs.Count == 0)
             {
                 Console.WriteLine("NO MORE TEXT");
@@ -327,9 +329,10 @@ namespace csb.usr_listener
 
             try
             {
+                
                 Messages_MessagesBase msgb = await user.GetMessages(chat, id);
                 MessageBase mb = msgb.Messages[0];
-                Message message = (Message)mb;
+                /*Message*/ message = (Message)mb;
 
                 if (message != null)
                 {
@@ -353,7 +356,15 @@ namespace csb.usr_listener
                 try
                 {
                     long rand = Helpers.RandomLong();
+
+                    //if (message.reply_to != null)
+                    //{
+                    //    int repId = message.reply_to.reply_to_msg_id;
+                    //    await user.SendMessageAsync(item, $"replyied_message:{message.message}:{message.}", null, repId);
+                    //}
+                    //else
                     await user.Messages_ForwardMessages(chat, new[] { id }, new[] { rand }, item);
+
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
@@ -538,6 +549,8 @@ namespace csb.usr_listener
 
             Task.Run(async () =>
             {
+                Console.WriteLine($"Starting user {PhoneNumber}...");
+
                 try
                 {
                     user = new Client(Config);
@@ -553,6 +566,7 @@ namespace csb.usr_listener
                 foreach (var item in CorrespondingBotNames)
                 {
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
+                    Thread.Sleep(2000);
                 }
 
                 if (TimeInterval > 0)
@@ -564,6 +578,7 @@ namespace csb.usr_listener
                 user.Update += User_Update;
 
                 Console.WriteLine($"User {PhoneNumber} started");
+
                 StartedEvent?.Invoke(PhoneNumber);
 
                 IsRunning = true;

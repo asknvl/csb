@@ -47,9 +47,16 @@ namespace csb.bot_moderator
                         if (message != null)
                         {
                             await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.sent);
-                            await message.Send(id, bot);
-                            Console.WriteLine($"{GeoTag} {id} was pushed {message.Id}");
-                            await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.delivered);
+                            try
+                            {
+                                await message.Send(id, bot);
+                                await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.delivered);
+                                Console.WriteLine($"{GeoTag} {id} was pushed {message.Id}");
+                            } catch (Exception ex)
+                            {
+                                await statApi.MarkFollowerWasDailyPushed(GeoTag, id, 0, DailyPushState.disable);
+                                throw new Exception(ex.Message);
+                            }
                         }
                         else
                         {

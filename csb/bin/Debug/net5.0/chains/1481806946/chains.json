@@ -14,7 +14,12 @@
         "VictimLink": "@booowos",
         "ChannelLink": "@asknvl",
         "ReplacedWords": [],
-        "AutoChanges": []
+        "AutoChanges": [
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1243990530/20767"
+          }
+        ]
       },
       {
         "GeoTag": "TEST2",
@@ -25,7 +30,12 @@
         "VictimLink": "@booowos",
         "ChannelLink": "@ceoxtime",
         "ReplacedWords": [],
-        "AutoChanges": []
+        "AutoChanges": [
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1243990530/20767"
+          }
+        ]
       }
     ],
     "User": {
@@ -39,6 +49,10 @@
       {
         "OldText": "@Amirrsallah",
         "NewText": "@Amir_SignalsAvi"
+      },
+      {
+        "OldText": "https://pinedmessage.xtime",
+        "NewText": "https://t.me/c/1243990530/20767"
       }
     ],
     "DailyPushData": {
