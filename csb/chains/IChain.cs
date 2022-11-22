@@ -21,7 +21,7 @@ namespace csb.chains
         List<BotPoster_api> Bots { get; set; }
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
-        public List<AutoChange> AutoChanges { get; set; }
+        //public List<AutoChange> AutoChanges { get; set; }
         public DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
@@ -46,9 +46,10 @@ namespace csb.chains
         void RemoveReplacedWord(int index);
         void ClearReplacedWords();
 
-        void AddAutoChange(AutoChange autochange);
-        void RemoveAutoChange(int index);
-        void ClearAutoChanges();
+        void AddAutoChange(string botname, AutoChange autochange);
+        List<AutoChange> GetAutoChanges(string botname);
+        void RemoveAutoChange(string botname, int index);
+        void ClearAutoChanges(string botname);
 
         void AddDailyPushMessage(DailyPushMessage message, ModerationProcessor moderators);
         void RemoveDailyPushMessage(int index, ModerationProcessor moderators);

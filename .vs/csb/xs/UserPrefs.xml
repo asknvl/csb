@@ -1,20 +1,19 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/bot_moderator/BotModerator_v4.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/chains/Chain.cs">
     <Files>
-      <File FileName="csb/users/User.cs" Line="1247" Column="40" />
+      <File FileName="csb/users/User.cs" Line="1397" Column="39" />
       <File FileName="csb/bot_moderator/BotModerator_v3.cs" />
       <File FileName="csb/bot_moderator/PushData.cs" />
       <File FileName="csb/bot_moderator/DailyPushData.cs" />
-      <File FileName="csb/bot_manager/BotManager.cs" />
+      <File FileName="csb/bot_manager/BotManager.cs" Line="65" Column="9" />
       <File FileName="csb/messaging/DailyPushMessageBase.cs" Line="133" Column="1" />
-      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="11" Column="33" NotebookId="1" />
-      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="494" Column="41" NotebookId="1" />
-      <File FileName="csb/chains/ChainProcessor.cs" NotebookId="1" />
-      <File FileName="csb/chains/IChain.cs" NotebookId="1" />
-      <File FileName="csb/chains/Chain.cs" Line="239" Column="25" NotebookId="1" />
+      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="59" Column="30" NotebookId="1" />
+      <File FileName="csb/bot_poster/BotPoster_api.cs" Line="20" Column="18" NotebookId="1" />
+      <File FileName="csb/chains/IChain.cs" Line="49" Column="42" NotebookId="1" />
+      <File FileName="csb/chains/Chain.cs" Line="29" Column="34" NotebookId="1" />
       <File FileName="csb/server/TGFollowersStatApi.cs" NotebookId="1" />
-      <File FileName="csb/Program.cs" NotebookId="1" />
+      <File FileName="csb/Program.cs" Line="20" Column="45" NotebookId="1" />
       <File FileName="csb/usr_listener/UserListener_v1.cs" Line="367" Column="1" NotebookId="1" />
     </Files>
     <Pads>
@@ -22,11 +21,12 @@
         <State name="__root__">
           <Node name="csb" expanded="True">
             <Node name="csb" expanded="True">
-              <Node name="bot_moderator" expanded="True">
-                <Node name="BotModerator_v4.cs" selected="True" />
-              </Node>
+              <Node name="bot_manager" expanded="True" />
+              <Node name="bot_moderator" expanded="True" />
               <Node name="bot_poster" expanded="True" />
-              <Node name="chains" expanded="True" />
+              <Node name="chains" expanded="True">
+                <Node name="Chain.cs" selected="True" />
+              </Node>
               <Node name="messaging" expanded="True" />
               <Node name="moderation" expanded="True" />
               <Node name="users" expanded="True" />

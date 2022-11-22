@@ -61,6 +61,7 @@ namespace csb.bot_manager
 
         waitingReplacedWord,
 
+        waitingAutoChangeBotGeoTag,
         waitingAutoChangeOldText,
         waitingAutoChangeNewText,
         waitingAutoChangeDelete,

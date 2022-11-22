@@ -489,6 +489,24 @@ namespace csb.users
             return inlineKeyboard;
         }
 
+        InlineKeyboardMarkup getMyBotsWithActionMarkUp(IChain chain, string action)
+        {
+            var bots = chain.Bots;
+            int number = bots.Count;
+
+            InlineKeyboardButton[][] bots_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
+            {
+                bots_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{bots[i].GeoTag} {bots[i].Name}", callbackData: $"bot_{action}_{bots[i].Name}") };
+            }
+            bots_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(bots_buttons);
+
+            return inlineKeyboard;
+        }
+
         InlineKeyboardMarkup getFilteredWordsMarkUp(IChain chain)
         {
             var words = chain.User.FilteredWords;
@@ -574,6 +592,7 @@ namespace csb.users
             return await bot.SendTextMessageAsync(
                 chatId: chat,
                 text: message,
+                disableWebPagePreview:true,
                 cancellationToken: cancellationToken);
         }
 
@@ -653,6 +672,28 @@ namespace csb.users
                 cancellationToken: cancellationToken));
         }
 
+        async Task showAddAutochangeBots(long chat, IChain chain)
+        {
+            var markup = getMyBotsWithActionMarkUp(chain, "+autochange");
+
+            await messagesProcessor.Add(chat, "showAddAutochangeBots", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Выберите бота, для которого неободимо добавить автозамены:",
+                replyMarkup: markup,
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showDeleteAutochangeBots(long chat, IChain chain)
+        {
+            var markup = getMyBotsWithActionMarkUp(chain, "-autochange");
+
+            await messagesProcessor.Add(chat, "showDeleteAutochangeBots", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Выберите бота, для которого неободимо удалить автозамены:",
+                replyMarkup: markup,
+                cancellationToken: cancellationToken));
+        }
+
         async Task showFilteredWords(long chat, IChain chain)
         {
             var markup = getFilteredWordsMarkUp(chain);
@@ -695,20 +736,41 @@ namespace csb.users
                 cancellationToken: cancellationToken));
         }
 
-        async Task showDeleteAutoChanges(long chat)
+        async Task showDeleteAutoChanges(long chat, string botname)
         {
-            var autochanges = chainprocessor.Get(currentChainID).AutoChanges;
 
-            string ach = (autochanges.Count > 0) ? "Введите номер автозамены, которую требуется удалить (введите 0, чтобы удалить все):\n" : "Список автозамен пуст";
+            var autochanges = chainprocessor.Get(currentChainID).GetAutoChanges(botname);
+
+            string ach = (autochanges.Count > 0) ? $"Введите номер автозамены для {botname}, которую требуется удалить (введите 0, чтобы удалить все):\n" : "Список автозамен пуст";
 
             int cntr = 0;
             foreach (var autochange in autochanges)
             {
                 cntr++;
-                ach += $"{cntr}\n {autochange.OldText} → {autochange.NewText}\n";
+                ach += $"{cntr}\n\t{autochange.OldText} → {autochange.NewText}\n";
             }
 
             await messagesProcessor.Add(chat, "deleteAutoChange", await sendTextButtonMessage(chat, ach, "back"));
+        }
+
+        async Task showAutoChanges(long chat, string botname)
+        {
+
+            var autochanges = chainprocessor.Get(currentChainID).GetAutoChanges(botname);
+
+            if (autochanges.Count == 0)
+                return;
+
+            string ach = $"Текущие автозамены бота:\n";
+
+            int cntr = 0;
+            foreach (var autochange in autochanges)
+            {
+                cntr++;
+                ach += $"{cntr}\n\t{autochange.OldText} → {autochange.NewText}\n";
+            }
+
+            await messagesProcessor.Add(chat, "showAutoChange", await sendTextMessage(chat, ach));
         }
         #endregion
 
@@ -1379,11 +1441,11 @@ namespace csb.users
                                 };
 
                                 var chain = chainsProcessor.Get(currentChainID);
-                                chain.AddAutoChange(autoChange);
+                                chain.AddAutoChange(currentBotName, autoChange);
                                 chainprocessor.Save();
-
-                                await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
                                 await messagesProcessor.Back(chat);
+                                await showAutoChanges(chat, currentBotName);
+                                await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
                                 State = BotState.waitingAutoChangeOldText;
 
                             } catch (Exception ex)
@@ -1400,13 +1462,13 @@ namespace csb.users
                                 int index = int.Parse(msg);
                                 if (index > 0)
                                 {                                    
-                                    chain.RemoveAutoChange(index - 1);                                            
+                                    chain.RemoveAutoChange(currentBotName, index - 1);                                            
                                 } else
                                 {
-                                    chain.ClearAutoChanges();
+                                    chain.ClearAutoChanges(currentBotName);
                                 }
                                 chainprocessor.Save();
-                                await showDeleteAutoChanges(chat);
+                                await showDeleteAutoChanges(chat, currentBotName);
 
                             } catch (Exception ex)
                             {
@@ -2040,8 +2102,9 @@ namespace csb.users
                 case "addAutoChange":
                     try
                     {
-                        await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
-                        State = BotState.waitingAutoChangeOldText;
+
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await showAddAutochangeBots(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)
@@ -2054,10 +2117,14 @@ namespace csb.users
                     try
                     {
 
-                        await showDeleteAutoChanges(chat);
+                        //await showDeleteAutoChanges(chat);
 
-                        State = BotState.waitingAutoChangeDelete;
+                        //State = BotState.waitingAutoChangeDelete;
 
+                        //await bot.AnswerCallbackQueryAsync(query.Id);
+
+                        var chain = chainsProcessor.Get(currentChainID);
+                        await showDeleteAutochangeBots(chat, chain);
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)
@@ -2196,7 +2263,6 @@ namespace csb.users
                     {
                         try
                         {
-                            
                             string name = data.Replace("bot_geotag_", "");
                             currentBotName = name;
                             await messagesProcessor.Add(chat, "bot_geotag_", await sendTextButtonMessage(chat, $"Введите новый геотег бота {name}:", "back"));
@@ -2206,6 +2272,44 @@ namespace csb.users
                         } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("bot_+autochange_"))
+                    {
+                        try
+                        {
+                            string name = data.Replace("bot_+autochange_", "");
+                            currentBotName = name;
+                            Console.WriteLine(name);
+                            //await messagesProcessor.Back(chat);
+                            await showAutoChanges(chat, currentBotName);
+                            await messagesProcessor.Add(chat, "addAutoChangeOldText", await sendTextButtonMessage(chat, "Введите ссылку, которую требуется заменить:", "back"));
+                            State = BotState.waitingAutoChangeOldText;
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("bot_-autochange_"))
+                    {
+                        try
+                        {
+                            var chain = chainsProcessor.Get(currentChainID);
+                            string name = data.Replace("bot_-autochange_", "");
+                            currentBotName = name;
+                            State = BotState.waitingAutoChangeDelete;
+                            //await messagesProcessor.Back(chat);
+                            await showDeleteAutoChanges(chat, currentBotName);
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+
+                        } catch (Exception ex)
+                        {
+
                         }
                     }
 

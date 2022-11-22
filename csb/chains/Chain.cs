@@ -31,8 +31,8 @@ namespace csb.chains
         public UserListener_v1 User { get; private set; }
         [JsonProperty]
         public List<string> ReplacedWords { get; set; } = new();
-        [JsonProperty]
-        public List<AutoChange> AutoChanges { get; set; } = new();
+        //[JsonProperty]
+        //public List<AutoChange> AutoChanges { get; set; } = new();
         [JsonProperty]
         public DailyPushData DailyPushData { get; set; } = new();
 
@@ -230,38 +230,59 @@ namespace csb.chains
                 item.ReplacedWords.Clear();
         }
 
-        public void AddAutoChange(AutoChange autochange)
+        public void AddAutoChange(string botname, AutoChange autochange)
         {
-            AutoChanges.Add(autochange);
-            foreach (var bot in Bots)
-            {
-                if (!bot.AutoChanges.Contains(autochange))
-                    bot.AutoChanges.Add(autochange);
-            }
+            //AutoChanges.Add(autochange);
+
+            var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
+
+            if (bot != null)
+                bot.AutoChanges.Add(autochange);
+
+
+            //foreach (var bot in Bots)
+            //{
+            //    if (!bot.AutoChanges.Contains(autochange))
+            //        bot.AutoChanges.Add(autochange);
+            //}
         }
 
-        public List<AutoChange> GetAutoChanges()
+        public List<AutoChange> GetAutoChanges(string botname)
         {
-            return AutoChanges;
+            var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
+            if (bot != null)
+                return bot.AutoChanges;
+            else
+                throw new Exception($"Для бота {bot.GeoTag} {bot.Name} не установлены автозамены");
         }
 
-        public void RemoveAutoChange(int index)
+        public void RemoveAutoChange(string botname, int index)
         {
-            AutoChanges.RemoveAt(index);
-            foreach (var bot in Bots)
-            {
+
+            var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
+
+            if (bot != null)
                 bot.AutoChanges.RemoveAt(index);
-            }
+
+            //AutoChanges.RemoveAt(index);
+            //foreach (var bot in Bots)
+            //{
+            //    bot.AutoChanges.RemoveAt(index);
+            //}
         }
 
-        public void ClearAutoChanges()
+        public void ClearAutoChanges(string botname)
         {
-            AutoChanges.Clear();
-            foreach (var bot in Bots)
-            {
-                bot.AutoChanges.Clear();                
-            }
-            
+            var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
+
+            if (bot != null)
+                bot.AutoChanges.Clear();
+            //AutoChanges.Clear();
+            //foreach (var bot in Bots)
+            //{
+            //    bot.AutoChanges.Clear();                
+            //}
+
         }
 
         public void AddDailyPushMessage(DailyPushMessage pattern, ModerationProcessor moderators)
