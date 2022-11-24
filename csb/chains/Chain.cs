@@ -304,7 +304,9 @@ namespace csb.chains
                 var patternCpy = pattern.Clone();
                 //patternCpy.Id = DailyPushData.Messages.Count;
 
-                patternCpy.MakeAutochange(new List<AutoChange>() { pmAutochange });
+                patternCpy.MakeAutochange(new List<AutoChange>() { pmAutochange }); //pm
+                patternCpy.MakeAutochange(outbot.AutoChanges); //bot poster autochanges
+
                 try
                 {
                     moderators.DailyPushData(geotag).Messages.Add(patternCpy);

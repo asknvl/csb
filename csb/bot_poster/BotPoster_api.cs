@@ -531,7 +531,7 @@ namespace csb.bot_poster
 
         public override string ToString()
         {
-            return $"{Name}:\n{ChannelTitle}\n{VictimLink}\n{ChannelLink}";
+            return $"{GeoTag}:\nИмя={Name}\nКанал={ChannelTitle}\nPM1={VictimLink}\nPM2={ChannelLink}";
         }
     }
 }

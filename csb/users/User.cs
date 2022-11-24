@@ -108,7 +108,7 @@ namespace csb.users
                 },
 
                  new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Настройка периодических уведомлений", callbackData: "editDailyPushes"),
+                    InlineKeyboardButton.WithCallbackData(text: "Настройка ежедневных push-уведомлений", callbackData: "editDailyPushes"),
                 },
 
                 new[] {
@@ -188,7 +188,7 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "daily_add"),
                 },
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Удалить все", callbackData: "daily_delete"),
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "daily_delete"),
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
@@ -396,7 +396,7 @@ namespace csb.users
             var moderators = moderationProcessor.ModeratorBots;
             int number = moderators.Count;
 
-            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 1][];
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 2][];
 
             for (int i = 0; i < number; i++)
             {
@@ -404,6 +404,50 @@ namespace csb.users
             }
 
             moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить модератора", callbackData: "newmoderator") };
+
+            moderators_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+
+            InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
+
+            return inlineKeyboard;
+        }
+
+        InlineKeyboardMarkup getMyModeratorsDailyPushMessagesShowMarkUp()
+        {
+
+            var moderators = moderationProcessor.ModeratorBots;
+            int number = moderators.Count;
+
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
+            {
+                moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: moderators[i].GeoTag, callbackData: $"moderators_show_daily_pushes_{moderators[i].GeoTag}") };
+            }
+
+            moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
+
+            return inlineKeyboard;
+        }
+
+        InlineKeyboardMarkup getMyModeratorsDailyPushMessagesDeleteMarkUp()
+        {
+
+            var moderators = moderationProcessor.ModeratorBots;
+            int number = moderators.Count;
+
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 2][];
+
+            for (int i = 0; i < number; i++)
+            {
+                moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: moderators[i].GeoTag, callbackData: $"moderators_delete_daily_pushes_{moderators[i].GeoTag}") };
+            }
+            moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Для всех", callbackData: "moderators_delete_daily_pushes_all") };
+
+            moderators_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
 
             InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
 
@@ -625,6 +669,28 @@ namespace csb.users
                 text: "Управление модераторами:",
                 //replyMarkup: inlineKeyboards["/mychains"],
                 replyMarkup: getMyModeratorsMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showMyModeratorsDailyPushesMessages(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "/mymoderators", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Выберите модератора, для которого требуется показать ежедневные сообщения:",
+                //replyMarkup: inlineKeyboards["/mychains"],
+                replyMarkup: getMyModeratorsDailyPushMessagesShowMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task deleteMyModeratorsDailyPushMessages(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "/mymoderators", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Выберите модератора, для которого требуется удалить ежедневные сообщения:",
+                //replyMarkup: inlineKeyboards["/mychains"],
+                replyMarkup: getMyModeratorsDailyPushMessagesDeleteMarkUp(),
                 cancellationToken: cancellationToken));
         }
 
@@ -1553,6 +1619,7 @@ namespace csb.users
                         foreach (var bot in chain.Bots)
                         {
                             botsinfo += $"{index}. {bot.ToString()}\n------\n";
+                            index++;
                         }
 
                         string isActive = (chain.IsRunning) ? "АКТИВНА" : "НЕАКТИВНА";
@@ -2160,11 +2227,15 @@ namespace csb.users
                 case "daily_delete":
                     try
                     {
-                        var chain = chainsProcessor.Get(currentChainID);
-                        chain.ClearDailyPushMessages(moderationProcessor);
-                        chainsProcessor.Save();
+                        //var chain = chainsProcessor.Get(currentChainID);
+                        //chain.ClearDailyPushMessages(moderationProcessor);
+                        //chainsProcessor.Save();
+                        //await bot.AnswerCallbackQueryAsync(query.Id);
+                        //await sendTextMessage(chat, "Ежедневные сообщения удалены");
+
+                        await deleteMyModeratorsDailyPushMessages(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id);
-                        await sendTextMessage(chat, "Ежедневные сообщения удалены");
+
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
@@ -2172,8 +2243,18 @@ namespace csb.users
                     break;
 
                 case "daily_show":
+                    try
+                    {
+                        await showMyModeratorsDailyPushesMessages(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
                     break;
 
+         
                 case "":
                     break;
 
@@ -2521,6 +2602,59 @@ namespace csb.users
                         }
                     }
 
+                    if (data.Contains("moderators_show_daily_pushes_"))
+                    {
+                        try
+                        {
+                            string geotag = data.Replace("moderators_show_daily_pushes_", "");
+                            var pushes = moderationProcessor.DailyPushData(geotag).Messages;
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+                            if (pushes.Count > 0)
+                            {
+                                foreach (var push in pushes)
+                                {
+                                    push.fileId = null;
+                                    await push.Send(chat, bot);
+                                }
+
+                            } else
+                            {
+                                await sendTextMessage(query.Message.Chat.Id,   $"Для модератора {geotag} не установлены ежедневные push-сообщения");
+                            }
+
+
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("moderators_delete_daily_pushes_"))
+                    {
+                        try
+                        {
+                            string geotag = data.Replace("moderators_delete_daily_pushes_", "");
+
+                            if (geotag.Equals("all"))
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.ClearDailyPushMessages(moderationProcessor);
+                                chainsProcessor.Save();
+                                await bot.AnswerCallbackQueryAsync(query.Id);
+                                await sendTextMessage(chat, "Ежедневные push-сообщения удалены для всех модерторов");
+                                return;
+                            }
+
+                            moderationProcessor.DailyPushData(geotag).Messages.Clear();
+                            moderationProcessor.Save();
+                            await sendTextMessage(chat, $"Ежедневные push-сообщения удалены для модератора {geotag}");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
                     break;
             }
         }

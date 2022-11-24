@@ -208,7 +208,7 @@ namespace csb.bot_moderator
                     string geoPrefx = GeoTag.Substring(0, 4);
 
                     //if (!chNumsFromGeoTags.Any(n => !n.Equals(chNum)))
-                    if (!chGeoPrefx.Any(n => n.Equals(geoPrefx)))
+                    if (!chGeoPrefx.Any(n => n.Equals(geoPrefx)) || addme)
                     {
                         try
                         {
