@@ -32,7 +32,9 @@ namespace csb.bot_moderator
         { 
             try
             {
-                
+                if (DailyPushData.Messages.Count == 0)
+                    return;
+
                 var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 24);
                 Console.WriteLine($"{DateTime.Now} GetSubs {GeoTag} {subs.Count}");
 
