@@ -17,7 +17,7 @@ namespace csb
        
         static void Main(string[] args)
         {
-            Console.WriteLine("Вдудь 3.1.7_1");
+            Console.WriteLine("Вдудь 3.1.8");
             BotManager manager = new BotManager();
             manager.Start();
 

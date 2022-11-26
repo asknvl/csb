@@ -9,7 +9,7 @@
       <File FileName="csb/bot_manager/BotManager.cs" />
       <File FileName="csb/messaging/DailyPushMessageBase.cs" Line="133" Column="1" />
       <File FileName="csb/messaging/DailyPushMessage.cs" />
-      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="36" Column="74" NotebookId="1" />
+      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="35" Column="1" NotebookId="1" />
       <File FileName="csb/bot_poster/BotPoster_api.cs" NotebookId="1" />
       <File FileName="csb/chains/IChain.cs" NotebookId="1" />
       <File FileName="csb/chains/Chain.cs" NotebookId="1" />
@@ -17,27 +17,6 @@
       <File FileName="csb/Program.cs" NotebookId="1" />
       <File FileName="csb/usr_listener/UserListener_v1.cs" NotebookId="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="csb" expanded="True">
-            <Node name="csb" expanded="True">
-              <Node name="bot_manager" expanded="True" />
-              <Node name="bot_moderator" expanded="True" />
-              <Node name="bot_poster" expanded="True" />
-              <Node name="chains" expanded="True" />
-              <Node name="messaging" expanded="True">
-                <Node name="DailyPushMessageBase.cs" selected="True" />
-              </Node>
-              <Node name="moderation" expanded="True" />
-              <Node name="server" expanded="True" />
-              <Node name="users" expanded="True" />
-              <Node name="usr_listener" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
