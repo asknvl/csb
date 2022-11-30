@@ -209,6 +209,28 @@ namespace csb.messaging
             }
 
         }
+
+        async Task send(long id, ITelegramBotClient bot)
+        {
+            switch (Message.Type)
+            {
+                case MessageType.Text:
+                    await sendTextMessage(id, bot);
+                    break;
+
+                case MessageType.Photo:
+                    await sendPhotoMessage(id, bot);
+                    break;
+
+                case MessageType.Video:
+                    await sendVideoMessage(id, bot);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         #endregion
 
         public static async Task<DailyPushMessage> Create(long id, ITelegramBotClient bot, Message pattern, string chainName)
@@ -284,20 +306,20 @@ namespace csb.messaging
 
         public virtual async Task Send(long id, ITelegramBotClient bot)
         {
-            await Task.Run(async () => { 
-                switch (Message.Type)
+            await Task.Run(async () => {
+
+                try
                 {
-                    case MessageType.Text:
-                        await sendTextMessage(id, bot);
-                        break;
-
-                    case MessageType.Photo:
-                        await sendPhotoMessage(id, bot);
-                        break;
-
-                    case MessageType.Video:
-                        await sendVideoMessage(id, bot);
-                        break;
+                    await send(id, bot);
+                    
+                } catch (Exception ex)
+                {
+                    if (ex.Message.ToLower().Contains("wrong file"))
+                    {
+                        Console.WriteLine("Resending with fileId = null");
+                        fileId = null;
+                        await send(id, bot);
+                    }
                 }
             });
         }

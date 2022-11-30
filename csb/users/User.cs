@@ -416,8 +416,13 @@ namespace csb.users
         InlineKeyboardMarkup getMyModeratorsDailyPushMessagesShowMarkUp()
         {
 
-            var moderators = moderationProcessor.ModeratorBots;
-            int number = moderators.Count;
+            //var moderators = moderationProcessor.ModeratorBots;
+            //int number = moderators.Count;
+            var bots = chainsProcessor.Get(currentChainID).Bots;
+            var botsGeoTags = bots.Select(b => b.GeoTag);
+
+            var moderators = moderationProcessor.ModeratorBots.Where(m => botsGeoTags.Contains(m.GeoTag)).ToList();
+            int number = moderators.Count; //select for chain bots
 
             InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 1][];
 
@@ -436,8 +441,11 @@ namespace csb.users
         InlineKeyboardMarkup getMyModeratorsDailyPushMessagesDeleteMarkUp()
         {
 
-            var moderators = moderationProcessor.ModeratorBots;
-            int number = moderators.Count;
+            var bots = chainsProcessor.Get(currentChainID).Bots;
+            var botsGeoTags = bots.Select(b => b.GeoTag);
+
+            var moderators = moderationProcessor.ModeratorBots.Where(m => botsGeoTags.Contains(m.GeoTag)).ToList();
+            int number = moderators.Count; //select for chain bots
 
             InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 2][];
 

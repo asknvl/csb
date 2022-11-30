@@ -21,12 +21,14 @@ namespace csb.bot_moderator
 
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
-            dailyPushTimer.Interval = 10 * 60 * 1000;
+            dailyPushTimer.Interval = 1 * 60 * 1000;
             dailyPushTimer.AutoReset = true;
-            dailyPushTimer.Elapsed += DailyPushTimer_Elapsed; ;
+            dailyPushTimer.Elapsed += DailyPushTimer_Elapsed;
             dailyPushTimer.Start();
         }
-  
+
+        int prevId = -1;
+
         private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         { 
             try
@@ -53,7 +55,8 @@ namespace csb.bot_moderator
                                 await message.Send(id, bot);
                                 await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.delivered);
                                 Console.WriteLine($"{GeoTag} {id} was pushed {message.Id}");
-                            } catch (Exception ex)
+                            }
+                            catch (Exception ex)
                             {
                                 await statApi.MarkFollowerWasDailyPushed(GeoTag, id, 0, DailyPushState.disable);
                                 throw new Exception(ex.Message);
