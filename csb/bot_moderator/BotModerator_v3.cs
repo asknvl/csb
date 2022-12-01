@@ -203,12 +203,10 @@ namespace csb.bot_moderator
                         Console.WriteLine($"IsApproved? {ex.Message}");
                     }
 
-                    //if (user_geotags.Count == 0 || (user_geotags.Count == 1 && user_geotags[0].Length != GeoTag.Length) || addme || GeoTag.ToLower().Contains("test"))
-
-                    string geoPrefx = GeoTag.Substring(0, 4);
-
-                    //if (!chNumsFromGeoTags.Any(n => !n.Equals(chNum)))
-                    if (!chGeoPrefx.Any(n => n.Equals(geoPrefx)) || addme)
+                    //string geoPrefx = GeoTag.Substring(0, 4);
+                    //if (!chGeoPrefx.Any(n => n.Equals(geoPrefx)) || addme)
+                    bool isAllowed = await statApi.IsSubscriptionAvaliable(GeoTag, chatJoinRequest.From.Id);
+                    if (isAllowed || addme)
                     {
                         try
                         {

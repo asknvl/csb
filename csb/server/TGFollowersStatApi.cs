@@ -442,6 +442,41 @@ namespace csb.server
                     throw new Exception($"Не удалось пометить результат daily push подписчика geotag={geotag} userid={userId} pushid={pushId}");
             });
         }
+
+        class subAvaliableData
+        {
+            public bool is_avaliable { get; set; }
+            public int group_id { get; set; }
+        }
+        class subAvaliableResult
+        {
+            public bool success { get; set; }
+            public subAvaliableData data { get; set; }
+        }
+        public virtual async Task<bool> IsSubscriptionAvaliable(string geotag, long id)
+        {
+            bool res = false;
+
+            await Task.Run(() =>
+            {
+                var client = new RestClient($"{url}/v1/telegram/subscriptionAvailability?geo={geotag}&userID={id}");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader($"Authorization", $"Bearer {token}");
+                var response = client.Execute(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var resp = JsonConvert.DeserializeObject<subAvaliableResult>(response.Content);
+                    if (resp.success)
+                        res = resp.data.is_avaliable;
+                    else
+                        throw new Exception($"IsSubscriptionAvaliable success={resp.success}");
+
+                } else
+                    throw new Exception($"Не удалось получить информацию о возможности подписки {id} на канал {geotag}");
+            });
+
+            return res;
+        }
         #endregion
     }
 }
