@@ -25,8 +25,8 @@ namespace csb.bot_moderator
         //protected TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
 
 #else
-        //TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
-        protected TGStatApi statApi = new TGStatApi("http://192.168.72.51:4000");        
+        protected TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
+        //protected TGStatApi statApi = new TGStatApi("http://192.168.72.51:4000");        
 
 #endif
         #endregion
