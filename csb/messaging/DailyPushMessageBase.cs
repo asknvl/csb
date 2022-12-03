@@ -319,7 +319,8 @@ namespace csb.messaging
                         Console.WriteLine("Resending with fileId = null");
                         fileId = null;
                         await send(id, bot);
-                    }
+                    } else
+                        throw;
                 }
             });
         }

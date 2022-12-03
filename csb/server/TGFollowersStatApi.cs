@@ -439,13 +439,13 @@ namespace csb.server
 
                 }
                 else
-                    throw new Exception($"Не удалось пометить результат daily push подписчика geotag={geotag} userid={userId} pushid={pushId}");
+                    throw new Exception($"Не удалось пометить результат daily push подписчика geotag={geotag} userid={userId} pushid={pushId} pushstate={pushState} responce={response.Content}");
             });
         }
 
         class subAvaliableData
         {
-            public bool is_avaliable { get; set; }
+            public bool is_available { get; set; }
             public int group_id { get; set; }
         }
         class subAvaliableResult
@@ -466,8 +466,9 @@ namespace csb.server
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var resp = JsonConvert.DeserializeObject<subAvaliableResult>(response.Content);
+
                     if (resp.success)
-                        res = resp.data.is_avaliable;
+                        res = resp.data.is_available;
                     else
                         throw new Exception($"IsSubscriptionAvaliable success={resp.success}");
 

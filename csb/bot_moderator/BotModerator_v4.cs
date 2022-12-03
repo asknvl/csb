@@ -57,7 +57,7 @@ namespace csb.bot_moderator
                             catch (Exception ex)
                             {
                                 await statApi.MarkFollowerWasDailyPushed(GeoTag, id, 0, DailyPushState.disable);
-                                throw new Exception(ex.Message);
+                                throw;
                             }
                         }
                         else
