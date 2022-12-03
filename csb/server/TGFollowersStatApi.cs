@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace csb.server
@@ -19,6 +20,7 @@ namespace csb.server
 
         #region vars
         string url;
+        static SemaphoreSlim semaphore = new SemaphoreSlim(20, 50);
         #endregion
 
         public TGFollowersStatApi(string url)
@@ -29,6 +31,9 @@ namespace csb.server
         #region public
         public virtual async Task UpdateFollowers(List<Follower> followers)
         {
+
+            await semaphore.WaitAsync();
+
             try
             {
                 await Task.Run(() => {
@@ -51,12 +56,17 @@ namespace csb.server
 
             } catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
+            } finally
+            {
+                semaphore.Release();
             }
         }
 
         public virtual async Task<int> GetFollowersNumber(string geotag, string startDate, string endDate)
         {
+            await semaphore.WaitAsync();
+
             int followersNumber = 0;
             string followersGeo = "";
 
@@ -94,7 +104,10 @@ namespace csb.server
 
             } catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
+            } finally
+            {
+                semaphore.Release();
             }
 
             return followersNumber;
@@ -115,33 +128,42 @@ namespace csb.server
 
         public virtual async Task<List<string>> GetFollowerGeoTags(long id)
         {
+            await semaphore.WaitAsync(); 
+
             List<string> tags = new List<string>();
 
             try
-            {           
-                var client = new RestClient($"{url}/v1/telegram/userByID/{id}");
-                var request = new RestRequest(Method.GET);
-                request.AddHeader($"Authorization", $"Bearer {token}");
-                var response = client.Execute(request);
-                var json = JObject.Parse(response.Content);
-                bool res = json["success"].ToObject<bool>();
-                if (res)
+            {
+                await Task.Run(() =>
                 {
-                    var data = json["telegramUser"];
-                    if (data != null)
-                    {
-                        var d = data.ToObject<tgUserDto>();
-                        tags = d.geolocations.Select(g => g.code).ToList();
-                    }
 
-                } else
-                {
-                    throw new TGFollowersStatException($"Не удалось получить геотеги для id={id}");
-                }
+                    var client = new RestClient($"{url}/v1/telegram/userByID/{id}");
+                    var request = new RestRequest(Method.GET);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
+                    var response = client.Execute(request);
+                    var json = JObject.Parse(response.Content);
+                    bool res = json["success"].ToObject<bool>();
+                    if (res)
+                    {
+                        var data = json["telegramUser"];
+                        if (data != null)
+                        {
+                            var d = data.ToObject<tgUserDto>();
+                            tags = d.geolocations.Select(g => g.code).ToList();
+                        }
+
+                    } else
+                    {
+                        throw new TGFollowersStatException($"Не удалось получить геотеги для id={id}");
+                    }
+                });
 
             } catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
+            } finally
+            {
+                semaphore.Release();
             }
 
             return tags;
@@ -167,25 +189,35 @@ namespace csb.server
         public virtual async Task<List<tgUserPushInfoDto>> GetNoFeedbackFollowers(string geotag, string date_from, string date_to)
         {
 
+            await semaphore.WaitAsync();
+
             List<tgUserPushInfoDto> users = new();
-
-            await Task.Run(() =>
+            try
             {
-                var client = new RestClient($"{url}/v1/telegram/usersWithoutFeedback?date_from={date_from}&date_to={date_to}&geo={geotag}");
-                var request = new RestRequest(Method.GET);
-                request.AddHeader($"Authorization", $"Bearer {token}");
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                await Task.Run(() =>
                 {
-                    var resp = JsonConvert.DeserializeObject<tgUsersPushResultDto>(response.Content);
-                    if (resp.success)
-                        users = resp.data;
-                    else
-                        throw new Exception($"GetNoFeedBackUsers success={resp.success}");
+                    var client = new RestClient($"{url}/v1/telegram/usersWithoutFeedback?date_from={date_from}&date_to={date_to}&geo={geotag}");
+                    var request = new RestRequest(Method.GET);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
+                    var response = client.Execute(request);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var resp = JsonConvert.DeserializeObject<tgUsersPushResultDto>(response.Content);
+                        if (resp.success)
+                            users = resp.data;
+                        else
+                            throw new Exception($"GetNoFeedBackUsers success={resp.success}");
 
-                } else
-                    throw new Exception($"Не удалось получить информацию о фидбеках подписчиков geotag={geotag}");
-            });
+                    } else
+                        throw new Exception($"Не удалось получить информацию о фидбеках подписчиков geotag={geotag}");
+                });
+            } catch (Exception ex)
+            {
+                throw;
+            } finally
+            {
+                semaphore.Release();
+            }
 
             return users;
         }
@@ -202,34 +234,49 @@ namespace csb.server
         }
         public virtual async Task MarkFollowerMadeFeedback(string geotag, long id)
         {
-            await Task.Run(() => {
 
-                var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                var request = new RestRequest(Method.POST);
-                request.AddHeader($"Authorization", $"Bearer {token}");
+            await semaphore.WaitAsync();
 
-                tgUsersFeedbackDto feedback = new();
-                feedback.users.Add(new tgUserFeedbackDto() { 
-                    tg_user_id = id,
-                    tg_geolocation = geotag,
-                    is_user_send_msg = true
-                });
+            try
+            {
 
-                string jfeedback = JsonConvert.SerializeObject(feedback);
-                request.AddParameter("application/json", jfeedback, ParameterType.RequestBody);
-
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                await Task.Run(() =>
                 {
-                    var json = JObject.Parse(response.Content);
-                    bool res = json["success"].ToObject<bool>();
-                    if (!res)
-                        throw new Exception($"MarkFollowerMadeFeedback success={res}");
 
-                } else
-                    throw new Exception($"Не удалось пометить фидбэк подписчика code={response.StatusCode} text={response.Content}");
+                    var client = new RestClient($"{url}/v1/telegram/userByGeo");
+                    var request = new RestRequest(Method.POST);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
 
-            });
+                    tgUsersFeedbackDto feedback = new();
+                    feedback.users.Add(new tgUserFeedbackDto()
+                    {
+                        tg_user_id = id,
+                        tg_geolocation = geotag,
+                        is_user_send_msg = true
+                    });
+
+                    string jfeedback = JsonConvert.SerializeObject(feedback);
+                    request.AddParameter("application/json", jfeedback, ParameterType.RequestBody);
+
+                    var response = client.Execute(request);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var json = JObject.Parse(response.Content);
+                        bool res = json["success"].ToObject<bool>();
+                        if (!res)
+                            throw new Exception($"MarkFollowerMadeFeedback success={res}");
+
+                    } else
+                        throw new Exception($"Не удалось пометить фидбэк подписчика code={response.StatusCode} text={response.Content}");
+
+                });
+            } catch (Exception ex)
+            {
+                throw;
+            } finally
+            {
+                semaphore.Release();
+            }
         }
 
         public class tgUserPushSentDto
@@ -258,48 +305,62 @@ namespace csb.server
 
         public virtual async Task MarkFollowerWasPushed(string geotag, long id, double hours, bool result)
         {
-            await Task.Run(() => {
 
-                var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                var request = new RestRequest(Method.POST);
-                request.AddHeader($"Authorization", $"Bearer {token}");
+            await semaphore.WaitAsync();
 
-                if (result)
+            try
+            {
+
+                await Task.Run(() =>
                 {
-                    tgUsersPushesDeliveredDto delivered = new();
-                    delivered.users.Add(new tgUserPushDeliveredDto()
+
+                    var client = new RestClient($"{url}/v1/telegram/userByGeo");
+                    var request = new RestRequest(Method.POST);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
+
+                    if (result)
                     {
-                        tg_user_id = id,
-                        tg_geolocation = geotag,
-                        push_delivered_hours = hours
-                    });
-                    string jdelivered = JsonConvert.SerializeObject(delivered);
-                    request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
+                        tgUsersPushesDeliveredDto delivered = new();
+                        delivered.users.Add(new tgUserPushDeliveredDto()
+                        {
+                            tg_user_id = id,
+                            tg_geolocation = geotag,
+                            push_delivered_hours = hours
+                        });
+                        string jdelivered = JsonConvert.SerializeObject(delivered);
+                        request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
 
-                } else
-                {
-                    tgUsersPushesSentDto sent = new();
-                    sent.users.Add(new tgUserPushSentDto()
+                    } else
                     {
-                        tg_user_id = id,
-                        tg_geolocation = geotag,
-                        push_send_hours = hours
-                    });
-                    string jsent = JsonConvert.SerializeObject(sent);
-                    request.AddParameter("application/json", jsent, ParameterType.RequestBody);
-                }
+                        tgUsersPushesSentDto sent = new();
+                        sent.users.Add(new tgUserPushSentDto()
+                        {
+                            tg_user_id = id,
+                            tg_geolocation = geotag,
+                            push_send_hours = hours
+                        });
+                        string jsent = JsonConvert.SerializeObject(sent);
+                        request.AddParameter("application/json", jsent, ParameterType.RequestBody);
+                    }
 
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var json = JObject.Parse(response.Content);
-                    bool res = json["success"].ToObject<bool>();
-                    if (!res)
-                        throw new Exception($"MarkFollowerWasPushed success={res}");
+                    var response = client.Execute(request);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var json = JObject.Parse(response.Content);
+                        bool res = json["success"].ToObject<bool>();
+                        if (!res)
+                            throw new Exception($"MarkFollowerWasPushed success={res}");
 
-                } else
-                    throw new Exception($"Не удалось пометить результат push подписчика");
-            });
+                    } else
+                        throw new Exception($"Не удалось пометить результат push подписчика");
+                });
+            } catch (Exception ex)
+            {
+                throw;
+            } finally
+            {
+                semaphore.Release();
+            }
         }
 
         public class tgUserDailyPushInfo
@@ -319,24 +380,35 @@ namespace csb.server
         public virtual async Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours)
         {
             List<tgUserDailyPushInfo> users = new();
-            await Task.Run(() =>
-            {
-                var client = new RestClient($"{url}/v1/telegram/usersNotification?min_hours_after_last_push={hours}&geo={geotag}");
-                var request = new RestRequest(Method.GET);
-                request.AddHeader($"Authorization", $"Bearer {token}");
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var resp = JsonConvert.DeserializeObject<tgUserDailyPushResultDto>(response.Content);
-                    if (resp.success)
-                        users = resp.data;
-                    else
-                        throw new Exception($"GetUsersNeedDailyPush success={resp.success}");
 
-                }
-                else
-                    throw new Exception($"Не удалось получить список подписчиков для ежедневного {hours} пуш сообщения geotag={geotag}");
-            });
+            await semaphore.WaitAsync();
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    var client = new RestClient($"{url}/v1/telegram/usersNotification?min_hours_after_last_push={hours}&geo={geotag}");
+                    var request = new RestRequest(Method.GET);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
+                    var response = client.Execute(request);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var resp = JsonConvert.DeserializeObject<tgUserDailyPushResultDto>(response.Content);
+                        if (resp.success)
+                            users = resp.data;
+                        else
+                            throw new Exception($"GetUsersNeedDailyPush success={resp.success}");
+
+                    } else
+                        throw new Exception($"Не удалось получить список подписчиков для ежедневного {hours} пуш сообщения geotag={geotag}");
+                });
+            } catch (Exception ex)
+            {
+                throw;
+            } finally
+            {
+                semaphore.Release();
+            }
 
             return users;
         }
@@ -386,61 +458,77 @@ namespace csb.server
 
         public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId,  DailyPushState pushState)
         {
-            await Task.Run(() => {
 
-                var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                var request = new RestRequest(Method.POST);
-                request.AddHeader($"Authorization", $"Bearer {token}");
+            await semaphore.WaitAsync();
 
-                switch (pushState)
+            try
+            {
+
+                await Task.Run(() =>
                 {
-                    case DailyPushState.sent:
-                        tgUsersDailyPushSentDto sent = new();
-                        sent.users.Add(new tgUserDailyPushSentDto() {
-                            tg_geolocation = geotag,
-                            tg_user_id = userId,
-                            notification_send_id = pushId
-                        });
-                        string jsent = JsonConvert.SerializeObject(sent);
-                        request.AddParameter("application/json", jsent, ParameterType.RequestBody);
-                        break;
-                    case DailyPushState.delivered:
-                        tgUsersDailyPushDeliveredDto delivered = new();
-                        delivered.users.Add(new tgUserDailyPushDeliveredDto() {
-                            tg_geolocation = geotag,
-                            tg_user_id = userId,
-                            notification_delivered_id = pushId
-                        });
-                        string jdelivered = JsonConvert.SerializeObject(delivered);
-                        request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
-                        break;
-                    case DailyPushState.disable:
-                        tgUsersDailyPushDisableDto disable = new();
-                        disable.users.Add(new tgUserDailyPushDisableDto() {
-                            tg_geolocation = geotag,
-                            tg_user_id = userId,
-                            notification_enabled = false
-                        });
-                        string jdisable = JsonConvert.SerializeObject(disable);
-                        request.AddParameter("application/json", jdisable, ParameterType.RequestBody);
-                        break;
-                    default:
-                        throw new Exception("MarkFolloweWasDailyPushed Unknown DailyPushState");
-                        
-                }
 
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var json = JObject.Parse(response.Content);
-                    bool res = json["success"].ToObject<bool>();
-                    if (!res)
-                        throw new Exception($"MarkFollowerWasDailyPushed success={res}");
+                    var client = new RestClient($"{url}/v1/telegram/userByGeo");
+                    var request = new RestRequest(Method.POST);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
 
-                }
-                else
-                    throw new Exception($"Не удалось пометить результат daily push подписчика geotag={geotag} userid={userId} pushid={pushId} pushstate={pushState} responce={response.Content}");
-            });
+                    switch (pushState)
+                    {
+                        case DailyPushState.sent:
+                            tgUsersDailyPushSentDto sent = new();
+                            sent.users.Add(new tgUserDailyPushSentDto()
+                            {
+                                tg_geolocation = geotag,
+                                tg_user_id = userId,
+                                notification_send_id = pushId
+                            });
+                            string jsent = JsonConvert.SerializeObject(sent);
+                            request.AddParameter("application/json", jsent, ParameterType.RequestBody);
+                            break;
+                        case DailyPushState.delivered:
+                            tgUsersDailyPushDeliveredDto delivered = new();
+                            delivered.users.Add(new tgUserDailyPushDeliveredDto()
+                            {
+                                tg_geolocation = geotag,
+                                tg_user_id = userId,
+                                notification_delivered_id = pushId
+                            });
+                            string jdelivered = JsonConvert.SerializeObject(delivered);
+                            request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
+                            break;
+                        case DailyPushState.disable:
+                            tgUsersDailyPushDisableDto disable = new();
+                            disable.users.Add(new tgUserDailyPushDisableDto()
+                            {
+                                tg_geolocation = geotag,
+                                tg_user_id = userId,
+                                notification_enabled = false
+                            });
+                            string jdisable = JsonConvert.SerializeObject(disable);
+                            request.AddParameter("application/json", jdisable, ParameterType.RequestBody);
+                            break;
+                        default:
+                            throw new Exception("MarkFolloweWasDailyPushed Unknown DailyPushState");
+
+                    }
+
+                    var response = client.Execute(request);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var json = JObject.Parse(response.Content);
+                        bool res = json["success"].ToObject<bool>();
+                        if (!res)
+                            throw new Exception($"MarkFollowerWasDailyPushed success={res}");
+
+                    } else
+                        throw new Exception($"<!!!> geotag={geotag} userid={userId} pushid={pushId} pushstate={pushState} msg={response.ErrorMessage} status={response.ResponseStatus}");
+                });
+            } catch (Exception ex)
+            {
+                throw;
+            } finally
+            {
+                semaphore.Release();    
+            }
         }
 
         class subAvaliableData
@@ -457,24 +545,36 @@ namespace csb.server
         {
             bool res = false;
 
-            await Task.Run(() =>
+            await semaphore.WaitAsync();
+
+            try
             {
-                var client = new RestClient($"{url}/v1/telegram/subscriptionAvailability?geo={geotag}&userID={id}");
-                var request = new RestRequest(Method.GET);
-                request.AddHeader($"Authorization", $"Bearer {token}");
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                await Task.Run(() =>
                 {
-                    var resp = JsonConvert.DeserializeObject<subAvaliableResult>(response.Content);
+                    var client = new RestClient($"{url}/v1/telegram/subscriptionAvailability?geo={geotag}&userID={id}");
+                    var request = new RestRequest(Method.GET);
+                    request.AddHeader($"Authorization", $"Bearer {token}");
+                    var response = client.Execute(request);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var resp = JsonConvert.DeserializeObject<subAvaliableResult>(response.Content);
 
-                    if (resp.success)
-                        res = resp.data.is_available;
-                    else
-                        throw new Exception($"IsSubscriptionAvaliable success={resp.success}");
+                        if (resp.success)
+                            res = resp.data.is_available;
+                        else
+                            throw new Exception($"IsSubscriptionAvaliable success={resp.success}");
 
-                } else
-                    throw new Exception($"Не удалось получить информацию о возможности подписки {id} на канал {geotag}");
-            });
+                    } else
+                        throw new Exception($"Не удалось получить информацию о возможности подписки {id} на канал {geotag}");
+                });
+
+            } catch (Exception ex)
+            {
+                throw;
+            } finally
+            {
+                semaphore.Release();
+            }
 
             return res;
         }
