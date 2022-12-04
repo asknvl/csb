@@ -21,11 +21,13 @@ namespace csb.server
         #region vars
         string url;
         static SemaphoreSlim semaphore = new SemaphoreSlim(1);
+        RestClient client;
         #endregion
 
         public TGFollowersStatApi(string url)
         {
-            this.url = url; 
+            this.url = url;
+            client = new RestClient($"{url}/v1");
         }
 
         #region public
@@ -36,9 +38,8 @@ namespace csb.server
 
             try
             {
-                await Task.Run(() => {
-                    var client = new RestClient($"{url}/v1/telegram");
-                    var request = new RestRequest(Method.POST);
+                await Task.Run(() => {                    
+                    var request = new RestRequest("telegram", Method.Post);
                     request.AddHeader($"Authorization", $"Bearer {token}");
 
                     sfollowers sf = new sfollowers(followers);
@@ -63,55 +64,53 @@ namespace csb.server
             }
         }
 
-        public virtual async Task<int> GetFollowersNumber(string geotag, string startDate, string endDate)
-        {
-            await semaphore.WaitAsync();
+        //public virtual async Task<int> GetFollowersNumber(string geotag, string startDate, string endDate)
+        //{
+        //    await semaphore.WaitAsync();
 
-            int followersNumber = 0;
-            string followersGeo = "";
+        //    int followersNumber = 0;
+        //    string followersGeo = "";
 
-            try
-            {
-                await Task.Run(() =>
-                {
+        //    try
+        //    {
+        //        await Task.Run(() =>
+        //        {
+        //            var request = new RestRequest("telegram/userCount", Method.Get);
+        //            request.AddHeader($"Authorization", $"Bearer {token}");
+        //            dynamic p = new JObject();
+        //            p.date_from = startDate;
+        //            p.date_to = endDate;
+        //            p.geo = geotag;
+        //            request.AddParameter("application/json", p.ToString(), ParameterType.RequestBody);
+        //            var response = client.Execute(request);
+        //            var json = JObject.Parse(response.Content);
+        //            bool res = json["success"].ToObject<bool>();
+        //            if (res)
+        //            {
+        //                JToken data = json["data"];
+        //                if (data != null)
+        //                {
+        //                    followersNumber = data["count_telegram_users"].ToObject<int>();
+        //                    followersGeo = data["geo"].ToString();
+        //                }
 
-                    var client = new RestClient($"{url}/v1/telegram/userCount");
-                    var request = new RestRequest(Method.GET);
-                    request.AddHeader($"Authorization", $"Bearer {token}");
-                    dynamic p = new JObject();
-                    p.date_from = startDate;
-                    p.date_to = endDate;
-                    p.geo = geotag;
-                    request.AddParameter("application/json", p.ToString(), ParameterType.RequestBody);
-                    var response = client.Execute(request);
-                    var json = JObject.Parse(response.Content);
-                    bool res = json["success"].ToObject<bool>();
-                    if (res)
-                    {
-                        JToken data = json["data"];
-                        if (data != null)
-                        {
-                            followersNumber = data["count_telegram_users"].ToObject<int>();
-                            followersGeo = data["geo"].ToString();
-                        }
+        //            } else
+        //            {
+        //                throw new TGFollowersStatException("Не удалось получить количество подписчиков");
+        //            }
 
-                    } else
-                    {
-                        throw new TGFollowersStatException("Не удалось получить количество подписчиков");
-                    }
+        //        });
 
-                });
+        //    } catch (Exception ex)
+        //    {
+        //        throw;
+        //    } finally
+        //    {
+        //        semaphore.Release();
+        //    }
 
-            } catch (Exception ex)
-            {
-                throw;
-            } finally
-            {
-                semaphore.Release();
-            }
-
-            return followersNumber;
-        }
+        //    return followersNumber;
+        //}
 
 
         class geoTagDto
@@ -136,9 +135,7 @@ namespace csb.server
             {
                 await Task.Run(() =>
                 {
-
-                    var client = new RestClient($"{url}/v1/telegram/userByID/{id}");
-                    var request = new RestRequest(Method.GET);
+                    var request = new RestRequest($"telegram/userByID/{id}", Method.Get);
                     request.AddHeader($"Authorization", $"Bearer {token}");
                     var response = client.Execute(request);
                     var json = JObject.Parse(response.Content);
@@ -195,9 +192,8 @@ namespace csb.server
             try
             {
                 await Task.Run(() =>
-                {
-                    var client = new RestClient($"{url}/v1/telegram/usersWithoutFeedback?date_from={date_from}&date_to={date_to}&geo={geotag}");
-                    var request = new RestRequest(Method.GET);
+                {                    
+                    var request = new RestRequest($"telegram/usersWithoutFeedback?date_from={date_from}&date_to={date_to}&geo={geotag}", Method.Post);
                     request.AddHeader($"Authorization", $"Bearer {token}");
                     var response = client.Execute(request);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -243,8 +239,7 @@ namespace csb.server
                 await Task.Run(() =>
                 {
 
-                    var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                    var request = new RestRequest(Method.POST);
+                    var request = new RestRequest($"telegram/userByGeo", Method.Post);
                     request.AddHeader($"Authorization", $"Bearer {token}");
 
                     tgUsersFeedbackDto feedback = new();
@@ -312,10 +307,8 @@ namespace csb.server
             {
 
                 await Task.Run(() =>
-                {
-
-                    var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                    var request = new RestRequest(Method.POST);
+                {                                        
+                    var request = new RestRequest("telegram/userByGeo", Method.Post);
                     request.AddHeader($"Authorization", $"Bearer {token}");
 
                     if (result)
@@ -385,12 +378,13 @@ namespace csb.server
 
             try
             {
-                await Task.Run(() =>
-                {
-                    var client = new RestClient($"{url}/v1/telegram/usersNotification?min_hours_after_last_push={hours}&geo={geotag}");
-                    var request = new RestRequest(Method.GET);
+                await Task.Run(async() =>
+                {                    
+                    var request = new RestRequest($"telegram/usersNotification");
                     request.AddHeader($"Authorization", $"Bearer {token}");
-                    var response = client.Execute(request);
+                    request.AddQueryParameter("min_hours_after_last_push", hours);
+                    request.AddQueryParameter("geo", geotag);
+                    var response = await client.GetAsync(request);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         var resp = JsonConvert.DeserializeObject<tgUserDailyPushResultDto>(response.Content);
@@ -465,10 +459,8 @@ namespace csb.server
             {
 
                 await Task.Run(() =>
-                {
-
-                    var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                    var request = new RestRequest(Method.POST);
+                {                                        
+                    var request = new RestRequest($"telegram/userByGeo", Method.Post);
                     request.AddHeader($"Authorization", $"Bearer {token}");
 
                     switch (pushState)
@@ -551,9 +543,8 @@ namespace csb.server
             try
             {
                 await Task.Run(() =>
-                {
-                    var client = new RestClient($"{url}/v1/telegram/subscriptionAvailability?geo={geotag}&userID={id}");
-                    var request = new RestRequest(Method.GET);
+                {                    
+                    var request = new RestRequest($"telegram/subscriptionAvailability?geo={geotag}&userID={id}", Method.Post);
                     request.AddHeader($"Authorization", $"Bearer {token}");
                     var response = client.Execute(request);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)

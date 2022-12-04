@@ -42,7 +42,7 @@
           "dependencies": {
             "RestSharp": {
               "target": "Package",
-              "version": "[106.10.0, )"
+              "version": "[108.0.3, )"
             },
             "Telegram.Bot": {
               "target": "Package",
