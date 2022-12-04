@@ -20,7 +20,7 @@ namespace csb.server
 
         #region vars
         string url;
-        static SemaphoreSlim semaphore = new SemaphoreSlim(20, 50);
+        static SemaphoreSlim semaphore = new SemaphoreSlim(1);
         #endregion
 
         public TGFollowersStatApi(string url)
@@ -459,7 +459,7 @@ namespace csb.server
         public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId,  DailyPushState pushState)
         {
 
-            await semaphore.WaitAsync();
+            //await semaphore.WaitAsync();
 
             try
             {
@@ -525,9 +525,10 @@ namespace csb.server
             } catch (Exception ex)
             {
                 throw;
+
             } finally
             {
-                semaphore.Release();    
+                //semaphore.Release();    
             }
         }
 
