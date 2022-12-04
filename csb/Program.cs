@@ -59,9 +59,9 @@ namespace csb
             for (int i = 0; i < t_1000.Length; i++)
                 t_1000[i] = new Test1($"{i}".PadLeft(3, ' '), 1000);
 
-            Test1[] t_7000 = new Test1[20];
-            for (int i = 0; i < t_7000.Length; i++)
-                t_7000[i] = new Test1($"{i}".PadLeft(3, ' '), 7000);
+            //Test1[] t_7000 = new Test1[20];
+            //for (int i = 0; i < t_7000.Length; i++)
+            //    t_7000[i] = new Test1($"{i}".PadLeft(3, ' '), 7000);
 
             //Test2[] tests = new Test2[50];
             //for (int i = 0; i < tests.Length; i++)
@@ -120,10 +120,16 @@ namespace csb
 
         private async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
+            Console.WriteLine(DateTime.Now);
+
             var subs = await api.GetUsersNeedDailyPush("INDA01", 24);
             Console.WriteLine($"{subs.Count}");
 
-            foreach (var item in subs)
+            int count = subs.Count;
+            count = 300;
+
+            for (int i = 0; i < count; i++)
             {
                 try
                 {
@@ -133,8 +139,10 @@ namespace csb
                     Console.WriteLine(ex.Message);
                 }
 
-                Console.WriteLine($"{name} {item.tg_user_id}");
+                Console.WriteLine($"{name} {i}");
             }
+
+            Console.WriteLine(DateTime.Now);
 
         }
     }
