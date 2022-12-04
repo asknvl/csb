@@ -55,13 +55,13 @@ namespace csb
             //for (int i = 0; i < tasks.Length; i++)
             //    tasks[i] = test(i, 500);
 
-            Test2[] t_1000 = new Test2[20];
+            Test1[] t_1000 = new Test1[20];
             for (int i = 0; i < t_1000.Length; i++)
-                t_1000[i] = new Test2($"{i}".PadLeft(3, ' '), 1000);
+                t_1000[i] = new Test1($"{i}".PadLeft(3, ' '), 1000);
 
-            Test2[] t_7000 = new Test2[20];
+            Test1[] t_7000 = new Test1[20];
             for (int i = 0; i < t_7000.Length; i++)
-                t_7000[i] = new Test2($"{i}".PadLeft(3, ' '), 7000);
+                t_7000[i] = new Test1($"{i}".PadLeft(3, ' '), 7000);
 
             //Test2[] tests = new Test2[50];
             //for (int i = 0; i < tests.Length; i++)
