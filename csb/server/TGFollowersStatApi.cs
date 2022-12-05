@@ -453,7 +453,7 @@ namespace csb.server
         public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId,  DailyPushState pushState)
         {
 
-            await semaphore.WaitAsync();
+            //await semaphore.WaitAsync();
 
             try
             {
@@ -520,7 +520,7 @@ namespace csb.server
 
             } finally
             {
-                semaphore.Release();    
+                //semaphore.Release();    
             }
         }
 
