@@ -1,10 +1,12 @@
 ﻿using csb.server.serialization;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,12 +21,25 @@ namespace csb.server
 
         #region vars
         string url;
+        ServiceCollection serviceCollection;
+        IHttpClientFactory httpClientFactory;
         #endregion
 
         public TGFollowersStatApi(string url)
         {
             this.url = url; 
+            serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+            var services = serviceCollection.BuildServiceProvider();
+            httpClientFactory = services.GetRequiredService<IHttpClientFactory>();
         }
+
+        #region private
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            services.AddHttpClient();
+        }
+        #endregion
 
         #region public
         public virtual async Task UpdateFollowers(List<Follower> followers)
