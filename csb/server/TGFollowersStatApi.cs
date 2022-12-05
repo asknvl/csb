@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace csb.server
 
         public TGFollowersStatApi(string url)
         {
-            this.url = url; 
+            this.url = url;
             serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             var services = serviceCollection.BuildServiceProvider();
@@ -46,7 +47,8 @@ namespace csb.server
         {
             try
             {
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     var client = new RestClient($"{url}/v1/telegram");
                     var request = new RestRequest(Method.POST);
                     request.AddHeader($"Authorization", $"Bearer {token}");
@@ -60,8 +62,8 @@ namespace csb.server
                     var json = JObject.Parse(response.Content);
                     var res = json["success"].ToObject<bool>();
                     if (!res)
-                        throw new TGFollowersStatException("Не удалось зарегестрировать подписчика");                    
-                        
+                        throw new TGFollowersStatException("Не удалось зарегестрировать подписчика");
+
                 });
 
             } catch (Exception ex)
@@ -124,7 +126,7 @@ namespace csb.server
 
         class tgUserDto
         {
-            public string tg_user_id { get; set; } 
+            public string tg_user_id { get; set; }
             public List<geoTagDto> geolocations { get; set; }
         }
 
@@ -133,7 +135,7 @@ namespace csb.server
             List<string> tags = new List<string>();
 
             try
-            {           
+            {
                 var client = new RestClient($"{url}/v1/telegram/userByID/{id}");
                 var request = new RestRequest(Method.GET);
                 request.AddHeader($"Authorization", $"Bearer {token}");
@@ -166,11 +168,11 @@ namespace csb.server
         public class tgUserPushInfoDto
         {
             public string tg_user_id { get; set; }
-            public string tg_chat_id { get;set; }
+            public string tg_chat_id { get; set; }
             public double? push_send_hours { get; set; }
             public double? push_delivered_hours { get; set; }
             public double time_after_subscribe { get; set; }
-            public double time_diff_last_push_subscr { get; set; }  
+            public double time_diff_last_push_subscr { get; set; }
         }
         public class tgUsersPushResultDto
         {
@@ -208,8 +210,8 @@ namespace csb.server
         public class tgUserFeedbackDto
         {
             public long tg_user_id { get; set; }
-            public string tg_geolocation { get; set; }  
-            public bool is_user_send_msg { get; set; }  
+            public string tg_geolocation { get; set; }
+            public bool is_user_send_msg { get; set; }
         }
         public class tgUsersFeedbackDto
         {
@@ -217,14 +219,16 @@ namespace csb.server
         }
         public virtual async Task MarkFollowerMadeFeedback(string geotag, long id)
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
 
                 var client = new RestClient($"{url}/v1/telegram/userByGeo");
                 var request = new RestRequest(Method.POST);
                 request.AddHeader($"Authorization", $"Bearer {token}");
 
                 tgUsersFeedbackDto feedback = new();
-                feedback.users.Add(new tgUserFeedbackDto() { 
+                feedback.users.Add(new tgUserFeedbackDto()
+                {
                     tg_user_id = id,
                     tg_geolocation = geotag,
                     is_user_send_msg = true
@@ -249,7 +253,7 @@ namespace csb.server
 
         public class tgUserPushSentDto
         {
-            public long tg_user_id { get; set;}
+            public long tg_user_id { get; set; }
             public string tg_geolocation { get; set; }
             public double push_send_hours { get; set; }
         }
@@ -261,19 +265,20 @@ namespace csb.server
 
         public class tgUserPushDeliveredDto
         {
-            public long tg_user_id { get; set;}
+            public long tg_user_id { get; set; }
             public string tg_geolocation { get; set; }
             public double push_delivered_hours { get; set; }
         }
 
         public class tgUsersPushesDeliveredDto
         {
-            public List <tgUserPushDeliveredDto> users { get; set; } = new();
+            public List<tgUserPushDeliveredDto> users { get; set; } = new();
         }
 
         public virtual async Task MarkFollowerWasPushed(string geotag, long id, double hours, bool result)
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
 
                 var client = new RestClient($"{url}/v1/telegram/userByGeo");
                 var request = new RestRequest(Method.POST);
@@ -320,7 +325,7 @@ namespace csb.server
         public class tgUserDailyPushInfo
         {
             public string tg_user_id { get; set; }
-            public int? notification_delivered_id { get; set; } 
+            public int? notification_delivered_id { get; set; }
         }
 
         public class tgUserDailyPushResultDto
@@ -348,8 +353,7 @@ namespace csb.server
                     else
                         throw new Exception($"GetUsersNeedDailyPush success={resp.success}");
 
-                }
-                else
+                } else
                     throw new Exception($"Не удалось получить список подписчиков для ежедневного {hours} пуш сообщения geotag={geotag}");
             });
 
@@ -399,62 +403,68 @@ namespace csb.server
             public List<tgUserDailyPushDisableDto> users { get; set; } = new();
         }
 
-        public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId,  DailyPushState pushState)
+        public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState)
         {
-            await Task.Run(() => {
+            await Task.Run(async () => {
 
-                var client = new RestClient($"{url}/v1/telegram/userByGeo");
-                var request = new RestRequest(Method.POST);
-                request.AddHeader($"Authorization", $"Bearer {token}");
+                string json = "";
 
                 switch (pushState)
                 {
                     case DailyPushState.sent:
                         tgUsersDailyPushSentDto sent = new();
-                        sent.users.Add(new tgUserDailyPushSentDto() {
+                        sent.users.Add(new tgUserDailyPushSentDto()
+                        {
                             tg_geolocation = geotag,
                             tg_user_id = userId,
                             notification_send_id = pushId
                         });
-                        string jsent = JsonConvert.SerializeObject(sent);
-                        request.AddParameter("application/json", jsent, ParameterType.RequestBody);
+                        json = JsonConvert.SerializeObject(sent);
+                        //request.AddParameter("application/json", jsent, ParameterType.RequestBody);
                         break;
                     case DailyPushState.delivered:
                         tgUsersDailyPushDeliveredDto delivered = new();
-                        delivered.users.Add(new tgUserDailyPushDeliveredDto() {
+                        delivered.users.Add(new tgUserDailyPushDeliveredDto()
+                        {
                             tg_geolocation = geotag,
                             tg_user_id = userId,
                             notification_delivered_id = pushId
                         });
-                        string jdelivered = JsonConvert.SerializeObject(delivered);
-                        request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
+                        json = JsonConvert.SerializeObject(delivered);
+                        //request.AddParameter("application/json", jdelivered, ParameterType.RequestBody);
                         break;
                     case DailyPushState.disable:
                         tgUsersDailyPushDisableDto disable = new();
-                        disable.users.Add(new tgUserDailyPushDisableDto() {
+                        disable.users.Add(new tgUserDailyPushDisableDto()
+                        {
                             tg_geolocation = geotag,
                             tg_user_id = userId,
                             notification_enabled = false
                         });
-                        string jdisable = JsonConvert.SerializeObject(disable);
-                        request.AddParameter("application/json", jdisable, ParameterType.RequestBody);
+                        json = JsonConvert.SerializeObject(disable);
+                        //request.AddParameter("application/json", jdisable, ParameterType.RequestBody);
                         break;
                     default:
                         throw new Exception("MarkFolloweWasDailyPushed Unknown DailyPushState");
-                        
+
+
+                
                 }
 
-                var response = client.Execute(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var json = JObject.Parse(response.Content);
-                    bool res = json["success"].ToObject<bool>();
-                    if (!res)
-                        throw new Exception($"MarkFollowerWasDailyPushed success={res}");
+                var addr = $"{url}/v1/telegram/userByGeo";
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-                }
-                else
-                    throw new Exception($"Не удалось пометить результат daily push подписчика geotag={geotag} userid={userId} pushid={pushId} pushstate={pushState} responce={response.Content}");
+                var httpClient = httpClientFactory.CreateClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await httpClient.PostAsync(addr, data);
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                var jres = JObject.Parse(result);
+                bool res = jres["success"].ToObject<bool>();
+                if (!res)
+                    throw new Exception($"MarkFollowerWasDailyPushed success={res}");
             });
         }
 
