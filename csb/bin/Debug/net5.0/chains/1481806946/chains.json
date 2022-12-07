@@ -82,7 +82,7 @@
         {
           "Id": 1,
           "Message": {
-            "message_id": 3499,
+            "message_id": 316,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -90,7 +90,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1669324467,
+            "date": 1670454119,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -111,13 +111,13 @@
               "thumb": {
                 "width": 144,
                 "height": 320,
-                "file_id": "AAMCAgADGQEAAg2rY3_es3YWCrt9LDeLaAagTOBK--YAAjMhAAJjdZFLm-UO0rDQV3EBAAdtAAMrBA",
+                "file_id": "AAMCAgADGQEAAgE8Y5EbZ2z-JKUxHmIAAW2tMq-5pqUQAAIzIQACY3WRS070F9Vs5mFqAQAHbQADKwQ",
                 "file_unique_id": "AQADMyEAAmN1kUty",
                 "file_size": 8128
               },
               "file_name": "IMG_5910.MP4",
               "mime_type": "video/mp4",
-              "file_id": "BAACAgIAAxkBAAINq2N_3rN2Fgq7fSw3i2gGoEzgSvvmAAIzIQACY3WRS5vlDtKw0FdxKwQ",
+              "file_id": "BAACAgIAAxkBAAIBPGORG2ds_iSlMR5iAAFtrTKvuaalEAACMyEAAmN1kUtO9BfVbOZhaisE",
               "file_unique_id": "AgADMyEAAmN1kUs",
               "file_size": 6537876
             },
@@ -166,13 +166,12 @@
               ]
             }
           },
-          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_15.MP4",
-          "fileId": null
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_0.MP4"
         },
         {
           "Id": 2,
           "Message": {
-            "message_id": 3501,
+            "message_id": 318,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -180,7 +179,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1669324472,
+            "date": 1670454131,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -198,28 +197,28 @@
               {
                 "width": 90,
                 "height": 31,
-                "file_id": "AgACAgIAAxkBAAINrWN_3rj-AAGv2K46KuRHOlwVBeXmhAACyr8xG2N1kUsP9qeiNl95ZwEAAwIAA3MAAysE",
+                "file_id": "AgACAgIAAxkBAAIBPmORG3Or9mobehSP2_3jQJnUmTFfAALKvzEbY3WRS01LudABleGlAQADAgADcwADKwQ",
                 "file_unique_id": "AQADyr8xG2N1kUt4",
                 "file_size": 878
               },
               {
                 "width": 320,
                 "height": 110,
-                "file_id": "AgACAgIAAxkBAAINrWN_3rj-AAGv2K46KuRHOlwVBeXmhAACyr8xG2N1kUsP9qeiNl95ZwEAAwIAA20AAysE",
+                "file_id": "AgACAgIAAxkBAAIBPmORG3Or9mobehSP2_3jQJnUmTFfAALKvzEbY3WRS01LudABleGlAQADAgADbQADKwQ",
                 "file_unique_id": "AQADyr8xG2N1kUty",
                 "file_size": 12510
               },
               {
                 "width": 800,
                 "height": 276,
-                "file_id": "AgACAgIAAxkBAAINrWN_3rj-AAGv2K46KuRHOlwVBeXmhAACyr8xG2N1kUsP9qeiNl95ZwEAAwIAA3gAAysE",
+                "file_id": "AgACAgIAAxkBAAIBPmORG3Or9mobehSP2_3jQJnUmTFfAALKvzEbY3WRS01LudABleGlAQADAgADeAADKwQ",
                 "file_unique_id": "AQADyr8xG2N1kUt9",
                 "file_size": 47855
               },
               {
                 "width": 1242,
                 "height": 429,
-                "file_id": "AgACAgIAAxkBAAINrWN_3rj-AAGv2K46KuRHOlwVBeXmhAACyr8xG2N1kUsP9qeiNl95ZwEAAwIAA3kAAysE",
+                "file_id": "AgACAgIAAxkBAAIBPmORG3Or9mobehSP2_3jQJnUmTFfAALKvzEbY3WRS01LudABleGlAQADAgADeQADKwQ",
                 "file_unique_id": "AQADyr8xG2N1kUt-",
                 "file_size": 62521
               }
@@ -264,13 +263,12 @@
               ]
             }
           },
-          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_16.jpg",
-          "fileId": null
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_1.jpg"
         },
         {
           "Id": 3,
           "Message": {
-            "message_id": 3503,
+            "message_id": 320,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -278,7 +276,7 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1669324477,
+            "date": 1670454135,
             "chat": {
               "id": 1481806946,
               "type": "private",
@@ -328,8 +326,1178 @@
               ]
             }
           },
-          "FilePath": null,
-          "fileId": null
+          "FilePath": null
+        },
+        {
+          "Id": 4,
+          "Message": {
+            "message_id": 322,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454140,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133159,
+            "animation": {
+              "width": 464,
+              "height": 848,
+              "duration": 11,
+              "thumb": {
+                "width": 175,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFCY5EbfHfsi7IG7Qusf3VY5kArZakAAvMkAAJjdZFLjdryoDq081IBAAdtAAMrBA",
+                "file_unique_id": "AQAD8yQAAmN1kUty",
+                "file_size": 1674
+              },
+              "file_name": "IMG_5943.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "CgACAgIAAxkBAAIBQmORG3x37IuyBu0LrH91WOZAK2WpAALzJAACY3WRS43a8qA6tPNSKwQ",
+              "file_unique_id": "AgAD8yQAAmN1kUs",
+              "file_size": 1333674
+            },
+            "document": {
+              "thumb": {
+                "width": 175,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFCY5EbfHfsi7IG7Qusf3VY5kArZakAAvMkAAJjdZFLjdryoDq081IBAAdtAAMrBA",
+                "file_unique_id": "AQAD8yQAAmN1kUty",
+                "file_size": 1674
+              },
+              "file_name": "IMG_5943.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "CgACAgIAAxkBAAIBQmORG3x37IuyBu0LrH91WOZAK2WpAALzJAACY3WRS43a8qA6tPNSKwQ",
+              "file_unique_id": "AgAD8yQAAmN1kUs",
+              "file_size": 1333674
+            },
+            "caption": "It’s my report of yesterday signals bro. I don’t understand why you still not playing with me🤙\n\nBecause if you played with me yesterday you can earn 18,300rs per one day but bro, I play every day and my followers make good result every day. That’s why I’m waiting you on my signals where I catch good coefficients and make profit🤑\n\nI hope that I will see you and me on list of players where we will catch great kef and stay in plus 😏\n\n⭕️TEXT ME: @booowos",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 95
+              },
+              {
+                "type": "underline",
+                "offset": 97,
+                "length": 233
+              },
+              {
+                "type": "italic",
+                "offset": 334,
+                "length": 115
+              },
+              {
+                "type": "mention",
+                "offset": 449,
+                "length": 8
+              },
+              {
+                "type": "italic",
+                "offset": 449,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💸My channel💸",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_9.MP4"
+        },
+        {
+          "Id": 5,
+          "Message": {
+            "message_id": 324,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454145,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133443,
+            "video": {
+              "width": 352,
+              "height": 640,
+              "duration": 21,
+              "thumb": {
+                "width": 176,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFEY5EbgaYsS7w8jHabhSeGSJ2cmeoAAvwkAAJjdZFL2XnEchK3Yp0BAAdtAAMrBA",
+                "file_unique_id": "AQAD_CQAAmN1kUty",
+                "file_size": 7564
+              },
+              "file_name": "IMG_5909.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBRGORG4GmLEu8PIx2m4UnhkidnJnqAAL8JAACY3WRS9l5xHISt2KdKwQ",
+              "file_unique_id": "AgAD_CQAAmN1kUs",
+              "file_size": 1912485
+            },
+            "caption": "This guy played with me and he satisfied with his results, he played with me every day and make very good income 😎\n\nYou also can play and be like this guy, because he close his debts and earn for himself, you just need click the link below and start with me 😏\n\n⭕️Here is my contact for any questions: @booowos",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 115
+              },
+              {
+                "type": "bold",
+                "offset": 117,
+                "length": 159
+              },
+              {
+                "type": "mention",
+                "offset": 303,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch training video✅",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_2.MP4"
+        },
+        {
+          "Id": 6,
+          "Message": {
+            "message_id": 326,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454150,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669130256,
+            "photo": [
+              {
+                "width": 90,
+                "height": 40,
+                "file_id": "AgACAgIAAxkBAAIBRmORG4ZYKH5pfuJSUQZXTHT2ZinvAAKHwjEbY3WRS9kBJkz_Q8ksAQADAgADcwADKwQ",
+                "file_unique_id": "AQADh8IxG2N1kUt4",
+                "file_size": 1069
+              },
+              {
+                "width": 320,
+                "height": 142,
+                "file_id": "AgACAgIAAxkBAAIBRmORG4ZYKH5pfuJSUQZXTHT2ZinvAAKHwjEbY3WRS9kBJkz_Q8ksAQADAgADbQADKwQ",
+                "file_unique_id": "AQADh8IxG2N1kUty",
+                "file_size": 15455
+              },
+              {
+                "width": 800,
+                "height": 356,
+                "file_id": "AgACAgIAAxkBAAIBRmORG4ZYKH5pfuJSUQZXTHT2ZinvAAKHwjEbY3WRS9kBJkz_Q8ksAQADAgADeAADKwQ",
+                "file_unique_id": "AQADh8IxG2N1kUt9",
+                "file_size": 55522
+              },
+              {
+                "width": 1242,
+                "height": 553,
+                "file_id": "AgACAgIAAxkBAAIBRmORG4ZYKH5pfuJSUQZXTHT2ZinvAAKHwjEbY3WRS9kBJkz_Q8ksAQADAgADeQADKwQ",
+                "file_unique_id": "AQADh8IxG2N1kUt-",
+                "file_size": 62112
+              }
+            ],
+            "caption": "As you see bro it’s a round history. And I every day analyse it and find best moments to bet💪\n\nI spend a lot of time to understand this game and graph and you can check reviews of my followers where they told their history, where this players play with me and also you can check my training video where a lot of useful information🔥\n\nBro, If you want to change life like my followers, you know what need to do - PLAY WITH ME 😎",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 94
+              },
+              {
+                "type": "underline",
+                "offset": 96,
+                "length": 235
+              },
+              {
+                "type": "bold",
+                "offset": 335,
+                "length": 93
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://feedback.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/booowos"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_3.jpg"
+        },
+        {
+          "Id": 7,
+          "Message": {
+            "message_id": 328,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454155,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133678,
+            "video": {
+              "width": 400,
+              "height": 848,
+              "duration": 14,
+              "thumb": {
+                "width": 151,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFIY5Ebi0C64OLiQB2YVjt4LlhU230AAqAjAAI9XZBLChEq5CtH_WwBAAdtAAMrBA",
+                "file_unique_id": "AQADoCMAAj1dkEty",
+                "file_size": 6329
+              },
+              "file_name": "IMG_5908.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBSGORG4tAuuDi4kAdmFY7eC5YVNt9AAKgIwACPV2QSwoRKuQrR_1sKwQ",
+              "file_unique_id": "AgADoCMAAj1dkEs",
+              "file_size": 1997373
+            },
+            "caption": "This guy for a long time want to play with me. He borrowed money from friend and can earn even more then borrowed ✊\n\nAnd now he make every day profit on my signals because I try hard every day and give cool signals where my bros earn good money 🤑\n\nYou deserve too bhai, let’s play with me and you will see result in a couple of hours ✊\n\n⭕️ You can write to me at any time: @booowos",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 115
+              },
+              {
+                "type": "italic",
+                "offset": 117,
+                "length": 130
+              },
+              {
+                "type": "underline",
+                "offset": 249,
+                "length": 87
+              },
+              {
+                "type": "mention",
+                "offset": 374,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://feedback.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_4.MP4"
+        },
+        {
+          "Id": 8,
+          "Message": {
+            "message_id": 330,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454160,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133802,
+            "photo": [
+              {
+                "width": 55,
+                "height": 90,
+                "file_id": "AgACAgIAAxkBAAIBSmORG5CQ0lSTRsnrhOVP_hxxpvkVAAKMwjEbY3WRS370XeeAm5HEAQADAgADcwADKwQ",
+                "file_unique_id": "AQADjMIxG2N1kUt4",
+                "file_size": 1328
+              },
+              {
+                "width": 196,
+                "height": 320,
+                "file_id": "AgACAgIAAxkBAAIBSmORG5CQ0lSTRsnrhOVP_hxxpvkVAAKMwjEbY3WRS370XeeAm5HEAQADAgADbQADKwQ",
+                "file_unique_id": "AQADjMIxG2N1kUty",
+                "file_size": 19238
+              },
+              {
+                "width": 491,
+                "height": 800,
+                "file_id": "AgACAgIAAxkBAAIBSmORG5CQ0lSTRsnrhOVP_hxxpvkVAAKMwjEbY3WRS370XeeAm5HEAQADAgADeAADKwQ",
+                "file_unique_id": "AQADjMIxG2N1kUt9",
+                "file_size": 79538
+              },
+              {
+                "width": 785,
+                "height": 1280,
+                "file_id": "AgACAgIAAxkBAAIBSmORG5CQ0lSTRsnrhOVP_hxxpvkVAAKMwjEbY3WRS370XeeAm5HEAQADAgADeQADKwQ",
+                "file_unique_id": "AQADjMIxG2N1kUt-",
+                "file_size": 106295
+              }
+            ],
+            "caption": "This is review of my followers, he is a great player, because play with me and start to make profit🙌\n\nHe was need money and he decided to try play with me and right now he make good money and stable withdrawals 🧐\n\nYou can check others stories on my channel where I help my brother to earn money and make their life more better 😎\n\n⭕️My contact: @booowos",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 102
+              },
+              {
+                "type": "italic",
+                "offset": 103,
+                "length": 111
+              },
+              {
+                "type": "underline",
+                "offset": 216,
+                "length": 115
+              },
+              {
+                "type": "mention",
+                "offset": 347,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://feedback.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🙌Where we make money🙌",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_5.jpg"
+        },
+        {
+          "Id": 9,
+          "Message": {
+            "message_id": 332,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454165,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133935,
+            "video": {
+              "width": 720,
+              "height": 1280,
+              "duration": 18,
+              "thumb": {
+                "width": 180,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFMY5EblRdivTLv8cJOHF2NetGS--cAAqMjAAI9XZBL2xul7npmNtkBAAdtAAMrBA",
+                "file_unique_id": "AQADoyMAAj1dkEty",
+                "file_size": 11764
+              },
+              "file_name": "IMG_5907.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBTGORG5UXYr0y7_HCThxdjXrRkvvnAAKjIwACPV2QS9sbpe56ZjbZKwQ",
+              "file_unique_id": "AgADoyMAAj1dkEs",
+              "file_size": 5866145
+            },
+            "caption": "She played with me over month, and she make very good result on my signals, if you don’t know, I give signals 2 time, 6 signals on daily signals and 6 signals in the evening 🔥\n\nShe payed her bills and continue earn with me, it’s really cool bro, just play with me and you can solve all your problems 💪\n\n⭕️ Write to me on any question: @booowos",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 176
+              },
+              {
+                "type": "underline",
+                "offset": 178,
+                "length": 125
+              },
+              {
+                "type": "mention",
+                "offset": 337,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://feedback.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🙌Where we make money🙌",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_6.MP4"
+        },
+        {
+          "Id": 10,
+          "Message": {
+            "message_id": 333,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454170,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669130639,
+            "photo": [
+              {
+                "width": 46,
+                "height": 90,
+                "file_id": "AgACAgIAAxkBAAIBTWORG5rCUwqAr-yaPrBrBRyEC-JiAAJ2wjEbY3WRS1SBC42xlyD3AQADAgADcwADKwQ",
+                "file_unique_id": "AQADdsIxG2N1kUt4",
+                "file_size": 1239
+              },
+              {
+                "width": 165,
+                "height": 320,
+                "file_id": "AgACAgIAAxkBAAIBTWORG5rCUwqAr-yaPrBrBRyEC-JiAAJ2wjEbY3WRS1SBC42xlyD3AQADAgADbQADKwQ",
+                "file_unique_id": "AQADdsIxG2N1kUty",
+                "file_size": 16711
+              },
+              {
+                "width": 412,
+                "height": 800,
+                "file_id": "AgACAgIAAxkBAAIBTWORG5rCUwqAr-yaPrBrBRyEC-JiAAJ2wjEbY3WRS1SBC42xlyD3AQADAgADeAADKwQ",
+                "file_unique_id": "AQADdsIxG2N1kUt9",
+                "file_size": 70199
+              },
+              {
+                "width": 659,
+                "height": 1280,
+                "file_id": "AgACAgIAAxkBAAIBTWORG5rCUwqAr-yaPrBrBRyEC-JiAAJ2wjEbY3WRS1SBC42xlyD3AQADAgADeQADKwQ",
+                "file_unique_id": "AQADdsIxG2N1kUt-",
+                "file_size": 91553
+              }
+            ],
+            "caption": "​​Bro. I want to help you,  to change your life to the best way, that’s why I wait you on my session, let’s try make money together😎 \n\nFor example check the screen and this guy don’t believe that can earn money. But he try and make good balance and cool withdrawal🤑\n\nIf you want the same, check the link below and start with me⬇️",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 2
+              },
+              {
+                "type": "bold",
+                "offset": 2,
+                "length": 132
+              },
+              {
+                "type": "italic",
+                "offset": 136,
+                "length": 131
+              },
+              {
+                "type": "code",
+                "offset": 269,
+                "length": 62
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/booowos"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_7.jpg"
+        },
+        {
+          "Id": 11,
+          "Message": {
+            "message_id": 334,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454177,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669134064,
+            "video": {
+              "width": 352,
+              "height": 640,
+              "duration": 30,
+              "thumb": {
+                "width": 176,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFOY5EbocRuZ5l3WRUfLkgOsIwdUF4AAqQjAAI9XZBLzpi0LKJggkoBAAdtAAMrBA",
+                "file_unique_id": "AQADpCMAAj1dkEty",
+                "file_size": 6948
+              },
+              "file_name": "IMG_5905.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBTmORG6HEbmeZd1kVHy5IDrCMHVBeAAKkIwACPV2QS86YtCyiYIJKKwQ",
+              "file_unique_id": "AgADpCMAAj1dkEs",
+              "file_size": 2728161
+            },
+            "caption": "His friend didn’t believe that he can earn money with me, but he tried and was succeeded, because I give really cool signals, you can check it on my channel😎\n\nBut now he earned more then their salary and they envy to him, if you want the same, check the link below ⬇️\n\n⭕️ My сontact for communication: @booowos",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 159
+              },
+              {
+                "type": "bold",
+                "offset": 160,
+                "length": 143
+              },
+              {
+                "type": "mention",
+                "offset": 303,
+                "length": 8
+              },
+              {
+                "type": "bold",
+                "offset": 303,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch training video✅",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_8.MP4"
+        },
+        {
+          "Id": 12,
+          "Message": {
+            "message_id": 335,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454182,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669131027,
+            "photo": [
+              {
+                "width": 90,
+                "height": 19,
+                "file_id": "AgACAgIAAxkBAAIBT2ORG6azr7-gCjSFEXhnPP0oUnpJAAKlvzEb6qDgSwTWfddiK0B8AQADAgADcwADKwQ",
+                "file_unique_id": "AQADpb8xG-qg4Et4",
+                "file_size": 697
+              },
+              {
+                "width": 320,
+                "height": 67,
+                "file_id": "AgACAgIAAxkBAAIBT2ORG6azr7-gCjSFEXhnPP0oUnpJAAKlvzEb6qDgSwTWfddiK0B8AQADAgADbQADKwQ",
+                "file_unique_id": "AQADpb8xG-qg4Ety",
+                "file_size": 7070
+              },
+              {
+                "width": 800,
+                "height": 167,
+                "file_id": "AgACAgIAAxkBAAIBT2ORG6azr7-gCjSFEXhnPP0oUnpJAAKlvzEb6qDgSwTWfddiK0B8AQADAgADeAADKwQ",
+                "file_unique_id": "AQADpb8xG-qg4Et9",
+                "file_size": 24732
+              },
+              {
+                "width": 1238,
+                "height": 258,
+                "file_id": "AgACAgIAAxkBAAIBT2ORG6azr7-gCjSFEXhnPP0oUnpJAAKlvzEb6qDgSwTWfddiK0B8AQADAgADeQADKwQ",
+                "file_unique_id": "AQADpb8xG-qg4Et-",
+                "file_size": 29783
+              }
+            ],
+            "caption": "Bro. Graph was good and I caught 5x and earn for one round over 20k, but it’s only one signal, imagine how much you can earn with me per one day. I give 6 signals in afternoon and 6 signals in the evening ✊\n\nI help you with all steps bro. Write me and I will explain how to make good money, it’s easy then you think, a lot of people try and change their life, be next 😎\n\nYou can also check my channel with review, because there are a lot of cool stories where people told me their life story and make profit with me💪",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 207
+              },
+              {
+                "type": "italic",
+                "offset": 208,
+                "length": 164
+              },
+              {
+                "type": "underline",
+                "offset": 372,
+                "length": 144
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews",
+                    "url": "https://feedback.xtime/"
+                  },
+                  {
+                    "text": "😎WRITE ME😎",
+                    "url": "https://t.me/booowos"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_10.jpg"
+        },
+        {
+          "Id": 13,
+          "Message": {
+            "message_id": 336,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454187,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669134178,
+            "video": {
+              "width": 352,
+              "height": 640,
+              "duration": 16,
+              "thumb": {
+                "width": 176,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFQY5EbqzZnuNNQ7bSsA1M8Medi4HUAAqkdAAI9XZhLK0apgK3ig7UBAAdtAAMrBA",
+                "file_unique_id": "AQADqR0AAj1dmEty",
+                "file_size": 11275
+              },
+              "file_name": "IMG_5904.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBUGORG6s2Z7jTUO20rANTPDHnYuB1AAKpHQACPV2YSytGqYCt4oO1KwQ",
+              "file_unique_id": "AgADqR0AAj1dmEs",
+              "file_size": 1499261
+            },
+            "caption": "This is my follower, he played with me on old phone and make profit, but he want to make his life and game with me easy and comfortable and that’s why on my signals he earned on new cool phone and continue play with me. Now he earn on another goal😉\n\nYou can also play with me if you want to earn and be financially independent and earn for your own goal. You just need register and make deposit bro, everything is easy 😌\n\n⭕️Text me: @booowos",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 249
+              },
+              {
+                "type": "bold",
+                "offset": 251,
+                "length": 184
+              },
+              {
+                "type": "mention",
+                "offset": 435,
+                "length": 8
+              },
+              {
+                "type": "bold",
+                "offset": 435,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🤙Watch training video🤙",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_11.MP4"
+        },
+        {
+          "Id": 14,
+          "Message": {
+            "message_id": 339,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454192,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669134406,
+            "animation": {
+              "width": 464,
+              "height": 848,
+              "duration": 5,
+              "thumb": {
+                "width": 175,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFTY5EbsFGalm6R-3tUbNhFOeyDyucAApQgAAJjdZFL2oubOWaQ8BsBAAdtAAMrBA",
+                "file_unique_id": "AQADlCAAAmN1kUty",
+                "file_size": 645
+              },
+              "file_name": "IMG_5912.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "CgACAgIAAxkBAAIBU2ORG7BRmpZukft7VGzYRTnsg8rnAAKUIAACY3WRS9qLmzlmkPAbKwQ",
+              "file_unique_id": "AgADlCAAAmN1kUs",
+              "file_size": 173916
+            },
+            "document": {
+              "thumb": {
+                "width": 175,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFTY5EbsFGalm6R-3tUbNhFOeyDyucAApQgAAJjdZFL2oubOWaQ8BsBAAdtAAMrBA",
+                "file_unique_id": "AQADlCAAAmN1kUty",
+                "file_size": 645
+              },
+              "file_name": "IMG_5912.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "CgACAgIAAxkBAAIBU2ORG7BRmpZukft7VGzYRTnsg8rnAAKUIAACY3WRS9qLmzlmkPAbKwQ",
+              "file_unique_id": "AgADlCAAAmN1kUs",
+              "file_size": 173916
+            },
+            "caption": "All right bro, you didn’t play with me and sit on casual work and earn your bit money, it’s sad bro 🙌\n\nCheck my screen, it’s report by the week, we earned with my bros 127,000k rs, it’s a big amount. I’m sure that it’s much better then your salary, that’s why start play with me🤯\n\nYou deserve be rich man and have good life, I will help you and we will earn together 🤑\n\n⭕️Here is my contact for any questions: @booowos",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 102
+              },
+              {
+                "type": "bold",
+                "offset": 104,
+                "length": 177
+              },
+              {
+                "type": "underline",
+                "offset": 283,
+                "length": 86
+              },
+              {
+                "type": "bold",
+                "offset": 375,
+                "length": 37
+              },
+              {
+                "type": "mention",
+                "offset": 413,
+                "length": 8
+              },
+              {
+                "type": "underline",
+                "offset": 413,
+                "length": 1
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch main video✅",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://partner.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_12.MP4"
+        },
+        {
+          "Id": 15,
+          "Message": {
+            "message_id": 344,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454198,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669134490,
+            "video": {
+              "width": 352,
+              "height": 640,
+              "duration": 20,
+              "thumb": {
+                "width": 176,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgFYY5EbtuHm72vyvGen6Z0Ph-PNJ9IAAtMdAAI9XZhLBnZIZDtgYToBAAdtAAMrBA",
+                "file_unique_id": "AQAD0x0AAj1dmEty",
+                "file_size": 6718
+              },
+              "file_name": "IMG_5903.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBWGORG7bh5u9r8rxnp-mdD4fjzSfSAALTHQACPV2YSwZ2SGQ7YGE6KwQ",
+              "file_unique_id": "AgAD0x0AAj1dmEs",
+              "file_size": 1749281
+            },
+            "caption": "This is my new followers and he shoot for me video where said that he want to try because see my ad. Bro he saw ad in instagram and decided to try, he want to change his life to the best way😏\n\nI helped him and everyone who are on my channel, because it’s my work, give cool and profitable signals where my brother can earn and make own life better👍\n\nYou deserve the same, that’s why let me help you bro, but if you have doubt then you can check my channel with reviews and see different stories of players 🤔\n\n⭕️ Write to me at any time: @booowos",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 192
+              },
+              {
+                "type": "italic",
+                "offset": 194,
+                "length": 156
+              },
+              {
+                "type": "underline",
+                "offset": 352,
+                "length": 158
+              },
+              {
+                "type": "mention",
+                "offset": 540,
+                "length": 8
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://feedback.xtime/"
+                  },
+                  {
+                    "text": "🤑Where we make money🤑",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_13.MP4"
+        },
+        {
+          "Id": 16,
+          "Message": {
+            "message_id": 346,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670454203,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669134565,
+            "photo": [
+              {
+                "width": 57,
+                "height": 90,
+                "file_id": "AgACAgIAAxkBAAIBWmORG7s8PTniiIicP3gcaadMvinYAAJ0wjEbY3WRS4fNwubrXVWSAQADAgADcwADKwQ",
+                "file_unique_id": "AQADdMIxG2N1kUt4",
+                "file_size": 1291
+              },
+              {
+                "width": 204,
+                "height": 320,
+                "file_id": "AgACAgIAAxkBAAIBWmORG7s8PTniiIicP3gcaadMvinYAAJ0wjEbY3WRS4fNwubrXVWSAQADAgADbQADKwQ",
+                "file_unique_id": "AQADdMIxG2N1kUty",
+                "file_size": 18466
+              },
+              {
+                "width": 509,
+                "height": 800,
+                "file_id": "AgACAgIAAxkBAAIBWmORG7s8PTniiIicP3gcaadMvinYAAJ0wjEbY3WRS4fNwubrXVWSAQADAgADeAADKwQ",
+                "file_unique_id": "AQADdMIxG2N1kUt9",
+                "file_size": 73213
+              },
+              {
+                "width": 814,
+                "height": 1280,
+                "file_id": "AgACAgIAAxkBAAIBWmORG7s8PTniiIicP3gcaadMvinYAAJ0wjEbY3WRS4fNwubrXVWSAQADAgADeQADKwQ",
+                "file_unique_id": "AQADdMIxG2N1kUt-",
+                "file_size": 92036
+              }
+            ],
+            "caption": "Bro. I want to speak with you honestly, I help people to earn and want to know that you make deposit or not? 🧐\n\nBecause if not I help you, I give you link and register, you can check my training video and fly with me, today was a good day for a coefficients and we all earned good money, let’s fly with us😎\n\nI wait you in the evening signals, I try hard every day and earn money, be my followers which earn money and show your withdrawal your friend and they will envy to you🤙",
+            "caption_entities": [
+              {
+                "type": "code",
+                "offset": 0,
+                "length": 111
+              },
+              {
+                "type": "bold",
+                "offset": 113,
+                "length": 195
+              },
+              {
+                "type": "underline",
+                "offset": 310,
+                "length": 167
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch training video",
+                    "url": "https://pinedmessage.xtime/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬 Text me",
+                    "url": "https://t.me/booowos"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "/Users/alexeykonovalov/work/csb/csb/bin/Debug/net5.0/chains/1481806946/TEST/file_14.jpg"
         }
       ]
     },

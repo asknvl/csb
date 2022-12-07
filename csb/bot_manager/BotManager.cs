@@ -91,7 +91,7 @@ namespace csb.bot_manager
 
 
 #if DEBUG
-            bot = new TelegramBotClient("5670690683:AAHxCfqo0N-S64tyrNkTKwlz-TfHb11R70Q");
+            bot = new TelegramBotClient("5921412686:AAGZzg0V1enYadLf_5YEycoEQBES8LyXc1A");
 #elif LATAM
             //Latam
             bot = new TelegramBotClient("5597155386:AAEvPn9KUuWRPCECuOTJDHdh6RiY_IVbpWM");             

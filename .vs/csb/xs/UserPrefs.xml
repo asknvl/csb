@@ -1,18 +1,17 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/chains/Chain.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/bot_moderator/BotModerator_v4.cs">
     <Files>
-      <File FileName="csb/users/User.cs" Line="2616" Column="42" />
+      <File FileName="csb/users/User.cs" Line="1" Column="1" />
       <File FileName="csb/bot_moderator/BotModerator_v3.cs" />
       <File FileName="csb/bot_moderator/PushData.cs" />
       <File FileName="csb/bot_moderator/DailyPushData.cs" />
       <File FileName="csb/bot_manager/BotManager.cs" />
-      <File FileName="csb/messaging/DailyPushMessageBase.cs" Line="133" Column="1" />
+      <File FileName="csb/messaging/DailyPushMessageBase.cs" />
       <File FileName="csb/messaging/DailyPushMessage.cs" />
-      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="35" Column="1" NotebookId="1" />
-      <File FileName="csb/bot_poster/BotPoster_api.cs" NotebookId="1" />
+      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="1" Column="1" NotebookId="1" />
       <File FileName="csb/chains/IChain.cs" NotebookId="1" />
-      <File FileName="csb/chains/Chain.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="csb/chains/Chain.cs" NotebookId="1" />
       <File FileName="csb/server/TGFollowersStatApi.cs" NotebookId="1" />
       <File FileName="csb/Program.cs" NotebookId="1" />
       <File FileName="csb/usr_listener/UserListener_v1.cs" NotebookId="1" />
@@ -22,8 +21,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/usr_listener/UserListener_v1.cs" relfile="csb/usr_listener/UserListener_v1.cs" line="363" column="1" />
       <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/bot_poster/BotPoster_api.cs" relfile="csb/bot_poster/BotPoster_api.cs" line="514" column="3" />
+      <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/Program.cs" relfile="csb/Program.cs" line="31" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

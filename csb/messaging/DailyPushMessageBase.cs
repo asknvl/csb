@@ -23,7 +23,7 @@ namespace csb.messaging
         public Message Message { get; set; }
         [JsonProperty]
         public string FilePath { get; set; }
-        [JsonProperty]
+        [JsonIgnore]
         public string fileId { get; set; } = null;
         #endregion
 
@@ -145,6 +145,8 @@ namespace csb.messaging
         {
             if (fileId == null)
             {
+                Console.WriteLine($"Message {id} fileId=null");
+
                 using (var fileStream = System.IO.File.OpenRead(FilePath))
                 {
 
@@ -178,6 +180,8 @@ namespace csb.messaging
         { 
             if (fileId == null)
             {
+                Console.WriteLine($"Message {id} fileId=null");
+
                 using (var fileStream = System.IO.File.OpenRead(FilePath))
                 {
 
@@ -208,6 +212,39 @@ namespace csb.messaging
 
         }
 
+        async Task sendDocumentMessage(long id, ITelegramBotClient bot)
+        {
+            if (fileId == null)
+            {
+                Console.WriteLine($"Message {id} fileId=null");
+
+                using (var fileStream = System.IO.File.OpenRead(FilePath))
+                {
+
+                    InputMedia idoc = new InputMedia(fileStream, Path.GetFileName(FilePath));
+                    
+                    var sent = await bot.SendDocumentAsync(id,
+                        idoc,
+                        caption: Message.Caption,
+                        replyMarkup: Message.ReplyMarkup,
+                        captionEntities: Message.CaptionEntities);
+
+                    fileId = sent.Document.FileId;
+                }
+            } else
+            {
+
+                InputMedia doc = new InputMedia(fileId);
+
+                await bot.SendDocumentAsync(id,
+                    doc,
+                    caption: Message.Caption,
+                    replyMarkup: Message.ReplyMarkup,
+                    captionEntities: Message.CaptionEntities);
+            }
+
+        }
+
         async Task send(long id, ITelegramBotClient bot)
         {
             switch (Message.Type)
@@ -222,6 +259,10 @@ namespace csb.messaging
 
                 case MessageType.Video:
                     await sendVideoMessage(id, bot);
+                    break;
+
+                case MessageType.Document:
+                    await sendDocumentMessage(id, bot);
                     break;
 
                 default:
@@ -251,6 +292,9 @@ namespace csb.messaging
                         break;
                     case MessageType.Video:
                         fileId = res.Message.Video.FileId;
+                        break;
+                    case MessageType.Document:
+                        fileId = res.Message.Document.FileId;
                         break;
                 }
 

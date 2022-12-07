@@ -21,18 +21,37 @@ namespace csb.bot_moderator
 
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
-            dailyPushTimer.Interval = 10 * 60 * 1000;
+            dailyPushTimer.Interval = 15 * 1000;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed;
             dailyPushTimer.Start();
         }
 
+        int cntr = 0;
         private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         { 
             try
             {
                 if (DailyPushData.Messages.Count == 0)
                     return;
+
+#if DEBUG
+                var message = DailyPushData.Messages.FirstOrDefault(m => m.Id > cntr);
+
+                if (message != null)
+                {
+                    Console.WriteLine($"{cntr}{message.Id}");
+                    //if (cntr == 4)
+                    //{
+                    //    Console.WriteLine("set fileId=null");
+                    //    message.fileId = null;
+                    //}
+                    await message.Send(1780912435, bot);
+                    cntr++;
+                }
+                else
+                    cntr = 0;
+#else
 
                 var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 24);
                 Console.WriteLine($"{DateTime.Now} GetSubs {GeoTag} {subs.Count}");
@@ -70,8 +89,10 @@ namespace csb.bot_moderator
                         Console.WriteLine($"{GeoTag} {subscriber.tg_user_id} {subscriber?.notification_delivered_id} {ex.Message}");
                     }
                 }
+#endif
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
