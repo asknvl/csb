@@ -9,7 +9,18 @@ namespace csb.server
 {
     public interface ITGFollowersStatApi
     {
-        Task<List<tgUserDailyPushInfoDto>> GetUsersNeedDailyPush(string geotag, double hours);
+        Task<bool> IsSubscriptionAvailable(string geotag, long id);
+        Task UpdateFollowers(List<Follower> followers);
+        Task<List<string>> GetFollowerGeoTags(long id);
+        Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours);
+        Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState);        
+    }
+
+    public enum DailyPushState
+    {
+        sent,
+        delivered,
+        disable
     }
 
     public class TGFollowersStatException : Exception

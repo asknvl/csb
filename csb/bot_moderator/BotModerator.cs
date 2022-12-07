@@ -21,7 +21,7 @@ namespace csb.bot_moderator
         protected CancellationTokenSource cts;
 
 #if DEBUG
-        protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
         //protected TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
 
 #else

@@ -38,7 +38,7 @@ namespace csb.bot_moderator
             {
                 string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
-                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
+                var subs = await statApi.GetNoFeedback Followers(GeoTag, date_from, date_to);
 
                 foreach (var subscriber in subs)         
                 {

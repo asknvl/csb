@@ -446,9 +446,6 @@ namespace csb.server
                         break;
                     default:
                         throw new Exception("MarkFolloweWasDailyPushed Unknown DailyPushState");
-
-
-                
                 }
 
                 var addr = $"{url}/v1/telegram/userByGeo";

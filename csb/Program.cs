@@ -55,7 +55,7 @@ namespace csb
             //for (int i = 0; i < tasks.Length; i++)
             //    tasks[i] = test(i, 500);
 
-            Test1[] t_1000 = new Test1[3];
+            Test1[] t_1000 = new Test1[20];
             for (int i = 0; i < t_1000.Length; i++)
                 t_1000[i] = new Test1($"{i}".PadLeft(3, ' '), 1000);
 
