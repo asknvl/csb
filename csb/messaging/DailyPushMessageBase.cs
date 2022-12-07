@@ -15,10 +15,7 @@ namespace csb.messaging
 {
     public abstract class DailyPushMessageBase
     {
-        #region vars
-        FileStream fileStream = null;
-        #endregion
-
+        
         #region properties
         [JsonProperty]
         public int Id { get; set; }
@@ -148,18 +145,18 @@ namespace csb.messaging
         {
             if (fileId == null)
             {
+                using (var fileStream = System.IO.File.OpenRead(FilePath))
+                {
 
-                fileStream = System.IO.File.OpenRead(FilePath);
+                    var sent = await bot.SendPhotoAsync(id,
+                            fileStream,
+                            caption: Message.Caption,
+                            replyMarkup: Message.ReplyMarkup,
+                            captionEntities: Message.CaptionEntities);
 
-                var sent = await bot.SendPhotoAsync(id,
-                        fileStream,
-                        caption: Message.Caption,
-                        replyMarkup: Message.ReplyMarkup,
-                        captionEntities: Message.CaptionEntities);
-
-                fileId = sent.Photo.Last().FileId;
-            }
-            else
+                    fileId = sent.Photo.Last().FileId;
+                }
+            } else
             {
                 InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(fileId));
 
@@ -181,16 +178,17 @@ namespace csb.messaging
         { 
             if (fileId == null)
             {
+                using (var fileStream = System.IO.File.OpenRead(FilePath))
+                {
 
-                fileStream = System.IO.File.OpenRead(FilePath);
+                    var sent = await bot.SendVideoAsync(id,
+                            fileStream,
+                            caption: Message.Caption,
+                            replyMarkup: Message.ReplyMarkup,
+                            captionEntities: Message.CaptionEntities);
 
-                var sent = await bot.SendVideoAsync(id,
-                        fileStream,
-                        caption: Message.Caption,
-                        replyMarkup: Message.ReplyMarkup,
-                        captionEntities: Message.CaptionEntities);
-
-                fileId = sent.Video.FileId;
+                    fileId = sent.Video.FileId;
+                }
             }
             else
             {
