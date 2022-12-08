@@ -18,7 +18,6 @@ C:\KONOVALOV\Sources\csb\csb\obj\Latam\net6.0\csb.dll
 C:\KONOVALOV\Sources\csb\csb\obj\Latam\net6.0\ref\csb.dll
 C:\KONOVALOV\Sources\csb\csb\obj\Latam\net6.0\csb.pdb
 C:\KONOVALOV\Sources\csb\csb\obj\Latam\net6.0\csb.genruntimeconfig.cache
-C:\KONOVALOV\Sources\csb\csb\obj\Latam\net6.0\csb.csproj.AssemblyReference.cache
 D:\WORK\xtime\Sources\csb\csb\bin\Latam\net6.0\csb.exe
 D:\WORK\xtime\Sources\csb\csb\bin\Latam\net6.0\csb.deps.json
 D:\WORK\xtime\Sources\csb\csb\bin\Latam\net6.0\csb.runtimeconfig.json
