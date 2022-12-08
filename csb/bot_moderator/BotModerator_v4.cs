@@ -21,7 +21,7 @@ namespace csb.bot_moderator
 
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
-            dailyPushTimer.Interval = 15 * 1000;
+            dailyPushTimer.Interval = 10 * 60 * 1000;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed;
             dailyPushTimer.Start();
