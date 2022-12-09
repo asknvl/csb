@@ -58,3 +58,8 @@ D:/WORK/xtime/Sources/csb/csb/obj/Debug/net6.0/refint/csb.dll
 D:/WORK/xtime/Sources/csb/csb/obj/Debug/net6.0/csb.pdb
 D:/WORK/xtime/Sources/csb/csb/obj/Debug/net6.0/csb.genruntimeconfig.cache
 D:/WORK/xtime/Sources/csb/csb/obj/Debug/net6.0/ref/csb.dll
+D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.csproj.AssemblyReference.cache
+D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.GeneratedMSBuildEditorConfig.editorconfig
+D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.AssemblyInfoInputs.cache
+D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.AssemblyInfo.cs
+D:\WORK\xtime\Sources\csb\csb\obj\Debug\net6.0\csb.csproj.CoreCompileInputs.cache
