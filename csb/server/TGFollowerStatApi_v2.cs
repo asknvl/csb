@@ -66,6 +66,117 @@ namespace csb.server
 
         }
 
+        public virtual async Task<List<tgUserPushInfoDto>> GetNoFeedbackFollowers(string geotag, string date_from, string date_to)
+        {
+            List<tgUserPushInfoDto> users = new();
+
+            var addr = $"{url}/v1/telegram/usersWithoutFeedback?date_from={date_from}&date_to={date_to}&geo={geotag}";
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.GetAsync(addr);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                var resp = JsonConvert.DeserializeObject<tgUsersPushResultDto>(result);
+
+                if (resp.success)
+                    users = resp.data;
+                else
+                    throw new Exception($"syccess=false");
+            } catch (Exception ex)
+            {
+                throw new Exception($"GetNoFeedbackFollowers {ex.Message}");
+            }
+
+            return users;
+        }
+
+        public virtual async Task MarkFollowerMadeFeedback(string geotag, long id)
+        {
+
+            tgUsersFeedbackDto feedback = new();
+            feedback.users.Add(new tgUserFeedbackDto()
+            {
+                tg_user_id = id,
+                tg_geolocation = geotag,
+                is_user_send_msg = true
+            });
+
+            string json = JsonConvert.SerializeObject(feedback);
+
+            var addr = $"{url}/v1/telegram/userByGeo";
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.PostAsync(addr, data);
+                var result = await response.Content.ReadAsStringAsync();
+                var jres = JObject.Parse(result);
+                bool res = jres["success"].ToObject<bool>();
+                if (!res)
+                    throw new Exception($"success=false");
+
+            } catch (Exception ex)
+            {
+                throw new Exception($"MarkFollowerMadeFeedback {ex.Message}");
+            }
+
+        }
+
+        public virtual async Task MarkFollowerWasPushed(string geotag, long id, double hours, bool status)
+        {
+            string json;
+
+            if (status)
+            {
+                tgUsersPushesDeliveredDto delivered = new();
+                delivered.users.Add(new tgUserPushDeliveredDto()
+                {
+                    tg_user_id = id,
+                    tg_geolocation = geotag,
+                    push_delivered_hours = hours
+                });
+                json = JsonConvert.SerializeObject(delivered);
+                
+            } else
+            {
+                tgUsersPushesSentDto sent = new();
+                sent.users.Add(new tgUserPushSentDto()
+                {
+                    tg_user_id = id,
+                    tg_geolocation = geotag,
+                    push_send_hours = hours
+                });
+
+                json = JsonConvert.SerializeObject(sent);
+                
+            }
+
+            var addr = $"{url}/v1/telegram/userByGeo";
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.PostAsync(addr, data);
+                var result = await response.Content.ReadAsStringAsync();
+                var jres = JObject.Parse(result);
+                bool res = jres["success"].ToObject<bool>();
+                if (!res)
+                    throw new Exception($"success=false");
+
+            } catch (Exception ex)
+            {
+                throw new Exception($"MarkFollowerWasPushed {ex.Message}");
+            }
+
+        }
+
         public async Task<bool> IsSubscriptionAvailable(string geotag, long id)
         {
             bool res = false;
@@ -84,7 +195,7 @@ namespace csb.server
                 if (resp.success)
                     res = resp.data.is_available;
                 else
-                    throw new Exception($"IsSubscriptionAvaliable success={resp.success}");
+                    throw new Exception($"sucess=false");
             } catch (Exception ex)
             {
                 throw new Exception($"IsSubscriptionAvaliable {ex.Message}");

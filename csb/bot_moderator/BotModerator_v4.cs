@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using csb.messaging;
+using csb.server;
 using Newtonsoft.Json;
-using static csb.server.TGFollowersStatApi;
 
 namespace csb.bot_moderator
 {
@@ -27,7 +27,6 @@ namespace csb.bot_moderator
             dailyPushTimer.Start();
         }
 
-        int cntr = 0;
         private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         { 
             try

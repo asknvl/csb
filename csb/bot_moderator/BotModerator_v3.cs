@@ -205,7 +205,7 @@ namespace csb.bot_moderator
 
                     //string geoPrefx = GeoTag.Substring(0, 4);
                     //if (!chGeoPrefx.Any(n => n.Equals(geoPrefx)) || addme)
-                    bool isAllowed = await statApi.IsSubscriptionAvaliable(GeoTag, chatJoinRequest.From.Id);
+                    bool isAllowed = await statApi.IsSubscriptionAvailable(GeoTag, chatJoinRequest.From.Id);
                     if (isAllowed || addme)
                     {
                         try

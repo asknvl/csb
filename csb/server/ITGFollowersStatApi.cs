@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csb.server.dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,22 @@ using System.Threading.Tasks;
 namespace csb.server
 {
     public interface ITGFollowersStatApi
-    {       
+    {
+        Task<bool> IsSubscriptionAvailable(string geotag, long id);
+        Task UpdateFollowers(List<Follower> followers);
+        Task<List<tgUserPushInfoDto>> GetNoFeedbackFollowers(string geotag, string date_from, string date_to);
+        Task MarkFollowerWasPushed(string geotag, long id, double hours, bool status);
+        Task<List<string>> GetFollowerGeoTags(long id);
+        Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours);
+        Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState);
+        Task MarkFollowerMadeFeedback(string geotag, long id);
+    }
+
+    public enum DailyPushState
+    {
+        sent,
+        delivered,
+        disable
     }
 
     public class TGFollowersStatException : Exception

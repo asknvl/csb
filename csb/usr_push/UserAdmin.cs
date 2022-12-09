@@ -14,11 +14,9 @@ namespace csb.usr_push
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
 #if DEBUG
-        protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");        
 #else
-        //TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
-        protected TGStatApi statApi = new TGStatApi("http://192.168.72.51:4000");
-
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");       
 #endif
 
         ILogger log = Logger.getInstance();

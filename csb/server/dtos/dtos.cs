@@ -95,4 +95,61 @@ namespace csb.server.dtos
         }
     }
     #endregion
+
+    #region GetNoFeedbackFollowers
+    public class tgUserPushInfoDto
+    {
+        public string tg_user_id { get; set; }
+        public string tg_chat_id { get; set; }
+        public double? push_send_hours { get; set; }
+        public double? push_delivered_hours { get; set; }
+        public double time_after_subscribe { get; set; }
+        public double time_diff_last_push_subscr { get; set; }
+    }
+    public class tgUsersPushResultDto
+    {
+        public bool success { get; set; }
+        public string geo { get; set; }
+        public List<tgUserPushInfoDto> data { get; set; } = new();
+    }
+    #endregion
+
+    #region MarkFollowerWasPushed
+    public class tgUserPushSentDto
+    {
+        public long tg_user_id { get; set; }
+        public string tg_geolocation { get; set; }
+        public double push_send_hours { get; set; }
+    }
+
+    public class tgUsersPushesSentDto
+    {
+        public List<tgUserPushSentDto> users { get; set; } = new();
+    }
+
+    public class tgUserPushDeliveredDto
+    {
+        public long tg_user_id { get; set; }
+        public string tg_geolocation { get; set; }
+        public double push_delivered_hours { get; set; }
+    }
+
+    public class tgUsersPushesDeliveredDto
+    {
+        public List<tgUserPushDeliveredDto> users { get; set; } = new();
+    }
+    #endregion
+
+    #region MarkFollowerMadeFeedback
+    public class tgUserFeedbackDto
+    {
+        public long tg_user_id { get; set; }
+        public string tg_geolocation { get; set; }
+        public bool is_user_send_msg { get; set; }
+    }
+    public class tgUsersFeedbackDto
+    {
+        public List<tgUserFeedbackDto> users { get; set; } = new();
+    }
+    #endregion
 }
