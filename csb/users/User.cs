@@ -213,6 +213,20 @@ namespace csb.users
                 }
             })},
 
+            {"finishDailyPushAdding", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Завершить", callbackData: "finishDailyPushAdding"),
+                }
+            })},
+
+            {"finishPushShow", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "finishPushShow"),
+                }
+            })},
+
              {"addChainCancel", new(new[] {
 
                 new[] {
@@ -281,6 +295,18 @@ namespace csb.users
                 }
             })},
 
+             {"addpush", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "addpush"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "back"),
+                }
+            })},
+
+            
+
         };
         #endregion
 
@@ -292,6 +318,7 @@ namespace csb.users
         string currentBotName;
         string oldText;
         BotState State;
+        Queue<int> pushMessagesIds = new Queue<int>();
         #endregion
 
         #region properties
@@ -922,6 +949,18 @@ namespace csb.users
                     }
                     break;
 
+                case "/moderatorslist":
+                    try
+                    {
+
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(chat, ex.Message);
+                        return;
+                    }
+                    break;
+
                 case "/myadmins":
                     State = BotState.free;
                     try
@@ -1300,7 +1339,7 @@ namespace csb.users
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
 
-                                await sendTextMessage(chat, "Приветственное сообщение создано");
+                                await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextMessage(chat, "Приветственное сообщение создано"));
 
                                 string helloReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, если оно не требуется нажмите Завершить";
                                 await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingGreetings"));
@@ -1338,11 +1377,13 @@ namespace csb.users
 
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Back(chat);
 
-                                await sendTextMessage(chat, "Прощальное сообщение создано");
-
-                                State = BotState.free;
-                            } catch (Exception ex)
+                                await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Прощальное сообщение создано. Добавить часовые уведомления?", "addpush"));
+                                //State = BotState.free;
+                            }
+                            catch (Exception ex)
                             {
                                 await sendTextMessage(chat, ex.Message);
                                 return;
@@ -1565,11 +1606,13 @@ namespace csb.users
 
                         DailyPushMessage pattern = await DailyPushMessage.Create(chat, bot, update.Message, chain.Name);
 
+                        pushMessagesIds.Enqueue(update.Message.MessageId);
+
                         chain.AddDailyPushMessage(pattern.Clone(), moderationProcessor);
                         chainprocessor.Save();
 
                         int cntr = chain.DailyPushData.Messages.Count;
-                        await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, $"Добавлено {cntr} сообщений. Перешлите (forward) сюда следующее сообщение для цепочки:", "back"));
+                        await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, $"Добавлено {cntr} сообщений. Перешлите (forward) сюда следующее сообщение для цепочки:", "finishDailyPushAdding"));
 
                     }
                     catch (Exception ex)
@@ -1800,8 +1843,8 @@ namespace csb.users
                 case "back":
                     try
                     {
-                        State = BotState.free;
                         await messagesProcessor.Back(chat);
+                        State = BotState.free;
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
                     {
@@ -2110,6 +2153,7 @@ namespace csb.users
                     currentPushMessage = new PushMessage();
                     try
                     {
+                        await messagesProcessor.Back(chat);
                         await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Введите период вывода сообщения в часах, если вы хотите заменить существующее сообщение, введите период, сообщение для которого требуется заменить:", "addNewPushCancel"));                        
                         await messagesProcessor.Delete(chat, "editPushMessages");                        
                         await bot.AnswerCallbackQueryAsync(query.Id);
@@ -2223,7 +2267,7 @@ namespace csb.users
                 case "daily_add":
                     try
                     {
-                        await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, "Перешлите (forward) сюда исходное сообщение для цепочки:", "back"));
+                        await messagesProcessor.Add(chat, "daily_add", await sendTextButtonMessage(chat, "Перешлите (forward) сюда исходное сообщение для цепочки:", "finishDailyPushAdding"));
                         State = BotState.waitingAddDaily;
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
@@ -2262,7 +2306,54 @@ namespace csb.users
                     }
                     break;
 
-         
+                case "finishDailyPushAdding":
+                    try
+                    {
+                        State = BotState.free;
+
+                        await messagesProcessor.Back(chat);
+
+                        while (pushMessagesIds.Count > 0)
+                        {
+                            var id = pushMessagesIds.Dequeue();
+                            try
+                            {
+                                await bot.DeleteMessageAsync(chat, id);
+
+                            } catch (Exception ex)
+                            {
+
+                            }
+                        }
+
+                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка периодических уведомлений:", "editDailyPushesMenu"));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "finishPushShow":
+                    try
+                    {
+                        while (pushMessagesIds.Count > 0)
+                        {
+                            await bot.DeleteMessageAsync(chat, pushMessagesIds.Dequeue());
+                        }
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                        await messagesProcessor.Back(chat);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+
+                    break;
+
+
+
                 case "":
                     break;
 
@@ -2617,13 +2708,19 @@ namespace csb.users
                             string geotag = data.Replace("moderators_show_daily_pushes_", "");
                             var pushes = moderationProcessor.DailyPushData(geotag).Messages;
                             await bot.AnswerCallbackQueryAsync(query.Id);
+
+                            pushMessagesIds.Clear();
+                            int cntr = 0;
                             if (pushes.Count > 0)
                             {
                                 foreach (var push in pushes)
                                 {
                                     push.fileId = null;
-                                    await push.Send(chat, bot);
+                                    pushMessagesIds.Enqueue(await push.Send(chat, bot));
+                                    cntr++;
                                 }
+
+                                await messagesProcessor.Add(chat, "finishPushShow", await sendTextButtonMessage(chat, $"Показано {cntr} сообщений", "finishPushShow"));
 
                             } else
                             {

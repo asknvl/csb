@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <None Remove="messaging\" />
+    <None Remove="WTelegramClient" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="messaging\" />

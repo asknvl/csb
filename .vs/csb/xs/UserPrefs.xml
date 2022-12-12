@@ -1,29 +1,39 @@
 ﻿<Properties StartupConfiguration="{6A55AD92-8A2B-4AC4-9722-8DA4FE3B8986}|Default">
   <MonoDevelop.Ide.ItemProperties.csb PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="csb/bot_moderator/BotModerator_v4.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="csb/users/User.cs">
     <Files>
-      <File FileName="csb/users/User.cs" Line="1" Column="1" />
-      <File FileName="csb/bot_moderator/BotModerator_v3.cs" />
-      <File FileName="csb/bot_moderator/PushData.cs" />
-      <File FileName="csb/bot_moderator/DailyPushData.cs" />
-      <File FileName="csb/bot_manager/BotManager.cs" />
-      <File FileName="csb/messaging/DailyPushMessageBase.cs" />
-      <File FileName="csb/messaging/DailyPushMessage.cs" />
-      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="csb/chains/IChain.cs" NotebookId="1" />
-      <File FileName="csb/chains/Chain.cs" NotebookId="1" />
-      <File FileName="csb/server/TGFollowersStatApi.cs" NotebookId="1" />
-      <File FileName="csb/Program.cs" NotebookId="1" />
-      <File FileName="csb/usr_listener/UserListener_v1.cs" NotebookId="1" />
+      <File FileName="csb/users/User.cs" Line="1370" Column="1" />
+      <File FileName="csb/bot_manager/BotManager.cs" Line="48" Column="35" />
+      <File FileName="csb/messaging/DailyPushMessageBase.cs" Line="221" Column="30" />
+      <File FileName="csb/bot_moderator/BotModerator_v4.cs" Line="25" Column="40" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="csb" expanded="True">
+            <Node name="csb" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="AssemblyDependencies" expanded="True" />
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+              <Node name="bot_manager" expanded="True" />
+              <Node name="bot_moderator" expanded="True" />
+              <Node name="messaging" expanded="True" />
+              <Node name="users" expanded="True">
+                <Node name="User.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/bot_poster/BotPoster_api.cs" relfile="csb/bot_poster/BotPoster_api.cs" line="514" column="3" />
-      <Breakpoint file="/Users/alexeykonovalov/work/csb/csb/Program.cs" relfile="csb/Program.cs" line="31" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

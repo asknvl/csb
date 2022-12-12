@@ -131,18 +131,21 @@ namespace csb.messaging
             }
         }
 
-        async Task sendTextMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendTextMessage(long id, ITelegramBotClient bot)
         {
-            await bot.SendTextMessageAsync(
+            var m = await bot.SendTextMessageAsync(
                     chatId: id,
                     text: Message.Text,
                     entities: Message.Entities,
                     replyMarkup: Message.ReplyMarkup,
                     cancellationToken: new CancellationToken());
+            return m.MessageId;
         }
 
-        async Task sendPhotoMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendPhotoMessage(long id, ITelegramBotClient bot)
         {
+            int messageId;
+
             if (fileId == null)
             {
                 Console.WriteLine($"Message {id} fileId=null");
@@ -157,6 +160,7 @@ namespace csb.messaging
                             captionEntities: Message.CaptionEntities);
 
                     fileId = sent.Photo.Last().FileId;
+                    messageId = sent.MessageId;
                 }
             } else
             {
@@ -167,17 +171,19 @@ namespace csb.messaging
 
                 InputMediaDocument doc = new InputMediaDocument(imp.Media);
 
-                await bot.SendPhotoAsync(id,
+                var sent = await bot.SendPhotoAsync(id,
                        doc.Media,
                        caption: Message.Caption,
                        replyMarkup: Message.ReplyMarkup,
                        captionEntities: Message.CaptionEntities);
+                messageId = sent.MessageId;
             }
-
+            return messageId;
         }
 
-        async Task sendVideoMessage(long id, ITelegramBotClient bot)
-        { 
+        async Task<int> sendVideoMessage(long id, ITelegramBotClient bot)
+        {
+            int messageId;
             if (fileId == null)
             {
                 Console.WriteLine($"Message {id} fileId=null");
@@ -192,6 +198,7 @@ namespace csb.messaging
                             captionEntities: Message.CaptionEntities);
 
                     fileId = sent.Video.FileId;
+                    messageId = sent.MessageId;
                 }
             }
             else
@@ -203,17 +210,20 @@ namespace csb.messaging
 
                 InputMediaDocument doc = new InputMediaDocument(imv.Media);
 
-                await bot.SendVideoAsync(id,
+                var sent = await bot.SendVideoAsync(id,
                        doc.Media,
                        caption: Message.Caption,
                        replyMarkup: Message.ReplyMarkup,
                        captionEntities: Message.CaptionEntities);
+                messageId = sent.MessageId;
             }
 
+            return messageId;
         }
 
-        async Task sendDocumentMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendDocumentMessage(long id, ITelegramBotClient bot)
         {
+            int messageId;
             if (fileId == null)
             {
                 Console.WriteLine($"Message {id} fileId=null");
@@ -230,44 +240,51 @@ namespace csb.messaging
                         captionEntities: Message.CaptionEntities);
 
                     fileId = sent.Document.FileId;
+                    messageId = sent.MessageId;
                 }
             } else
             {
 
                 InputMedia doc = new InputMedia(fileId);
 
-                await bot.SendDocumentAsync(id,
+                var sent = await bot.SendDocumentAsync(id,
                     doc,
                     caption: Message.Caption,
                     replyMarkup: Message.ReplyMarkup,
                     captionEntities: Message.CaptionEntities);
+                messageId = sent.MessageId;
             }
 
+            return messageId;
         }
 
-        async Task send(long id, ITelegramBotClient bot)
+        async Task<int> send(long id, ITelegramBotClient bot)
         {
+            int messageId;
             switch (Message.Type)
             {
                 case MessageType.Text:
-                    await sendTextMessage(id, bot);
+                    messageId =  await sendTextMessage(id, bot);
                     break;
 
                 case MessageType.Photo:
-                    await sendPhotoMessage(id, bot);
+                    messageId = await sendPhotoMessage(id, bot);
                     break;
 
                 case MessageType.Video:
-                    await sendVideoMessage(id, bot);
+                    messageId = await sendVideoMessage(id, bot);
                     break;
 
                 case MessageType.Document:
-                    await sendDocumentMessage(id, bot);
+                    messageId = await sendDocumentMessage(id, bot);
                     break;
 
                 default:
+                    messageId = 0;
                     break;
             }
+
+            return messageId;
         }
 
         #endregion
@@ -346,25 +363,29 @@ namespace csb.messaging
             }
         }
 
-        public virtual async Task Send(long id, ITelegramBotClient bot)
+        public virtual async Task<int> Send(long id, ITelegramBotClient bot)
         {
+            int messageId = 0;
+
             await Task.Run(async () => {
 
                 try
                 {
-                    await send(id, bot);
-                    
+                    messageId = await send(id, bot);
+
                 } catch (Exception ex)
                 {
                     if (ex.Message.ToLower().Contains("wrong file"))
                     {
                         Console.WriteLine("Resending with fileId = null");
                         fileId = null;
-                        await send(id, bot);
+                        messageId = await send(id, bot);
                     } else
                         throw;
                 }
             });
+
+            return messageId;
         }
 
         public DailyPushMessage Clone()

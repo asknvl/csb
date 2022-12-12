@@ -1,22 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "R/przMS/S1IgfGGAeSs5MA/bSlyu/nozGtyvtZuF+lGcY0wANuoVjFYaFl7wA5Zu408mLzuod5Aj7TbHQuPbAw==",
+  "dgSpecHash": "p1GMdAZlaD7q2mTWg8mwCZA0Civagbs4oJnA70S2TpwgB7tf75eYdorOiIwsSNJxioB5Y+0lm+wjU0LP5yKaqw==",
   "success": true,
-  "projectFilePath": "D:\\WORK\\xtime\\Sources\\csb\\csb\\csb.csproj",
+  "projectFilePath": "/Users/alexeykonovalov/work/csb/csb/csb.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.http\\7.0.0\\microsoft.extensions.http.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\restsharp\\106.10.0\\restsharp.106.10.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.dependencyinjection/7.0.0/microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.http/7.0.0/microsoft.extensions.http.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.logging/7.0.0/microsoft.extensions.logging.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/newtonsoft.json/12.0.2/newtonsoft.json.12.0.2.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/restsharp/106.10.0/restsharp.106.10.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/telegram.bot/18.0.0/telegram.bot.18.0.0.nupkg.sha512",
+    "/Users/alexeykonovalov/.nuget/packages/telegram.bot.extensions.polling/1.0.2/telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }
