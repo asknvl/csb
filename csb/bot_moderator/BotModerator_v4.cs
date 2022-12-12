@@ -27,6 +27,7 @@ namespace csb.bot_moderator
             dailyPushTimer.Start();
         }
 
+        int cntr = 0;
         private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         { 
             try
