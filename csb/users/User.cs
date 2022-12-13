@@ -974,7 +974,7 @@ namespace csb.users
                         string res = "";
                         foreach (var item in admins)
                         {
-                            res += $"{item.geotag} {item.username} {item.phone_number}";
+                            res += $"{item.geotag} {item.username} {item.phone_number}\n";
                         }
                         await sendTextMessage(chat, res);
 
