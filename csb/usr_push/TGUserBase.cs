@@ -27,7 +27,9 @@ namespace csb.usr_push
         [JsonProperty]        
         public string phone_number { get; set; }
         [JsonProperty]
-        public string geotag { get; set; }        
+        public string geotag { get; set; }
+        [JsonProperty]
+        public string? username { get; set; }
         #endregion
 
         public TGUserBase(string api_id, string api_hash, string phone_number, string geotag)
@@ -91,6 +93,7 @@ namespace csb.usr_push
             {
                 user = new Client(Config);
                 usr = await user.LoginUserIfNeeded();
+                username = usr.username;
                 user.Update -= User_Update;
                 user.Update += User_Update;
                 res = true;

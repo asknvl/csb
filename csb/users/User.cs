@@ -146,7 +146,7 @@ namespace csb.users
                 },
 
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToMyModerators"),
                 }
             })},
 
@@ -659,7 +659,7 @@ namespace csb.users
             }
 
             push_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Добавить push сообщение", callbackData: "addpush") };
-            push_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+            push_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToModeratorShow") };
 
             InlineKeyboardMarkup inlineKeyboard = new(push_buttons);
 
@@ -952,7 +952,31 @@ namespace csb.users
                 case "/moderatorslist":
                     try
                     {
+                        var moderators = moderationProcessor.ModeratorBots;
+                        string res = "";
+                        foreach (var item in moderators)
+                        {
+                            res += $"{item.GeoTag} {item.Name}\n";
+                        }
+                        await sendTextMessage(chat, res);
 
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(chat, ex.Message);
+                        return;
+                    }
+                    break;
+
+                case "/myadamins":
+                    try
+                    {
+                        var admins = adminManager.Users.ToArray();
+                        string res = "";
+                        foreach (var item in admins)
+                        {
+                            res += $"{item.geotag} {item.username} {item.phone_number}";
+                        }
+                        await sendTextMessage(chat, res);
 
                     } catch (Exception ex)
                     {
@@ -2213,6 +2237,35 @@ namespace csb.users
                         State = BotState.free;
 
                     } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "backToModeratorShow":
+                    try
+                    {
+                        await messagesProcessor.Back(chat);
+                        var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                        string m = $"Выбран модератор {moderator.GeoTag}. Что сделать?";
+                        await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "backToMyModerators":
+                    try
+                    {
+                        await messagesProcessor.Back(chat);
+                        await showMyModerators(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    }
+                    catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
