@@ -967,7 +967,7 @@ namespace csb.users
                     }
                     break;
 
-                case "/myadamins":
+                case "/adminslist":
                     try
                     {
                         var admins = adminManager.Users.ToArray();
