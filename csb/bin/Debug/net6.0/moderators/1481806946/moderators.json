@@ -1,9 +1,9 @@
 [
   {
     "GeoTag": "TEST1",
-    "Name": "test_moderator_1_bot",
-    "Token": "5699556980:AAHeepQ57cH8Am6YiWeNHdMZHTrNiko0keI",
-    "ChannelID": null,
+    "Name": "moderatortest1_bot",
+    "Token": "5374965995:AAHX9w12LSm1GcjoAp_kUZWHJGiWjKWpT-k",
+    "ChannelID": -1001692610611,
     "Greetings": {
       "HelloMessage": {
         "Text": "hi",

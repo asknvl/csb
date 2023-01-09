@@ -570,7 +570,7 @@ namespace csb.bot_moderator
 
         #region public
 
-        public void Start()
+        public async void Start()
         {
             logger.inf($"Startting moderator...");
 
@@ -585,10 +585,22 @@ namespace csb.bot_moderator
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember }
+                AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember, UpdateType.MyChatMember }
             };
 
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
+
+            try
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    var link = await bot.CreateChatInviteLinkAsync(ChannelID, null, null, null, true);
+                    logger.inf($"{link.InviteLink}");
+                }
+            } catch (Exception ex)
+            {
+                logger.err(ex.Message);
+            }
 
             IsRunning = true;
 
@@ -599,6 +611,13 @@ namespace csb.bot_moderator
 
         public void Stop()
         {
+            cts?.Cancel();
+            IsRunning = false;
+
+            pushTimer?.Stop();
+            dailyPushTimer?.Stop();
+
+            logger.inf($"Moderator stopped");
         }
         #endregion
 

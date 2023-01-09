@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TL;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace csb.moderation
@@ -44,6 +45,13 @@ namespace csb.moderation
             string rd = File.ReadAllText(path);
 
             ModeratorBots = JsonConvert.DeserializeObject<IEnumerable<BotModeratorBase>>(rd);
+
+            foreach (var bot in ModeratorBots)
+            {
+                bot.ParametersUpdatedEvent += (p) => {
+                    Save();
+                };
+            }
         }
 
         public void Save()
@@ -71,9 +79,10 @@ namespace csb.moderation
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
 
             T mbot = (T)Activator.CreateInstance(typeof(T), token, geotag);
-      
+
             //var mbot = new bot_moderator_capi(token, geotag);
-            mbot.ParametersUpdatedEvent += (p) => {
+            mbot.ParametersUpdatedEvent += (p) =>
+            {
                 Save();
             };
 
@@ -89,12 +98,17 @@ namespace csb.moderation
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
 
             //var mbot = new bot_moderator_capi(token, geotag);
-            //mbot.ParametersUpdatedEvent += (p) => {
+            //mbot.ParametersUpdatedEvent += (p) =>
+            //{
             //    Save();
             //};
 
             T mbot = (T)Activator.CreateInstance(typeof(T), token, geotag);
-            
+            mbot.ParametersUpdatedEvent += (p) =>
+            {
+                Save();
+            };
+
             foreach (var pattern in patternPushData.Messages)
             {
                 pattern.MakeAutochange(autoChanges);

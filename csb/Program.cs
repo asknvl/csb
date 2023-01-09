@@ -40,7 +40,7 @@ namespace csb
             string text = "";
             do
             {
-                text = Console.ReadLine();
+                //text = Console.ReadLine();
             } while (!text.Equals("quit"));
 
         }
