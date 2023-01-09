@@ -285,7 +285,7 @@ namespace csb.chains
 
         }
 
-        public void AddDailyPushMessage(DailyPushMessage pattern, ModerationProcessor moderators)
+        public void AddDailyPushMessage(DailyPushMessage pattern, IModeratorsProcessor moderators)
         {
 
             DailyPushData.Messages.Add(pattern);
@@ -320,12 +320,7 @@ namespace csb.chains
             
         }
 
-        public void RemoveDailyPushMessage(int index, ModerationProcessor moderators)
-        {
-            
-        }
-
-        public void ClearDailyPushMessages(ModerationProcessor moderators)
+        public void ClearDailyPushMessages(IModeratorsProcessor moderators)
         {
             DailyPushData.Messages.Clear();
             foreach (var outbot in Bots)

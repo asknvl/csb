@@ -14,11 +14,6 @@ namespace csb.bot_moderator
         System.Timers.Timer dailyPushTimer = new System.Timers.Timer();
         #endregion
 
-        #region properties
-        [JsonProperty]
-        public DailyPushData DailyPushData { get; set; } = new();
-        #endregion
-
         public BotModerator_v4(string token, string geotag) : base(token, geotag)
         {
 #if DEBUG

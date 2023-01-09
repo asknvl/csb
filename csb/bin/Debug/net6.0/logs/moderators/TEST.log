@@ -1,0 +1,41 @@
+07.01.2023 22:37:55 inf > Startting moderator...
+07.01.2023 22:37:55 inf > Moderator started, bot username=test_moderator_1_bot channelID=null
+07.01.2023 22:38:25 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:28 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:31 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:34 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:37 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:40 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:43 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:47 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:50 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:53 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:56 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:38:59 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+07.01.2023 22:39:02 err > Telegram API Error:
+[409]
+Conflict: terminated by other getUpdates request; make sure that only one bot instance is running

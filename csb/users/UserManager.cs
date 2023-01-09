@@ -1,4 +1,5 @@
-﻿using csb.chains;
+﻿using csb.bot_moderator;
+using csb.chains;
 using csb.moderation;
 using csb.storage;
 using csb.usr_push;
@@ -57,7 +58,9 @@ namespace csb.users
                 user.chainsProcessor.Load();
                 user.chainsProcessor.StartAll();
 
-                user.moderationProcessor = new ModerationProcessor($"{user.Id}");
+                //user.moderationProcessor = new ModerationProcessor($"{user.Id}");
+                user.moderationProcessor = new ModeratorsProcessor<bot_moderator_capi>($"{user.Id}");
+
                 user.moderationProcessor.Load();
                 user.moderationProcessor.StartAll();
 
@@ -75,7 +78,10 @@ namespace csb.users
                     bot = bot,
                     messagesProcessor = new MessagesProcessor(bot),
                     chainsProcessor = new ChainProcessor($"{userId}"),
-                    moderationProcessor = new ModerationProcessor($"{userId}"),
+
+                    //moderationProcessor = new ModerationProcessor($"{userId}"),
+                    moderationProcessor = new ModeratorsProcessor<bot_moderator_capi>($"{userId}"),
+
                     adminManager = new TGUserManager<UserAdmin>("admins.json"),
                     cancellationToken = cancellationToken,                    
                     Name = name

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,14 @@ namespace csb.bot_moderator
         string GeoTag { get; set; }
         string Name { get; set; }
         string Token { get; set; }
+        long? ChannelID { get; set; }
+        GreetingsData Greetings { get; set; }
+        PushData PushData { get; set; }
+        DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; set; }
         void Start();
         void Stop();
+
+        public event Action<IBotModerator> ParametersUpdatedEvent;
     }
 }

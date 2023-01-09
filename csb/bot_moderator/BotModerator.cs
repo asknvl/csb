@@ -22,6 +22,9 @@ namespace csb.bot_moderator
 
 #if DEBUG
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
+
+        public event Action<IBotModerator> ParametersUpdatedEvent;
+
         //protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
 
 
@@ -43,6 +46,12 @@ namespace csb.bot_moderator
         public string Name { get; set; }
         [JsonProperty]
         public string Token { get; set; }
+        [JsonProperty]
+        public GreetingsData Greetings { get; set; } = new();
+        [JsonProperty]
+        public PushData PushData { get; set; } = new();
+        [JsonProperty]
+        public DailyPushData DailyPushData { get; set; } = new();
         [JsonIgnore]
         public bool IsRunning { get; set; }
         [JsonIgnore]
@@ -51,6 +60,7 @@ namespace csb.bot_moderator
         public uint ApprovesCounter { get; set; }
         [JsonIgnore]
         public uint ApisendsCounter { get; set; }
+        public long? ChannelID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         public BotModerator()

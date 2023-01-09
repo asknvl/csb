@@ -15,11 +15,11 @@ namespace csb.moderation
     {
         #region vars
         string path;
-        List<BotModerator_v4> moderatorBotsList = new();
+        List<bot_moderator_capi> moderatorBotsList = new();
         #endregion
 
         #region properties
-        public List<BotModerator_v4> ModeratorBots => moderatorBotsList;
+        public List<bot_moderator_capi> ModeratorBots => moderatorBotsList;
         #endregion
 
         public ModerationProcessor(string userId)
@@ -39,7 +39,7 @@ namespace csb.moderation
                 Save();
             }
             string rd = File.ReadAllText(path);
-            moderatorBotsList = JsonConvert.DeserializeObject<List<BotModerator_v4>>(rd);
+            moderatorBotsList = JsonConvert.DeserializeObject<List<bot_moderator_capi>>(rd);
         }
 
         public void Save()
@@ -64,7 +64,11 @@ namespace csb.moderation
             if (found)
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
 
-            var mbot = new BotModerator_v4(token, geotag);
+            var mbot = new bot_moderator_capi(token, geotag);
+            mbot.ParametersUpdatedEvent += (p) => {
+                Save();
+            };
+
             mbot.Start();
             moderatorBotsList.Add(mbot);
             Save();            
@@ -76,7 +80,10 @@ namespace csb.moderation
             if (found)
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
 
-            var mbot = new BotModerator_v4(token, geotag);
+            var mbot = new bot_moderator_capi(token, geotag);
+            mbot.ParametersUpdatedEvent += (p) => {
+                Save();
+            };
 
             foreach (var pattern in patternPushData.Messages)
             {
@@ -113,7 +120,7 @@ namespace csb.moderation
             return found.DailyPushData;
         }
 
-        public BotModerator Get(string geotag)
+        public IBotModerator Get(string geotag)
         {
             var found = moderatorBotsList.FirstOrDefault(o => o.GeoTag.Equals(geotag));
             if (found == null)

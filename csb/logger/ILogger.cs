@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace csb.logger
+namespace asknvl.logger
 {
     public interface ILogger
     {
-        void dbg(string message);
-        void err(string message);
+        bool EnableConsoleOutput { get; set; }
+        bool EnableConsoleErrorOutput { get; set; } 
+
+        void dbg(string text);
+        void err(string text);
+        void inf(string text);
     }
 }

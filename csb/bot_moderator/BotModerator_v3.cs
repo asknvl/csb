@@ -18,11 +18,6 @@ namespace csb.bot_moderator
         System.Timers.Timer pushTimer = new System.Timers.Timer();        
         #endregion
 
-        #region properties
-        [JsonProperty]
-        public PushData PushData { get; set; } = new();
-        #endregion
-
         public BotModerator_v3(string token, string geotag) : base(token, geotag)
         {
             pushTimer.Interval =  10 * 60 * 1000;

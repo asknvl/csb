@@ -34,6 +34,10 @@
           {
             "OldText": "https://feedback.xtime",
             "NewText": "https://t.me/feebback"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@asknvl"
           }
         ]
       },
@@ -66,6 +70,10 @@
           {
             "OldText": "https://feedback.xtime",
             "NewText": "https://t.me/feedback_Avi"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@ceoxtime"
           }
         ]
       }
@@ -78,162 +86,7 @@
     },
     "ReplacedWords": [],
     "DailyPushData": {
-      "Messages": [
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 1624,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934848,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "1"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 2,
-          "Message": {
-            "message_id": 1626,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934850,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "2"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 3,
-          "Message": {
-            "message_id": 1628,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934852,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "3"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 4,
-          "Message": {
-            "message_id": 1630,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934853,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "4"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 5,
-          "Message": {
-            "message_id": 1632,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934854,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "5"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 6,
-          "Message": {
-            "message_id": 1634,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934855,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "6"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 7,
-          "Message": {
-            "message_id": 1636,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1670934856,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "7"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     },
     "State": 0
   }

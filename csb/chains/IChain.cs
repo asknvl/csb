@@ -51,9 +51,8 @@ namespace csb.chains
         void RemoveAutoChange(string botname, int index);
         void ClearAutoChanges(string botname);
 
-        void AddDailyPushMessage(DailyPushMessage message, ModerationProcessor moderators);
-        void RemoveDailyPushMessage(int index, ModerationProcessor moderators);
-        void ClearDailyPushMessages(ModerationProcessor moderators);
+        void AddDailyPushMessage(DailyPushMessage message, IModeratorsProcessor moderators);        
+        void ClearDailyPushMessages(IModeratorsProcessor moderators);
 
 
     }

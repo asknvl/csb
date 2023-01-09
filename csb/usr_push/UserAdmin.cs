@@ -1,4 +1,4 @@
-﻿using csb.logger;
+﻿
 using csb.server;
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,6 @@ namespace csb.usr_push
 #else
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");       
 #endif
-
-        ILogger log = Logger.getInstance();
 #endregion
 
 #region properties        

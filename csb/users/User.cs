@@ -343,8 +343,11 @@ namespace csb.users
             }
         }
 
+        //[JsonIgnore]
+        //public ModerationProcessor moderationProcessor { get; set; }
+
         [JsonIgnore]
-        public ModerationProcessor moderationProcessor { get; set; }
+        public IModeratorsProcessor moderationProcessor { get; set; }
 
         TGUserManager<UserAdmin> adminmanager;
         [JsonIgnore]
@@ -420,7 +423,7 @@ namespace csb.users
         InlineKeyboardMarkup getMyModeratorsMarkUp()
         {
 
-            var moderators = moderationProcessor.ModeratorBots;
+            var moderators = moderationProcessor.ModeratorBots.ToList();
             int number = moderators.Count;
 
             InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 2][];
