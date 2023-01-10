@@ -48,6 +48,13 @@ namespace csb.moderation
 
             foreach (var bot in ModeratorBots)
             {
+
+                if (bot.LeadType == null)
+                {
+                    bot.LeadType = BotModeratorLeadType.NO;
+                    Save();
+                }                
+
                 bot.ParametersUpdatedEvent += (p) => {
                     Save();
                 };

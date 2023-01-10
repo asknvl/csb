@@ -55,6 +55,8 @@ namespace csb.bot_moderator
         [JsonProperty]
         public long? ChannelID { get; set; } = null;
         [JsonProperty]
+        public BotModeratorLeadType? LeadType { get; set; } = BotModeratorLeadType.NO;
+        [JsonProperty]
         public GreetingsData Greetings { get; set; } = new();
         [JsonProperty]
         public PushData PushData { get; set; } = new();
@@ -62,7 +64,8 @@ namespace csb.bot_moderator
         public DailyPushData DailyPushData { get; set; } = new();
 
         [JsonIgnore]
-        public bool IsRunning { get; set; }        
+        public bool IsRunning { get; set; }
+        
         #endregion
 
         public BotModeratorBase(string token, string geotag)
@@ -319,6 +322,12 @@ namespace csb.bot_moderator
 
                 long user_id = member.NewChatMember.User.Id;
                 long chat_id = update.ChatMember.Chat.Id;
+
+                if (ChannelID == null)
+                {
+                    ChannelID = chat_id;
+                    ParametersUpdatedEvent?.Invoke(this);
+                }                    
 
                 string fn = member.NewChatMember.User.FirstName;
                 string ln = member.NewChatMember.User.LastName;
@@ -590,17 +599,17 @@ namespace csb.bot_moderator
 
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
-            try
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    var link = await bot.CreateChatInviteLinkAsync(ChannelID, null, null, null, true);
-                    logger.inf($"{link.InviteLink}");
-                }
-            } catch (Exception ex)
-            {
-                logger.err(ex.Message);
-            }
+            //try
+            //{
+            //    for (int i = 0; i < 10; i++)
+            //    {
+            //        var link = await bot.CreateChatInviteLinkAsync(ChannelID, null, null, null, true);
+            //        logger.inf($"{link.InviteLink}");
+            //    }
+            //} catch (Exception ex)
+            //{
+            //    logger.err(ex.Message);
+            //}
 
             IsRunning = true;
 

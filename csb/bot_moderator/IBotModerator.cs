@@ -13,6 +13,8 @@ namespace csb.bot_moderator
         string Name { get; set; }
         string Token { get; set; }
         long? ChannelID { get; set; }
+        BotModeratorLeadType LeadType { get; set; }
+
         GreetingsData Greetings { get; set; }
         PushData PushData { get; set; }
         DailyPushData DailyPushData { get; set; }
@@ -22,4 +24,12 @@ namespace csb.bot_moderator
 
         public event Action<IBotModerator> ParametersUpdatedEvent;
     }
+
+    public enum BotModeratorLeadType : int
+    {
+        NO = 0,
+        CAPIv1,
+        CAPIv2
+    }
+    
 }

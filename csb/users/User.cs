@@ -129,6 +129,10 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Изменить геотег", callbackData: "editModeratorGeoTag"),
                 },
 
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Алгоритм формирования лидов", callbackData: "editModeratorGeoTag"),
+                },
+
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Настроить Join сообщение", callbackData: "editJoinMessage"),
                 },
