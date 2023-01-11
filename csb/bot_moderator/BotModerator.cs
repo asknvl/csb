@@ -22,12 +22,7 @@ namespace csb.bot_moderator
 
 #if DEBUG
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
-
-        public event Action<IBotModerator> ParametersUpdatedEvent;
-
         //protected TGStatApi statApi = new TGStatApi("http://185.46.9.229:4000");
-
-
         //protected TGStatApi statApi = new TGStatApi("http://136.243.74.153:4000");
 
 #else
@@ -183,5 +178,7 @@ namespace csb.bot_moderator
         }
 
         #endregion
+
+        public event Action<IBotModerator> ParametersUpdatedEvent;
     }
 }

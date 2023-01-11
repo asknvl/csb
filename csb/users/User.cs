@@ -673,7 +673,7 @@ namespace csb.users
             return inlineKeyboard;
         }
 
-        InlineKeyboardMarkup getMyLeadAlgorithmsMarkUp(BotModeratorLeadType type)
+        InlineKeyboardMarkup getMyLeadAlgorithmsMarkUp(BotModeratorLeadType? type)
         {
             var algorithms = Enum.GetValues(typeof(BotModeratorLeadType));           
             int number = algorithms.Length;
@@ -686,10 +686,10 @@ namespace csb.users
                 var text = ((BotModeratorLeadType)item).ToString();
                 if (text.Equals(type.ToString()))
                     text = $"{text} ✓";
-                type_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{text}", callbackData: $"lead_algo_{item}") };
+                type_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{text}", callbackData: $"lead_algo_{(int)item}") };
                 i++;
             }
-            type_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToModeratorShow") };
+            type_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToModeratorShow") };
 
             InlineKeyboardMarkup inlineKeyboard = new(type_buttons);
 
@@ -2201,8 +2201,15 @@ namespace csb.users
                     break;
 
                 case "checkLeadAlgorithm":
-                    var moderator = moderationProcessor.Get(currentModeratorGeoTag);
-                    await showMyModeratorsLeadType(chat, moderator.LeadType);
+                    try
+                    {
+                        var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                        await showMyModeratorsLeadType(chat, moderator.LeadType);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }                    
                     break;
 
                 case "editPushMessages":
@@ -2854,6 +2861,24 @@ namespace csb.users
 
                         }
                         catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("lead_algo_"))
+                    {
+                        try
+                        {
+                            string alg = data.Replace("lead_algo_", "");
+                            int val = int.Parse(alg);
+                            BotModeratorLeadType algorithm = (BotModeratorLeadType)val;
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+                            var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                            moderator.LeadType = algorithm;
+                            await showMyModeratorsLeadType(chat, moderator.LeadType);                            
+
+                        } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);
                         }
