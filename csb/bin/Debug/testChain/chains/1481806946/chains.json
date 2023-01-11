@@ -1,0 +1,240 @@
+[
+  {
+    "Owner": 0,
+    "Name": "TEST",
+    "Id": 1,
+    "PhoneNumber": "+79918437350",
+    "Bots": [
+      {
+        "GeoTag": "TEST1",
+        "Token": "5747440314:AAHvcb__HtHV4nwyUqo4lvwLHpV7Qw2fAZE",
+        "Name": "test_poster_1_bot",
+        "ChannelID": -1001692610611,
+        "ChannelTitle": "OUT1",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@asknvl",
+        "ReplacedWords": [],
+        "AutoChanges": [
+          {
+            "OldText": "https://partner.xtime",
+            "NewText": "https://1wclvk.top/casino/list?open=register"
+          },
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1243990530/20767"
+          },
+          {
+            "OldText": "https://training.xtime",
+            "NewText": "https://t.me/+IQ5zBmd97N82NmNi"
+          },
+          {
+            "OldText": "https://howiamlook.xtime",
+            "NewText": "https://t.me/c/1243990530/20777"
+          },
+          {
+            "OldText": "https://feedback.xtime",
+            "NewText": "https://t.me/feebback"
+          }
+        ]
+      },
+      {
+        "GeoTag": "TEST2",
+        "Token": "5770581555:AAFmk8eUfrcqm7utn4LY8-Xc_msTPadVPaQ",
+        "Name": "test_poster_2_bot",
+        "ChannelID": -1001666542030,
+        "ChannelTitle": "OUT2",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@ceoxtime",
+        "ReplacedWords": [],
+        "AutoChanges": [
+          {
+            "OldText": "https://partner.xtime",
+            "NewText": "https://1wvhpx.top/casino/list?open=register"
+          },
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1700959000/102"
+          },
+          {
+            "OldText": "https://training.xtime",
+            "NewText": "https://t.me/avitrainingind"
+          },
+          {
+            "OldText": "https://howiamlook.xtime",
+            "NewText": "https://t.me/c/1700959000/109"
+          },
+          {
+            "OldText": "https://feedback.xtime",
+            "NewText": "https://t.me/feedback_Avi"
+          }
+        ]
+      }
+    ],
+    "User": {
+      "FilteredWords": [],
+      "TimeInterval": 0.016666666666666666,
+      "MessageBufferLength": 10,
+      "MatchingPercentageTreshold": 71
+    },
+    "ReplacedWords": [],
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 1624,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934848,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "1"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 1626,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934850,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "2"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 3,
+          "Message": {
+            "message_id": 1628,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934852,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "3"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 4,
+          "Message": {
+            "message_id": 1630,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934853,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "4"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 5,
+          "Message": {
+            "message_id": 1632,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934854,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "5"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 6,
+          "Message": {
+            "message_id": 1634,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934855,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "6"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 7,
+          "Message": {
+            "message_id": 1636,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1670934856,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "7"
+          },
+          "FilePath": null
+        }
+      ]
+    },
+    "State": 0
+  }
+]
