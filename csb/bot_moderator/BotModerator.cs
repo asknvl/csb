@@ -61,6 +61,7 @@ namespace csb.bot_moderator
         [JsonIgnore]
         public uint ApisendsCounter { get; set; }
         public long? ChannelID { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public BotModeratorLeadType? LeadType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         public BotModerator()

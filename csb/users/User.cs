@@ -130,7 +130,7 @@ namespace csb.users
                 },
 
                  new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Алгоритм формирования лидов", callbackData: "editModeratorGeoTag"),
+                    InlineKeyboardButton.WithCallbackData(text: "Алгоритм формирования лидов", callbackData: "checkLeadAlgorithm"),
                 },
 
                 new[] {
@@ -673,6 +673,30 @@ namespace csb.users
             return inlineKeyboard;
         }
 
+        InlineKeyboardMarkup getMyLeadAlgorithmsMarkUp(BotModeratorLeadType type)
+        {
+            var algorithms = Enum.GetValues(typeof(BotModeratorLeadType));           
+            int number = algorithms.Length;
+
+            InlineKeyboardButton[][] type_buttons = new InlineKeyboardButton[number + 1][];
+            int i = 0;
+
+            foreach (var item in algorithms)
+            {
+                var text = ((BotModeratorLeadType)item).ToString();
+                if (text.Equals(type.ToString()))
+                    text = $"{text} ✓";
+                type_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{text}", callbackData: $"lead_algo_{item}") };
+                i++;
+            }
+            type_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToModeratorShow") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(type_buttons);
+
+            return inlineKeyboard;
+
+        }
+
         async Task<Message> sendTextMessage(long chat, string message)
         {
             return await bot.SendTextMessageAsync(
@@ -841,6 +865,15 @@ namespace csb.users
                 chatId: chat,
                 text: "Управление push-сообщениями:",
                 replyMarkup: getMyPushMessagesMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showMyModeratorsLeadType(long chat, BotModeratorLeadType? type)
+        {
+            await messagesProcessor.Add(chat, "checkLeadAlgorithm", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text:"Выберите алгоритм для обработки лидов:",
+                replyMarkup: getMyLeadAlgorithmsMarkUp(type),
                 cancellationToken: cancellationToken));
         }
 
@@ -2165,6 +2198,11 @@ namespace csb.users
                     await messagesProcessor.Add(chat, "editModeratorGeoTag", await sendTextButtonMessage(chat, $"Текущий геотег модератора - {currentModeratorGeoTag}. Введите новый геотег:", "back"));
                     State = BotState.waitingModeratorGeoTagEdit;
                     await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "checkLeadAlgorithm":
+                    var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                    await showMyModeratorsLeadType(chat, moderator.LeadType);
                     break;
 
                 case "editPushMessages":

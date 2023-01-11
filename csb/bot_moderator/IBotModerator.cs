@@ -13,7 +13,7 @@ namespace csb.bot_moderator
         string Name { get; set; }
         string Token { get; set; }
         long? ChannelID { get; set; }
-        BotModeratorLeadType LeadType { get; set; }
+        BotModeratorLeadType? LeadType { get; set; }
 
         GreetingsData Greetings { get; set; }
         PushData PushData { get; set; }
