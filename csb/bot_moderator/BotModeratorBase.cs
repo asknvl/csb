@@ -55,7 +55,7 @@ namespace csb.bot_moderator
         [JsonProperty]
         public long? ChannelID { get; set; } = null;
         [JsonProperty]
-        public BotModeratorLeadType? LeadType { get; set; } = BotModeratorLeadType.NO;
+        public BotModeratorLeadType? LeadType { get; set; } = null;
         [JsonProperty]
         public GreetingsData Greetings { get; set; } = new();
         [JsonProperty]
@@ -263,15 +263,11 @@ namespace csb.bot_moderator
 
                 var chatJoinRequest = update.ChatJoinRequest;
 
-                var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
-                List<string> chGeoPrefx = new();
+                var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);                
 
                 string tags = "";
-                foreach (var item in user_geotags)
-                {
-                    chGeoPrefx.Add(item.Substring(0, 4));
-                    tags += $"{item} ";
-                }
+                foreach (var item in user_geotags)                                    
+                    tags += $"{item} ";                
 
                 bool addme = false;
                 try
@@ -302,12 +298,12 @@ namespace csb.bot_moderator
                         logger.err(ex.Message);
                     }
                     await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    logger.inf($"{DateTime.Now} {GeoTag} cntr={++appCntr} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                    logger.inf_urgent($"{GeoTag} cntr={++appCntr} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
 
                 }
                 else
                 {
-                    logger.inf($"{DateTime.Now} {GeoTag} cntr={++decCntr} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                    logger.inf_urgent($"{GeoTag} cntr={++decCntr} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                 }
             }

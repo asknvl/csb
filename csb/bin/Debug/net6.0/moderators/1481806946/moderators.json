@@ -1,9 +1,35 @@
 [
   {
     "GeoTag": "TEST1",
-    "Name": "moderatortest1_bot",
-    "Token": "5374965995:AAHX9w12LSm1GcjoAp_kUZWHJGiWjKWpT-k",
-    "ChannelID": -1001692610611,
+    "Name": "test_moderator_1_bot",
+    "Token": "5699556980:AAHeepQ57cH8Am6YiWeNHdMZHTrNiko0keI",
+    "ChannelID": null,
+    "LeadType": 0,
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "hi",
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": "bye",
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "PushData": {
+      "Messages": []
+    },
+    "DailyPushData": {
+      "Messages": []
+    }
+  },
+  {
+    "GeoTag": "TEST2",
+    "Name": "test_moderator_2_bot",
+    "Token": "5698515521:AAHlZ663NoR2iVU9RsJzZLB5T2pERSv2E5o",
+    "ChannelID": -1001666542030,
+    "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
         "Text": "hi",

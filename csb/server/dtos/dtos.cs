@@ -76,12 +76,12 @@ namespace csb.server.dtos
     class subAvaliableData
     {
         public bool is_available { get; set; }
-        public int group_id { get; set; }
+        public int? group_id { get; set; }
     }
     class subAvaliableResult
     {
         public bool success { get; set; }
-        public subAvaliableData data { get; set; }
+        public subAvaliableData? data { get; set; }
     }
     #endregion
 

@@ -14,5 +14,6 @@ namespace asknvl.logger
         void dbg(string text);
         void err(string text);
         void inf(string text);
+        void inf_urgent(string text);
     }
 }

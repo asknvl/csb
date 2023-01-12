@@ -34,10 +34,6 @@
           {
             "OldText": "https://feedback.xtime",
             "NewText": "https://t.me/feebback"
-          },
-          {
-            "OldText": "@booowos",
-            "NewText": "@asknvl"
           }
         ]
       },
@@ -70,10 +66,6 @@
           {
             "OldText": "https://feedback.xtime",
             "NewText": "https://t.me/feedback_Avi"
-          },
-          {
-            "OldText": "@booowos",
-            "NewText": "@ceoxtime"
           }
         ]
       }

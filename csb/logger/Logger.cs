@@ -122,6 +122,15 @@ namespace asknvl.logger
             if (!DisableFileOutput)
                 logMessages.Enqueue(message);
         }
+
+        public void inf_urgent(string text)
+        {
+            var message = new LogMessage(LogMessageType.inf, text);            
+                Console.WriteLine(message.ToString());
+
+            if (!DisableFileOutput)
+                logMessages.Enqueue(message);
+        }
         #endregion
     }
 }

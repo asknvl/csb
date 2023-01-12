@@ -1,2 +1,12 @@
-07.01.2023 21:45:32 inf > Startting moderator...
-07.01.2023 21:45:33 inf > Moderator started, bot username=test_moderator_2_bot channelID=null
+12.01.2023 2:48:15 inf > Startting moderator...
+12.01.2023 2:48:16 inf > Moderator started, bot username=test_moderator_2_bot channelID=-1001666542030
+12.01.2023 2:48:18 inf > 12.01.2023 2:48:18 TEST2 cntr=1 APPROVED -1001666542030 5077471120 acc_5m  testacc_5m TEST1 
+12.01.2023 2:48:25 inf > Updated DB+
+12.01.2023 2:48:25 inf > 12.01.2023 2:48:25 TEST2 JOIN -1001666542030 5077471120 acc_5m  @testacc_5m link=https://t.me/+mfKc505-... 
+12.01.2023 2:48:26 inf > Updated DB-
+12.01.2023 2:48:26 inf > 12.01.2023 2:48:26 TEST2 LEFT -1001666542030 5077471120 acc_5m  @testacc_5m NOLINK 
+12.01.2023 2:48:27 err > Bad Request: USER_ALREADY_PARTICIPANT
+12.01.2023 2:48:28 err > Bad Request: USER_ALREADY_PARTICIPANT
+12.01.2023 2:48:29 err > Bad Request: USER_ALREADY_PARTICIPANT
+12.01.2023 2:48:30 inf > Updated DB+
+12.01.2023 2:48:30 inf > 12.01.2023 2:48:30 TEST2 JOIN -1001666542030 5077471120 acc_5m  @testacc_5m link=https://t.me/+mfKc505-... 
