@@ -1,12 +1,6 @@
-12.01.2023 2:48:15 inf > Startting moderator...
-12.01.2023 2:48:16 inf > Moderator started, bot username=test_moderator_2_bot channelID=-1001666542030
-12.01.2023 2:48:18 inf > 12.01.2023 2:48:18 TEST2 cntr=1 APPROVED -1001666542030 5077471120 acc_5m  testacc_5m TEST1 
-12.01.2023 2:48:25 inf > Updated DB+
-12.01.2023 2:48:25 inf > 12.01.2023 2:48:25 TEST2 JOIN -1001666542030 5077471120 acc_5m  @testacc_5m link=https://t.me/+mfKc505-... 
-12.01.2023 2:48:26 inf > Updated DB-
-12.01.2023 2:48:26 inf > 12.01.2023 2:48:26 TEST2 LEFT -1001666542030 5077471120 acc_5m  @testacc_5m NOLINK 
-12.01.2023 2:48:27 err > Bad Request: USER_ALREADY_PARTICIPANT
-12.01.2023 2:48:28 err > Bad Request: USER_ALREADY_PARTICIPANT
-12.01.2023 2:48:29 err > Bad Request: USER_ALREADY_PARTICIPANT
-12.01.2023 2:48:30 inf > Updated DB+
-12.01.2023 2:48:30 inf > 12.01.2023 2:48:30 TEST2 JOIN -1001666542030 5077471120 acc_5m  @testacc_5m link=https://t.me/+mfKc505-... 
+13.01.2023 0:51:06 inf > Startting moderator...
+13.01.2023 0:51:06 inf > Moderator started, bot username=testmoderator2_bot channelID=null
+13.01.2023 0:52:08 inf > Moderator added to channel/group ID=-1001666542030
+13.01.2023 0:52:19 inf > TEST2 cntr=1 APPROVED -1001666542030 1784884123 acc_4m  testacc_4m TEST01 TEST TEST1 
+13.01.2023 0:52:19 inf > Updated DB+
+13.01.2023 0:52:19 inf > 13.01.2023 0:52:19 TEST2 JOIN -1001666542030 1784884123 acc_4m  @testacc_4m link=https://t.me/+vwrDV73P... 

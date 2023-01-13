@@ -173,7 +173,7 @@ namespace csb.bot_moderator
                     //    Console.WriteLine("set fileId=null");
                     //    message.fileId = null;
                     //}
-                    await message.Send(1780912435, bot);
+                    await message.Send(1784884123, bot);
                     cntr++;
                 }
                 else
@@ -241,7 +241,7 @@ namespace csb.bot_moderator
         #region protected
         protected virtual async Task processMyChatMember(Update update)
         {
-            long id = update.MyChatMember.Chat.Id;          
+            long id = update.MyChatMember.Chat.Id;               
 
             switch (update.MyChatMember.NewChatMember.Status)
             {

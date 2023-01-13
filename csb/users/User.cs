@@ -108,6 +108,10 @@ namespace csb.users
                 },
 
                  new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настройка smart-уведомлений", callbackData: "editSmartPushes"),
+                },
+
+                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Настройка ежедневных push-уведомлений", callbackData: "editDailyPushes"),
                 },
 
@@ -1373,7 +1377,11 @@ namespace csb.users
                                         NewText = outbot.ChannelLink
                                     };
 
-                                    moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, new List<AutoChange> { pmAutochange });
+                                    var allAutoChanges = new List<AutoChange>(outbot.AutoChanges);
+                                    allAutoChanges.Add(pmAutochange);
+
+                                    //moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, new List<AutoChange> { pmAutochange });
+                                    moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, allAutoChanges);
 
                                 } else
                                     moderationProcessor.Add(moder_token, currentModeratorGeoTag);
