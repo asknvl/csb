@@ -8,7 +8,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace csb.messaging
 {
-    public class DailyPushMessage : DailyPushMessageBase
+    public class DailyPushMessage : PushMessageBase
     {
         public DailyPushMessage()
         {

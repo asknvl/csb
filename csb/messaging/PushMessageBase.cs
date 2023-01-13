@@ -13,7 +13,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.messaging
 {
-    public abstract class DailyPushMessageBase
+    public abstract class PushMessageBase
     {
         
         #region properties
@@ -27,7 +27,7 @@ namespace csb.messaging
         public string fileId { get; set; } = null;
         #endregion
 
-        public DailyPushMessageBase()
+        public PushMessageBase()
         {
         }
 

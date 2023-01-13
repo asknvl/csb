@@ -43,6 +43,5 @@
   <ItemGroup>
     <Folder Include="bot_moderator\lead_processor\" />
     <Folder Include="bot_moderator\link_processor\" />
-    <Folder Include="messaging\" />
   </ItemGroup>
 </Project>
