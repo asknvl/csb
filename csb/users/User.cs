@@ -145,9 +145,9 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Настроить Leave сообщение", callbackData: "editLeaveMessage"),
                 },
 
-                new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Настроить Push сообщения", callbackData: "editPushMessages"),
-                },
+                //new[] {
+                //    InlineKeyboardButton.WithCallbackData(text: "Настроить Push сообщения", callbackData: "editPushMessages"),
+                //},
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteModerator"),
@@ -203,6 +203,49 @@ namespace csb.users
                 }
             })},
 
+            {"finishDailyPushAdding", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Завершить", callbackData: "finishDailyPushAdding"),
+                }
+            })},
+
+            {"finishDailyPushShow", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "finishDailyPushShow"),
+                }
+            })},
+
+            {"editSmartPushesMenu", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "smart_show"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "smart_add"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "smart_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
+             {"finishSmartPushAdding", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Завершить", callbackData: "finishDailyPushAdding"),
+                }
+            })},
+
+            {"finishSmartPushShow", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "finishDailyPushShow"),
+                }
+            })},
+
             {"editAdmin", new(new[] {
 
                 new[] {
@@ -218,20 +261,6 @@ namespace csb.users
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
-                }
-            })},
-
-            {"finishDailyPushAdding", new(new[] {
-
-                new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "« Завершить", callbackData: "finishDailyPushAdding"),
-                }
-            })},
-
-            {"finishPushShow", new(new[] {
-
-                new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "finishPushShow"),
                 }
             })},
 
@@ -296,10 +325,10 @@ namespace csb.users
                 }
             })},
 
-             {"addNewPushCancel", new(new[] {
+             {"addSmartPushCancel", new(new[] {
 
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addNewPushCancel"),
+                    InlineKeyboardButton.WithCallbackData(text: "Отмена", callbackData: "addSmartPushCancel"),
                 }
             })},
 
@@ -322,7 +351,11 @@ namespace csb.users
         int currentChainID;
         string currentModeratorGeoTag;
         string currentAdminGeoTag;
-        PushMessage currentPushMessage;
+
+        //PushMessage currentPushMessage;
+        double currentPushMessageTime;
+
+
         string currentBotName;
         string oldText;
         BotState State;
@@ -500,6 +533,30 @@ namespace csb.users
             return inlineKeyboard;
         }
 
+        InlineKeyboardMarkup getMyModeratorsSmartPushMessagesDeleteMarkUp()
+        {
+
+            var bots = chainsProcessor.Get(currentChainID).Bots;
+            var botsGeoTags = bots.Select(b => b.GeoTag);
+
+            var moderators = moderationProcessor.ModeratorBots.Where(m => botsGeoTags.Contains(m.GeoTag)).ToList();
+            int number = moderators.Count; //select for chain bots
+
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 2][];
+
+            for (int i = 0; i < number; i++)
+            {
+                moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: moderators[i].GeoTag, callbackData: $"moderators_delete_smart_pushes_{moderators[i].GeoTag}") };
+            }
+            moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Для всех", callbackData: "moderators_delete_smart_pushes_all") };
+
+            moderators_buttons[number + 1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
+
+            return inlineKeyboard;
+        }
+
         async Task<InlineKeyboardMarkup> getMyChannelsMarkUp(IChain chain)
         {
 
@@ -659,7 +716,7 @@ namespace csb.users
         InlineKeyboardMarkup getMyPushMessagesMarkUp()
         {
 
-            var pushes = moderationProcessor.PushData(currentModeratorGeoTag).Messages;
+            var pushes = moderationProcessor.SmartPushData(currentModeratorGeoTag).Messages;
             int number = pushes.Count;
 
             InlineKeyboardButton[][] push_buttons = new InlineKeyboardButton[number + 2][];
@@ -761,6 +818,17 @@ namespace csb.users
                 text: "Выберите модератора, для которого требуется удалить ежедневные сообщения:",
                 //replyMarkup: inlineKeyboards["/mychains"],
                 replyMarkup: getMyModeratorsDailyPushMessagesDeleteMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task deleteMyModeratorsSmartPushMessages(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "/mymoderators", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Выберите модератора, для которого требуется удалить smart сообщения:",
+                //replyMarkup: inlineKeyboards["/mychains"],
+                replyMarkup: getMyModeratorsSmartPushMessagesDeleteMarkUp(),
                 cancellationToken: cancellationToken));
         }
 
@@ -1559,14 +1627,15 @@ namespace csb.users
                             }
                             break;
 
-                        case BotState.waitingNewPushTimePeriod:
+                        case BotState.waitingNewSmartPushTimePeriod:
                             try
                             {
-                                currentPushMessage.TimePeriod = double.Parse(msg.Trim());                                                                
-                                State = BotState.waitingNewPushMessage;
+                                currentPushMessageTime = double.Parse(msg.Trim());
+                                pushMessagesIds.Enqueue(update.Message.MessageId);
+                                State = BotState.waitingNewSmartPushMessage;
                                 await messagesProcessor.Back(chat);
                                 string helloReqMsg = "Перешлите (forward) сюда push \U0001F9B5 сообщение:";
-                                await messagesProcessor.Add(chat, "waitingPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "addNewPushCancel"));
+                                await messagesProcessor.Add(chat, "waitingNewSmartPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "addSmartPushCancel"));
 
                             } catch (Exception ex)
                             {
@@ -1575,26 +1644,21 @@ namespace csb.users
                             }
                             break;
 
-                        case BotState.waitingNewPushMessage:
+                        case BotState.waitingNewSmartPushMessage:
                             try
                             {
-                                TextMessage txtmsg = new TextMessage();
-                                txtmsg.Text = update.Message.Text;
-                                txtmsg.Entities = update.Message.Entities;
-                                txtmsg.ReplyMarkup = update.Message.ReplyMarkup;
+                                var chain = chainsProcessor.Get(currentChainID);
 
-                                currentPushMessage.TextMessage = txtmsg;
+                                SmartPushMessage pattern = await SmartPushMessage.Create(chat, bot, update.Message, chain.Name, currentPushMessageTime);
 
-                                moderationProcessor.PushData(currentModeratorGeoTag).Messages.RemoveAll(m => m.TimePeriod == currentPushMessage.TimePeriod);
-                                moderationProcessor.PushData(currentModeratorGeoTag).Messages.Add(currentPushMessage);
-                                var pd = moderationProcessor.PushData(currentModeratorGeoTag).Messages.OrderBy(m => m.TimePeriod);
-                                moderationProcessor.PushData(currentModeratorGeoTag).Messages = pd.ToList();
-                                moderationProcessor.Save();
+                                pushMessagesIds.Enqueue(update.Message.MessageId);
 
-                                State = BotState.free;
-                                await messagesProcessor.Back(chat);
-                                //await sendTextMessage(chat, "Push-сообщение создано");
-                                await showMyPushMessages(chat);
+                                chain.AddSmartPushMessage(pattern.Clone(), moderationProcessor);
+                                chainprocessor.Save();
+
+                                int cntr = chain.SmartPushData.Messages.Count;
+                                await messagesProcessor.Add(chat, "smart_add", await sendTextButtonMessage(chat, $"Добавлено {currentPushMessageTime} сообщение. Введите период вывода следующего сообщения в часах:", "finishSmartPushAdding"));
+                                State = BotState.waitingNewSmartPushTimePeriod;
 
                             } catch (Exception ex)
                             {
@@ -2220,88 +2284,6 @@ namespace csb.users
                     }                    
                     break;
 
-                case "editPushMessages":
-                    try
-                    {
-                        await showMyPushMessages(chat);
-                        await bot.AnswerCallbackQueryAsync(query.Id);
-
-                    } catch (Exception ex)
-                    {
-                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                    }                    
-                    break;
-
-                case "addpush":
-                    State = BotState.waitingNewPushTimePeriod;
-                    currentPushMessage = new PushMessage();
-                    try
-                    {
-                        await messagesProcessor.Back(chat);
-                        await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Введите период вывода сообщения в часах, если вы хотите заменить существующее сообщение, введите период, сообщение для которого требуется заменить:", "addNewPushCancel"));                        
-                        await messagesProcessor.Delete(chat, "editPushMessages");                        
-                        await bot.AnswerCallbackQueryAsync(query.Id);
-                    } catch (Exception ex)
-                    {
-                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                    }
-                    break;
-
-                case "push_message_show":
-                    try
-                    {
-                        await bot.SendTextMessageAsync(
-                                                   Id,
-                                                   text: currentPushMessage?.TextMessage.Text,
-                                                   replyMarkup: currentPushMessage?.TextMessage.ReplyMarkup,
-                                                   entities: currentPushMessage?.TextMessage.Entities,
-                                                   disableWebPagePreview: false,
-                                                   cancellationToken: cancellationToken);
-                    } catch (Exception ex)
-                    {
-                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                    }
-                    break;
-
-                case "push_message_delete":
-                    try
-                    {
-                        //adminManager.Delete(currentAdminGeoTag);
-                        moderationProcessor.PushData(currentModeratorGeoTag).Messages.Remove(currentPushMessage);
-                        moderationProcessor.Save();
-                        await messagesProcessor.Back(chat);
-                        await messagesProcessor.Back(chat);
-                        await showMyPushMessages(chat);
-                        await bot.AnswerCallbackQueryAsync(query.Id, "Сообщение удалено");
-                    }
-                    catch (Exception ex)
-                    {
-                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                    }
-                    break;
-
-                case "addNewPushCancel":
-                    try
-                    {
-                        switch (State) { 
-                            case BotState.waitingNewPushTimePeriod:
-                                await messagesProcessor.Back(chat);
-                                break;
-
-                            case BotState.waitingNewPushMessage:
-                                await messagesProcessor.Back(chat);
-                                await messagesProcessor.Back(chat);
-                                break;
-                        }
-
-                        State = BotState.free;
-
-                    } catch (Exception ex)
-                    {
-                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                    }
-                    break;
-
                 case "backToModeratorShow":
                     try
                     {
@@ -2448,7 +2430,7 @@ namespace csb.users
                     }
                     break;
 
-                case "finishPushShow":
+                case "finishDailyPushShow":
                     try
                     {
                         while (pushMessagesIds.Count > 0)
@@ -2466,6 +2448,75 @@ namespace csb.users
                     break;
 
 
+                case "editSmartPushes":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "editSmartPushesMenu", await sendTextButtonMessage(chat, "Настройка smart уведомлений:", "editSmartPushesMenu"));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+
+                case "smart_add":
+                    try
+                    {
+                        await messagesProcessor.Add(chat, "smart_add", await sendTextButtonMessage(chat, "Введите период вывода сообщения в часах:", "finishSmartPushAdding"));
+                        State = BotState.waitingNewSmartPushTimePeriod;
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "smart_delete":
+                    try
+                    {   
+                        await deleteMyModeratorsSmartPushMessages(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "finishSmartPushAdding":
+                    try
+                    {
+                        State = BotState.free;
+
+                        await messagesProcessor.Back(chat);
+
+                        while (pushMessagesIds.Count > 0)
+                        {
+                            var id = pushMessagesIds.Dequeue();
+                            try
+                            {
+                                await bot.DeleteMessageAsync(chat, id);
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
+
+                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка smart-уведомлений:", "editSmartPushesMenu"));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
 
                 case "":
                     break;
@@ -2796,24 +2847,6 @@ namespace csb.users
                         }
                     }
 
-                    if (data.Contains("push_"))
-                    {
-                        try
-                        {
-                            string t = data.Replace("push_", "");
-                            double timePeriod = double.Parse(t);
-                            currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
-                            currentPushMessage = moderationProcessor.PushData(currentModeratorGeoTag).Messages.FirstOrDefault(m => m.TimePeriod == timePeriod);
-                            string m = $"Выбрано {currentPushMessage.TimePeriod} часовое push-сообщение. Что сделать?";
-                            await messagesProcessor.Add(chat, "editPushMessage", await sendTextButtonMessage(chat, m, "editPushMessage"));
-                            await bot.AnswerCallbackQueryAsync(query.Id);
-
-                        } catch (Exception ex)
-                        {
-                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                        }
-                    }
-
                     if (data.Contains("moderators_show_daily_pushes_"))
                     {
                         try
@@ -2833,7 +2866,7 @@ namespace csb.users
                                     cntr++;
                                 }
 
-                                await messagesProcessor.Add(chat, "finishPushShow", await sendTextButtonMessage(chat, $"Показано {cntr} сообщений", "finishPushShow"));
+                                await messagesProcessor.Add(chat, "finishDailyPushShow", await sendTextButtonMessage(chat, $"Показано {cntr} сообщений", "finishDailyPushShow"));
 
                             } else
                             {
@@ -2866,6 +2899,33 @@ namespace csb.users
                             moderationProcessor.DailyPushData(geotag).Messages.Clear();
                             moderationProcessor.Save();
                             await sendTextMessage(chat, $"Ежедневные push-сообщения удалены для модератора {geotag}");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("moderators_delete_smart_pushes_"))
+                    {
+                        try
+                        {
+                            string geotag = data.Replace("moderators_delete_smart_pushes_", "");
+
+                            if (geotag.Equals("all"))
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                chain.ClearSmartPushMessages(moderationProcessor);
+                                chainsProcessor.Save();
+                                await bot.AnswerCallbackQueryAsync(query.Id);
+                                await sendTextMessage(chat, "Smart-сообщения удалены для всех модерторов");
+                                return;
+                            }
+
+                            moderationProcessor.SmartPushData(geotag).Messages.Clear();
+                            moderationProcessor.Save();
+                            await sendTextMessage(chat, $"Smart-сообщения удалены для модератора {geotag}");
 
                         }
                         catch (Exception ex)

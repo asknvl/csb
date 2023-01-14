@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using csb.messaging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace csb.bot_moderator
 {
-    public class PushMessage
+    public class SmartPushData
     {
         [JsonProperty]
-        public double TimePeriod { get; set; }
-        [JsonProperty]
-        public TextMessage TextMessage { get; set; }
+        public List<SmartPushMessage> Messages { get; set; } = new();
     }
 }

@@ -16,7 +16,7 @@ namespace csb.bot_moderator
         BotModeratorLeadType? LeadType { get; set; }
 
         GreetingsData Greetings { get; set; }
-        PushData PushData { get; set; }
+        SmartPushData PushData { get; set; }
         DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; set; }
         void Start();

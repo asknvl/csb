@@ -59,7 +59,7 @@ namespace csb.bot_moderator
         [JsonProperty]
         public GreetingsData Greetings { get; set; } = new();
         [JsonProperty]
-        public PushData PushData { get; set; } = new();
+        public SmartPushData PushData { get; set; } = new();
         [JsonProperty]
         public DailyPushData DailyPushData { get; set; } = new();
 
@@ -122,13 +122,13 @@ namespace csb.bot_moderator
                         {
                             await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
 
-                            await bot.SendTextMessageAsync(
-                                                 id,
-                                                 text: pushmessage.TextMessage.Text,
-                                                 replyMarkup: pushmessage.TextMessage.ReplyMarkup,
-                                                 entities: pushmessage.TextMessage.Entities,
-                                                 disableWebPagePreview: false,
-                                                 cancellationToken: new CancellationToken());
+                            //await bot.SendTextMessageAsync(
+                            //                     id,
+                            //                     text: pushmessage.TextMessage.Text,
+                            //                     replyMarkup: pushmessage.TextMessage.ReplyMarkup,
+                            //                     entities: pushmessage.TextMessage.Entities,
+                            //                     disableWebPagePreview: false,
+                            //                     cancellationToken: new CancellationToken());
 
                             await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);
                             //Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {pushmessage.TimePeriod} hour message");

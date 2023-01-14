@@ -30,11 +30,11 @@ namespace csb.chains
         [JsonProperty]
         public UserListener_v1 User { get; private set; }
         [JsonProperty]
-        public List<string> ReplacedWords { get; set; } = new();
-        //[JsonProperty]
-        //public List<AutoChange> AutoChanges { get; set; } = new();
+        public List<string> ReplacedWords { get; set; } = new();        
         [JsonProperty]
         public DailyPushData DailyPushData { get; set; } = new();
+        [JsonProperty]
+        public SmartPushData SmartPushData { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -338,6 +338,58 @@ namespace csb.chains
                 
         }
 
-        
+        public void AddSmartPushMessage(SmartPushMessage pattern, IModeratorsProcessor moderators)
+        {
+
+            SmartPushData.Messages.Add(pattern);
+            pattern.Id = SmartPushData.Messages.Count;
+
+            foreach (var outbot in Bots)
+            {
+                string geotag = outbot.GeoTag;
+
+                AutoChange pmAutochange = new AutoChange()
+                {
+                    OldText = outbot.VictimLink,
+                    NewText = outbot.ChannelLink
+                };
+
+                var patternCpy = pattern.Clone();
+                //patternCpy.Id = DailyPushData.Messages.Count;
+
+                patternCpy.MakeAutochange(new List<AutoChange>() { pmAutochange }); //pm
+                patternCpy.MakeAutochange(outbot.AutoChanges); //bot poster autochanges
+
+                try
+                {
+                    moderators.SmartPushData(geotag).Messages.Add(patternCpy);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+            moderators.Save();
+
+        }
+
+        public void ClearSmartPushMessages(IModeratorsProcessor moderators)
+        {
+            SmartPushData.Messages.Clear();
+            foreach (var outbot in Bots)
+            {
+                string geotag = outbot.GeoTag;
+                try
+                {
+                    moderators.SmartPushData(geotag).Messages.Clear();
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }            
+            moderators.Save();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace csb.moderation
         void Add(string token, string geotag);
         void Add(string token, string geotag, DailyPushData patternPushData, List<AutoChange> autoChanges);
         GreetingsData Greetings(string geotag);
-        PushData PushData(string geotag);
+        SmartPushData SmartPushData(string geotag);
         DailyPushData DailyPushData(string geotag);
         IBotModerator Get(string geotag);
         void Delete(string geotag);

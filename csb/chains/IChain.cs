@@ -22,6 +22,7 @@ namespace csb.chains
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
         //public List<AutoChange> AutoChanges { get; set; }
+        public SmartPushData SmartPushData { get; set; }
         public DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
@@ -50,9 +51,10 @@ namespace csb.chains
         List<AutoChange> GetAutoChanges(string botname);
         void RemoveAutoChange(string botname, int index);
         void ClearAutoChanges(string botname);
-
         void AddDailyPushMessage(DailyPushMessage message, IModeratorsProcessor moderators);        
         void ClearDailyPushMessages(IModeratorsProcessor moderators);
+        void AddSmartPushMessage(SmartPushMessage message, IModeratorsProcessor moderators);
+        void ClearSmartPushMessages(IModeratorsProcessor moderators);
 
 
     }

@@ -131,15 +131,15 @@ namespace csb.moderation
         {
             var found = ModeratorBots.FirstOrDefault(o => o.GeoTag.Equals(geotag));
             if (found == null)
-                throw new Exception("Бота-модератора с таким геотегом не существует");
+                throw new Exception($"Бота-модератора с геотегом {geotag} не существует");
             return found.Greetings;
         }
 
-        public PushData PushData(string geotag)
+        public SmartPushData SmartPushData(string geotag)
         {
             var found = ModeratorBots.FirstOrDefault(o => o.GeoTag.Equals(geotag));
             if (found == null)
-                throw new Exception("Бота-модератора с таким геотегом не существует");
+                throw new Exception($"Бота-модератора с геотегом {geotag} не существует");
             return found.PushData;
         }
 
