@@ -40,8 +40,4 @@
     <None Remove="messaging\" />
     <None Remove="WTelegramClient" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bot_moderator\lead_processor\" />
-    <Folder Include="bot_moderator\link_processor\" />
-  </ItemGroup>
 </Project>

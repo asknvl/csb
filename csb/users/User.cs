@@ -235,7 +235,7 @@ namespace csb.users
              {"finishSmartPushAdding", new(new[] {
 
                 new[] {
-                    InlineKeyboardButton.WithCallbackData(text: "« Завершить", callbackData: "finishDailyPushAdding"),
+                    InlineKeyboardButton.WithCallbackData(text: "« Завершить", callbackData: "finishSmartPushAdding"),
                 }
             })},
 
@@ -247,6 +247,10 @@ namespace csb.users
             })},
 
             {"editAdmin", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Перезапустить админа", callbackData: "restartAdmin"),
+                },
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить админа", callbackData: "deleteAdmin"),
@@ -500,6 +504,31 @@ namespace csb.users
             for (int i = 0; i < number; i++)
             {
                 moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: moderators[i].GeoTag, callbackData: $"moderators_show_daily_pushes_{moderators[i].GeoTag}") };
+            }
+
+            moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
+
+            return inlineKeyboard;
+        }
+
+        InlineKeyboardMarkup getMyModeratorsSmartPushMessagesShowMarkUp()
+        {
+
+            //var moderators = moderationProcessor.ModeratorBots;
+            //int number = moderators.Count;
+            var bots = chainsProcessor.Get(currentChainID).Bots;
+            var botsGeoTags = bots.Select(b => b.GeoTag);
+
+            var moderators = moderationProcessor.ModeratorBots.Where(m => botsGeoTags.Contains(m.GeoTag)).ToList();
+            int number = moderators.Count; //select for chain bots
+
+            InlineKeyboardButton[][] moderators_buttons = new InlineKeyboardButton[number + 1][];
+
+            for (int i = 0; i < number; i++)
+            {
+                moderators_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: moderators[i].GeoTag, callbackData: $"moderators_show_smart_pushes_{moderators[i].GeoTag}") };
             }
 
             moderators_buttons[number] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
@@ -807,6 +836,17 @@ namespace csb.users
                 text: "Выберите модератора, для которого требуется показать ежедневные сообщения:",
                 //replyMarkup: inlineKeyboards["/mychains"],
                 replyMarkup: getMyModeratorsDailyPushMessagesShowMarkUp(),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showMyModeratorsSmartPushesMessages(long chat)
+        {
+            State = BotState.free;
+            await messagesProcessor.Add(chat, "/mymoderators", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Выберите модератора, для которого требуется показать smart-сообщения:",
+                //replyMarkup: inlineKeyboards["/mychains"],
+                replyMarkup: getMyModeratorsSmartPushMessagesShowMarkUp(),
                 cancellationToken: cancellationToken));
         }
 
@@ -1635,7 +1675,7 @@ namespace csb.users
                                 State = BotState.waitingNewSmartPushMessage;
                                 await messagesProcessor.Back(chat);
                                 string helloReqMsg = "Перешлите (forward) сюда push \U0001F9B5 сообщение:";
-                                await messagesProcessor.Add(chat, "waitingNewSmartPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "addSmartPushCancel"));
+                                await messagesProcessor.Add(chat, "waitingNewSmartPushMessage", await sendTextButtonMessage(chat, helloReqMsg, "finishSmartPushAdding"));
 
                             } catch (Exception ex)
                             {
@@ -1656,7 +1696,7 @@ namespace csb.users
                                 chain.AddSmartPushMessage(pattern.Clone(), moderationProcessor);
                                 chainprocessor.Save();
 
-                                int cntr = chain.SmartPushData.Messages.Count;
+                                int cntr = chain.PushData.Messages.Count;
                                 await messagesProcessor.Add(chat, "smart_add", await sendTextButtonMessage(chat, $"Добавлено {currentPushMessageTime} сообщение. Введите период вывода следующего сообщения в часах:", "finishSmartPushAdding"));
                                 State = BotState.waitingNewSmartPushTimePeriod;
 
@@ -2245,6 +2285,30 @@ namespace csb.users
                     }
                     break;
 
+                case "restartAdmin":
+                    try
+                    {
+                        var admin = adminManager.Get(currentAdminGeoTag);
+
+                        if (admin != null)
+                        {
+
+                            admin.Stop();
+                            await admin.Start();
+
+                            await messagesProcessor.Back(chat);
+                            await messagesProcessor.Back(chat);
+                            await showMyAdmins(chat);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Админ перезапущен");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
                 case "finishEddingGreetings":
                     State = BotState.waitingModeratorByeMessage;
                     await messagesProcessor.Back(chat);
@@ -2508,9 +2572,21 @@ namespace csb.users
                             }
                         }
 
-                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка smart-уведомлений:", "editSmartPushesMenu"));
+                        await messagesProcessor.Add(chat, "editSmartPushesMenu", await sendTextButtonMessage(chat, "Настройка smart-уведомлений:", "editSmartPushesMenu"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "smart_show":
+                    try
+                    {
+                        await showMyModeratorsSmartPushesMessages(chat);
+                        await bot.AnswerCallbackQueryAsync(query.Id);
                     }
                     catch (Exception ex)
                     {
@@ -2861,7 +2937,7 @@ namespace csb.users
                             {
                                 foreach (var push in pushes)
                                 {
-                                    push.fileId = null;
+                                    push.fileId = null;                                    
                                     pushMessagesIds.Enqueue(await push.Send(chat, bot));
                                     cntr++;
                                 }
@@ -2926,6 +3002,45 @@ namespace csb.users
                             moderationProcessor.SmartPushData(geotag).Messages.Clear();
                             moderationProcessor.Save();
                             await sendTextMessage(chat, $"Smart-сообщения удалены для модератора {geotag}");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+                    if (data.Contains("moderators_show_smart_pushes_"))
+                    {
+                        try
+                        {
+                            string geotag = data.Replace("moderators_show_smart_pushes_", "");
+                            var pushes = moderationProcessor.SmartPushData(geotag).Messages;
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+
+                            //pushMessagesIds.Clear();
+                            int cntr = 0;
+                            if (pushes.Count > 0)
+                            {
+                                foreach (var push in pushes)
+                                {
+                                    push.fileId = null;
+                                    //await sendTextMessage(chat, $"{push}");
+
+                                    var msg = await sendTextMessage(chat, $"{push.TimePeriod} часовое сообщение:");
+                                    pushMessagesIds.Enqueue(msg.MessageId);
+                                    pushMessagesIds.Enqueue(await push.Send(chat, bot));
+                                    cntr++;
+                                }
+
+                                await messagesProcessor.Add(chat, "finishSmartPushShow", await sendTextButtonMessage(chat, $"Показано {cntr} сообщений", "finishSmartPushShow"));
+
+                            }
+                            else
+                            {
+                                await sendTextMessage(query.Message.Chat.Id, $"Для модератора {geotag} не установлены ежедневные smart-сообщения");
+                            }
+
 
                         }
                         catch (Exception ex)

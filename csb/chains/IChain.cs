@@ -22,7 +22,7 @@ namespace csb.chains
         UserListener_v1 User { get; }
         public List<string> ReplacedWords { get; set; }
         //public List<AutoChange> AutoChanges { get; set; }
-        public SmartPushData SmartPushData { get; set; }
+        public SmartPushData PushData { get; set; }
         public DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }

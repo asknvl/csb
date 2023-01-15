@@ -34,7 +34,7 @@ namespace csb.chains
         [JsonProperty]
         public DailyPushData DailyPushData { get; set; } = new();
         [JsonProperty]
-        public SmartPushData SmartPushData { get; set; } = new();
+        public SmartPushData PushData { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -341,8 +341,8 @@ namespace csb.chains
         public void AddSmartPushMessage(SmartPushMessage pattern, IModeratorsProcessor moderators)
         {
 
-            SmartPushData.Messages.Add(pattern);
-            pattern.Id = SmartPushData.Messages.Count;
+            PushData.Messages.Add(pattern);
+            pattern.Id = PushData.Messages.Count;
 
             foreach (var outbot in Bots)
             {
@@ -376,7 +376,7 @@ namespace csb.chains
 
         public void ClearSmartPushMessages(IModeratorsProcessor moderators)
         {
-            SmartPushData.Messages.Clear();
+            PushData.Messages.Clear();
             foreach (var outbot in Bots)
             {
                 string geotag = outbot.GeoTag;

@@ -55,7 +55,7 @@ namespace csb.messaging
                     if (!Directory.Exists(destinationFilePath))
                         Directory.CreateDirectory(destinationFilePath);
 
-                    destinationFilePath = Path.Combine(destinationFilePath, fileName);
+                    destinationFilePath = Path.Combine(destinationFilePath, fileName);                    
 
                     await using FileStream fileStream = System.IO.File.OpenWrite(destinationFilePath);
                     await bot.DownloadFileAsync(

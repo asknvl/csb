@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -92,11 +93,18 @@ namespace csb.bot_moderator
         #region private
         private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
+            int sent = 0;
+            int delivered = 0;
+
             try
             {
                 string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
-                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
+
+                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);  
+
+                sent = subs.Count;                
 
                 foreach (var subscriber in subs)
                 {
@@ -122,6 +130,8 @@ namespace csb.bot_moderator
                         {
                             await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
 
+                            await pushmessage.Send(id, bot);
+
                             //await bot.SendTextMessageAsync(
                             //                     id,
                             //                     text: pushmessage.TextMessage.Text,
@@ -132,6 +142,8 @@ namespace csb.bot_moderator
 
                             await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);
                             //Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {pushmessage.TimePeriod} hour message");
+
+                            delivered++;
 
                         }
                         catch (Exception ex)
@@ -151,12 +163,19 @@ namespace csb.bot_moderator
             catch (Exception ex)
             {
                 logger.err(ex.Message);
+            } finally
+            {   
+                logger.inf($"{GeoTag} SmartPushes: delivered {delivered} of {sent}");
             }
         }
 
         int cntr = 0;
         private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
+            int sent = 0;
+            int delivered = 0;
+
             try
             {
                 if (DailyPushData.Messages.Count == 0)
@@ -181,7 +200,9 @@ namespace csb.bot_moderator
 #else
 
                 var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 24);
-                logger.inf($"{DateTime.Now} GetSubs {GeoTag} {subs.Count}");
+                sent = subs.Count;
+
+                //logger.inf($"{DateTime.Now} GetDailySubs {GeoTag} {subs.Count}");
 
                 foreach (var subscriber in subs)
                 {
@@ -198,7 +219,9 @@ namespace csb.bot_moderator
                             {
                                 await message.Send(id, bot);
                                 await statApi.MarkFollowerWasDailyPushed(GeoTag, id, message.Id, DailyPushState.delivered);
-                                logger.inf($"{GeoTag} {id} was pushed {message.Id}");
+                                delivered++;
+
+                                //logger.inf($"{GeoTag} {id} was pushed {message.Id}");
                             }
                             catch (Exception ex)
                             {
@@ -222,6 +245,9 @@ namespace csb.bot_moderator
             catch (Exception ex)
             {
                 logger.err(ex.Message);
+            } finally
+            {
+                logger.inf($"{GeoTag} DailyPushes: delivered {delivered} of {sent}");
             }
         }
 
