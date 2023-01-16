@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace csb.leads
+namespace asknvl
 {
     public interface ILeadsProcessor
-    {
+    {        
     }
 }
