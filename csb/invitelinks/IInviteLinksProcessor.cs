@@ -9,7 +9,7 @@ namespace csb.invitelinks
 {
     public interface IInviteLinksProcessor
     {
-        Task<string> Generate(ITelegramBotClient bot);
-        Task Revoke(ITelegramBotClient bot, string link);
+        Task<string> Generate();
+        Task Revoke(string link);
     }
 }

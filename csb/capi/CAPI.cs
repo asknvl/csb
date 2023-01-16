@@ -1,6 +1,7 @@
 ﻿using capi_test.capi.dtos;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,12 @@ namespace capi_test.capi
         IHttpClientFactory httpClientFactory;
         #endregion
 
-        public CAPI(string pixel_id, string token)
+        public CAPI()
         {
-            path = $"https://graph.facebook.com/{API_VERSION}/{pixel_id}/events?access_token={token}";
-
             serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             var services = serviceCollection.BuildServiceProvider();
             httpClientFactory = services.GetRequiredService<IHttpClientFactory>();
-
         }
 
         #region private
@@ -60,15 +58,10 @@ namespace capi_test.capi
         }
         #endregion
 
-        #region public
-        public async Task MakeTestEvent()
+        #region public     
+        public async Task MakeLeadEvent(string pixel_id, string token, long tg_user_id, string firstname = null, string lastname = null, string client_user_agernt = null, string client_ip_address = null, string test_event_code = null)
         {
-            var httpClient = httpClientFactory.CreateClient();
-            await Task.Run(() => { });
-        }
-
-        public async Task MakeEvent(long tg_user_id, string firstname = null, string lastname = null, string client_user_agernt = null, string client_ip_address = null, string test_event_code = null)
-        {
+            path = $"https://graph.facebook.com/{API_VERSION}/{pixel_id}/events?access_token={token}";
             var httpClient = httpClientFactory.CreateClient();
 
             serverEventDTO serverEvent = new serverEventDTO()
@@ -82,12 +75,11 @@ namespace capi_test.capi
                     fn = (!string.IsNullOrEmpty(firstname)) ? getSHA256(firstname.ToLower()) : null,
                     ln = (!string.IsNullOrEmpty(lastname)) ? getSHA256(lastname.ToLower()) : null,
                     client_user_agent = (!string.IsNullOrEmpty(client_user_agernt)) ? client_user_agernt : null,
-                    client_ip_address = (!string.IsNullOrEmpty(client_ip_address)) ? client_ip_address : null
-                    
+                    client_ip_address = (!string.IsNullOrEmpty(client_ip_address)) ? client_ip_address : null                    
                 }
             };
 
-            string json = null;
+            string json;
 
             if (test_event_code == null)
             {

@@ -1,4 +1,5 @@
-﻿using csb.bot_manager;
+﻿using asknvl.leads;
+using csb.bot_manager;
 using csb.bot_moderator;
 using csb.bot_poster;
 using csb.chains;
@@ -11,12 +12,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.users
@@ -763,9 +762,9 @@ namespace csb.users
             return inlineKeyboard;
         }
 
-        InlineKeyboardMarkup getMyLeadAlgorithmsMarkUp(BotModeratorLeadType? type)
+        InlineKeyboardMarkup getMyLeadAlgorithmsMarkUp(LeadAlgorithmType? type)
         {
-            var algorithms = Enum.GetValues(typeof(BotModeratorLeadType));           
+            var algorithms = Enum.GetValues(typeof(LeadAlgorithmType));           
             int number = algorithms.Length;
 
             InlineKeyboardButton[][] type_buttons = new InlineKeyboardButton[number + 1][];
@@ -773,7 +772,7 @@ namespace csb.users
 
             foreach (var item in algorithms)
             {
-                var text = ((BotModeratorLeadType)item).ToString();
+                var text = ((LeadAlgorithmType)item).ToString();
                 if (text.Equals(type.ToString()))
                     text = $"{text} ✓";
                 type_buttons[i] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"{text}", callbackData: $"lead_algo_{(int)item}") };
@@ -980,7 +979,7 @@ namespace csb.users
                 cancellationToken: cancellationToken));
         }
 
-        async Task showMyModeratorsLeadType(long chat, BotModeratorLeadType? type)
+        async Task showMyModeratorsLeadType(long chat, LeadAlgorithmType? type)
         {
             await messagesProcessor.Add(chat, "checkLeadAlgorithm", await bot.SendTextMessageAsync(
                 chatId: chat,
@@ -3055,7 +3054,7 @@ namespace csb.users
                         {
                             string alg = data.Replace("lead_algo_", "");
                             int val = int.Parse(alg);
-                            BotModeratorLeadType algorithm = (BotModeratorLeadType)val;
+                            LeadAlgorithmType algorithm = (LeadAlgorithmType)val;
                             await bot.AnswerCallbackQueryAsync(query.Id);
                             var moderator = moderationProcessor.Get(currentModeratorGeoTag);
                             moderator.LeadType = algorithm;

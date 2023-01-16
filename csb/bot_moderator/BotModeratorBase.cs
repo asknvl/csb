@@ -1,14 +1,11 @@
-﻿using asknvl.logger;
+﻿using asknvl.leads;
+using asknvl.logger;
 using csb.addme_service;
 using csb.server;
-using csb.users;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection.PortableExecutable;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -56,7 +53,7 @@ namespace csb.bot_moderator
         [JsonProperty]
         public long? ChannelID { get; set; } = null;
         [JsonProperty]
-        public BotModeratorLeadType? LeadType { get; set; } = null;
+        public LeadAlgorithmType? LeadType { get; set; } = null;
         [JsonProperty]
         public GreetingsData Greetings { get; set; } = new();
         [JsonProperty]
@@ -91,7 +88,7 @@ namespace csb.bot_moderator
         }
 
         #region private
-        private async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
 
             int sent = 0;
@@ -170,7 +167,7 @@ namespace csb.bot_moderator
         }
 
         int cntr = 0;
-        private async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
 
             int sent = 0;
@@ -251,7 +248,7 @@ namespace csb.bot_moderator
             }
         }
 
-        public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+        Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             var ErrorMessage = exception switch
             {
@@ -265,7 +262,7 @@ namespace csb.bot_moderator
         #endregion
 
         #region protected
-        protected virtual async Task processMyChatMember(Update update)
+        protected virtual void processMyChatMember(Update update)
         {
             long id = update.MyChatMember.Chat.Id;               
 
@@ -326,6 +323,8 @@ namespace csb.bot_moderator
                     await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                     logger.inf_urgent($"{GeoTag} cntr={++appCntr} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
 
+                    //Make Lead event to FB here
+
                 }
                 else
                 {
@@ -334,7 +333,6 @@ namespace csb.bot_moderator
                 }
             }
         }
-
         protected virtual async Task processChatMember(Update update, CancellationToken cancellationToken)
         {
             if (update.ChatMember != null)
@@ -382,7 +380,6 @@ namespace csb.bot_moderator
                                 followers.Add(follower);
                                 await statApi.UpdateFollowers(followers);
                                 logger.inf("Updated DB+");
-
                             }
                         }
                         break;
@@ -420,7 +417,6 @@ namespace csb.bot_moderator
         int decCntr = 0;
         protected virtual async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
-
             if (update == null)
                 return;
 
@@ -429,7 +425,7 @@ namespace csb.bot_moderator
                 case UpdateType.MyChatMember:
                     try
                     {
-                        await processMyChatMember(update);
+                        processMyChatMember(update);
                     } catch (Exception ex)
                     {
                         logger.err(ex.Message);
@@ -600,7 +596,6 @@ namespace csb.bot_moderator
         #endregion
 
         #region public
-
         public async void Start()
         {
             logger.inf($"Startting moderator...");

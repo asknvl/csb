@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using asknvl;
+using asknvl.leads;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace csb.bot_moderator
         string Name { get; set; }
         string Token { get; set; }
         long? ChannelID { get; set; }
-        BotModeratorLeadType? LeadType { get; set; }
+        LeadAlgorithmType? LeadType { get; set; }
 
         GreetingsData Greetings { get; set; }
         SmartPushData PushData { get; set; }
@@ -25,11 +27,6 @@ namespace csb.bot_moderator
         public event Action<IBotModerator> ParametersUpdatedEvent;
     }
 
-    public enum BotModeratorLeadType : int
-    {
-        NO = 0,
-        CAPIv1,
-        CAPIv2
-    }
+    
     
 }

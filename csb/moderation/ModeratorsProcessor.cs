@@ -1,4 +1,6 @@
-﻿using csb.bot_moderator;
+﻿using asknvl;
+using asknvl.leads;
+using csb.bot_moderator;
 using csb.bot_poster;
 using Newtonsoft.Json;
 using System;
@@ -51,7 +53,7 @@ namespace csb.moderation
 
                 if (bot.LeadType == null)
                 {
-                    bot.LeadType = BotModeratorLeadType.NO;
+                    bot.LeadType = LeadAlgorithmType.TrackerOnly;
                     Save();
                 }                
 

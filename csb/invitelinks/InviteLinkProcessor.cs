@@ -9,14 +9,25 @@ namespace csb.invitelinks
 {
     public class InviteLinkProcessor : IInviteLinksProcessor
     {
-        public Task<string> Generate(ITelegramBotClient bot)
+        #region vars
+        ITelegramBotClient bot;
+        #endregion
+
+        public InviteLinkProcessor(ITelegramBotClient bot)
+        {
+            this.bot = bot;
+        }
+
+        #region public
+        public Task<string> Generate()
         {
             throw new NotImplementedException();
         }
 
-        public Task Revoke(ITelegramBotClient bot, string link)
+        public Task Revoke(string link)
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
