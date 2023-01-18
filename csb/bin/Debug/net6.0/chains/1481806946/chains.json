@@ -16,12 +16,16 @@
         "ReplacedWords": [],
         "AutoChanges": [
           {
+            "OldText": "https://partner.xtime",
+            "NewText": "https://avisignal.online"
+          },
+          {
             "OldText": "@booowos",
             "NewText": "@asknvl"
           },
           {
-            "OldText": "xtime1",
-            "NewText": "OUT1"
+            "OldText": "https://promo.xtime",
+            "NewText": "www.guns.ru"
           }
         ]
       },
@@ -38,10 +42,6 @@
           {
             "OldText": "@booowos",
             "NewText": "@ceoxtime"
-          },
-          {
-            "OldText": "xtime1",
-            "NewText": "OUT2"
           }
         ]
       }

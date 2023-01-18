@@ -27,8 +27,7 @@ namespace csb.server
             string usrnm = !string.IsNullOrEmpty(username) ? $"@{username}" : "";
             string link = !string.IsNullOrEmpty(invite_link) ? $"link={invite_link}" : "NOLINK";
 
-            return $"{DateTime.Now} " +
-                   $"{tg_geolocation} " +
+            return $"{tg_geolocation} " +
                    $"{status} " +
                    $"{tg_chat_id} " +
                    $"{tg_user_id} " +

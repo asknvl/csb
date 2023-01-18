@@ -63,7 +63,7 @@ namespace csb.bot_moderator
 
         [JsonIgnore]
         public bool IsRunning { get; set; }
-        
+
         #endregion
 
         public BotModeratorBase(string token, string geotag)
@@ -74,7 +74,11 @@ namespace csb.bot_moderator
 
             logger = new Logger("moderators", GeoTag);
 
+#if !DEBUG
             pushTimer.Interval = push_period;
+#else
+            pushTimer.Interval = 10000;
+#endif
             pushTimer.AutoReset = true;
             pushTimer.Elapsed += PushTimer_Elapsed;
             pushTimer.Start();
@@ -88,21 +92,22 @@ namespace csb.bot_moderator
         }
 
         #region private
+        int tstcntr = 0;
         async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            if (PushData.Messages.Count == 0)
+                return; 
 
-            int sent = 0;
             int delivered = 0;
 
             try
             {
+#if !DEBUG
                 string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
 
                 var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);  
-
-                sent = subs.Count;                
-
+                
                 foreach (var subscriber in subs)
                 {
 
@@ -114,55 +119,47 @@ namespace csb.bot_moderator
                     double Tp = lastPushHours;
                     double Tl = subscriber.time_diff_last_push_subscr;
 
-                    //Console.WriteLine($"Tp={Tp} Tc={Tc} Tl={Tl}, Tc-Tl+Tp={Tc - Tl + Tp}");
-
                     var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > Tp && m.TimePeriod < Tc - Tl + Tp);
 
                     if (pushmessage != null)
                     {
-
-                        long id = long.Parse(subscriber.tg_user_id);
+                        long id = long.Parse(subscriber.tg_user_id);                     
 
                         try
                         {
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
-
-                            await pushmessage.Send(id, bot);
-
-                            //await bot.SendTextMessageAsync(
-                            //                     id,
-                            //                     text: pushmessage.TextMessage.Text,
-                            //                     replyMarkup: pushmessage.TextMessage.ReplyMarkup,
-                            //                     entities: pushmessage.TextMessage.Entities,
-                            //                     disableWebPagePreview: false,
-                            //                     cancellationToken: new CancellationToken());
-
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);
-                            //Console.WriteLine($"PUSH: user {subscriber.tg_user_id} pushed with {pushmessage.TimePeriod} hour message");
-
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);                           
+                            await pushmessage.Send(id, bot);                            
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);                                                        
                             delivered++;
-
                         }
                         catch (Exception ex)
                         {
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
-                            //Console.WriteLine($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message");
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);                            
+                            logger.err($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message {ex.Message}");
                         }
 
                     }
                     else
                     {
-                        //Console.WriteLine($"PUSH: no push messages for {subscriber.tg_user_id}");
+                        //No messages for user yet
                     }
                 }
+#else
+                var msg = PushData.Messages.FirstOrDefault(m => m.Id > tstcntr);
+                if (msg != null)
+                {
+                    tstcntr = msg.Id;
+                    await msg.Send(1784884123, bot);
+                }
+#endif
 
             }
             catch (Exception ex)
             {
                 logger.err(ex.Message);
             } finally
-            {   
-                logger.inf($"{GeoTag} SmartPushes: delivered {delivered} of {sent}");
+            {
+                logger.inf($"{GeoTag} SmartPushes: delivered {delivered}");
             }
         }
 
@@ -264,12 +261,12 @@ namespace csb.bot_moderator
         #region protected
         protected virtual void processMyChatMember(Update update)
         {
-            long id = update.MyChatMember.Chat.Id;               
+            long id = update.MyChatMember.Chat.Id;
 
             switch (update.MyChatMember.NewChatMember.Status)
             {
-                case ChatMemberStatus.Administrator:                                        
-                case ChatMemberStatus.Member:                    
+                case ChatMemberStatus.Administrator:
+                case ChatMemberStatus.Member:
                     ChannelID = id;
                     ParametersUpdatedEvent?.Invoke(this);
                     logger.inf($"Moderator added to channel/group ID={id}");
@@ -286,11 +283,11 @@ namespace csb.bot_moderator
 
                 var chatJoinRequest = update.ChatJoinRequest;
 
-                var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);                
+                var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
 
                 string tags = "";
-                foreach (var item in user_geotags)                                    
-                    tags += $"{item} ";                
+                foreach (var item in user_geotags)
+                    tags += $"{item} ";
 
                 bool addme = false;
                 try
@@ -347,7 +344,7 @@ namespace csb.bot_moderator
                 {
                     ChannelID = chat_id;
                     ParametersUpdatedEvent?.Invoke(this);
-                }                    
+                }
 
                 string fn = member.NewChatMember.User.FirstName;
                 string ln = member.NewChatMember.User.LastName;
@@ -397,7 +394,8 @@ namespace csb.bot_moderator
                                          disableWebPagePreview: false,
                                          cancellationToken: cancellationToken);
                         }
-                        catch (Exception ex) {
+                        catch (Exception ex)
+                        {
                             logger.err(ex.Message);
                         }
 
@@ -408,7 +406,7 @@ namespace csb.bot_moderator
                         break;
                 }
 
-                logger.inf(follower.ToString());
+                logger.inf_urgent(follower.ToString());
 
             }
         }
@@ -426,7 +424,8 @@ namespace csb.bot_moderator
                     try
                     {
                         processMyChatMember(update);
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         logger.err(ex.Message);
                     }
@@ -436,7 +435,8 @@ namespace csb.bot_moderator
                     try
                     {
                         await processChatJoinRequest(update, cancellationToken);
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         logger.err(ex.Message);
                     }
@@ -446,152 +446,14 @@ namespace csb.bot_moderator
                     try
                     {
                         await processChatMember(update, cancellationToken);
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         logger.err(ex.Message);
                     }
                     break;
             }
 
-            //if (update == null)
-            //    return;
-
-            //if (update.ChatMember != null)
-            //{
-            //    try
-            //    {
-            //        var member = update.ChatMember;
-
-            //        long user_id = member.NewChatMember.User.Id;
-            //        long chat_id = update.ChatMember.Chat.Id;
-
-            //        string fn = member.NewChatMember.User.FirstName;
-            //        string ln = member.NewChatMember.User.LastName;
-            //        string un = member.NewChatMember.User.Username;
-
-            //        string link = member.InviteLink?.InviteLink;
-
-            //        List<Follower> followers = new();
-            //        var follower = new Follower()
-            //        {
-            //            tg_chat_id = chat_id,
-            //            tg_user_id = user_id,
-            //            username = un,
-            //            firstname = fn,
-            //            lastname = ln,
-            //            invite_link = link,
-            //            tg_geolocation = GeoTag
-            //        };
-
-            //        switch (member.NewChatMember.Status)
-            //        {
-            //            case ChatMemberStatus.Member:
-
-            //                follower.is_subscribed = true;
-
-            //                if (member.InviteLink != null)
-            //                {
-            //                    if (member.InviteLink.CreatesJoinRequest)
-            //                    {
-            //                        followers.Add(follower);
-            //                        await statApi.UpdateFollowers(followers);
-            //                        logger.inf("Updated DB+");
-
-            //                    }
-            //                }
-            //                break;
-
-            //            case ChatMemberStatus.Left:
-
-            //                try
-            //                {
-            //                    if (Greetings.ByeMessage != null)
-            //                        await bot.SendTextMessageAsync(
-            //                                 member.From.Id,
-            //                                 text: Greetings.ByeMessage.Text,
-            //                                 replyMarkup: Greetings.ByeMessage.ReplyMarkup,
-            //                                 entities: Greetings.ByeMessage.Entities,
-            //                                 disableWebPagePreview: false,
-            //                                 cancellationToken: cancellationToken);
-            //                }
-            //                catch (Exception ex) { }
-
-            //                follower.is_subscribed = false;
-            //                followers.Add(follower);
-            //                await statApi.UpdateFollowers(followers);
-            //                logger.inf("Updated DB-");
-            //                break;
-            //        }
-
-            //        logger.inf(follower.ToString());
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        logger.err(ex.Message);
-            //    }
-            //}
-
-            //if (update.ChatJoinRequest != null)
-            //{
-
-            //    try
-            //    {
-            //        var chatJoinRequest = update.ChatJoinRequest;
-
-            //        var user_geotags = await statApi.GetFollowerGeoTags(chatJoinRequest.From.Id);
-            //        List<string> chGeoPrefx = new();
-
-            //        string tags = "";
-            //        foreach (var item in user_geotags)
-            //        {
-            //            chGeoPrefx.Add(item.Substring(0, 4));
-            //            tags += $"{item} ";
-            //        }
-
-            //        bool addme = false;
-            //        try
-            //        {
-            //            addme = addMe.IsApproved(chatJoinRequest.From.Id);
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            logger.err($"IsApproved? {ex.Message}");
-            //        }
-
-            //        bool isAllowed = await statApi.IsSubscriptionAvailable(GeoTag, chatJoinRequest.From.Id);
-            //        if (isAllowed || addme)
-            //        {
-            //            try
-            //            {
-            //                if (Greetings.HelloMessage != null)
-            //                    await bot.SendTextMessageAsync(
-            //                             chatJoinRequest.From.Id,
-            //                             text: Greetings.HelloMessage.Text,
-            //                             replyMarkup: Greetings.HelloMessage.ReplyMarkup,
-            //                             entities: Greetings.HelloMessage.Entities,
-            //                             disableWebPagePreview: true,
-            //                             cancellationToken: cancellationToken);
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                logger.err(ex.Message);
-            //            }
-            //            await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-            //            logger.inf($"{DateTime.Now} {GeoTag} cntr={++appCntr} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
-
-            //        }
-            //        else
-            //        {
-            //            logger.inf($"{DateTime.Now} {GeoTag} cntr={++decCntr} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
-            //            await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        logger.err(ex.Message);
-            //    }
-            //}
         }
         #endregion
 
