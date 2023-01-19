@@ -26,6 +26,10 @@
           {
             "OldText": "https://promo.xtime",
             "NewText": "www.guns.ru"
+          },
+          {
+            "OldText": "promo.xtime",
+            "NewText": "per2dep"
           }
         ]
       },
@@ -41,7 +45,31 @@
         "AutoChanges": [
           {
             "OldText": "@booowos",
-            "NewText": "@ceoxtime"
+            "NewText": "@CarlossRodriguess"
+          },
+          {
+            "OldText": "https://partner.xtime",
+            "NewText": "https://signalavi.space"
+          },
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1864888051/14"
+          },
+          {
+            "OldText": "https://training.xtime",
+            "NewText": "https://t.me/eentrenamiento"
+          },
+          {
+            "OldText": "https://howiamlook.xtime",
+            "NewText": "https://t.me/c/1864888051/21"
+          },
+          {
+            "OldText": "https://feedback.xtime",
+            "NewText": "https://t.me/resenasAvi"
+          },
+          {
+            "OldText": "promo.xtime",
+            "NewText": "col3dep"
           }
         ]
       }

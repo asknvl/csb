@@ -1488,7 +1488,7 @@ namespace csb.users
                                     allAutoChanges.Add(pmAutochange);
 
                                     //moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, new List<AutoChange> { pmAutochange });
-                                    moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, allAutoChanges);
+                                    moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, chain.PushData, allAutoChanges);
 
                                 } else
                                     moderationProcessor.Add(moder_token, currentModeratorGeoTag);

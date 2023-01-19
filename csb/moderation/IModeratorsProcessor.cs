@@ -12,7 +12,7 @@ namespace csb.moderation
     {
         IEnumerable<IBotModerator> ModeratorBots { get; }
         void Add(string token, string geotag);
-        void Add(string token, string geotag, DailyPushData patternPushData, List<AutoChange> autoChanges);
+        void Add(string token, string geotag, DailyPushData patternPushData, SmartPushData patternSmartPushData, List<AutoChange> autoChanges);
         GreetingsData Greetings(string geotag);
         SmartPushData SmartPushData(string geotag);
         DailyPushData DailyPushData(string geotag);

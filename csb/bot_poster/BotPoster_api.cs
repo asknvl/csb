@@ -595,7 +595,9 @@ namespace csb.bot_poster
                 if (resEntities != null)
                 {
                     int delta = autochange.NewText.Length - autochange.OldText.Length;
-                    var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
+
+                    //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
+                    var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
 
                     foreach (var item in found)
                     {
@@ -611,8 +613,7 @@ namespace csb.bot_poster
                             if (resEntities[i].Offset > indexReplace)
                                 resEntities[i].Offset += delta;
                         }
-                    }
-
+                    } 
                 }
             }
 
@@ -676,14 +677,20 @@ namespace csb.bot_poster
             //var reply = message.ReplyToMessage;
             //int? replyId = message.ReplyToMessage?.MessageId;
 
-            await bot.SendTextMessageAsync(            
-            chatId: ChannelID,
-            text: t,
-            //replyToMessageId:replyId, 
-            entities: filterEntities(messageEntities),
-            disableWebPagePreview: disablePreview,
-            replyMarkup: message.ReplyMarkup,            
-            cancellationToken: cts);
+            try
+            {
+                await bot.SendTextMessageAsync(
+                chatId: ChannelID,
+                text: t,
+                //replyToMessageId:replyId, 
+                entities: filterEntities(messageEntities),
+                disableWebPagePreview: disablePreview,
+                replyMarkup: message.ReplyMarkup,
+                cancellationToken: cts);
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)

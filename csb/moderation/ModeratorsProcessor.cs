@@ -100,17 +100,11 @@ namespace csb.moderation
             Save();
         }
 
-        public void Add(string token, string geotag, DailyPushData patternPushData, List<AutoChange> autoChanges)
+        public void Add(string token, string geotag, DailyPushData patternPushData, SmartPushData patternSmartPushData, List<AutoChange> autoChanges)
         {
             bool found = ModeratorBots.Any(o => o.Token.Equals(token) || o.GeoTag.Equals(geotag));
             if (found)
                 throw new Exception("Бот-модератор с таким токеном или геотегом уже существует. Повторите ввод:");
-
-            //var mbot = new bot_moderator_capi(token, geotag);
-            //mbot.ParametersUpdatedEvent += (p) =>
-            //{
-            //    Save();
-            //};
 
             T mbot = (T)Activator.CreateInstance(typeof(T), token, geotag);
             mbot.ParametersUpdatedEvent += (p) =>
@@ -122,6 +116,12 @@ namespace csb.moderation
             {
                 pattern.MakeAutochange(autoChanges);
                 mbot.DailyPushData.Messages.Add(pattern.Clone());
+            }
+
+            foreach (var pattern in patternSmartPushData.Messages)
+            {
+                pattern.MakeAutochange(autoChanges);
+                mbot.PushData.Messages.Add(pattern.Clone());
             }
 
             mbot.Start();

@@ -232,19 +232,9 @@ namespace csb.chains
 
         public void AddAutoChange(string botname, AutoChange autochange)
         {
-            //AutoChanges.Add(autochange);
-
             var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
-
             if (bot != null)
                 bot.AutoChanges.Add(autochange);
-
-
-            //foreach (var bot in Bots)
-            //{
-            //    if (!bot.AutoChanges.Contains(autochange))
-            //        bot.AutoChanges.Add(autochange);
-            //}
         }
 
         public List<AutoChange> GetAutoChanges(string botname)
@@ -258,31 +248,16 @@ namespace csb.chains
 
         public void RemoveAutoChange(string botname, int index)
         {
-
             var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
-
             if (bot != null)
                 bot.AutoChanges.RemoveAt(index);
-
-            //AutoChanges.RemoveAt(index);
-            //foreach (var bot in Bots)
-            //{
-            //    bot.AutoChanges.RemoveAt(index);
-            //}
         }
 
         public void ClearAutoChanges(string botname)
         {
             var bot = Bots.FirstOrDefault(b => b.Name.Equals(botname));
-
             if (bot != null)
-                bot.AutoChanges.Clear();
-            //AutoChanges.Clear();
-            //foreach (var bot in Bots)
-            //{
-            //    bot.AutoChanges.Clear();                
-            //}
-
+                bot.AutoChanges.Clear();         
         }
 
         public void AddDailyPushMessage(DailyPushMessage pattern, IModeratorsProcessor moderators)
