@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace asknvl.leads
 {
@@ -13,7 +14,7 @@ namespace asknvl.leads
         {
         }
 
-        public override Task MakeFBLead(string invite_link)
+        public override Task MakeFBLead(ChatInviteLink invite_link)
         {
             return Task.CompletedTask;
         }

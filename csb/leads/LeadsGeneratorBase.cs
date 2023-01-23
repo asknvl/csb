@@ -1,6 +1,7 @@
 ﻿using asknvl.logger;
 using csb.server;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace asknvl.leads
 {
@@ -18,7 +19,7 @@ namespace asknvl.leads
             this.trackApi = trackApi;            
         }
 
-        public abstract Task MakeFBLead(string invite_link);
+        public abstract Task MakeFBLead(ChatInviteLink invite_link);
 
         public virtual Task MakeTrackerLead()
         {

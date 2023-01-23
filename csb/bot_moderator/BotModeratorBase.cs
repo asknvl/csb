@@ -394,7 +394,7 @@ namespace csb.bot_moderator
                                 await statApi.UpdateFollowers(followers);
                                 logger.inf("Updated DB+");
 
-                                //var leadData =
+                                //await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink);
                             }
                         }
                         break;
