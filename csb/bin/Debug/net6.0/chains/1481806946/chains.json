@@ -72,6 +72,17 @@
             "NewText": "col3dep"
           }
         ]
+      },
+      {
+        "GeoTag": "TEST01",
+        "Token": "5551991329:AAHaf5W-I976muopxZdunX7iDKRR77vcq14",
+        "Name": "capi_test_poster_bot",
+        "ChannelID": -1001897374095,
+        "ChannelTitle": "TEST01",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@asknvl",
+        "ReplacedWords": [],
+        "AutoChanges": []
       }
     ],
     "User": {

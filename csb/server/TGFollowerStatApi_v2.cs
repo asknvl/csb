@@ -1,4 +1,4 @@
-﻿using csb.server.dtos;
+﻿using csb.server.tg_dtos;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -39,7 +39,9 @@ namespace csb.server
         {
             services.AddHttpClient();
         }
+        #endregion
 
+        #region public
         public async Task UpdateFollowers(List<Follower> followers)
         {
             var addr = $"{url}/v1/telegram";
@@ -240,10 +242,7 @@ namespace csb.server
             }
 
             return tags;
-        }
-        #endregion
-
-        #region public
+        }               
         public async Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours)
         {
             List<tgUserDailyPushInfo> users = new();

@@ -1,4 +1,4 @@
-﻿using csb.server.dtos;
+﻿using csb.server.tg_dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

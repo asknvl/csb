@@ -9,7 +9,8 @@ namespace csb.invitelinks
 {
     public interface IInviteLinksProcessor
     {
-        Task<string> Generate();
-        Task Revoke(string link);
+        Task<string> Generate(long? channelid);
+        Task<int> Generate(long? channelid, int n);
+        Task Revoke(long? channelid, string link);
     }
 }

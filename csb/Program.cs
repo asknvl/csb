@@ -10,6 +10,7 @@ using csb.usr_push;
 using csb.server;
 using System.Linq;
 using System.Threading.Tasks;
+using csb.settings;
 
 namespace csb
 {
@@ -19,7 +20,11 @@ namespace csb
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Вдудь 3.2.0_3");
+
+            GlobalSettings settings = GlobalSettings.getInstance();
+
+            Console.WriteLine("Вдудь 3.2.3");
+            Console.WriteLine($"Офис:{settings.office}");
             BotManager manager = new BotManager();
             manager.Start();
 

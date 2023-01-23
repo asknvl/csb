@@ -320,5 +320,371 @@
         }
       ]
     }
+  },
+  {
+    "GeoTag": "TEST01",
+    "Name": "capi_test_moderator_bot",
+    "Token": "5962943411:AAGSQX2SyN_ZZQsqSHxvTN4e-tA9sSlbXwA",
+    "ChannelID": -1001897374095,
+    "LeadType": 0,
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "hi",
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": "bye",
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "PushData": {
+      "Messages": [
+        {
+          "TimePeriod": 1.0,
+          "Id": 1,
+          "Message": {
+            "message_id": 2853,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673794985,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from_chat": {
+              "id": -1001726461246,
+              "type": "channel",
+              "title": "🚀Aviator Colombia"
+            },
+            "forward_from_message_id": 522,
+            "forward_date": 1673788777,
+            "photo": [
+              {
+                "width": 90,
+                "height": 50,
+                "file_id": "AgACAgIAAxkBAAILJWPEFalP-kKiWf3LNREP0XMCjNPBAAK0yDEbNPUgSpJJLULiW9NUAQADAgADcwADLQQ",
+                "file_unique_id": "AQADtMgxGzT1IEp4",
+                "file_size": 1328
+              },
+              {
+                "width": 320,
+                "height": 178,
+                "file_id": "AgACAgIAAxkBAAILJWPEFalP-kKiWf3LNREP0XMCjNPBAAK0yDEbNPUgSpJJLULiW9NUAQADAgADbQADLQQ",
+                "file_unique_id": "AQADtMgxGzT1IEpy",
+                "file_size": 15127
+              },
+              {
+                "width": 800,
+                "height": 446,
+                "file_id": "AgACAgIAAxkBAAILJWPEFalP-kKiWf3LNREP0XMCjNPBAAK0yDEbNPUgSpJJLULiW9NUAQADAgADeAADLQQ",
+                "file_unique_id": "AQADtMgxGzT1IEp9",
+                "file_size": 55413
+              },
+              {
+                "width": 1162,
+                "height": 648,
+                "file_id": "AgACAgIAAxkBAAILJWPEFalP-kKiWf3LNREP0XMCjNPBAAK0yDEbNPUgSpJJLULiW9NUAQADAgADeQADLQQ",
+                "file_unique_id": "AQADtMgxGzT1IEp-",
+                "file_size": 57395
+              }
+            ],
+            "caption": "​​​​Buen día muchachos👋\n\nLogramos ganancias estupendas con una gráfica que se comportó muy bien y a la que pudimos sacarle provecho 👌\n\nAsí que estén atentos al canal y nos veremos en rato \n\n⭕️NOVATOS - NO SE OLVIDEN DE SUSCRÍBANSE A \n• Mi canal con el entrenamiento:\nhttps://t.me/entrenamiento_signals\n\n• Mi canal con sus reseñas:\nhttps://t.me/resenans\n\n⭕️Para cualquier pregunta \n\n@Carlos_rodriigues",
+            "caption_entities": [
+              {
+                "type": "text_link",
+                "offset": 0,
+                "length": 2,
+                "url": "https://telegra.ph/file/78c0fa7f6df6b85f7f168.mp4"
+              },
+              {
+                "type": "bold",
+                "offset": 4,
+                "length": 22
+              },
+              {
+                "type": "italic",
+                "offset": 26,
+                "length": 8
+              },
+              {
+                "type": "italic",
+                "offset": 35,
+                "length": 100
+              },
+              {
+                "type": "bold",
+                "offset": 137,
+                "length": 53
+              },
+              {
+                "type": "text_link",
+                "offset": 269,
+                "length": 34,
+                "url": "https://t.me/entrenamiento_signals/"
+              },
+              {
+                "type": "underline",
+                "offset": 269,
+                "length": 34
+              },
+              {
+                "type": "text_link",
+                "offset": 333,
+                "length": 21,
+                "url": "https://t.me/resenans/"
+              },
+              {
+                "type": "underline",
+                "offset": 333,
+                "length": 21
+              },
+              {
+                "type": "mention",
+                "offset": 384,
+                "length": 18
+              },
+              {
+                "type": "underline",
+                "offset": 384,
+                "length": 18
+              }
+            ]
+          },
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_31.jpg"
+        },
+        {
+          "TimePeriod": 2.0,
+          "Id": 2,
+          "Message": {
+            "message_id": 2857,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673795000,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "forward_from": {
+              "id": 5519305850,
+              "is_bot": true,
+              "first_name": "🚀Equipo Aviator [bot]",
+              "username": "COL_MODERATOR_BOT"
+            },
+            "forward_date": 1672967434,
+            "animation": {
+              "width": 528,
+              "height": 848,
+              "duration": 6,
+              "thumb": {
+                "width": 199,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgspY8QVt1EsX1FSldACOjbcKsgKPNAAAjokAAKOQrlJWV1ebQ1LZCQBAAdtAAMtBA",
+                "file_unique_id": "AQADOiQAAo5CuUly",
+                "file_size": 3448
+              },
+              "file_name": "file_248.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "CgACAgIAAxkBAAILKWPEFbdRLF9RUpXQAjo23CrICjzQAAI6JAACjkK5SVldXm0NS2QkLQQ",
+              "file_unique_id": "AgADOiQAAo5CuUk",
+              "file_size": 629605
+            },
+            "document": {
+              "thumb": {
+                "width": 199,
+                "height": 320,
+                "file_id": "AAMCAgADGQEAAgspY8QVt1EsX1FSldACOjbcKsgKPNAAAjokAAKOQrlJWV1ebQ1LZCQBAAdtAAMtBA",
+                "file_unique_id": "AQADOiQAAo5CuUly",
+                "file_size": 3448
+              },
+              "file_name": "file_248.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "CgACAgIAAxkBAAILKWPEFbdRLF9RUpXQAjo23CrICjzQAAI6JAACjkK5SVldXm0NS2QkLQQ",
+              "file_unique_id": "AgADOiQAAo5CuUk",
+              "file_size": 629605
+            },
+            "caption": "Es mi informe de señales de ayer hermano. No entiendo por qué todavía no juegas conmigo 🤙\n\nPorque si jugaste conmigo ayer, puedes ganar  1,500,000 de pesos día tras dia, pero hermano, juego todos los días y mis seguidores obtienen buenos resultados todos los días. Es por eso que te estoy esperando en mis señales donde atrapo buenos coeficientes y obtengo ganancias 🤑\n\nEspero verte a ti y a mí en la lista de jugadores donde atraparemos un gran coeficiente y haremos buenas ganancias 😏\n\n⭕️MANDAME UN MENSAJE DE TEXTO: @CarlRodriges",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 91
+              },
+              {
+                "type": "italic",
+                "offset": 92,
+                "length": 45
+              },
+              {
+                "type": "italic",
+                "offset": 148,
+                "length": 222
+              },
+              {
+                "type": "underline",
+                "offset": 372,
+                "length": 117
+              },
+              {
+                "type": "bold",
+                "offset": 493,
+                "length": 28
+              },
+              {
+                "type": "mention",
+                "offset": 522,
+                "length": 13
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💸 Mi canal 💸",
+                    "url": "https://t.me/c/1791021628/2086/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲 Regístrate aquí 📲",
+                    "url": "https://1wmvvc.top/casino/list?open=register/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_32.MP4"
+        }
+      ]
+    },
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 2324,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673557363,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "24push 1 xtime1"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 2326,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673557372,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "24 push2 xtime1"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 3,
+          "Message": {
+            "message_id": 2465,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673693486,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "1"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 4,
+          "Message": {
+            "message_id": 2467,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673693487,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "2"
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 5,
+          "Message": {
+            "message_id": 2469,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1673693488,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "3"
+          },
+          "FilePath": null
+        }
+      ]
+    }
   }
 ]

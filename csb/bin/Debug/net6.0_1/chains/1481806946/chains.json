@@ -1,0 +1,35 @@
+[  
+  {
+    "Owner": 0,
+    "Name": "TEST1",
+    "Id": 2,
+    "PhoneNumber": "+79918437350",
+    "Bots": [
+      {
+        "GeoTag": "TEST1",
+        "Token": "5401037645:AAGvWcc_R-3ji6stcW1HpMhb1fNRCVxhe40",
+        "Name": "testoutput3_bot",
+        "ChannelID": -1001891437737,
+        "ChannelTitle": "OUT3",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@asknvl",
+        "ReplacedWords": [],
+        "AutoChanges": []
+      }
+    ],
+    "User": {
+      "FilteredWords": [],
+      "TimeInterval": 0.016666666666666666,
+      "MessageBufferLength": 10,
+      "MatchingPercentageTreshold": 71
+    },
+    "ReplacedWords": [],
+    "DailyPushData": {
+      "Messages": []
+    },
+    "PushData": {
+      "Messages": []
+    },
+    "State": 0
+  }
+]

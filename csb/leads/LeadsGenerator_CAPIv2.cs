@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csb.server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,13 @@ namespace asknvl.leads
 {
     public class LeadsGenerator_CAPIv2 : LeadsGeneratorBase
     {
-        public override Task MakeFBLead()
+        public LeadsGenerator_CAPIv2(string geotag, ITGFollowerTrackApi trackApi) : base(geotag, trackApi)
         {
-            throw new NotImplementedException();
+        }
+
+        public override Task MakeFBLead(string invite_link)
+        {
+            return Task.CompletedTask;
         }
     }
 }

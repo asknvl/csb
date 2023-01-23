@@ -1,17 +1,19 @@
-﻿using asknvl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using csb.server;
 using System.Threading.Tasks;
 
 namespace asknvl.leads
 {
     public class LeadsGenerator_CAPIv1 : LeadsGeneratorBase
     {
-        public override Task MakeFBLead()
+        public LeadsGenerator_CAPIv1(string geotag, ITGFollowerTrackApi trackApi) : base(geotag, trackApi)
         {
-            throw new NotImplementedException();
+        }
+
+        public override async Task MakeFBLead(string invite_link)
+        {
+            await Task.Run(() => {
+                var lead_data = trackApi.GetLeadData(invite_link);
+            });
         }
     }
 }

@@ -1,15 +1,24 @@
-﻿using asknvl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using asknvl.logger;
+using csb.server;
 using System.Threading.Tasks;
 
 namespace asknvl.leads
 {
-    public abstract class LeadsGeneratorBase
+    public abstract class LeadsGeneratorBase : ILeadsGenerator
     {
-        public abstract Task MakeFBLead();
+        #region vars
+        protected string GeoTag;
+        protected ITGFollowerTrackApi trackApi;
+        protected ILogger logger;        
+        #endregion
+
+        public LeadsGeneratorBase(string geotag, ITGFollowerTrackApi trackApi)
+        {
+            GeoTag = geotag;
+            this.trackApi = trackApi;            
+        }
+
+        public abstract Task MakeFBLead(string invite_link);
 
         public virtual Task MakeTrackerLead()
         {

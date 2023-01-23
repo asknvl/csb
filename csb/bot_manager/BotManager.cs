@@ -88,26 +88,11 @@ namespace csb.bot_manager
 
         public BotManager()
         {
-
-
-#if DEBUG
-            bot = new TelegramBotClient("5921412686:AAGZzg0V1enYadLf_5YEycoEQBES8LyXc1A");
-#elif LATAM
-            //Latam
-            bot = new TelegramBotClient("5597155386:AAEvPn9KUuWRPCECuOTJDHdh6RiY_IVbpWM");             
-#elif VESTNIK
-            //Вестник
-            bot = new TelegramBotClient("5417889302:AAG2sMp32gXlzfl6HnEvB2VmVXfAR_7G274");            
-#endif
-
-
-            //chainsProcessor.Load();
+            var settings = GlobalSettings.getInstance();
+            bot = new TelegramBotClient(settings.bot_manager_token);
 
             userManager = new UserManager(bot, cancellationToken);
             userManager.Init();
-
-            //chainsProcessor.StartAll(); 
-            
         }
 
        

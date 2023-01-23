@@ -1,6 +1,7 @@
 ﻿using asknvl.leads;
 using asknvl.logger;
 using csb.addme_service;
+using csb.invitelinks;
 using csb.server;
 using Newtonsoft.Json;
 using System;
@@ -40,7 +41,12 @@ namespace csb.bot_moderator
 #else
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");
 #endif
+        protected ITGFollowerTrackApi trackApi = new TGFollowerTrackApi("https://app.alopadsa.ru");
+
         protected AddMeService addMe = AddMeService.getInstance();
+
+        protected ILeadsGenerator leadsGenerator;
+        protected IInviteLinksProcessor linksProcessor;
         #endregion
 
         #region properies
@@ -52,8 +58,18 @@ namespace csb.bot_moderator
         public string Token { get; set; }
         [JsonProperty]
         public long? ChannelID { get; set; } = null;
+
+        LeadAlgorithmType? leadType = null;
         [JsonProperty]
-        public LeadAlgorithmType? LeadType { get; set; } = null;
+        public LeadAlgorithmType? LeadType {
+            get => leadType;
+            set
+            {
+                leadType = value;
+                Stop();
+                Start();
+            }
+        }
         [JsonProperty]
         public GreetingsData Greetings { get; set; } = new();
         [JsonProperty]
@@ -259,7 +275,7 @@ namespace csb.bot_moderator
         #endregion
 
         #region protected
-        protected virtual void processMyChatMember(Update update)
+        protected virtual async Task processMyChatMember(Update update)
         {
             long id = update.MyChatMember.Chat.Id;
 
@@ -270,6 +286,8 @@ namespace csb.bot_moderator
                     ChannelID = id;
                     ParametersUpdatedEvent?.Invoke(this);
                     logger.inf($"Moderator added to channel/group ID={id}");
+
+                    int linksNumber = await linksProcessor.Generate(ChannelID, 10);
                     break;
                 default:
                     break;
@@ -319,8 +337,6 @@ namespace csb.bot_moderator
                     }
                     await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                     logger.inf_urgent($"{GeoTag} cntr={++appCntr} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
-
-                    //Make Lead event to FB here
 
                 }
                 else
@@ -377,6 +393,8 @@ namespace csb.bot_moderator
                                 followers.Add(follower);
                                 await statApi.UpdateFollowers(followers);
                                 logger.inf("Updated DB+");
+
+                                //var leadData =
                             }
                         }
                         break;
@@ -423,7 +441,7 @@ namespace csb.bot_moderator
                 case UpdateType.MyChatMember:
                     try
                     {
-                        processMyChatMember(update);
+                        await processMyChatMember(update);                        
                     }
                     catch (Exception ex)
                     {
@@ -458,7 +476,7 @@ namespace csb.bot_moderator
         #endregion
 
         #region public
-        public async void Start()
+        public void Start()
         {
             logger.inf($"Startting moderator...");
 
@@ -471,24 +489,18 @@ namespace csb.bot_moderator
 
             cts = new CancellationTokenSource();
 
+            linksProcessor = InviteLinkProcessorFactory.Create(GeoTag, LeadType, bot, trackApi);
+            leadsGenerator = LeadsGeneratorFactory.Create(GeoTag, LeadType, trackApi);
+
+            if (ChannelID != null)
+                linksProcessor.Generate(ChannelID, 10).Wait();
+            
             var receiverOptions = new ReceiverOptions
             {
                 AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember, UpdateType.MyChatMember }
             };
 
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
-
-            //try
-            //{
-            //    for (int i = 0; i < 10; i++)
-            //    {
-            //        var link = await bot.CreateChatInviteLinkAsync(ChannelID, null, null, null, true);
-            //        logger.inf($"{link.InviteLink}");
-            //    }
-            //} catch (Exception ex)
-            //{
-            //    logger.err(ex.Message);
-            //}
 
             IsRunning = true;
 

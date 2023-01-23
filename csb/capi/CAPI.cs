@@ -59,7 +59,14 @@ namespace capi_test.capi
         #endregion
 
         #region public     
-        public async Task MakeLeadEvent(string pixel_id, string token, long tg_user_id, string firstname = null, string lastname = null, string client_user_agernt = null, string client_ip_address = null, string test_event_code = null)
+        public async Task MakeLeadEvent(string pixel_id,
+                                        string token,
+                                        long? tg_user_id = null,
+                                        string firstname = null,
+                                        string lastname = null,
+                                        string client_user_agernt = null,
+                                        string client_ip_address = null,
+                                        string test_event_code = null)
         {
             path = $"https://graph.facebook.com/{API_VERSION}/{pixel_id}/events?access_token={token}";
             var httpClient = httpClientFactory.CreateClient();
@@ -71,7 +78,7 @@ namespace capi_test.capi
                 event_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                 user_data = new userDataDTO()
                 {
-                    external_id = $"{tg_user_id}",
+                    //external_id = $"{tg_user_id}",
                     fn = (!string.IsNullOrEmpty(firstname)) ? getSHA256(firstname.ToLower()) : null,
                     ln = (!string.IsNullOrEmpty(lastname)) ? getSHA256(lastname.ToLower()) : null,
                     client_user_agent = (!string.IsNullOrEmpty(client_user_agernt)) ? client_user_agernt : null,
