@@ -9,7 +9,7 @@ namespace asknvl.leads
 {
     public interface ILeadsGenerator
     {
-        Task MakeFBLead(ChatInviteLink invite_link);
+        Task MakeFBLead(string invite_link, string firstname = null, string lastname = null);
         Task MakeTrackerLead();
     }
 

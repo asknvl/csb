@@ -14,7 +14,7 @@ namespace asknvl.leads
         {
         }
 
-        public override Task MakeFBLead(ChatInviteLink invite_link)
+        public override Task MakeFBLead(string invite_link, string firstname = null, string lastname = null)
         {
             return Task.CompletedTask;
         }

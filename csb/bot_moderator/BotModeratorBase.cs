@@ -66,6 +66,7 @@ namespace csb.bot_moderator
             set
             {
                 leadType = value;
+                ParametersUpdatedEvent?.Invoke(this);
                 Stop();
                 Start();
             }
@@ -317,7 +318,11 @@ namespace csb.bot_moderator
                     logger.err($"IsApproved? {ex.Message}");
                 }
 
+#if DEBUG
+                bool isAllowed = true;
+#else
                 bool isAllowed = await statApi.IsSubscriptionAvailable(GeoTag, chatJoinRequest.From.Id);
+#endif
                 if (isAllowed || addme)
                 {
                     try
@@ -394,7 +399,7 @@ namespace csb.bot_moderator
                                 await statApi.UpdateFollowers(followers);
                                 logger.inf("Updated DB+");
 
-                                //await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink);
+                                await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink);
                             }
                         }
                         break;
@@ -473,9 +478,9 @@ namespace csb.bot_moderator
             }
 
         }
-        #endregion
+#endregion
 
-        #region public
+#region public
         public void Start()
         {
             logger.inf($"Startting moderator...");
@@ -519,10 +524,10 @@ namespace csb.bot_moderator
 
             logger.inf($"Moderator stopped");
         }
-        #endregion
+#endregion
 
-        #region events
+#region events
         public event Action<IBotModerator> ParametersUpdatedEvent;
-        #endregion
+#endregion
     }
 }

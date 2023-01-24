@@ -19,7 +19,7 @@ namespace asknvl.leads
             this.trackApi = trackApi;            
         }
 
-        public abstract Task MakeFBLead(ChatInviteLink invite_link);
+        public abstract Task MakeFBLead(string invite_link, string firstname = null, string lastname = null);
 
         public virtual Task MakeTrackerLead()
         {

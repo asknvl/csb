@@ -1,12 +1,15 @@
-﻿using csb.server.track_dtos;
+﻿using csb.server.tg_dtos;
+using csb.server.track_dtos;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using TL;
 
 namespace csb.server
 {    
@@ -67,9 +70,39 @@ namespace csb.server
             }
         }
 
-        public Task<leadDataDto> GetLeadData(string link)
+        public async Task<leadDataDto> GetLeadData(string link)
         {
-            throw new NotImplementedException();
+            leadDataDto leadData = new();
+
+            var addr = $"{url}/v1/telegram/clientDataByLink";
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            linkParameterDto jlink = new linkParameterDto()
+            {
+                link = link
+            };
+            var json = JsonConvert.SerializeObject(jlink);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+            try
+            {
+                var response = await httpClient.PostAsync(addr, data);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                var resp = JsonConvert.DeserializeObject<leadDataDtoResponse>(result);
+
+                if (resp.success)
+                    leadData = resp.data;
+                else
+                    throw new Exception($"success=false");
+            } catch (Exception ex)
+            {
+                throw new Exception($"GetLeadData {ex.Message}");
+            }
+
+            return leadData;
         }
         #endregion
     }

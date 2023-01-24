@@ -16,14 +16,18 @@ namespace asknvl.leads
             capi = new CAPI();
         }
         #region public
-        public override async Task MakeFBLead(ChatInviteLink invite_link)
+        public override async Task MakeFBLead(string invite_link, string firstname = null, string lastname = null)
         {            
-            var lead_data = await trackApi.GetLeadData(invite_link.InviteLink);
+            var lead_data = await trackApi.GetLeadData(invite_link)
 
             await capi.MakeLeadEvent(
-                    lead_data.fb_pixel,
-                    lead_data.fb_capi
-                    
+                        lead_data.fb_pixel,
+                        lead_data.fb_capi,
+                        tg_user_id:null,
+                        firstname: firstname,
+                        lastname: lastname,
+                        client_user_agent:lead_data.user_agent,
+                        client_ip_address:lead_data.ip
                     );
         }
         #endregion

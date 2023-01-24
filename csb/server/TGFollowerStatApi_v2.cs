@@ -86,7 +86,7 @@ namespace csb.server
                 if (resp.success)
                     users = resp.data;
                 else
-                    throw new Exception($"syccess=false");
+                    throw new Exception($"success=false");
             } catch (Exception ex)
             {
                 throw new Exception($"GetNoFeedbackFollowers {ex.Message}");

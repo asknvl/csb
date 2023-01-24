@@ -326,7 +326,7 @@
     "Name": "capi_test_moderator_bot",
     "Token": "5962943411:AAGSQX2SyN_ZZQsqSHxvTN4e-tA9sSlbXwA",
     "ChannelID": -1001897374095,
-    "LeadType": 0,
+    "LeadType": 1,
     "Greetings": {
       "HelloMessage": {
         "Text": "hi",

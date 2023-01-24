@@ -18,6 +18,11 @@ namespace csb.server.track_dtos
     #endregion
 
     #region GetLeadData
+    public class linkParameterDto
+    {
+        [JsonProperty]
+        public string link { get; set; }
+    }
     public class leadDataDtoResponse
     {
         [JsonProperty]
