@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csb.settings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace csb.server
         public string lastname { get; set; }
         public string invite_link { get; set; }
         public string tg_geolocation { get; set; }
+        public int office_id { get; set; } 
         //[JsonIgnore]
         public bool is_subscribed { get; set; }
 
@@ -27,7 +29,10 @@ namespace csb.server
             string usrnm = !string.IsNullOrEmpty(username) ? $"@{username}" : "";
             string link = !string.IsNullOrEmpty(invite_link) ? $"link={invite_link}" : "NOLINK";
 
-            return $"{tg_geolocation} " +
+            Offices office = (Offices)office_id;
+
+            return $"{office} " +
+                   $"{tg_geolocation} " +
                    $"{status} " +
                    $"{tg_chat_id} " +
                    $"{tg_user_id} " +

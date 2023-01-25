@@ -1,4 +1,5 @@
 ﻿using csb.server.tg_dtos;
+using csb.settings;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,13 +22,12 @@ namespace csb.server
         #region vars
         string url;
         ServiceCollection serviceCollection;
-        IHttpClientFactory httpClientFactory;
+        IHttpClientFactory httpClientFactory;        
         #endregion
 
         public TGFollowersStatApi_v2(string url)
-        {
+        {            
             this.url = url;
-
             serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             var services = serviceCollection.BuildServiceProvider();

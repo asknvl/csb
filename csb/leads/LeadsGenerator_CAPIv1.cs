@@ -17,8 +17,8 @@ namespace asknvl.leads
         }
         #region public
         public override async Task MakeFBLead(string invite_link, string firstname = null, string lastname = null)
-        {            
-            var lead_data = await trackApi.GetLeadData(invite_link)
+        {
+            var lead_data = await trackApi.GetLeadData(invite_link);
 
             await capi.MakeLeadEvent(
                         lead_data.fb_pixel,

@@ -59,7 +59,7 @@ namespace capi_test.capi
         #endregion
 
         #region public     
-        public async Task MakeLeadEvent(string pixel_id,
+        public async Task<string> MakeLeadEvent(string pixel_id,
                                         string token,
                                         long? tg_user_id = null,
                                         string firstname = null,
@@ -68,6 +68,7 @@ namespace capi_test.capi
                                         string client_ip_address = null,
                                         string test_event_code = null)
         {
+
             path = $"https://graph.facebook.com/{API_VERSION}/{pixel_id}/events?access_token={token}";
             var httpClient = httpClientFactory.CreateClient();
 
@@ -113,19 +114,20 @@ namespace capi_test.capi
             }
             
             var data = new StringContent(json, Encoding.UTF8, "application/json");
+            string result = "";
 
             try
             {
                 var response = await httpClient.PostAsync(path, data);
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadAsStringAsync();
+                result = await response.Content.ReadAsStringAsync();
                 
-                Console.WriteLine(result);
-
             } catch (Exception ex)
             {
                 throw new Exception($"MakeEvent {ex.Message}");
             }
+
+            return result;
         }
         #endregion
     }

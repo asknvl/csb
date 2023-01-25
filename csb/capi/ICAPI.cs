@@ -4,7 +4,7 @@ namespace capi_test.capi
 {
     public interface ICAPI
     {
-        public Task MakeLeadEvent(string pixel_id,
+        public Task<string> MakeLeadEvent(string pixel_id,
                                   string token,
                                   long? tg_user_id = null,
                                   string firstname = null,

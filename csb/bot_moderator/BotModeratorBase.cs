@@ -29,6 +29,7 @@ namespace csb.bot_moderator
         #endregion
 
         #region vars
+        settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
         ILogger logger;
         protected ITelegramBotClient bot;
         protected CancellationTokenSource cts;
@@ -382,6 +383,7 @@ namespace csb.bot_moderator
                     firstname = fn,
                     lastname = ln,
                     invite_link = link,
+                    office_id = (int)globals.office,
                     tg_geolocation = GeoTag
                 };
 
