@@ -1,6 +1,7 @@
 ﻿using asknvl.logger;
 using csb.server;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 
@@ -43,7 +44,7 @@ namespace csb.invitelinks
 
                     var invitelink = await bot.CreateChatInviteLinkAsync(channelid, null, null, null, true);
                     link = invitelink.InviteLink;
-                    logger.inf($"tg:{link}");
+                    logger.inf_urgent($"generated:{link}");
 
                     await trackApi.EnqueueInviteLink(geotag, link);
                     logger.inf("server: enqueued");
@@ -63,7 +64,7 @@ namespace csb.invitelinks
 
         public async Task<int> Generate(long? channelid, int n)
         {
-            logger.inf($"Link generate request n={n}:");
+            logger.inf_urgent($"Link generate request n={n}:");
             if (channelid == null)
             {
                 logger.err($"Unable to generate link n={n}: ChannelID=null");
@@ -77,6 +78,7 @@ namespace csb.invitelinks
                 {
                     await Generate(channelid);
                     res++;
+                    Thread.Sleep(1000);
                 }            
             });
 
@@ -96,6 +98,7 @@ namespace csb.invitelinks
             try
             {
                 await bot.RevokeChatInviteLinkAsync(channelid, link);
+                logger.inf_urgent($"revoked: CH={channelid} link={link}");
             } catch (Exception ex) {
 
                 logger.err(ex.Message);

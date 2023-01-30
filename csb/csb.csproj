@@ -3,14 +3,26 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <Configurations>Debug;Release;Vestnik;Latam</Configurations>
+    <Configurations>Debug;Release;Vestnik;Latam;capi_debug;capi_release;capi_inda</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;MULT_INP</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='capi_inda|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;MULT_INP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='capi_debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;MULT_INP</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;LATAM;MULT_INP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='capi_release|AnyCPU'">
     <DefineConstants>$(DefineConstants)TRACE;LATAM;MULT_INP</DefineConstants>
   </PropertyGroup>
 

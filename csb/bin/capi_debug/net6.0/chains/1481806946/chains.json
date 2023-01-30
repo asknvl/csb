@@ -1,0 +1,64 @@
+[
+  {
+    "Owner": 0,
+    "Name": "INDAP",
+    "Id": 12,
+    "PhoneNumber": "+79771826918",
+    "Bots": [
+      {
+        "GeoTag": "INDA02",
+        "Token": "5731630172:AAEWOJgxLOeX5IxdvNVksXLVnnlXxF9wzVU",
+        "Name": "P1_CHAIN_BOT",
+        "ChannelID": -1001743603954,
+        "ChannelTitle": "🚀Aviator Team",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@Amirsalllah",
+        "ReplacedWords": [],
+        "AutoChanges": [
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1743603954/2557"
+          },
+          {
+            "OldText": "https://training.xtime",
+            "NewText": "https://t.me/avitraining"
+          },
+          {
+            "OldText": "https://howiamlook.xtime",
+            "NewText": "https://t.me/c/1743603954/2566"
+          },
+          {
+            "OldText": "https://feedback.xtime",
+            "NewText": "https://t.me/avreview"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@amirrsallah"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@Amirsalllah"
+          },
+          {
+            "OldText": "https://partner.xtime",
+            "NewText": "https://signalsaviator.online"
+          }
+        ]
+      }
+    ],
+    "User": {
+      "FilteredWords": [],
+      "TimeInterval": 0.016666666666666666,
+      "MessageBufferLength": 5,
+      "MatchingPercentageTreshold": 99
+    },
+    "ReplacedWords": [],
+    "DailyPushData": {
+      "Messages": []
+    },
+    "PushData": {
+      "Messages": []
+    },
+    "State": 0
+  }
+]

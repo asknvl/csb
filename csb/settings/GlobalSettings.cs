@@ -61,7 +61,7 @@ namespace csb.settings
             bot_manager_token = "5597155386:AAEvPn9KUuWRPCECuOTJDHdh6RiY_IVbpWM";
             
 #endif
-#if DEBUG
+#if DEBUG || CAPI_DEBUG
             listener_api_id = "13180345";
             listener_api_hash = "df78e4859fb0cbd03dc5cf83d5d0c0cb";
             bot_manager_token = "5921412686:AAGZzg0V1enYadLf_5YEycoEQBES8LyXc1A";

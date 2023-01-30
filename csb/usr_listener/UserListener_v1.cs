@@ -18,16 +18,14 @@ namespace csb.usr_listener
 
         #region const
         const int messages_buffer_length = 20;
-#if DEBUG
-        const int analyse_message_buffer_length = 10;
-        const int analyse_treshold = 71;
-#elif LATAM
+
+        //Для отладки, когда вестник работал
+        //const int analyse_message_buffer_length = 10;
+        //const int analyse_treshold = 71;
+
         const int analyse_message_buffer_length = 5;
         const int analyse_treshold = 99;
-#elif VESTNIK
-        const int analyse_message_buffer_length = 8;
-        const int analyse_treshold = 70;
-#endif
+
         #endregion
 
         #region vars

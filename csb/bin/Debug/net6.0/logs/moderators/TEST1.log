@@ -1,22 +1,5 @@
-25.01.2023 12:19:51 inf > Moderator stopped
-25.01.2023 12:19:51 inf > Startting moderator...
-25.01.2023 12:19:51 inf > Moderator started, bot username=testmoderator1_bot channelID=-1001692610611
-25.01.2023 12:21:37 err > Forbidden: bot can't initiate conversation with a user
-25.01.2023 12:21:38 inf > TEST1 cntr=1 APPROVED -1001692610611 5077471120 acc_5m  testacc_5m TEST01 TEST1 TEST2 
-25.01.2023 12:21:38 inf > Updated DB+
-25.01.2023 12:21:38 inf > DBG TEST1 JOIN -1001692610611 5077471120 acc_5m  @testacc_5m link=https://t.me/+CsEUivFu... 
-25.01.2023 12:23:31 err > Forbidden: bot can't initiate conversation with a user
-25.01.2023 12:23:31 inf > Updated DB-
-25.01.2023 12:23:31 inf > DBG TEST1 LEFT -1001692610611 5077471120 acc_5m  @testacc_5m NOLINK 
-25.01.2023 12:23:35 err > Forbidden: bot can't initiate conversation with a user
-25.01.2023 12:23:35 inf > TEST1 cntr=2 APPROVED -1001692610611 5077471120 acc_5m  testacc_5m TEST01 TEST2 
-25.01.2023 12:23:35 inf > Updated DB+
-25.01.2023 12:23:35 inf > DBG TEST1 JOIN -1001692610611 5077471120 acc_5m  @testacc_5m link=https://t.me/+CsEUivFu... 
-25.01.2023 12:24:24 inf > Updated DB-
-25.01.2023 12:24:24 inf > DBG TEST1 LEFT -1001692610611 1784884123 acc_4m  @testacc_4m NOLINK 
-25.01.2023 12:24:34 inf > TEST1 cntr=3 APPROVED -1001692610611 1784884123 acc_4m  testacc_4m TEST01 TEST TEST2 
-25.01.2023 12:24:34 inf > Updated DB+
-25.01.2023 12:24:34 inf > DBG TEST1 JOIN -1001692610611 1784884123 acc_4m  @testacc_4m link=https://t.me/+CsEUivFu... 
-25.01.2023 12:26:13 err > Forbidden: bot can't initiate conversation with a user
-25.01.2023 12:26:13 inf > Updated DB-
-25.01.2023 12:26:13 inf > DBG TEST1 LEFT -1001692610611 5077471120 acc_5m  @testacc_5m NOLINK 
+27.01.2023 20:08:26 inf > Moderator stopped
+27.01.2023 20:08:26 inf > Startting moderator...
+27.01.2023 20:08:26 inf > Moderator started, bot username=testmoderator1_bot channelID=-1001692610611
+27.01.2023 20:08:37 inf > TEST1 SmartPushes: delivered 0
+27.01.2023 20:08:46 inf > TEST1 SmartPushes: delivered 0

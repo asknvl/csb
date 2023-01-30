@@ -152,8 +152,9 @@ namespace csb.bot_moderator
                         }
                         catch (Exception ex)
                         {
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);                            
-                            logger.err($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message {ex.Message}");
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
+                            throw;
+                            //logger.err($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message {ex.Message}");
                         }
 
                     }
@@ -177,7 +178,7 @@ namespace csb.bot_moderator
                 logger.err(ex.Message);
             } finally
             {
-                logger.inf($"{GeoTag} SmartPushes: delivered {delivered}");
+                logger.inf_urgent($"{GeoTag} SMART_PUSH: delivered {delivered}");
             }
         }
 
@@ -189,7 +190,7 @@ namespace csb.bot_moderator
             int delivered = 0;
 
             try
-            {
+            {                
                 if (DailyPushData.Messages.Count == 0)
                     return;
 
@@ -259,7 +260,7 @@ namespace csb.bot_moderator
                 logger.err(ex.Message);
             } finally
             {
-                logger.inf($"{GeoTag} DailyPushes: delivered {delivered} of {sent}");
+                logger.inf_urgent($"{GeoTag} DAILY_PUSH: delivered {delivered} of {sent}");
             }
         }
 
@@ -316,7 +317,7 @@ namespace csb.bot_moderator
                 }
                 catch (Exception ex)
                 {
-                    logger.err($"IsApproved? {ex.Message}");
+                    logger.err(ex.Message);
                 }
 
 #if DEBUG
@@ -342,12 +343,12 @@ namespace csb.bot_moderator
                         logger.err(ex.Message);
                     }
                     await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    logger.inf_urgent($"{GeoTag} cntr={++appCntr} APPROVED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                    logger.inf_urgent($"{GeoTag} APPROVED({++appCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
 
                 }
                 else
                 {
-                    logger.inf_urgent($"{GeoTag} cntr={++decCntr} DECLINED {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                    logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                 }
             }
@@ -399,9 +400,21 @@ namespace csb.bot_moderator
                             {
                                 followers.Add(follower);
                                 await statApi.UpdateFollowers(followers);
-                                logger.inf("Updated DB+");
+#if CAPI_RELEASE || CAPI_DEBUG
+                                logger.inf_urgent("DB+");
+#endif                             
+                                var linkToRevoke = await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink); //return invite link to revoke
 
-                                await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink);
+                                await linksProcessor.Revoke(ChannelID, link);
+                             
+#if CAPI_RELEASE || CAPI_DEBUG
+                                logger.inf_urgent("Lead+");
+#endif
+
+                                var nextLink =  await linksProcessor.Generate(ChannelID);
+#if CAPI_RELEASE || CAPI_DEBUG
+                                logger.inf_urgent("NextLink+");
+#endif
                             }
                         }
                         break;
@@ -427,11 +440,11 @@ namespace csb.bot_moderator
                         follower.is_subscribed = false;
                         followers.Add(follower);
                         await statApi.UpdateFollowers(followers);
-                        logger.inf("Updated DB-");
+                        
                         break;
                 }
 
-                logger.inf_urgent(follower.ToString());
+                logger.inf(follower.ToString());
 
             }
         }
@@ -500,7 +513,7 @@ namespace csb.bot_moderator
             leadsGenerator = LeadsGeneratorFactory.Create(GeoTag, LeadType, trackApi);
 
             if (ChannelID != null)
-                linksProcessor.Generate(ChannelID, 10).Wait();
+                linksProcessor.Generate(ChannelID, 20).Wait();
             
             var receiverOptions = new ReceiverOptions
             {
@@ -508,6 +521,9 @@ namespace csb.bot_moderator
             };
 
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
+
+            pushTimer?.Start();
+            dailyPushTimer?.Start();
 
             IsRunning = true;
 

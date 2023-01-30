@@ -1,3 +1,7 @@
-25.01.2023 12:19:51 inf > Moderator stopped
-25.01.2023 12:19:51 inf > Startting moderator...
-25.01.2023 12:19:58 inf > Moderator started, bot username=capi_test_moderator_bot channelID=-1001897374095
+27.01.2023 20:08:26 inf > Moderator stopped
+27.01.2023 20:08:26 inf > Startting moderator...
+27.01.2023 20:08:32 inf > Moderator started, bot username=capi_test_moderator_bot channelID=-1001897374095
+27.01.2023 20:08:43 err > Bad Request: chat not found
+27.01.2023 20:08:43 inf > TEST01 SmartPushes: delivered 0
+27.01.2023 20:08:53 err > Bad Request: chat not found
+27.01.2023 20:08:53 inf > TEST01 SmartPushes: delivered 0

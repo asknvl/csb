@@ -1,0 +1,3488 @@
+[
+  {
+    "GeoTag": "INDA07",
+    "Name": "W20_MODERATOR_BOT",
+    "Token": "5822406886:AAG-0yBTSS2_J1C8CVIW_C3jEns6W3urOVg",
+    "ChannelID": -1001842421061,
+    "LeadType": 1,
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "❗️MESSAGE FOR NEW SUBSCRIBERS❗️\n\n🤩 Hi My name is Amir and in this channel I teach people how to make money from Aviator game. If you take my work seriously - then without any problem you can learn to earn from 15-20k rupees a day. Read all the information below carefully and then you can start!\n\n☑️Maybe you've already tried to make money from it, or maybe you're tackling it all for the first time and don't understand anything 🤔 Don't worry, I'll help!\n\n☑️ To start earning, you need to register at REGISTER IN Now my software and analytics work only with this product.\n\n☑️ After registration, you need to replenish your balance.\n\n☑️ Have you increased the balance? Great 👍🏼 Let's move on... I have a free CANAL where you read this post. Every day you can get ~ three predictions on it. Never bet all-in!\n☑️ On a free channel, I do my best so that everyone can make some money and learn a little bit about making money on Aviator.\n\n☑️ If you have any doubts, I have a CHANNEL WITH FEEDBACK from all the people who are already working with me with good results. You can write to each of them, talk to them in person and make sure that everything is real and not complicated 😉\n\n☑️ If you want detailed instructions on how to start working with me, go to my TRAINING CHANNEL\n Watch the training video, read all the information carefully and let's make money together 💸\n\n\n☑️ Still have questions? Don't be shy and write me personally: @amirSallash\n\nI'm always happy to help you 😉",
+        "Entities": [
+          {
+            "type": "bold",
+            "offset": 2,
+            "length": 27
+          },
+          {
+            "type": "italic",
+            "offset": 36,
+            "length": 147
+          },
+          {
+            "type": "bold",
+            "offset": 184,
+            "length": 47
+          },
+          {
+            "type": "code",
+            "offset": 232,
+            "length": 64
+          },
+          {
+            "type": "text_link",
+            "offset": 504,
+            "length": 11,
+            "url": "https://avigood.online/"
+          },
+          {
+            "type": "text_link",
+            "offset": 713,
+            "length": 5,
+            "url": "https://t.me/+DWO7yk9LZH4yZGY0"
+          },
+          {
+            "type": "text_link",
+            "offset": 975,
+            "length": 21,
+            "url": "https://t.me/feedback_avia"
+          },
+          {
+            "type": "text_link",
+            "offset": 1263,
+            "length": 16,
+            "url": "https://t.me/training_avi"
+          },
+          {
+            "type": "mention",
+            "offset": 1440,
+            "length": 12
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "🤑REGISTER",
+                "url": "https://avigood.online/"
+              },
+              {
+                "text": "💎MAIN CHANNEL",
+                "url": "https://t.me/+DWO7yk9LZH4yZGY0"
+              }
+            ],
+            [
+              {
+                "text": "✅TRAINING",
+                "url": "https://t.me/training_avi"
+              },
+              {
+                "text": "💰FEEDBACK",
+                "url": "https://t.me/feedback_avia"
+              }
+            ]
+          ]
+        }
+      },
+      "ByeMessage": {
+        "Text": "😢Bro, it's a shame that you decided to leave, because on this channel I help make money. And thousands of people have already been able to change their lives!\n\n😎Believe me, it's all real. Let me help you start over and fix everything, let's go step by step together:\n\n1. Take a close look at my TRANING.\n2. Make a deposit on the SITE.\n3. Closely follow the signals on the CHANNEL and repeat after me\n\n✅Just 3 simple steps will lead you to 10000-15000 rupees a day and you can solve all your financial problems.\n\nDon't give up friend, everything will work out 🔥\n\nIf you have any questions - write me, I'll help you 📲 @amirSallash",
+        "Entities": [
+          {
+            "type": "bold",
+            "offset": 47,
+            "length": 42
+          },
+          {
+            "type": "italic",
+            "offset": 90,
+            "length": 69
+          },
+          {
+            "type": "bold",
+            "offset": 163,
+            "length": 26
+          },
+          {
+            "type": "italic",
+            "offset": 190,
+            "length": 78
+          },
+          {
+            "type": "bold",
+            "offset": 273,
+            "length": 24
+          },
+          {
+            "type": "text_link",
+            "offset": 297,
+            "length": 7,
+            "url": "https://t.me/training_avi"
+          },
+          {
+            "type": "bold",
+            "offset": 309,
+            "length": 21
+          },
+          {
+            "type": "text_link",
+            "offset": 331,
+            "length": 4,
+            "url": "https://avigood.online/"
+          },
+          {
+            "type": "bold",
+            "offset": 340,
+            "length": 33
+          },
+          {
+            "type": "text_link",
+            "offset": 374,
+            "length": 7,
+            "url": "https://t.me/+DWO7yk9LZH4yZGY0"
+          },
+          {
+            "type": "bold",
+            "offset": 382,
+            "length": 19
+          },
+          {
+            "type": "bold",
+            "offset": 441,
+            "length": 11
+          },
+          {
+            "type": "bold",
+            "offset": 453,
+            "length": 12
+          },
+          {
+            "type": "italic",
+            "offset": 514,
+            "length": 50
+          },
+          {
+            "type": "bold",
+            "offset": 565,
+            "length": 52
+          },
+          {
+            "type": "mention",
+            "offset": 620,
+            "length": 12
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "💎DEPOSIT",
+                "url": "https://avigood.online/"
+              },
+              {
+                "text": "💸MY SIGNALS",
+                "url": "https://t.me/+DWO7yk9LZH4yZGY0"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "PushData": {
+      "Messages": [
+        {
+          "TimePeriod": 3.0,
+          "Id": 1,
+          "Message": {
+            "message_id": 121,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675093013,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1674137173,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 14,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAA3lj1-QVB4G5EvXGWk6f-4z_NjhhHQACOCgAAsJDSUqVM_0Ghm8EjQEAB20AAy0E",
+                "file_unique_id": "AQADOCgAAsJDSUpy",
+                "file_size": 5478
+              },
+              "file_name": "IMG_2931.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAN5Y9fkFQeBuRL1xlpOn_uM_zY4YR0AAjgoAALCQ0lKlTP9BoZvBI0tBA",
+              "file_unique_id": "AgADOCgAAsJDSUo",
+              "file_size": 2036983
+            },
+            "caption": "Listen bro, why are you still not playing with me?  \n\nJust look at what profit came out, if you bet 1000, you will earn more than 14 thousand, don't you want to earn money and make your life better? 🤑\n\n I will help you to do this and it is very easy so write to me and I will help you achieve the same results, because those who have been playing with me for a long time, they make excellent results and their life has changed a lot😏\n\nI wait only you 😎\n\n@amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 52
+              },
+              {
+                "type": "italic",
+                "offset": 54,
+                "length": 147
+              },
+              {
+                "type": "underline",
+                "offset": 204,
+                "length": 232
+              },
+              {
+                "type": "bold",
+                "offset": 437,
+                "length": 18
+              },
+              {
+                "type": "mention",
+                "offset": 457,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💬TEXT ME💬",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_0.MP4"
+        },
+        {
+          "TimePeriod": 9.0,
+          "Id": 2,
+          "Message": {
+            "message_id": 125,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675093043,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1674137246,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 14,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAA31j1-Qzl2ySr5h8URZeKSqHY2FotAACOigAAsJDSUrimNs6Sheu_gEAB20AAy0E",
+                "file_unique_id": "AQADOigAAsJDSUpy",
+                "file_size": 7184
+              },
+              "file_name": "IMG_2932.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAN9Y9fkM5dskq-YfFEWXikqh2NhaLQAAjooAALCQ0lK4pjbOkoXrv4tBA",
+              "file_unique_id": "AgADOigAAsJDSUo",
+              "file_size": 2031134
+            },
+            "caption": "Bro you are missing this opportunity👊\n\n😎You just look at my weekly report where I withmy brothers were able to make over 100k and it's only a week\n\n I've been playing this game for a very long time, so if you want to change your life and close your debts and just want to have a lot of money, then I'm waiting for you, write to me and I'll be happy to tell you everything and show you and help to do the same 😏\n\n@amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 38
+              },
+              {
+                "type": "italic",
+                "offset": 42,
+                "length": 106
+              },
+              {
+                "type": "underline",
+                "offset": 151,
+                "length": 262
+              },
+              {
+                "type": "mention",
+                "offset": 415,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🤑MONEY HERE🤑",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_1.MP4"
+        }
+      ]
+    },
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 307,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094402,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720294,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 17,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgEzY9fpgqTTMgelhtkws20AAfcO4uGKAAJHJgACudMZSsrPfvD0Sg46AQAHbQADLQQ",
+                "file_unique_id": "AQADRyYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2742.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBM2PX6YKk0zIHpYbZMLNtAAH3DuLhigACRyYAArnTGUrKz37w9EoOOi0E",
+              "file_unique_id": "AgADRyYAArnTGUo",
+              "file_size": 6933452
+            },
+            "caption": "Hey bro, this man play with me for a long time and he satisfied his results, he want to make his life better and did it🤙\n\nBut I know that you also want the same, you want to close your debts and needs, that’s why WRITE ME and change your life ⬇️\n\n⭕️Here is my contact for any questions: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 121
+              },
+              {
+                "type": "italic",
+                "offset": 123,
+                "length": 123
+              },
+              {
+                "type": "bold",
+                "offset": 250,
+                "length": 37
+              },
+              {
+                "type": "mention",
+                "offset": 288,
+                "length": 12
+              },
+              {
+                "type": "underline",
+                "offset": 288,
+                "length": 5
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🔥Watch training video🔥",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_2.MP4"
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 309,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094410,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673568844,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADcwADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUp4",
+                "file_size": 1288
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADbQADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUpy",
+                "file_size": 13478
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADeAADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUp9",
+                "file_size": 49892
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADeQADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUp-",
+                "file_size": 61191
+              }
+            ],
+            "caption": "Bro. I want to speak with you honestly, I help people to earn and want to know that you make deposit or not? 🧐\n\nBecause if not I help you, I give you link and register, you can check my training video and fly with me, today was a good day for a coefficients and we all earned good money, let’s fly with us😎\n\nI wait you in the evening signals, I try hard every day and earn money, be my followers which earn money and show your withdrawal your friend and they will envy to you🤙",
+            "caption_entities": [
+              {
+                "type": "code",
+                "offset": 0,
+                "length": 111
+              },
+              {
+                "type": "bold",
+                "offset": 113,
+                "length": 195
+              },
+              {
+                "type": "underline",
+                "offset": 310,
+                "length": 167
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch this video",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_3.jpg"
+        },
+        {
+          "Id": 3,
+          "Message": {
+            "message_id": 311,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094417,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720416,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 15,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgE3Y9fpkSaGxhAC-O4ZLk0JqqvI9agAAkomAAK50xlKzJhM5Q60BhcBAAdtAAMtBA",
+                "file_unique_id": "AQADSiYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2743.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBN2PX6ZEmhsYQAvjuGS5NCaqryPWoAAJKJgACudMZSsyYTOUOtAYXLQQ",
+              "file_unique_id": "AgADSiYAArnTGUo",
+              "file_size": 7725144
+            },
+            "caption": "This bro start play with me and was excited his earnings, and he invite his friends to fly together and now they earn good money and their life’s is cool because they earned with me🤑\n\nBut you wait when money will drop on your hands, bro, if you will sit, other guys will make money and you will envy them, but you can do the opposite to be envied🧐",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 183
+              },
+              {
+                "type": "italic",
+                "offset": 185,
+                "length": 164
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ],
+                [
+                  {
+                    "text": "😎WRITE ME😎",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_4.MP4"
+        },
+        {
+          "Id": 4,
+          "Message": {
+            "message_id": 313,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094428,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669130256,
+            "photo": [
+              {
+                "width": 90,
+                "height": 40,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADcwADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUt4",
+                "file_size": 1069
+              },
+              {
+                "width": 320,
+                "height": 142,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADbQADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUty",
+                "file_size": 15455
+              },
+              {
+                "width": 800,
+                "height": 356,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADeAADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUt9",
+                "file_size": 55522
+              },
+              {
+                "width": 1242,
+                "height": 553,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADeQADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUt-",
+                "file_size": 62112
+              }
+            ],
+            "caption": "As you see bro it’s a round history. And I every day analyse it and find best moments to bet💪\n\nI spend a lot of time to understand this game and graph and you can check reviews of my followers where they told their history, where this players play with me and also you can check my training video where a lot of useful information🔥\n\nBro, If you want to change life like my followers, you know what need to do - PLAY WITH ME 😎",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 94
+              },
+              {
+                "type": "underline",
+                "offset": 96,
+                "length": 235
+              },
+              {
+                "type": "bold",
+                "offset": 335,
+                "length": 93
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_5.jpg"
+        },
+        {
+          "Id": 5,
+          "Message": {
+            "message_id": 315,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094435,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720494,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 16,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgE7Y9fpo_NWyGKmaTaSwG5Qr34gPLkAAk4mAAK50xlK4Cz9gV6TR2kBAAdtAAMtBA",
+                "file_unique_id": "AQADTiYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2744.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBO2PX6aPzVshipmk2ksBuUK9-IDy5AAJOJgACudMZSuAs_YFek0dpLQQ",
+              "file_unique_id": "AgADTiYAArnTGUo",
+              "file_size": 8267670
+            },
+            "caption": "This guy played with me and he satisfied with his results, he played with me every day and make very good income 😎\n\nYou also can play and be like this guy, because he close his debts and earn for himself, you just need click the link below and start with me 😏\n\n⭕️Here is my contact for any questions: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 115
+              },
+              {
+                "type": "bold",
+                "offset": 117,
+                "length": 159
+              },
+              {
+                "type": "mention",
+                "offset": 303,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch training video✅",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_6.MP4"
+        },
+        {
+          "Id": 6,
+          "Message": {
+            "message_id": 317,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094444,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673569107,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADcwADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUp4",
+                "file_size": 1323
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADbQADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUpy",
+                "file_size": 13327
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADeAADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUp9",
+                "file_size": 49967
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADeQADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUp-",
+                "file_size": 62766
+              }
+            ],
+            "caption": "Bro. I want to help you,  to change your life to the best way, that’s why I wait you on my session, let’s try make money together😎 \n\nFor example, people who start playing can earn great money in a short period of time, they don't believe it at first, but they take risks and are pleasantly surprised by their balance, you just have to try and I'll help you earn 🤑\n\nIf you want the same, check the link below and start with me⬇️",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 132
+              },
+              {
+                "type": "italic",
+                "offset": 134,
+                "length": 231
+              },
+              {
+                "type": "code",
+                "offset": 367,
+                "length": 62
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_7.jpg"
+        },
+        {
+          "Id": 7,
+          "Message": {
+            "message_id": 319,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094450,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720561,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 17,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgE_Y9fpsrcKlEpR-4Te-sYGpi80x6cAAk8mAAK50xlKnlTmU2VcKLQBAAdtAAMtBA",
+                "file_unique_id": "AQADTyYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2745.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBP2PX6bK3CpRKUfuE3vrGBqYvNMenAAJPJgACudMZSp5U5lNlXCi0LQQ",
+              "file_unique_id": "AgADTyYAArnTGUo",
+              "file_size": 8565362
+            },
+            "caption": "This guy for a long time want to play with me. He borrowed money from friend and can earn even more then borrowed ✊\n\nAnd now he make every day profit on my signals because I try hard every day and give cool signals where my bros earn good money 🤑\n\nYou deserve too bhai, let’s play with me and you will see result in a couple of hours ✊\n\n⭕️ You can write to me at any time: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 115
+              },
+              {
+                "type": "italic",
+                "offset": 117,
+                "length": 130
+              },
+              {
+                "type": "underline",
+                "offset": 249,
+                "length": 87
+              },
+              {
+                "type": "mention",
+                "offset": 374,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ],
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_8.MP4"
+        },
+        {
+          "Id": 8,
+          "Message": {
+            "message_id": 321,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094457,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133802,
+            "photo": [
+              {
+                "width": 55,
+                "height": 90,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADcwADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUt4",
+                "file_size": 1328
+              },
+              {
+                "width": 196,
+                "height": 320,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADbQADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUty",
+                "file_size": 19238
+              },
+              {
+                "width": 491,
+                "height": 800,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADeAADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUt9",
+                "file_size": 79538
+              },
+              {
+                "width": 785,
+                "height": 1280,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADeQADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUt-",
+                "file_size": 106295
+              }
+            ],
+            "caption": "This is review of my followers, he is a great player, because play with me and start to make profit🙌\n\nHe was need money and he decided to try play with me and right now he make good money and stable withdrawals 🧐\n\nYou can check others stories on my channel where I help my brother to earn money and make their life more better 😎\n\n⭕️My contact: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 102
+              },
+              {
+                "type": "italic",
+                "offset": 103,
+                "length": 111
+              },
+              {
+                "type": "underline",
+                "offset": 216,
+                "length": 115
+              },
+              {
+                "type": "mention",
+                "offset": 347,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🙌Where we make money🙌",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_9.jpg"
+        },
+        {
+          "Id": 9,
+          "Message": {
+            "message_id": 323,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094462,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720650,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 13,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFDY9fpvrmysgABHxLikqJLHQzwRTlPAAJTJgACudMZSrey0EAUXfSoAQAHbQADLQQ",
+                "file_unique_id": "AQADUyYAArnTGUpy",
+                "file_size": 688
+              },
+              "file_name": "IMG_2746.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBQ2PX6b65srIAAR8S4pKiSx0M8EU5TwACUyYAArnTGUq3stBAFF30qC0E",
+              "file_unique_id": "AgADUyYAArnTGUo",
+              "file_size": 6243951
+            },
+            "caption": "She played with me over month, and she make very good result on my signals, if you don’t know, I give signals 2 time, 6 signals on daily signals and 6 signals in the evening 🔥\n\nShe payed her bills and continue earn with me, it’s really cool bro, just play with me and you can solve all your problems 💪\n\n⭕️ Write to me on any question: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 176
+              },
+              {
+                "type": "underline",
+                "offset": 178,
+                "length": 125
+              },
+              {
+                "type": "mention",
+                "offset": 337,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🙌Where we make money🙌",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_10.MP4"
+        },
+        {
+          "Id": 10,
+          "Message": {
+            "message_id": 325,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094470,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673569862,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADcwADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUp4",
+                "file_size": 1249
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADbQADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUpy",
+                "file_size": 13664
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADeAADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUp9",
+                "file_size": 48151
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADeQADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUp-",
+                "file_size": 59613
+              }
+            ],
+            "caption": "I want to tell you that you can make good money with me, because I analyse the graph every day so that YOU and other people can increase your balance, I give signals absolutely for free and you only need to bet with me✊\n\nStart with 2000RS and you will see that your balance will increase on the first day, so I will be waiting for you on my signals 💸\n\nIf you have doubts, then I can dispel them, you can check my channel with reviews or check my main channel where I earn money with my subscribers 🤙",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 219
+              },
+              {
+                "type": "underline",
+                "offset": 221,
+                "length": 131
+              },
+              {
+                "type": "bold",
+                "offset": 353,
+                "length": 148
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ],
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_11.jpg"
+        },
+        {
+          "Id": 11,
+          "Message": {
+            "message_id": 327,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094477,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720779,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 15,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFHY9fpzdAP7jv89NWso7DcaYRSVLAAAlYmAAK50xlKK0k9UxFcZBYBAAdtAAMtBA",
+                "file_unique_id": "AQADViYAArnTGUpy",
+                "file_size": 685
+              },
+              "file_name": "IMG_2747.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBR2PX6c3QD-47_PTVrKOw3GmEUlSwAAJWJgACudMZSitJPVMRXGQWLQQ",
+              "file_unique_id": "AgADViYAArnTGUo",
+              "file_size": 7301046
+            },
+            "caption": "Hey bro, this girl play with me for a long time and he satisfied his results, he want to make his life better and did it🤙\n\nBut I know that you also want the same, you want to close your debts and needs, that’s why WRITE ME and change your life ⬇️\n\n⭕️Here is my contact for any questions: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 122
+              },
+              {
+                "type": "italic",
+                "offset": 124,
+                "length": 123
+              },
+              {
+                "type": "bold",
+                "offset": 251,
+                "length": 37
+              },
+              {
+                "type": "mention",
+                "offset": 289,
+                "length": 12
+              },
+              {
+                "type": "underline",
+                "offset": 289,
+                "length": 5
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🔥Watch training video🔥",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_12.MP4"
+        },
+        {
+          "Id": 12,
+          "Message": {
+            "message_id": 329,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094484,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669131027,
+            "photo": [
+              {
+                "width": 90,
+                "height": 19,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADcwADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Et4",
+                "file_size": 697
+              },
+              {
+                "width": 320,
+                "height": 67,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADbQADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Ety",
+                "file_size": 7070
+              },
+              {
+                "width": 800,
+                "height": 167,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADeAADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Et9",
+                "file_size": 24732
+              },
+              {
+                "width": 1238,
+                "height": 258,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADeQADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Et-",
+                "file_size": 29783
+              }
+            ],
+            "caption": "Bro. Graph was good and I caught 5x and earn for one round over 20k, but it’s only one signal, imagine how much you can earn with me per one day. I give 6 signals in afternoon and 6 signals in the evening ✊\n\nI help you with all steps bro. Write me and I will explain how to make good money, it’s easy then you think, a lot of people try and change their life, be next 😎\n\nYou can also check my channel with review, because there are a lot of cool stories where people told me their life story and make profit with me💪",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 207
+              },
+              {
+                "type": "italic",
+                "offset": 208,
+                "length": 164
+              },
+              {
+                "type": "underline",
+                "offset": 372,
+                "length": 144
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews",
+                    "url": "https://t.me/feedback_avia/"
+                  },
+                  {
+                    "text": "😎WRITE ME😎",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_13.jpg"
+        },
+        {
+          "Id": 13,
+          "Message": {
+            "message_id": 331,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094491,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720869,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 12,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFLY9fp2-45ooum-Efs7yRtamJlwRoAAlgmAAK50xlKE2vaSN-6QZoBAAdtAAMtBA",
+                "file_unique_id": "AQADWCYAArnTGUpy",
+                "file_size": 685
+              },
+              "file_name": "IMG_2748.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBS2PX6dvuOaKLpvhH7O8kbWpiZcEaAAJYJgACudMZShNr2kjfukGaLQQ",
+              "file_unique_id": "AgADWCYAArnTGUo",
+              "file_size": 5806795
+            },
+            "caption": "This is my follower, he played with me on old phone and make profit, but he want to make his life and game with me easy and comfortable and that’s why on my signals he earned on new cool phone and continue play with me. Now he earn on another goal😉\n\nYou can also play with me if you want to earn and be financially independent and earn for your own goal. You just need register and make deposit bro, everything is easy 😌\n\n⭕️Text me: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 249
+              },
+              {
+                "type": "bold",
+                "offset": 251,
+                "length": 184
+              },
+              {
+                "type": "mention",
+                "offset": 435,
+                "length": 12
+              },
+              {
+                "type": "bold",
+                "offset": 435,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://avigood.online//"
+                  }
+                ],
+                [
+                  {
+                    "text": "🤙Watch training video🤙",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_14.MP4"
+        },
+        {
+          "Id": 14,
+          "Message": {
+            "message_id": 333,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094497,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673569675,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADcwADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUp4",
+                "file_size": 1220
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADbQADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUpy",
+                "file_size": 13058
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADeAADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUp9",
+                "file_size": 53158
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADeQADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUp-",
+                "file_size": 67607
+              }
+            ],
+            "caption": "My subscribers play with me every day, they also play independently and earn for their life, and what are you worse for?🙌\n\nPeople always need money, and here there is a great chance to earn quickly and a lot, you should try right now and make your dreams come true, and I will help you with this and you will be able to consistently earn and make withdrawal🧐\n\nYou can watch other stories of other players on my channel, where I help my subscribers earn money and make their lives better 😎",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 123
+              },
+              {
+                "type": "bold",
+                "offset": 124,
+                "length": 236
+              },
+              {
+                "type": "italic",
+                "offset": 362,
+                "length": 129
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/amirSallash"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_15.jpg"
+        },
+        {
+          "Id": 15,
+          "Message": {
+            "message_id": 335,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094503,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673721749,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 14,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFPY9fp5wABp8ILZcwAAaKOp1vdJYGj_QACYCYAArnTGUojuQcTfhF5yQEAB20AAy0E",
+                "file_unique_id": "AQADYCYAArnTGUpy",
+                "file_size": 688
+              },
+              "file_name": "IMG_2749.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBT2PX6ecAAafCC2XMAAGijqdb3SWBo_0AAmAmAAK50xlKI7kHE34RecktBA",
+              "file_unique_id": "AgADYCYAArnTGUo",
+              "file_size": 7193520
+            },
+            "caption": "These are my new subscribers and he made a video for me where he said he wanted to try because he saw my advertisement. Bro he saw an advertisement on Instagram and decided to try it, he wants to change his life for the better😏\n\nI helped him and everyone on my channel, because this is my job, give cool and profitable signals where my brother can earn and make his life better👍\n\nYou deserve the same, so let me help you, bro, but if you're in doubt, then you can check out my channel with reviews and see different player stories 🤔\n\n⭕️ Write to me at any time: @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 225
+              },
+              {
+                "type": "italic",
+                "offset": 230,
+                "length": 148
+              },
+              {
+                "type": "underline",
+                "offset": 382,
+                "length": 150
+              },
+              {
+                "type": "mention",
+                "offset": 565,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/feedback_avia/"
+                  },
+                  {
+                    "text": "🤑Where we make money🤑",
+                    "url": "https://t.me/c/1842421061/6/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_16.MP4"
+        },
+        {
+          "Id": 16,
+          "Message": {
+            "message_id": 337,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094511,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673726769,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADcwADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUp4",
+                "file_size": 1234
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADbQADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUpy",
+                "file_size": 13156
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADeAADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUp9",
+                "file_size": 44698
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADeQADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUp-",
+                "file_size": 55790
+              }
+            ],
+            "caption": "🔥💸Just look at my weekly report, where I and my subscribers were able to earn 192,000RS and that's in just a week\n\n I've been playing this game for a long time, so if you want to change your life and pay off your debts, or you just want to have a lot of money, then I'm waiting for you, write to me and I'll be happy to tell you everything, and you can do the same ✊😎\n\n  📲 @amirSallash",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 2,
+                "length": 113
+              },
+              {
+                "type": "underline",
+                "offset": 118,
+                "length": 248
+              },
+              {
+                "type": "mention",
+                "offset": 377,
+                "length": 12
+              }
+            ]
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_17.jpg"
+        }
+      ]
+    }
+  },
+  {
+    "GeoTag": "INDA08",
+    "Name": "W21_MODERATOR_BOT",
+    "Token": "5678385096:AAEseiuyIUouGQL8MMx8RHCz4Pv7hlKZ92s",
+    "ChannelID": -1001860000847,
+    "LeadType": 0,
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "❗️MESSAGE FOR NEW SUBSCRIBERS❗️\n\n🤩 Hi My name is Amir and in this channel I teach people how to make money from Aviator game. If you take my work seriously - then without any problem you can learn to earn from 15-20k rupees a day. Read all the information below carefully and then you can start!\n\n☑️Maybe you've already tried to make money from it, or maybe you're tackling it all for the first time and don't understand anything 🤔 Don't worry, I'll help!\n\n☑️ To start earning, you need to register at REGISTER IN Now my software and analytics work only with this product.\n\n☑️ After registration, you need to replenish your balance.\n\n☑️ Have you increased the balance? Great 👍🏼 Let's move on... I have a free CANAL where you read this post. Every day you can get ~ three predictions on it. Never bet all-in!\n☑️ On a free channel, I do my best so that everyone can make some money and learn a little bit about making money on Aviator.\n\n☑️ If you have any doubts, I have a CHANNEL WITH FEEDBACK from all the people who are already working with me with good results. You can write to each of them, talk to them in person and make sure that everything is real and not complicated 😉\n\n☑️ If you want detailed instructions on how to start working with me, go to my TRAINING CHANNEL\n Watch the training video, read all the information carefully and let's make money together 💸\n\n\n☑️ Still have questions? Don't be shy and write me personally: @sallashAmir\n\nI'm always happy to help you 😉",
+        "Entities": [
+          {
+            "type": "bold",
+            "offset": 2,
+            "length": 27
+          },
+          {
+            "type": "italic",
+            "offset": 36,
+            "length": 147
+          },
+          {
+            "type": "bold",
+            "offset": 184,
+            "length": 47
+          },
+          {
+            "type": "code",
+            "offset": 232,
+            "length": 64
+          },
+          {
+            "type": "text_link",
+            "offset": 504,
+            "length": 11,
+            "url": "https://aviatorgood.online/"
+          },
+          {
+            "type": "text_link",
+            "offset": 713,
+            "length": 5,
+            "url": "https://t.me/+UjS1xEU31k9hMGNk"
+          },
+          {
+            "type": "text_link",
+            "offset": 975,
+            "length": 21,
+            "url": "https://t.me/avia_feedbackk"
+          },
+          {
+            "type": "text_link",
+            "offset": 1263,
+            "length": 16,
+            "url": "https://t.me/avia_trainingg"
+          },
+          {
+            "type": "mention",
+            "offset": 1440,
+            "length": 12
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "🤑REGISTER",
+                "url": "https://aviatorgood.online/"
+              },
+              {
+                "text": "💎MAIN CHANNEL",
+                "url": "https://t.me/+UjS1xEU31k9hMGNk"
+              }
+            ],
+            [
+              {
+                "text": "✅TRAINING",
+                "url": "https://t.me/avia_trainingg"
+              },
+              {
+                "text": "💰FEEDBACK",
+                "url": "https://t.me/avia_feedbackk"
+              }
+            ]
+          ]
+        }
+      },
+      "ByeMessage": {
+        "Text": "😢Bro, it's a shame that you decided to leave, because on this channel I help make money. And thousands of people have already been able to change their lives!\n\n😎Believe me, it's all real. Let me help you start over and fix everything, let's go step by step together:\n\n1. Take a close look at my TRANING.\n2. Make a deposit on the SITE.\n3. Closely follow the signals on the CHANNEL and repeat after me\n\n✅Just 3 simple steps will lead you to 10000-15000 rupees a day and you can solve all your financial problems.\n\nDon't give up friend, everything will work out 🔥\n\nIf you have any questions - write me, I'll help you 📲 @sallashAmir",
+        "Entities": [
+          {
+            "type": "bold",
+            "offset": 47,
+            "length": 42
+          },
+          {
+            "type": "italic",
+            "offset": 90,
+            "length": 69
+          },
+          {
+            "type": "bold",
+            "offset": 163,
+            "length": 26
+          },
+          {
+            "type": "italic",
+            "offset": 190,
+            "length": 78
+          },
+          {
+            "type": "bold",
+            "offset": 273,
+            "length": 24
+          },
+          {
+            "type": "text_link",
+            "offset": 297,
+            "length": 7,
+            "url": "https://t.me/avia_trainingg"
+          },
+          {
+            "type": "bold",
+            "offset": 309,
+            "length": 21
+          },
+          {
+            "type": "text_link",
+            "offset": 331,
+            "length": 4,
+            "url": "https://aviatorgood.online/"
+          },
+          {
+            "type": "bold",
+            "offset": 340,
+            "length": 33
+          },
+          {
+            "type": "text_link",
+            "offset": 374,
+            "length": 7,
+            "url": "https://t.me/+UjS1xEU31k9hMGNk"
+          },
+          {
+            "type": "bold",
+            "offset": 382,
+            "length": 19
+          },
+          {
+            "type": "bold",
+            "offset": 441,
+            "length": 11
+          },
+          {
+            "type": "bold",
+            "offset": 453,
+            "length": 12
+          },
+          {
+            "type": "italic",
+            "offset": 514,
+            "length": 50
+          },
+          {
+            "type": "bold",
+            "offset": 565,
+            "length": 52
+          },
+          {
+            "type": "mention",
+            "offset": 620,
+            "length": 12
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "💎DEPOSIT",
+                "url": "https://aviatorgood.online/"
+              },
+              {
+                "text": "💸MY SIGNALS",
+                "url": "https://t.me/+UjS1xEU31k9hMGNk"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "PushData": {
+      "Messages": [
+        {
+          "TimePeriod": 3.0,
+          "Id": 1,
+          "Message": {
+            "message_id": 121,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675093013,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1674137173,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 14,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAA3lj1-QVB4G5EvXGWk6f-4z_NjhhHQACOCgAAsJDSUqVM_0Ghm8EjQEAB20AAy0E",
+                "file_unique_id": "AQADOCgAAsJDSUpy",
+                "file_size": 5478
+              },
+              "file_name": "IMG_2931.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAN5Y9fkFQeBuRL1xlpOn_uM_zY4YR0AAjgoAALCQ0lKlTP9BoZvBI0tBA",
+              "file_unique_id": "AgADOCgAAsJDSUo",
+              "file_size": 2036983
+            },
+            "caption": "Listen bro, why are you still not playing with me?  \n\nJust look at what profit came out, if you bet 1000, you will earn more than 14 thousand, don't you want to earn money and make your life better? 🤑\n\n I will help you to do this and it is very easy so write to me and I will help you achieve the same results, because those who have been playing with me for a long time, they make excellent results and their life has changed a lot😏\n\nI wait only you 😎\n\n@sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 52
+              },
+              {
+                "type": "italic",
+                "offset": 54,
+                "length": 147
+              },
+              {
+                "type": "underline",
+                "offset": 204,
+                "length": 232
+              },
+              {
+                "type": "bold",
+                "offset": 437,
+                "length": 18
+              },
+              {
+                "type": "mention",
+                "offset": 457,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💬TEXT ME💬",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_0.MP4"
+        },
+        {
+          "TimePeriod": 9.0,
+          "Id": 2,
+          "Message": {
+            "message_id": 125,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675093043,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1674137246,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 14,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAA31j1-Qzl2ySr5h8URZeKSqHY2FotAACOigAAsJDSUrimNs6Sheu_gEAB20AAy0E",
+                "file_unique_id": "AQADOigAAsJDSUpy",
+                "file_size": 7184
+              },
+              "file_name": "IMG_2932.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAN9Y9fkM5dskq-YfFEWXikqh2NhaLQAAjooAALCQ0lK4pjbOkoXrv4tBA",
+              "file_unique_id": "AgADOigAAsJDSUo",
+              "file_size": 2031134
+            },
+            "caption": "Bro you are missing this opportunity👊\n\n😎You just look at my weekly report where I withmy brothers were able to make over 100k and it's only a week\n\n I've been playing this game for a very long time, so if you want to change your life and close your debts and just want to have a lot of money, then I'm waiting for you, write to me and I'll be happy to tell you everything and show you and help to do the same 😏\n\n@sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 38
+              },
+              {
+                "type": "italic",
+                "offset": 42,
+                "length": 106
+              },
+              {
+                "type": "underline",
+                "offset": 151,
+                "length": 262
+              },
+              {
+                "type": "mention",
+                "offset": 415,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🤑MONEY HERE🤑",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_1.MP4"
+        }
+      ]
+    },
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 307,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094402,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720294,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 17,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgEzY9fpgqTTMgelhtkws20AAfcO4uGKAAJHJgACudMZSsrPfvD0Sg46AQAHbQADLQQ",
+                "file_unique_id": "AQADRyYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2742.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBM2PX6YKk0zIHpYbZMLNtAAH3DuLhigACRyYAArnTGUrKz37w9EoOOi0E",
+              "file_unique_id": "AgADRyYAArnTGUo",
+              "file_size": 6933452
+            },
+            "caption": "Hey bro, this man play with me for a long time and he satisfied his results, he want to make his life better and did it🤙\n\nBut I know that you also want the same, you want to close your debts and needs, that’s why WRITE ME and change your life ⬇️\n\n⭕️Here is my contact for any questions: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 121
+              },
+              {
+                "type": "italic",
+                "offset": 123,
+                "length": 123
+              },
+              {
+                "type": "bold",
+                "offset": 250,
+                "length": 37
+              },
+              {
+                "type": "mention",
+                "offset": 288,
+                "length": 12
+              },
+              {
+                "type": "underline",
+                "offset": 288,
+                "length": 5
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🔥Watch training video🔥",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_2.MP4"
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 309,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094410,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673568844,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADcwADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUp4",
+                "file_size": 1288
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADbQADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUpy",
+                "file_size": 13478
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADeAADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUp9",
+                "file_size": 49892
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBNWPX6Ypp_iOioBkCsqtXhKAc7JtNAALJxzEbaCABSh5zK-rKfyz4AQADAgADeQADLQQ",
+                "file_unique_id": "AQADyccxG2ggAUp-",
+                "file_size": 61191
+              }
+            ],
+            "caption": "Bro. I want to speak with you honestly, I help people to earn and want to know that you make deposit or not? 🧐\n\nBecause if not I help you, I give you link and register, you can check my training video and fly with me, today was a good day for a coefficients and we all earned good money, let’s fly with us😎\n\nI wait you in the evening signals, I try hard every day and earn money, be my followers which earn money and show your withdrawal your friend and they will envy to you🤙",
+            "caption_entities": [
+              {
+                "type": "code",
+                "offset": 0,
+                "length": 111
+              },
+              {
+                "type": "bold",
+                "offset": 113,
+                "length": 195
+              },
+              {
+                "type": "underline",
+                "offset": 310,
+                "length": 167
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch this video",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_3.jpg"
+        },
+        {
+          "Id": 3,
+          "Message": {
+            "message_id": 311,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094417,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720416,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 15,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgE3Y9fpkSaGxhAC-O4ZLk0JqqvI9agAAkomAAK50xlKzJhM5Q60BhcBAAdtAAMtBA",
+                "file_unique_id": "AQADSiYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2743.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBN2PX6ZEmhsYQAvjuGS5NCaqryPWoAAJKJgACudMZSsyYTOUOtAYXLQQ",
+              "file_unique_id": "AgADSiYAArnTGUo",
+              "file_size": 7725144
+            },
+            "caption": "This bro start play with me and was excited his earnings, and he invite his friends to fly together and now they earn good money and their life’s is cool because they earned with me🤑\n\nBut you wait when money will drop on your hands, bro, if you will sit, other guys will make money and you will envy them, but you can do the opposite to be envied🧐",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 183
+              },
+              {
+                "type": "italic",
+                "offset": 185,
+                "length": 164
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ],
+                [
+                  {
+                    "text": "😎WRITE ME😎",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_4.MP4"
+        },
+        {
+          "Id": 4,
+          "Message": {
+            "message_id": 313,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094428,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669130256,
+            "photo": [
+              {
+                "width": 90,
+                "height": 40,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADcwADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUt4",
+                "file_size": 1069
+              },
+              {
+                "width": 320,
+                "height": 142,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADbQADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUty",
+                "file_size": 15455
+              },
+              {
+                "width": 800,
+                "height": 356,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADeAADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUt9",
+                "file_size": 55522
+              },
+              {
+                "width": 1242,
+                "height": 553,
+                "file_id": "AgACAgIAAxkBAAIBOWPX6ZyhftClMdDwO5x_lNO02mx0AAKHwjEbY3WRSyzuvl0vx9dvAQADAgADeQADLQQ",
+                "file_unique_id": "AQADh8IxG2N1kUt-",
+                "file_size": 62112
+              }
+            ],
+            "caption": "As you see bro it’s a round history. And I every day analyse it and find best moments to bet💪\n\nI spend a lot of time to understand this game and graph and you can check reviews of my followers where they told their history, where this players play with me and also you can check my training video where a lot of useful information🔥\n\nBro, If you want to change life like my followers, you know what need to do - PLAY WITH ME 😎",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 94
+              },
+              {
+                "type": "underline",
+                "offset": 96,
+                "length": 235
+              },
+              {
+                "type": "bold",
+                "offset": 335,
+                "length": 93
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_5.jpg"
+        },
+        {
+          "Id": 5,
+          "Message": {
+            "message_id": 315,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094435,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720494,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 16,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgE7Y9fpo_NWyGKmaTaSwG5Qr34gPLkAAk4mAAK50xlK4Cz9gV6TR2kBAAdtAAMtBA",
+                "file_unique_id": "AQADTiYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2744.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBO2PX6aPzVshipmk2ksBuUK9-IDy5AAJOJgACudMZSuAs_YFek0dpLQQ",
+              "file_unique_id": "AgADTiYAArnTGUo",
+              "file_size": 8267670
+            },
+            "caption": "This guy played with me and he satisfied with his results, he played with me every day and make very good income 😎\n\nYou also can play and be like this guy, because he close his debts and earn for himself, you just need click the link below and start with me 😏\n\n⭕️Here is my contact for any questions: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 115
+              },
+              {
+                "type": "bold",
+                "offset": 117,
+                "length": 159
+              },
+              {
+                "type": "mention",
+                "offset": 303,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "✅Watch training video✅",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_6.MP4"
+        },
+        {
+          "Id": 6,
+          "Message": {
+            "message_id": 317,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094444,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673569107,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADcwADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUp4",
+                "file_size": 1323
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADbQADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUpy",
+                "file_size": 13327
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADeAADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUp9",
+                "file_size": 49967
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBPWPX6awja4PwusR-t8r9SRogh-EsAALKxzEbaCABSqL-hMUVu5pyAQADAgADeQADLQQ",
+                "file_unique_id": "AQADyscxG2ggAUp-",
+                "file_size": 62766
+              }
+            ],
+            "caption": "Bro. I want to help you,  to change your life to the best way, that’s why I wait you on my session, let’s try make money together😎 \n\nFor example, people who start playing can earn great money in a short period of time, they don't believe it at first, but they take risks and are pleasantly surprised by their balance, you just have to try and I'll help you earn 🤑\n\nIf you want the same, check the link below and start with me⬇️",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 132
+              },
+              {
+                "type": "italic",
+                "offset": 134,
+                "length": 231
+              },
+              {
+                "type": "code",
+                "offset": 367,
+                "length": 62
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_7.jpg"
+        },
+        {
+          "Id": 7,
+          "Message": {
+            "message_id": 319,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094450,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720561,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 17,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgE_Y9fpsrcKlEpR-4Te-sYGpi80x6cAAk8mAAK50xlKnlTmU2VcKLQBAAdtAAMtBA",
+                "file_unique_id": "AQADTyYAArnTGUpy",
+                "file_size": 874
+              },
+              "file_name": "IMG_2745.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBP2PX6bK3CpRKUfuE3vrGBqYvNMenAAJPJgACudMZSp5U5lNlXCi0LQQ",
+              "file_unique_id": "AgADTyYAArnTGUo",
+              "file_size": 8565362
+            },
+            "caption": "This guy for a long time want to play with me. He borrowed money from friend and can earn even more then borrowed ✊\n\nAnd now he make every day profit on my signals because I try hard every day and give cool signals where my bros earn good money 🤑\n\nYou deserve too bhai, let’s play with me and you will see result in a couple of hours ✊\n\n⭕️ You can write to me at any time: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 115
+              },
+              {
+                "type": "italic",
+                "offset": 117,
+                "length": 130
+              },
+              {
+                "type": "underline",
+                "offset": 249,
+                "length": 87
+              },
+              {
+                "type": "mention",
+                "offset": 374,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_8.MP4"
+        },
+        {
+          "Id": 8,
+          "Message": {
+            "message_id": 321,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094457,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669133802,
+            "photo": [
+              {
+                "width": 55,
+                "height": 90,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADcwADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUt4",
+                "file_size": 1328
+              },
+              {
+                "width": 196,
+                "height": 320,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADbQADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUty",
+                "file_size": 19238
+              },
+              {
+                "width": 491,
+                "height": 800,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADeAADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUt9",
+                "file_size": 79538
+              },
+              {
+                "width": 785,
+                "height": 1280,
+                "file_id": "AgACAgIAAxkBAAIBQWPX6bkTuyTe1IHGPEKv0tcLdPAFAAKMwjEbY3WRS_jnz-y-_xUhAQADAgADeQADLQQ",
+                "file_unique_id": "AQADjMIxG2N1kUt-",
+                "file_size": 106295
+              }
+            ],
+            "caption": "This is review of my followers, he is a great player, because play with me and start to make profit🙌\n\nHe was need money and he decided to try play with me and right now he make good money and stable withdrawals 🧐\n\nYou can check others stories on my channel where I help my brother to earn money and make their life more better 😎\n\n⭕️My contact: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 102
+              },
+              {
+                "type": "italic",
+                "offset": 103,
+                "length": 111
+              },
+              {
+                "type": "underline",
+                "offset": 216,
+                "length": 115
+              },
+              {
+                "type": "mention",
+                "offset": 347,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🙌Where we make money🙌",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_9.jpg"
+        },
+        {
+          "Id": 9,
+          "Message": {
+            "message_id": 323,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094462,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720650,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 13,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFDY9fpvrmysgABHxLikqJLHQzwRTlPAAJTJgACudMZSrey0EAUXfSoAQAHbQADLQQ",
+                "file_unique_id": "AQADUyYAArnTGUpy",
+                "file_size": 688
+              },
+              "file_name": "IMG_2746.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBQ2PX6b65srIAAR8S4pKiSx0M8EU5TwACUyYAArnTGUq3stBAFF30qC0E",
+              "file_unique_id": "AgADUyYAArnTGUo",
+              "file_size": 6243951
+            },
+            "caption": "She played with me over month, and she make very good result on my signals, if you don’t know, I give signals 2 time, 6 signals on daily signals and 6 signals in the evening 🔥\n\nShe payed her bills and continue earn with me, it’s really cool bro, just play with me and you can solve all your problems 💪\n\n⭕️ Write to me on any question: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 176
+              },
+              {
+                "type": "underline",
+                "offset": 178,
+                "length": 125
+              },
+              {
+                "type": "mention",
+                "offset": 337,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🙌Where we make money🙌",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_10.MP4"
+        },
+        {
+          "Id": 10,
+          "Message": {
+            "message_id": 325,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094470,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673569862,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADcwADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUp4",
+                "file_size": 1249
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADbQADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUpy",
+                "file_size": 13664
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADeAADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUp9",
+                "file_size": 48151
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBRWPX6cYQseyqmM3Wuz2uybSdty05AALNxzEbaCABSlqyhx4xXUUQAQADAgADeQADLQQ",
+                "file_unique_id": "AQADzccxG2ggAUp-",
+                "file_size": 59613
+              }
+            ],
+            "caption": "I want to tell you that you can make good money with me, because I analyse the graph every day so that YOU and other people can increase your balance, I give signals absolutely for free and you only need to bet with me✊\n\nStart with 2000RS and you will see that your balance will increase on the first day, so I will be waiting for you on my signals 💸\n\nIf you have doubts, then I can dispel them, you can check my channel with reviews or check my main channel where I earn money with my subscribers 🤙",
+            "caption_entities": [
+              {
+                "type": "italic",
+                "offset": 0,
+                "length": 219
+              },
+              {
+                "type": "underline",
+                "offset": 221,
+                "length": 131
+              },
+              {
+                "type": "bold",
+                "offset": 353,
+                "length": 148
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_11.jpg"
+        },
+        {
+          "Id": 11,
+          "Message": {
+            "message_id": 327,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094477,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720779,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 15,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFHY9fpzdAP7jv89NWso7DcaYRSVLAAAlYmAAK50xlKK0k9UxFcZBYBAAdtAAMtBA",
+                "file_unique_id": "AQADViYAArnTGUpy",
+                "file_size": 685
+              },
+              "file_name": "IMG_2747.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBR2PX6c3QD-47_PTVrKOw3GmEUlSwAAJWJgACudMZSitJPVMRXGQWLQQ",
+              "file_unique_id": "AgADViYAArnTGUo",
+              "file_size": 7301046
+            },
+            "caption": "Hey bro, this girl play with me for a long time and he satisfied his results, he want to make his life better and did it🤙\n\nBut I know that you also want the same, you want to close your debts and needs, that’s why WRITE ME and change your life ⬇️\n\n⭕️Here is my contact for any questions: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 122
+              },
+              {
+                "type": "italic",
+                "offset": 124,
+                "length": 123
+              },
+              {
+                "type": "bold",
+                "offset": 251,
+                "length": 37
+              },
+              {
+                "type": "mention",
+                "offset": 289,
+                "length": 12
+              },
+              {
+                "type": "underline",
+                "offset": 289,
+                "length": 5
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🔥Watch training video🔥",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ],
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_12.MP4"
+        },
+        {
+          "Id": 12,
+          "Message": {
+            "message_id": 329,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094484,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5321135512,
+              "is_bot": true,
+              "first_name": "Test Kamilla",
+              "username": "test_kamilla_bot"
+            },
+            "forward_date": 1669131027,
+            "photo": [
+              {
+                "width": 90,
+                "height": 19,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADcwADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Et4",
+                "file_size": 697
+              },
+              {
+                "width": 320,
+                "height": 67,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADbQADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Ety",
+                "file_size": 7070
+              },
+              {
+                "width": 800,
+                "height": 167,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADeAADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Et9",
+                "file_size": 24732
+              },
+              {
+                "width": 1238,
+                "height": 258,
+                "file_id": "AgACAgIAAxkBAAIBSWPX6dSz1-zL58il-8dccw1gkTNBAAKlvzEb6qDgS9aRo4c5UiARAQADAgADeQADLQQ",
+                "file_unique_id": "AQADpb8xG-qg4Et-",
+                "file_size": 29783
+              }
+            ],
+            "caption": "Bro. Graph was good and I caught 5x and earn for one round over 20k, but it’s only one signal, imagine how much you can earn with me per one day. I give 6 signals in afternoon and 6 signals in the evening ✊\n\nI help you with all steps bro. Write me and I will explain how to make good money, it’s easy then you think, a lot of people try and change their life, be next 😎\n\nYou can also check my channel with review, because there are a lot of cool stories where people told me their life story and make profit with me💪",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 207
+              },
+              {
+                "type": "italic",
+                "offset": 208,
+                "length": 164
+              },
+              {
+                "type": "underline",
+                "offset": 372,
+                "length": 144
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews",
+                    "url": "https://t.me/avia_feedbackk/"
+                  },
+                  {
+                    "text": "😎WRITE ME😎",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_13.jpg"
+        },
+        {
+          "Id": 13,
+          "Message": {
+            "message_id": 331,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094491,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673720869,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 12,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFLY9fp2-45ooum-Efs7yRtamJlwRoAAlgmAAK50xlKE2vaSN-6QZoBAAdtAAMtBA",
+                "file_unique_id": "AQADWCYAArnTGUpy",
+                "file_size": 685
+              },
+              "file_name": "IMG_2748.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBS2PX6dvuOaKLpvhH7O8kbWpiZcEaAAJYJgACudMZShNr2kjfukGaLQQ",
+              "file_unique_id": "AgADWCYAArnTGUo",
+              "file_size": 5806795
+            },
+            "caption": "This is my follower, he played with me on old phone and make profit, but he want to make his life and game with me easy and comfortable and that’s why on my signals he earned on new cool phone and continue play with me. Now he earn on another goal😉\n\nYou can also play with me if you want to earn and be financially independent and earn for your own goal. You just need register and make deposit bro, everything is easy 😌\n\n⭕️Text me: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 249
+              },
+              {
+                "type": "bold",
+                "offset": 251,
+                "length": 184
+              },
+              {
+                "type": "mention",
+                "offset": 435,
+                "length": 12
+              },
+              {
+                "type": "bold",
+                "offset": 435,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📲Registration📲",
+                    "url": "https://aviatorgood.online/"
+                  }
+                ],
+                [
+                  {
+                    "text": "🤙Watch training video🤙",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_14.MP4"
+        },
+        {
+          "Id": 14,
+          "Message": {
+            "message_id": 333,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094497,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5637144967,
+              "is_bot": true,
+              "first_name": "Pohuy",
+              "username": "Pohuind_bot"
+            },
+            "forward_date": 1673569675,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADcwADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUp4",
+                "file_size": 1220
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADbQADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUpy",
+                "file_size": 13058
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADeAADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUp9",
+                "file_size": 53158
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBTWPX6eEydSkxPrUsDJ7SU-Ojhw9_AALMxzEbaCABSsCI1UyVkw52AQADAgADeQADLQQ",
+                "file_unique_id": "AQADzMcxG2ggAUp-",
+                "file_size": 67607
+              }
+            ],
+            "caption": "My subscribers play with me every day, they also play independently and earn for their life, and what are you worse for?🙌\n\nPeople always need money, and here there is a great chance to earn quickly and a lot, you should try right now and make your dreams come true, and I will help you with this and you will be able to consistently earn and make withdrawal🧐\n\nYou can watch other stories of other players on my channel, where I help my subscribers earn money and make their lives better 😎",
+            "caption_entities": [
+              {
+                "type": "underline",
+                "offset": 0,
+                "length": 123
+              },
+              {
+                "type": "bold",
+                "offset": 124,
+                "length": 236
+              },
+              {
+                "type": "italic",
+                "offset": 362,
+                "length": 129
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  }
+                ],
+                [
+                  {
+                    "text": "💬Text me💬",
+                    "url": "https://t.me/sallashAmir"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_15.jpg"
+        },
+        {
+          "Id": 15,
+          "Message": {
+            "message_id": 335,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094503,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673721749,
+            "video": {
+              "width": 1920,
+              "height": 1072,
+              "duration": 14,
+              "thumb": {
+                "width": 320,
+                "height": 179,
+                "file_id": "AAMCAgADGQEAAgFPY9fp5wABp8ILZcwAAaKOp1vdJYGj_QACYCYAArnTGUojuQcTfhF5yQEAB20AAy0E",
+                "file_unique_id": "AQADYCYAArnTGUpy",
+                "file_size": 688
+              },
+              "file_name": "IMG_2749.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIBT2PX6ecAAafCC2XMAAGijqdb3SWBo_0AAmAmAAK50xlKI7kHE34RecktBA",
+              "file_unique_id": "AgADYCYAArnTGUo",
+              "file_size": 7193520
+            },
+            "caption": "These are my new subscribers and he made a video for me where he said he wanted to try because he saw my advertisement. Bro he saw an advertisement on Instagram and decided to try it, he wants to change his life for the better😏\n\nI helped him and everyone on my channel, because this is my job, give cool and profitable signals where my brother can earn and make his life better👍\n\nYou deserve the same, so let me help you, bro, but if you're in doubt, then you can check out my channel with reviews and see different player stories 🤔\n\n⭕️ Write to me at any time: @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 225
+              },
+              {
+                "type": "italic",
+                "offset": 230,
+                "length": 148
+              },
+              {
+                "type": "underline",
+                "offset": 382,
+                "length": 150
+              },
+              {
+                "type": "mention",
+                "offset": 565,
+                "length": 12
+              }
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "📚Channel with reviews📚",
+                    "url": "https://t.me/avia_feedbackk/"
+                  },
+                  {
+                    "text": "🤑Where we make money🤑",
+                    "url": "https://t.me/c/1860000847/7/"
+                  }
+                ]
+              ]
+            }
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_16.MP4"
+        },
+        {
+          "Id": 16,
+          "Message": {
+            "message_id": 337,
+            "from": {
+              "id": 5293465144,
+              "is_bot": false,
+              "first_name": "ADMIN",
+              "username": "booowos",
+              "language_code": "ru"
+            },
+            "date": 1675094511,
+            "chat": {
+              "id": 5293465144,
+              "type": "private",
+              "username": "booowos",
+              "first_name": "ADMIN"
+            },
+            "forward_from": {
+              "id": 5860256042,
+              "is_bot": true,
+              "first_name": "Камилла бот",
+              "username": "kamilla_bot_bot"
+            },
+            "forward_date": 1673726769,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADcwADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUp4",
+                "file_size": 1234
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADbQADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUpy",
+                "file_size": 13156
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADeAADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUp9",
+                "file_size": 44698
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIBUWPX6e4JXywUYPSQlVXnudZ_kSKCAALswjEbaCAJSno3L3wfh5zVAQADAgADeQADLQQ",
+                "file_unique_id": "AQAD7MIxG2ggCUp-",
+                "file_size": 55790
+              }
+            ],
+            "caption": "🔥💸Just look at my weekly report, where I and my subscribers were able to earn 192,000RS and that's in just a week\n\n I've been playing this game for a long time, so if you want to change your life and pay off your debts, or you just want to have a lot of money, then I'm waiting for you, write to me and I'll be happy to tell you everything, and you can do the same ✊😎\n\n  📲 @sallashAmir",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 2,
+                "length": 113
+              },
+              {
+                "type": "underline",
+                "offset": 118,
+                "length": 248
+              },
+              {
+                "type": "mention",
+                "offset": 377,
+                "length": 12
+              }
+            ]
+          },
+          "FilePath": "c:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\capi_inda\\net6.0\\chains\\1481806946\\INDA CAPI\\file_17.jpg"
+        }
+      ]
+    }
+  }
+]

@@ -145,7 +145,7 @@ namespace csb.bot_manager
                             string name = $"{update.Message.Chat.FirstName} {update.Message.Chat.LastName}";
                             userManager.Add(chat, name);
 
-                            string helloText = "Вас приветствует бот Вдуть 2.0!\n" +
+                            string helloText = "Вас приветствует бот Дудь 3!\n" +
                                 "Бот позволяет копировать чужие каналы (входные каналы) и заменять в них ссылки.\n" +
                                 "Для копирования канала нужно создать цепочку.\n" +
                                 "Цепочка состоит из пользователя-шпиона и выводных ботов:\n" +
