@@ -1433,8 +1433,9 @@ namespace csb.users
                                                "1.Перейдите в @BotFather и там введите команду /newbot.\n" +
                                                "2.Придумайте и отправьте название выводного бота. Название должно соответствоать ГЕО связки (например MODERATOR_IND1).\n" +
                                                "3.Далее отправьте username бота. Username бота должен иметь вид: названиеБота_bot (например MODERATOR_IND1_bot).\n" +
-                                               "4.Добавьте бота в модерируемый канал.\n" +
-                                               "5.Скопируйте API-токен бота-модератора из @BotFather и отпавьте его сюда:";
+                                               "4.Скопируйте API-токен бота-модератора из @BotFather и отпавьте его сюда:\n" +
+                                               "5.Добавьте бота в модерируемый канал.";
+                                               
 
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingModeratorToken", await sendTextButtonMessage(chat, moderatorTokenMsg, "addModeratorCancel"));

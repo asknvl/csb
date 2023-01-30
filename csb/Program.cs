@@ -23,7 +23,7 @@ namespace csb
 
             GlobalSettings settings = GlobalSettings.getInstance();
 
-            Console.WriteLine("Вдудь 3.2.3");
+            Console.WriteLine("Вдудь 3.3.3");
             Console.WriteLine($"Офис:{settings.office}");
             BotManager manager = new BotManager();
             manager.Start();
