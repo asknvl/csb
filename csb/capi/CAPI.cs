@@ -56,6 +56,16 @@ namespace capi_test.capi
                 return sb.ToString();
             }
         }
+
+        string getFbc(string input)
+        {
+            string res = null;
+
+            DateTimeOffset dto = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            string unixTime =  $"{dto.ToUnixTimeSeconds()}";
+
+            return res;
+        }
         #endregion
 
         #region public     

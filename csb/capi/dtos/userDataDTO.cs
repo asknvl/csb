@@ -19,5 +19,7 @@ namespace capi_test.capi.dtos
         public string client_user_agent { get; set; }
         [JsonProperty]
         public string client_ip_address { get; set; }
+        [JsonProperty]
+        public string fbc { get; set; }
     }
 }
