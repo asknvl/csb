@@ -43,7 +43,8 @@ namespace capi_test.capi
         #region private
         string getSHA256(string input)
         {
-            var bytes = Encoding.UTF8.GetBytes(input);
+            string normalized = input.ToLower().Replace(" ", "");
+            var bytes = Encoding.UTF8.GetBytes(normalized);
             using (var hashEngine = SHA256.Create())
             {
                 var hashedBytes = hashEngine.ComputeHash(bytes, 0, bytes.Length);
@@ -56,16 +57,6 @@ namespace capi_test.capi
                 return sb.ToString();
             }
         }
-
-        string getFbc(string input)
-        {
-            string res = null;
-
-            DateTimeOffset dto = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
-            string unixTime =  $"{dto.ToUnixTimeSeconds()}";
-
-            return res;
-        }
         #endregion
 
         #region public     
@@ -76,24 +67,28 @@ namespace capi_test.capi
                                         string lastname = null,
                                         string client_user_agernt = null,
                                         string client_ip_address = null,
+                                        string fbc = null,
                                         string test_event_code = null)
         {
 
             path = $"https://graph.facebook.com/{API_VERSION}/{pixel_id}/events?access_token={token}";
             var httpClient = httpClientFactory.CreateClient();
 
+            long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
             serverEventDTO serverEvent = new serverEventDTO()
             {
                 action_source = "chat",
                 event_name = "Lead",
-                event_time = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                event_time = time,
                 user_data = new userDataDTO()
                 {
                     //external_id = $"{tg_user_id}",
-                    fn = (!string.IsNullOrEmpty(firstname)) ? getSHA256(firstname.ToLower()) : null,
-                    ln = (!string.IsNullOrEmpty(lastname)) ? getSHA256(lastname.ToLower()) : null,
+                    fn = (!string.IsNullOrEmpty(firstname)) ? getSHA256(firstname) : null,
+                    ln = (!string.IsNullOrEmpty(lastname)) ? getSHA256(lastname) : null,
                     client_user_agent = (!string.IsNullOrEmpty(client_user_agernt)) ? client_user_agernt : null,
-                    client_ip_address = (!string.IsNullOrEmpty(client_ip_address)) ? client_ip_address : null                    
+                    client_ip_address = (!string.IsNullOrEmpty(client_ip_address)) ? client_ip_address : null,
+                    fbc = (!string.IsNullOrEmpty(fbc)) ? $"fb.1.{time}.{fbc}" : null
                 }
             };
 

@@ -9,8 +9,8 @@ namespace capi_test.capi.dtos
 {
     public class userDataDTO
     {
-        [JsonProperty]
-        public string external_id { get; set; }
+        //[JsonProperty]
+        //public string external_id { get; set; }
         [JsonProperty]
         public string fn { get; set; }
         [JsonProperty]

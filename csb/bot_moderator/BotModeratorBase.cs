@@ -403,7 +403,9 @@ namespace csb.bot_moderator
 #if CAPI_RELEASE || CAPI_DEBUG
                                 logger.inf_urgent("DB+");
 #endif                             
-                                var linkToRevoke = await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink); //return invite link to revoke
+                                var linkToRevoke = await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink,
+                                                                                   firstname: follower.firstname,
+                                                                                   lastname: follower.lastname); //return invite link to revoke
 
                                 await linksProcessor.Revoke(ChannelID, link);
                              
