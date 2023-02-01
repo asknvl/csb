@@ -39,7 +39,7 @@ namespace csb.server.track_dtos
         [JsonProperty]
         public string tr_subid { get; set; }
         [JsonProperty]
-        public string tr_campaign_ig { get; set; }
+        public string tr_campaign_id { get; set; }
         [JsonProperty]
         public string tr_campaign_name { get; set; }
         [JsonProperty]

@@ -28,7 +28,8 @@ namespace asknvl.leads
                                            $"capi={lead_data.fb_capi}\n" +
                                            $"fbc={lead_data.fbcl_id}\n" +
                                            $"ip={lead_data.ip}\n" +
-                                           $"ua={lead_data.user_agent}");
+                                           $"ua={lead_data.user_agent}\n" +
+                                           $"fbc={lead_data.fbcl_id}");
 
             try
             {
@@ -39,7 +40,8 @@ namespace asknvl.leads
                                 firstname: firstname,
                                 lastname: lastname,
                                 client_user_agent: lead_data.user_agent,
-                                client_ip_address: lead_data.ip);
+                                client_ip_address: lead_data.ip,
+                                fbc: lead_data.fbcl_id);
 
                 logger.inf_urgent(leadRes);
 
