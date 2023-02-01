@@ -23,7 +23,12 @@ namespace asknvl.leads
         {
             logger.inf_urgent("lead_data?");
             var lead_data = await trackApi.GetLeadData(invite_link);
-            logger.inf_urgent($"lead_data: link={lead_data.tg_link} pixel={lead_data.fb_pixel} capi={lead_data.fb_capi}");
+            logger.inf_urgent($"lead_data: $link={lead_data.tg_link}\n" +
+                                           $"pixel={lead_data.fb_pixel}\n" +
+                                           $"capi={lead_data.fb_capi}\n" +
+                                           $"fbc={lead_data.fbcl_id}\n" +
+                                           $"ip={lead_data.ip}\n" +
+                                           $"ua={lead_data.user_agent}");
 
             try
             {
