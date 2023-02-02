@@ -1,4 +1,5 @@
-﻿using capi_test.capi.dtos;
+﻿using asknvl.logger;
+using capi_test.capi.dtos;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -23,6 +24,7 @@ namespace capi_test.capi
         string path = "";
         ServiceCollection serviceCollection;
         IHttpClientFactory httpClientFactory;
+        ILogger logger;
         #endregion
 
         public CAPI()
@@ -65,9 +67,10 @@ namespace capi_test.capi
                                         long? tg_user_id = null,
                                         string firstname = null,
                                         string lastname = null,
-                                        string client_user_agernt = null,
+                                        string client_user_agent = null,
                                         string client_ip_address = null,
                                         string fbc = null,
+                                        string fbp = null,
                                         string test_event_code = null)
         {
 
@@ -81,15 +84,20 @@ namespace capi_test.capi
                 action_source = "chat",
                 event_name = "Lead",
                 event_time = time,
+
                 user_data = new userDataDTO()
                 {
                     //external_id = $"{tg_user_id}",
                     fn = (!string.IsNullOrEmpty(firstname)) ? getSHA256(firstname) : null,
                     ln = (!string.IsNullOrEmpty(lastname)) ? getSHA256(lastname) : null,
-                    client_user_agent = (!string.IsNullOrEmpty(client_user_agernt)) ? client_user_agernt : null,
+                    client_user_agent = (!string.IsNullOrEmpty(client_user_agent)) ? client_user_agent : null,
                     client_ip_address = (!string.IsNullOrEmpty(client_ip_address)) ? client_ip_address : null,
-                    fbc = (!string.IsNullOrEmpty(fbc)) ? $"fb.1.{time}.{fbc}" : null
+                    fbc = (!string.IsNullOrEmpty(fbc)) ? $"fb.1.{time}.{fbc}" : null,
+                    //fbp = (!string.IsNullOrEmpty(fbp)) ? $"{fbp}" : null
                 }
+
+                
+
             };
 
             string json;
@@ -129,7 +137,7 @@ namespace capi_test.capi
                 
             } catch (Exception ex)
             {
-                throw new Exception($"MakeEvent {ex.Message}");
+                throw new Exception($"MakeLeadEvent {ex.Message}");
             }
 
             return result;

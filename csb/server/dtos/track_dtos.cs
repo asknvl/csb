@@ -45,6 +45,8 @@ namespace csb.server.track_dtos
         [JsonProperty]
         public string fbcl_id { get; set; }
         [JsonProperty]
+        public string fbp { get; set; }
+        [JsonProperty]
         public string fb_capi { get; set; }
         [JsonProperty]
         public string fb_pixel { get; set; }

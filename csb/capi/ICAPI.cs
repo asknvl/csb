@@ -12,6 +12,7 @@ namespace capi_test.capi
                                   string client_user_agent = null,
                                   string client_ip_address = null,
                                   string fbc = null,
+                                  string fbp = null,
                                   string test_event_code = null);
     }
 }

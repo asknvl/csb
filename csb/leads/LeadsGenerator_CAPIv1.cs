@@ -29,8 +29,8 @@ namespace asknvl.leads
                                            $"fbc={lead_data.fbcl_id}\n" +
                                            $"ip={lead_data.ip}\n" +
                                            $"ua={lead_data.user_agent}\n" +
-                                           $"fbc={lead_data.fbcl_id}");
-
+                                           $"fbc={lead_data.fbcl_id}\n"
+                                           /*$"fbз={lead_data.fbp}\n"*/);
             try
             {
                 var leadRes = await capi.MakeLeadEvent(
@@ -41,7 +41,8 @@ namespace asknvl.leads
                                 lastname: lastname,
                                 client_user_agent: lead_data.user_agent,
                                 client_ip_address: lead_data.ip,
-                                fbc: lead_data.fbcl_id);
+                                fbc: lead_data.fbcl_id
+                                /*fbp: lead_data.fbp*/);
 
                 logger.inf_urgent(leadRes);
 
