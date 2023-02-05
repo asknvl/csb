@@ -7,5 +7,6 @@ namespace csb.server
     {
         Task EnqueueInviteLink(string geotag, string link);
         Task<leadDataDto> GetLeadData(string link);
+        Task<int> GetInviteLinksAvailable(string geotag);
     }
 }

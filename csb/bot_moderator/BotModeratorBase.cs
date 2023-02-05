@@ -62,7 +62,8 @@ namespace csb.bot_moderator
 
         LeadAlgorithmType? leadType = null;
         [JsonProperty]
-        public LeadAlgorithmType? LeadType {
+        public LeadAlgorithmType? LeadType
+        {
             get => leadType;
             set
             {
@@ -90,7 +91,7 @@ namespace csb.bot_moderator
             Token = token;
             GeoTag = geotag;
 
-            logger = new Logger("moderators", GeoTag);
+            logger = new Logger("MDR", "moderators", GeoTag);
 
 #if !DEBUG
             pushTimer.Interval = push_period;
@@ -114,7 +115,7 @@ namespace csb.bot_moderator
         async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             if (PushData.Messages.Count == 0)
-                return; 
+                return;
 
             int delivered = 0;
 
@@ -124,8 +125,8 @@ namespace csb.bot_moderator
                 string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
 
-                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);  
-                
+                var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
+
                 foreach (var subscriber in subs)
                 {
 
@@ -141,13 +142,13 @@ namespace csb.bot_moderator
 
                     if (pushmessage != null)
                     {
-                        long id = long.Parse(subscriber.tg_user_id);                     
+                        long id = long.Parse(subscriber.tg_user_id);
 
                         try
                         {
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);                           
-                            await pushmessage.Send(id, bot);                            
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);                                                        
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
+                            await pushmessage.Send(id, bot);
+                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, true);
                             delivered++;
                         }
                         catch (Exception ex)
@@ -190,7 +191,7 @@ namespace csb.bot_moderator
             int delivered = 0;
 
             try
-            {                
+            {
                 if (DailyPushData.Messages.Count == 0)
                     return;
 
@@ -408,12 +409,12 @@ namespace csb.bot_moderator
                                                                                    lastname: follower.lastname); //return invite link to revoke
 
                                 await linksProcessor.Revoke(ChannelID, link);
-                             
+
 #if CAPI_RELEASE || CAPI_DEBUG
                                 logger.inf_urgent("Lead+");
 #endif
 
-                                var nextLink =  await linksProcessor.Generate(ChannelID);
+                                var nextLink = await linksProcessor.Generate(ChannelID);
 #if CAPI_RELEASE || CAPI_DEBUG
                                 logger.inf_urgent("NextLink+");
 #endif
@@ -442,7 +443,7 @@ namespace csb.bot_moderator
                         follower.is_subscribed = false;
                         followers.Add(follower);
                         await statApi.UpdateFollowers(followers);
-                        
+
                         break;
                 }
 
@@ -463,7 +464,7 @@ namespace csb.bot_moderator
                 case UpdateType.MyChatMember:
                     try
                     {
-                        await processMyChatMember(update);                        
+                        await processMyChatMember(update);
                     }
                     catch (Exception ex)
                     {
@@ -495,10 +496,10 @@ namespace csb.bot_moderator
             }
 
         }
-#endregion
+        #endregion
 
-#region public
-        public void Start()
+        #region public
+        public virtual void Start()
         {
             logger.inf($"Startting moderator...");
 
@@ -514,9 +515,11 @@ namespace csb.bot_moderator
             linksProcessor = InviteLinkProcessorFactory.Create(GeoTag, LeadType, bot, trackApi);
             leadsGenerator = LeadsGeneratorFactory.Create(GeoTag, LeadType, trackApi);
 
-            if (ChannelID != null)
-                linksProcessor.Generate(ChannelID, 20).Wait();
-            
+            //if (ChannelID != null)
+            //    linksProcessor.Generate(ChannelID, 20).Wait();
+
+            linksProcessor.StartLinkNumberControl(ChannelID, cts);
+
             var receiverOptions = new ReceiverOptions
             {
                 AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember, UpdateType.MyChatMember }
@@ -544,10 +547,10 @@ namespace csb.bot_moderator
 
             logger.inf($"Moderator stopped");
         }
-#endregion
+        #endregion
 
-#region events
+        #region events
         public event Action<IBotModerator> ParametersUpdatedEvent;
-#endregion
+        #endregion
     }
 }

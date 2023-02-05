@@ -70,6 +70,35 @@ namespace csb.server
             }
         }
 
+        public async Task<int> GetInviteLinksAvailable(string geotag)
+        {
+
+            int res = 0;
+
+            var addr = $"{url}/v1/telegram/availableTelegramLinks?geo={geotag}";
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.GetAsync(addr);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                var resp = JsonConvert.DeserializeObject<availableInviteLinksDtoResponse>(result);
+
+                if (resp.success)
+                    res = resp.available_count;
+                else
+                    throw new Exception($"success=false");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"GetInviteLinksAvailabl {ex.Message}");
+            }
+
+            return res;
+        }
+
         public async Task<leadDataDto> GetLeadData(string link)
         {
             leadDataDto leadData = new();

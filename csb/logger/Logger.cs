@@ -18,6 +18,7 @@ namespace asknvl.logger
         Queue<LogMessage> logMessages = new Queue<LogMessage>();
         System.Timers.Timer timer = new System.Timers.Timer();
         string filePath;
+        string TAG;
         #endregion
 
         #region properties
@@ -40,8 +41,10 @@ namespace asknvl.logger
         public bool EnableConsoleErrorOutput { get; set; }
         #endregion        
 
-        public Logger(string foldername, string filename)
+        public Logger(string tag, string foldername, string filename)
         {
+
+            TAG = tag;
 
 #if DEBUG
             EnableConsoleOutput = true;
@@ -95,7 +98,7 @@ namespace asknvl.logger
         #region public
         public void dbg(string text)
         {
-            var message = new LogMessage(LogMessageType.dbg, text);
+            var message = new LogMessage(LogMessageType.dbg, TAG, text);
             if (EnableConsoleOutput)
                 Console.WriteLine(message.ToString());
 
@@ -105,7 +108,7 @@ namespace asknvl.logger
 
         public void err(string text)
         {
-            var message = new LogMessage(LogMessageType.err, text);
+            var message = new LogMessage(LogMessageType.err, TAG, text);
             if (EnableConsoleOutput || EnableConsoleErrorOutput)
                 Console.WriteLine(message.ToString());
 
@@ -115,7 +118,7 @@ namespace asknvl.logger
 
         public void inf(string text)
         {
-            var message = new LogMessage(LogMessageType.inf, text);
+            var message = new LogMessage(LogMessageType.inf, TAG, text);
             if (EnableConsoleOutput)
                 Console.WriteLine(message.ToString());
 
@@ -125,7 +128,7 @@ namespace asknvl.logger
 
         public void inf_urgent(string text)
         {
-            var message = new LogMessage(LogMessageType.inf, text);            
+            var message = new LogMessage(LogMessageType.inf, TAG, text);            
                 Console.WriteLine(message.ToString());
 
             if (!DisableFileOutput)

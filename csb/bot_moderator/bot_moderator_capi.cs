@@ -10,6 +10,6 @@ namespace csb.bot_moderator
     {
         public bot_moderator_capi(string token, string geotag) : base(token, geotag)
         {
-        }
+        }        
     }
 }

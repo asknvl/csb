@@ -64,4 +64,14 @@ namespace csb.server.track_dtos
         public string user_agent { get; set; }
     }
     #endregion
+
+    #region GetInviteLinksAvailable
+    public class availableInviteLinksDtoResponse
+    {
+        [JsonProperty]
+        public bool success { get; set; }
+        [JsonProperty]
+        public int available_count { get; set; }
+    }
+    #endregion
 }

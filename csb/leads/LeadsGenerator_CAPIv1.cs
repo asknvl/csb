@@ -16,7 +16,7 @@ namespace asknvl.leads
         public LeadsGenerator_CAPIv1(string geotag, ITGFollowerTrackApi trackApi) : base(geotag, trackApi)
         {
             capi = new CAPI();
-            logger = new Logger("leadsgenerator_CAPIv1", geotag);
+            logger = new Logger("LDS", "leadsgenerator_CAPIv1", geotag);
         }
         #region public
         public override async Task<string> MakeFBLead(string invite_link, string firstname = null, string lastname = null)
@@ -29,8 +29,8 @@ namespace asknvl.leads
                                            $"fbc={lead_data.fbcl_id}\n" +
                                            $"ip={lead_data.ip}\n" +
                                            $"ua={lead_data.user_agent}\n" +
-                                           $"fbc={lead_data.fbcl_id}\n"
-                                           /*$"fbз={lead_data.fbp}\n"*/);
+                                           $"fbc={lead_data.fbcl_id}\n" +
+                                           $"fbp={lead_data.fbp}");
             try
             {
                 var leadRes = await capi.MakeLeadEvent(
@@ -41,8 +41,8 @@ namespace asknvl.leads
                                 lastname: lastname,
                                 client_user_agent: lead_data.user_agent,
                                 client_ip_address: lead_data.ip,
-                                fbc: lead_data.fbcl_id
-                                /*fbp: lead_data.fbp*/);
+                                fbc: lead_data.fbcl_id,
+                                fbp: lead_data.fbp);
 
                 logger.inf_urgent(leadRes);
 

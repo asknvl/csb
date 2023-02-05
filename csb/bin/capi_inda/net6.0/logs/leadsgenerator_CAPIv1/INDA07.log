@@ -1,3 +1,30 @@
-30.01.2023 22:36:45 inf > lead_data?
-30.01.2023 22:36:45 inf > lead_data: link=tg://join?invite=cRoIDOQSP58xN2Y0 pixel=pixel capi=capi
-30.01.2023 22:36:45 err > MakeEvent Этот хост неизвестен. (graph.facebook.com:443)
+05.02.2023 14:05:35 inf LDS > lead_data?
+05.02.2023 14:05:35 inf LDS > lead_data: $link=tg://join?invite=zuQ2RQtRngFiYjlk
+pixel=733156255000813
+capi=EAAPtCiVFHZC0BADvZCV9WhAHIv6ZBF3QfZA4siIxJJUDRgIh0pieZBhR89tPdPE2uhREzK8E8NAIeWr41nBuwyVP2PcFZCVONFya3JmDU72a4tfRAB590H6YgJZBW6jFnehEZBYjbwSsqJ4ICGr32wjhCEyPg0kxkNjJZCZBiwnbcNmNnQUZBwt3C90Yeb7alIUbZBMZD
+fbc=PAAaYsRGzjGDy2UuhTz4S6jbUmlp3CVGf4WRHwij9MGyfefpyqg8cP8qDqMec
+ip=106.196.42.131
+ua=Mozilla/5.0 (Linux; Android 12; CPH2251 Build/SP1A.210812.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/108.0.5359.128 Mobile Safari/537.36 Instagram 264.0.0.22.106 Android (31/12; 480dpi; 1080x2153; OPPO; CPH2251; OP4F83L1; mt6877; en_IN; 430370703)
+fbc=PAAaYsRGzjGDy2UuhTz4S6jbUmlp3CVGf4WRHwij9MGyfefpyqg8cP8qDqMec
+fbp=fb.1.1675595101560.1344444795
+05.02.2023 14:05:36 err LDS > MakeLeadEvent Этот хост неизвестен. (graph.facebook.com:443)
+05.02.2023 14:05:43 inf LDS > lead_data?
+05.02.2023 14:05:43 inf LDS > lead_data: $link=tg://join?invite=OJzHECF8wLk4YmU0
+pixel=733156255000813
+capi=EAAPtCiVFHZC0BADvZCV9WhAHIv6ZBF3QfZA4siIxJJUDRgIh0pieZBhR89tPdPE2uhREzK8E8NAIeWr41nBuwyVP2PcFZCVONFya3JmDU72a4tfRAB590H6YgJZBW6jFnehEZBYjbwSsqJ4ICGr32wjhCEyPg0kxkNjJZCZBiwnbcNmNnQUZBwt3C90Yeb7alIUbZBMZD
+fbc=PAAaaahLXgVabBUv6lIo-HaL_PWv3cnc8uFQ2_V-QeUgqCwhqsl2iAGuZ7d4k
+ip=49.34.123.243
+ua=Mozilla/5.0 (Linux; Android 9; CPH1859 Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/108.0.5359.128 Mobile Safari/537.36 Instagram 265.0.0.19.301 Android (28/9; 480dpi; 1080x2160; OPPO; CPH1859; CPH1859; mt6771; en_US; 436384445)
+fbc=PAAaaahLXgVabBUv6lIo-HaL_PWv3cnc8uFQ2_V-QeUgqCwhqsl2iAGuZ7d4k
+fbp=
+05.02.2023 14:05:43 err LDS > MakeLeadEvent Этот хост неизвестен. (graph.facebook.com:443)
+05.02.2023 14:05:51 inf LDS > lead_data?
+05.02.2023 14:05:51 inf LDS > lead_data: $link=tg://join?invite=H98XRU6h-HMwZjRk
+pixel=733156255000813
+capi=EAAPtCiVFHZC0BADvZCV9WhAHIv6ZBF3QfZA4siIxJJUDRgIh0pieZBhR89tPdPE2uhREzK8E8NAIeWr41nBuwyVP2PcFZCVONFya3JmDU72a4tfRAB590H6YgJZBW6jFnehEZBYjbwSsqJ4ICGr32wjhCEyPg0kxkNjJZCZBiwnbcNmNnQUZBwt3C90Yeb7alIUbZBMZD
+fbc=PAAaZjaxx1u80tBRFEzSgXkFufWFL2i6RS_pfREH-9siARELdhw2ZGOQjDdfg
+ip=47.11.255.196
+ua=Mozilla/5.0 (Linux; Android 13; RMX3471 Build/TP1A.220905.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/109.0.5414.117 Mobile Safari/537.36 Instagram 268.0.0.18.72 Android (33/13; 408dpi; 1080x2190; realme; RMX3471; RE54CBL1; qcom; en_IN; 442822269)
+fbc=PAAaZjaxx1u80tBRFEzSgXkFufWFL2i6RS_pfREH-9siARELdhw2ZGOQjDdfg
+fbp=fb.1.1675595144900.1443355933
+05.02.2023 14:05:51 err LDS > MakeLeadEvent Этот хост неизвестен. (graph.facebook.com:443)

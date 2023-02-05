@@ -93,10 +93,9 @@ namespace capi_test.capi
                     client_user_agent = (!string.IsNullOrEmpty(client_user_agent)) ? client_user_agent : null,
                     client_ip_address = (!string.IsNullOrEmpty(client_ip_address)) ? client_ip_address : null,
                     fbc = (!string.IsNullOrEmpty(fbc)) ? $"fb.1.{time}.{fbc}" : null,
-                    //fbp = (!string.IsNullOrEmpty(fbp)) ? $"{fbp}" : null
+                    fbp = (!string.IsNullOrEmpty(fbp)) ? $"{fbp}" : null
                 }
 
-                
 
             };
 

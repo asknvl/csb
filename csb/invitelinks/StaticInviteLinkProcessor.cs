@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace csb.invitelinks
@@ -19,6 +20,11 @@ namespace csb.invitelinks
         }
 
         public Task Revoke(long? channelid, string link)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task StartLinkNumberControl(long? channelid, CancellationTokenSource cts)
         {
             return Task.CompletedTask;
         }

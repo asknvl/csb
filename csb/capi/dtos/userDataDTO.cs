@@ -21,8 +21,8 @@ namespace capi_test.capi.dtos
         public string client_ip_address { get; set; }
         [JsonProperty]
         public string fbc { get; set; }
-        //[JsonProperty]
-        //public string fbp { get; set; }
+        [JsonProperty]
+        public string fbp { get; set; }
     }
 
     public class baseUserDataDTO
