@@ -122,12 +122,14 @@ namespace csb.chains
             User.SetVerifyCode(code);
         }
 
-        public async Task AddBot(string token)
+        public async Task AddBot(string token, string geotag)
         {
             var found = Bots.FirstOrDefault(t => t.Token.Equals(token));
             if (found == null)
             {
                 var bot = new BotPoster_api(token);
+                bot.GeoTag = geotag;
+
                 if (User != null)
                 {
                     bot.AllowedID = User.ID;

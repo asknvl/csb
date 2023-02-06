@@ -32,7 +32,7 @@ namespace csb.chains
 
         void SetVerifyCode(string code);
 
-        Task AddBot(string token);
+        Task AddBot(string token, string geotag);
         void RemoveBot(string name);
         void EditBotGeotag(string name, string newgeotag);
 

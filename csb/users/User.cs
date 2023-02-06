@@ -352,6 +352,7 @@ namespace csb.users
 
         #region vars          
         int currentChainID;
+        string currentBotGeoTag;
         string currentModeratorGeoTag;
         string currentAdminGeoTag;
 
@@ -1205,14 +1206,57 @@ namespace csb.users
                                 return;
                             }
 
-                            string tokenMsg = $"Создайте выводного бота. Для этого выполните следующие действия:\n" +
-                                               "1.Перейдите в @BotFather и там введите команду /newbot.\n" +
-                                               "2.Придумайте и отправьте название выводного бота. Название должно быть понятным (например output_ch_1).\n" +
-                                               "3.Далее отправьте username бота. Username бота должен иметь вид: названиеБота_bot (например output_ch_1_bot).\n" +
-                                               "4.@BotFather отправит вам сообщение с API-токеном. Скопируйте токен и отпавьте его сюда:";
+                            //string tokenMsg = $"Создайте выводного бота. Для этого выполните следующие действия:\n" +
+                            //                   "1.Перейдите в @BotFather и там введите команду /newbot.\n" +
+                            //                   "2.Придумайте и отправьте название выводного бота. Название должно быть понятным (например output_ch_1).\n" +
+                            //                   "3.Далее отправьте username бота. Username бота должен иметь вид: названиеБота_bot (например output_ch_1_bot).\n" +
+                            //                   "4.@BotFather отправит вам сообщение с API-токеном. Скопируйте токен и отпавьте его сюда:";
 
 
-                            await messagesProcessor.Add(chat, "waitingToken", await sendTextButtonMessage(chat, tokenMsg, "addChainCancel"));
+                            //await messagesProcessor.Add(chat, "waitingToken", await sendTextButtonMessage(chat, tokenMsg, "addChainCancel"));
+                            //State = BotState.waitingToken;
+                            try
+                            {
+                                await messagesProcessor.Back(chat);
+                                await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Введите геотег бота:", "addChainCancel"));
+                                State = BotState.waitingBotGeoTag;
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+
+                            break;
+
+                        case BotState.waitingBotGeoTag:
+                            try
+                            {
+
+                                currentBotGeoTag = msg;
+
+                                //var chain = chainsProcessor.Get(currentChainID);
+                                //var bot = chain.Bots.Last();
+                                //bot.GeoTag = msg;
+                                //await messagesProcessor.Back(chat);
+                                //await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
+
+                                string tokenMsg = $"Создайте выводного бота. Для этого выполните следующие действия:\n" +
+                                                   "1.Перейдите в @BotFather и там введите команду /newbot.\n" +
+                                                   "2.Придумайте и отправьте название выводного бота. Название должно быть понятным (например output_ch_1).\n" +
+                                                   "3.Далее отправьте username бота. Username бота должен иметь вид: названиеБота_bot (например output_ch_1_bot).\n" +
+                                                   "4.@BotFather отправит вам сообщение с API-токеном. Скопируйте токен и отпавьте его сюда:";
+
+
+                                await messagesProcessor.Add(chat, "waitingToken", await sendTextButtonMessage(chat, tokenMsg, "addChainCancel"));
+                                State = BotState.waitingToken;
+
+
+                            }
+                            catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
                             State = BotState.waitingToken;
                             break;
 
@@ -1227,27 +1271,9 @@ namespace csb.users
                             try
                             {
                                 var chain = chainsProcessor.Get(currentChainID);
-                                chain.AddBot(token);
-                                await messagesProcessor.Back(chat);
-                                await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Введите геотег бота:", "addChainCancel"));
-                            } catch (Exception ex)
-                            {
-                                await sendTextMessage(chat, ex.Message);
-                                return;
-                            }
-
-                            State = BotState.waitingBotGeoTag;
-                            break;
-
-                        case BotState.waitingBotGeoTag:
-                            try
-                            {
-                                var chain = chainsProcessor.Get(currentChainID);
-                                var bot = chain.Bots.Last();
-                                bot.GeoTag = msg;
+                                await chain.AddBot(token, currentBotGeoTag);
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Добавьте бота в администраторы выходного канала и перешлите сюда сообщение из этого канала:", "addChainCancel"));
-                                //await messagesProcessor.Add(chat, "waitingOutputVictimLink", await sendTextButtonMessage(chat, "Введите телеграм аккаунт (в формате @name), КОТОРЫЙ требуется заменить во входящих сообщениях. Введите 0, если требуется заменять все аккаунты:", "addChainCancel"));
 
                             }
                             catch (Exception ex)
@@ -1255,6 +1281,7 @@ namespace csb.users
                                 await sendTextMessage(chat, ex.Message);
                                 return;
                             }
+
                             State = BotState.waitingOutputChannelId;
                             break;
 
@@ -1560,8 +1587,8 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Back(chat);
 
-                                await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Прощальное сообщение создано. Добавить часовые уведомления?", "addpush"));
-                                //State = BotState.free;
+                                //await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Прощальное сообщение создано. Добавить часовые уведомления?", "addpush"));
+                                State = BotState.free;
                             }
                             catch (Exception ex)
                             {
@@ -1964,8 +1991,12 @@ namespace csb.users
                         var chain = chainsProcessor.Get(currentChainID);
                         chain.State = ChainState.edditing;
 
-                        await messagesProcessor.Add(chat, "addOutputBot", await sendTextButtonMessage(chat, "Введите токен бота:", "addChainCancel"));
-                        State = BotState.waitingToken;
+                        //await messagesProcessor.Add(chat, "addOutputBot", await sendTextButtonMessage(chat, "Введите токен бота:", "addChainCancel"));
+                        //State = BotState.waitingToken;
+
+                        await messagesProcessor.Add(chat, "waitingOutputChannelId", await sendTextButtonMessage(chat, "Введите геотег бота:", "addChainCancel"));
+                        State = BotState.waitingBotGeoTag;
+
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)

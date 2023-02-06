@@ -1,13 +1,7 @@
-27.01.2023 20:06:54 inf > Moderator stopped
-27.01.2023 20:06:54 inf > Startting moderator...
-27.01.2023 20:06:55 inf > Moderator started, bot username=testoutput2_bot channelID=null
-27.01.2023 20:06:58 err > Telegram API Error:
-[409]
-Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-27.01.2023 20:07:01 err > Telegram API Error:
-[409]
-Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-27.01.2023 20:07:04 err > Telegram API Error:
-[409]
-Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-27.01.2023 20:07:06 inf > Moderator stopped
+06.02.2023 23:26:44 inf MDR > Moderator stopped
+06.02.2023 23:26:44 inf MDR > Startting moderator...
+06.02.2023 23:26:45 inf MDR > Moderator started, bot username=testmoderator2_bot channelID=null
+06.02.2023 23:26:45 inf MDR > Moderator stopped
+06.02.2023 23:26:45 inf MDR > Startting moderator...
+06.02.2023 23:26:45 inf MDR > Moderator started, bot username=testmoderator2_bot channelID=null
+06.02.2023 23:27:05 inf MDR > Moderator stopped

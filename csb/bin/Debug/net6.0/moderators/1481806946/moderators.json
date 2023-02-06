@@ -3,241 +3,7 @@
     "GeoTag": "TEST01",
     "Name": "testmoderator1_bot",
     "Token": "5667741487:AAHeStGOG7XAnINKPIkOHUq0fkGXWWvZS4k",
-    "ChannelID": -1001692610611,
-    "LeadType": 0,
-    "Greetings": {
-      "HelloMessage": {
-        "Text": "hi xtime.1",
-        "Entities": null,
-        "ReplyMarkup": null
-      },
-      "ByeMessage": {
-        "Text": "bye xtime.1",
-        "Entities": null,
-        "ReplyMarkup": null
-      }
-    },
-    "PushData": {
-      "Messages": [
-        {
-          "TimePeriod": 1.0,
-          "Id": 1,
-          "Message": {
-            "message_id": 4311,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636404,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart test change 1"
-          },
-          "FilePath": null
-        },
-        {
-          "TimePeriod": 2.0,
-          "Id": 2,
-          "Message": {
-            "message_id": 4315,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636416,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart 2 test change 1"
-          },
-          "FilePath": null
-        }
-      ]
-    },
-    "DailyPushData": {
-      "Messages": [
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 4332,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636467,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push 1 test change 1"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 2,
-          "Message": {
-            "message_id": 4334,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636472,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push 2 test change 1"
-          },
-          "FilePath": null
-        }
-      ]
-    }
-  },
-  {
-    "GeoTag": "TEST02",
-    "Name": "testmoderator2_bot",
-    "Token": "5911667484:AAGdR8NIRG1ULAp9jrH5gHOGqCJtULONMPw",
-    "ChannelID": -1001666542030,
-    "LeadType": 0,
-    "Greetings": {
-      "HelloMessage": {
-        "Text": null,
-        "Entities": null,
-        "ReplyMarkup": null
-      },
-      "ByeMessage": {
-        "Text": null,
-        "Entities": null,
-        "ReplyMarkup": null
-      }
-    },
-    "PushData": {
-      "Messages": [
-        {
-          "TimePeriod": 1.0,
-          "Id": 1,
-          "Message": {
-            "message_id": 4311,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636404,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart test change 2"
-          },
-          "FilePath": null
-        },
-        {
-          "TimePeriod": 2.0,
-          "Id": 2,
-          "Message": {
-            "message_id": 4315,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636416,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart 2 test change 2"
-          },
-          "FilePath": null
-        }
-      ]
-    },
-    "DailyPushData": {
-      "Messages": [
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 4332,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636467,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push 1 test change 2"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 2,
-          "Message": {
-            "message_id": 4334,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636472,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push 2 test change 2"
-          },
-          "FilePath": null
-        }
-      ]
-    }
-  },
-  {
-    "GeoTag": "TEST03",
-    "Name": "capi_test_moderator_bot",
-    "Token": "5962943411:AAGSQX2SyN_ZZQsqSHxvTN4e-tA9sSlbXwA",
-    "ChannelID": -1001897374095,
+    "ChannelID": null,
     "LeadType": null,
     "Greetings": {
       "HelloMessage": {
@@ -257,7 +23,7 @@
           "TimePeriod": 1.0,
           "Id": 1,
           "Message": {
-            "message_id": 4311,
+            "message_id": 5326,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -265,37 +31,14 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1675636404,
+            "date": 1675724527,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "smart test change 3"
-          },
-          "FilePath": null
-        },
-        {
-          "TimePeriod": 2.0,
-          "Id": 2,
-          "Message": {
-            "message_id": 4315,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675636416,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart 2 test change 3"
+            "text": "smart 1 ch 1"
           },
           "FilePath": null
         }
@@ -306,7 +49,7 @@
         {
           "Id": 1,
           "Message": {
-            "message_id": 4332,
+            "message_id": 5334,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -314,21 +57,45 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1675636467,
+            "date": 1675724560,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "push 1 test change 3"
+            "text": "push ch 1"
           },
           "FilePath": null
-        },
+        }
+      ]
+    }
+  },
+  {
+    "GeoTag": "TEST02",
+    "Name": "testmoderator2_bot",
+    "Token": "5911667484:AAGdR8NIRG1ULAp9jrH5gHOGqCJtULONMPw",
+    "ChannelID": null,
+    "LeadType": null,
+    "Greetings": {
+      "HelloMessage": {
+        "Text": null,
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": null,
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "PushData": {
+      "Messages": [
         {
-          "Id": 2,
+          "TimePeriod": 1.0,
+          "Id": 1,
           "Message": {
-            "message_id": 4334,
+            "message_id": 5326,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -336,14 +103,40 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1675636472,
+            "date": 1675724527,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "push 2 test change 3"
+            "text": "smart 1 ch 2"
+          },
+          "FilePath": null
+        }
+      ]
+    },
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 5334,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1675724560,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push ch 2"
           },
           "FilePath": null
         }

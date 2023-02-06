@@ -114,14 +114,16 @@ namespace csb.moderation
 
             foreach (var pattern in patternPushData.Messages)
             {
-                pattern.MakeAutochange(autoChanges);
-                mbot.DailyPushData.Messages.Add(pattern.Clone());
+                var tmp = pattern.Clone();
+                tmp.MakeAutochange(autoChanges);
+                mbot.DailyPushData.Messages.Add(tmp);
             }
 
             foreach (var pattern in patternSmartPushData.Messages)
             {
-                pattern.MakeAutochange(autoChanges);
-                mbot.PushData.Messages.Add(pattern.Clone());
+                var tmp = pattern.Clone();
+                tmp.MakeAutochange(autoChanges);
+                mbot.PushData.Messages.Add(tmp);
             }
 
             mbot.Start();
