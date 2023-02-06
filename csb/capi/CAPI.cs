@@ -73,7 +73,6 @@ namespace capi_test.capi
                                         string fbp = null,
                                         string test_event_code = null)
         {
-
             path = $"https://graph.facebook.com/{API_VERSION}/{pixel_id}/events?access_token={token}";
             var httpClient = httpClientFactory.CreateClient();
 
