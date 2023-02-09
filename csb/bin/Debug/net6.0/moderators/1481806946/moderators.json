@@ -3,8 +3,8 @@
     "GeoTag": "TEST01",
     "Name": "testmoderator1_bot",
     "Token": "5667741487:AAHeStGOG7XAnINKPIkOHUq0fkGXWWvZS4k",
-    "ChannelID": null,
-    "LeadType": null,
+    "ChannelID": -618442838,
+    "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
         "Text": null,
@@ -76,7 +76,7 @@
     "Name": "testmoderator2_bot",
     "Token": "5911667484:AAGdR8NIRG1ULAp9jrH5gHOGqCJtULONMPw",
     "ChannelID": null,
-    "LeadType": null,
+    "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
         "Text": null,

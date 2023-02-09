@@ -279,8 +279,11 @@ namespace csb.bot_moderator
         #endregion
 
         #region protected
-        protected virtual async Task processMyChatMember(Update update)
+        protected virtual void processMyChatMember(Update update)
         {
+            if (ChannelID != null)
+                return;
+
             long id = update.MyChatMember.Chat.Id;
 
             switch (update.MyChatMember.NewChatMember.Status)
@@ -290,8 +293,7 @@ namespace csb.bot_moderator
                     ChannelID = id;
                     ParametersUpdatedEvent?.Invoke(this);
                     logger.inf($"Moderator added to channel/group ID={id}");
-
-                    int linksNumber = await linksProcessor.Generate(ChannelID, 10);
+                    //int linksNumber = await linksProcessor.Generate(ChannelID, 10);
                     break;
                 default:
                     break;
@@ -461,15 +463,15 @@ namespace csb.bot_moderator
 
             switch (update.Type)
             {
-                case UpdateType.MyChatMember:
+                case UpdateType.MyChatMember:                    
                     try
                     {
-                        await processMyChatMember(update);
+                        processMyChatMember(update);
                     }
                     catch (Exception ex)
                     {
                         logger.err(ex.Message);
-                    }
+                    }                    
                     break;
 
                 case UpdateType.ChatJoinRequest:
