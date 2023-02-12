@@ -18,57 +18,10 @@
       }
     },
     "PushData": {
-      "Messages": [
-        {
-          "TimePeriod": 1.0,
-          "Id": 1,
-          "Message": {
-            "message_id": 5326,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675724527,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart 1 ch 1"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     },
     "DailyPushData": {
-      "Messages": [
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 5334,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675724560,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push ch 1"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     }
   },
   {
@@ -90,57 +43,10 @@
       }
     },
     "PushData": {
-      "Messages": [
-        {
-          "TimePeriod": 1.0,
-          "Id": 1,
-          "Message": {
-            "message_id": 5326,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675724527,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart 1 ch 2"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     },
     "DailyPushData": {
-      "Messages": [
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 5334,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675724560,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push ch 2"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     }
   }
 ]

@@ -17,31 +17,35 @@
         "AutoChanges": [
           {
             "OldText": "@booowos",
+            "NewText": "@amirrsallah"
+          },
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1243990530/20767"
+          },
+          {
+            "OldText": "https://training.xtime",
+            "NewText": "https://t.me/+IQ5zBmd97N82NmNi"
+          },
+          {
+            "OldText": "https://howiamlook.xtime",
+            "NewText": "https://t.me/c/1243990530/20777"
+          },
+          {
+            "OldText": "https://feedback.xtime",
+            "NewText": "https://t.me/feebback"
+          },
+          {
+            "OldText": "@booowos",
             "NewText": "@asknvl1"
           },
           {
-            "OldText": "xtime.1",
-            "NewText": "ch 1"
-          }
-        ]
-      },
-      {
-        "GeoTag": "TEST02",
-        "Token": "5951686484:AAGy2emjZfyeDRESQ9Pjps8qsrI5iO_8acI",
-        "Name": "testoutput2_bot",
-        "ChannelID": -1001666542030,
-        "ChannelTitle": "OUT2",
-        "VictimLink": "@booowos",
-        "ChannelLink": "@asknvl2",
-        "ReplacedWords": [],
-        "AutoChanges": [
-          {
-            "OldText": "@booowos",
-            "NewText": "@asknvl2"
+            "OldText": "https://partner.xtime",
+            "NewText": "https://avisignal.online"
           },
           {
-            "OldText": "xtime.1",
-            "NewText": "ch 2"
+            "OldText": "https://promo.xtime",
+            "NewText": "ind1dep"
           }
         ]
       }
@@ -54,57 +58,10 @@
     },
     "ReplacedWords": [],
     "DailyPushData": {
-      "Messages": [
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 5334,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675724560,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "push xtime.1"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     },
     "PushData": {
-      "Messages": [
-        {
-          "TimePeriod": 1.0,
-          "Id": 1,
-          "Message": {
-            "message_id": 5326,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1675724527,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "smart 1 xtime.1"
-          },
-          "FilePath": null
-        }
-      ]
+      "Messages": []
     },
     "State": 0
   }

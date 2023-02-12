@@ -1,10 +1,7 @@
-﻿using csb.server;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +17,7 @@ namespace csb.bot_poster
     public class BotPoster_api
     {
         #region const
-        string[] replace_patterns = {                        
+        string[] replace_patterns = {
             @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)", //url
             @"\S*\.*ru",
             @"(Подписаться на )\w*\s|S",
@@ -34,7 +31,7 @@ namespace csb.bot_poster
             @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)", //url
             @"\S*\.*ru",
             @"(Подписаться на )\w*\s|S",
-            @"(Подписаться на )\w*.*",            
+            @"(Подписаться на )\w*.*",
             @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
         };
         #endregion
@@ -326,14 +323,14 @@ namespace csb.bot_poster
 
             //    switch (message.Type)
             //    {
-                    
+
             //        case MessageType.Photo:
 
             //            InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
 
             //            if (!ChannelLink.Equals("0"))
             //            {
-                            
+
             //                (imp.Caption, imp.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
 
             //            } else
@@ -444,7 +441,7 @@ namespace csb.bot_poster
             //        case MessageType.Text:
             //            await postTextAndWebPage(message, cancellationToken);
             //            break;
-                    
+
             //        default:
             //            await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
             //            break;
@@ -510,7 +507,7 @@ namespace csb.bot_poster
                     text = text.Replace(match.Value, "");
 
                     if (tmpEntities != null)
-                    
+
                     {
                         tmpEntities = tmpEntities.OrderBy(e => e.Offset).ToList();
                         int position = match.Index;
@@ -527,15 +524,16 @@ namespace csb.bot_poster
                                     tmpEntities[i].Offset -= length;
                                 }
                             }
-                        } catch ( Exception ex)
+                        }
+                        catch (Exception ex)
                         {
 
-                        }                
-                                                
+                        }
+
                     }
-                    
+
                 }
-                
+
             }
 
             if (tmpEntities != null)
@@ -563,7 +561,7 @@ namespace csb.bot_poster
             }
 
             return res;
-        }    
+        }
 
         (string, MessageEntity[]? entities) autoChange(string text, MessageEntity[]? entities, List<AutoChange> autoChanges)
         {
@@ -586,35 +584,72 @@ namespace csb.bot_poster
             foreach (var autochange in autoChanges)
             {
                 resEntities = resEntities?.OrderBy(e => e.Offset).ToList();
+
                 int indexReplace = resText.IndexOf(autochange.OldText);
-                if (indexReplace == -1)
-                    continue;
-
-                resText = resText.Replace(autochange.OldText, autochange.NewText);
-
-                if (resEntities != null)
+                //-
+                while (indexReplace != -1)
                 {
-                    int delta = autochange.NewText.Length - autochange.OldText.Length;
+                    //resText = resText.Replace(autochange.OldText, autochange.NewText);
 
-                    //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
-                    var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
+                    resText = resText.Remove(indexReplace, autochange.OldText.Length).Insert(indexReplace, autochange.NewText);
+                    
 
-                    foreach (var item in found)
+                    if (resEntities != null)
                     {
-                        int ind = resEntities.IndexOf(item);
-                        resEntities[ind].Length += delta;
+                        int delta = autochange.NewText.Length - autochange.OldText.Length;
+
+                        //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
+                        var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
+
+                        foreach (var item in found)
+                        {
+                            int ind = resEntities.IndexOf(item);
+                            resEntities[ind].Length += delta;
+                        }
+
+                        if (found != null && found.Count > 0)
+                        {
+                            var indexEntity = resEntities.IndexOf(found[0]);
+                            for (int i = indexEntity + 1; i < resEntities.Count; i++)
+                            {
+                                if (resEntities[i].Offset > indexReplace)
+                                    resEntities[i].Offset += delta;
+                            }
+                        }
                     }
 
-                    if (found != null && found.Count > 0)
-                    {
-                        var indexEntity = resEntities.IndexOf(found[0]);
-                        for (int i = indexEntity + 1; i < resEntities.Count; i++)
-                        {
-                            if (resEntities[i].Offset > indexReplace)
-                                resEntities[i].Offset += delta;
-                        }
-                    } 
+                    indexReplace = resText.IndexOf(autochange.OldText);
                 }
+                //-
+
+                //if (indexReplace == -1)
+                //    continue;
+
+                //resText = resText.Replace(autochange.OldText, autochange.NewText);
+
+                //if (resEntities != null)
+                //{
+                //    int delta = autochange.NewText.Length - autochange.OldText.Length;
+
+                //    //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
+                //    var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
+
+                //    foreach (var item in found)
+                //    {
+                //        int ind = resEntities.IndexOf(item);
+                //        resEntities[ind].Length += delta;
+                //    }
+
+                //    if (found != null && found.Count > 0)
+                //    {
+                //        var indexEntity = resEntities.IndexOf(found[0]);
+                //        for (int i = indexEntity + 1; i < resEntities.Count; i++)
+                //        {
+                //            if (resEntities[i].Offset > indexReplace)
+                //                resEntities[i].Offset += delta;
+                //        }
+                //    }
+                //}
             }
 
             return (resText, resEntities?.ToArray());
@@ -650,7 +685,7 @@ namespace csb.bot_poster
         async Task postTextAndWebPage(Message message, CancellationToken cts)
         {
             string text = message.Text;
-            
+
             MessageEntity[]? messageEntities = null;
 
             string t = text;
@@ -658,7 +693,8 @@ namespace csb.bot_poster
             {
                 (t, messageEntities) = autoChange(t, message.Entities, AutoChanges);
 
-            } else
+            }
+            else
             {
                 MessageEntity[] e;
                 (t, e) = getUpdatedText(text, null);
@@ -668,7 +704,7 @@ namespace csb.bot_poster
             bool disablePreview = true;
             if (messageEntities != null && messageEntities.Length > 0)
             {
-                disablePreview = messageEntities[0].Type != MessageEntityType.TextLink;   
+                disablePreview = messageEntities[0].Type != MessageEntityType.TextLink;
             }
 
             if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
@@ -687,7 +723,8 @@ namespace csb.bot_poster
                 disableWebPagePreview: disablePreview,
                 replyMarkup: message.ReplyMarkup,
                 cancellationToken: cts);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -711,10 +748,11 @@ namespace csb.bot_poster
             {
                 await bot.SendMediaGroupAsync(
                     chatId: ChannelID,
-                    media: mediaList,                    
+                    media: mediaList,
                     cancellationToken: cts.Token);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 //IsRunning = false;
