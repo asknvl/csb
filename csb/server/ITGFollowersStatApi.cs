@@ -11,6 +11,7 @@ namespace csb.server
     {
         Task<bool> IsSubscriptionAvailable(string geotag, long id);
         Task UpdateFollowers(List<Follower> followers);
+        Task MarkFollowerWasDeclined(string geotag, long id);
         Task<List<tgUserPushInfoDto>> GetNoFeedbackFollowers(string geotag, string date_from, string date_to);
         Task MarkFollowerWasPushed(string geotag, long id, double hours, bool status);
         Task<List<string>> GetFollowerGeoTags(long id);

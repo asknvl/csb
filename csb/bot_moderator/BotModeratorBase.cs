@@ -353,6 +353,7 @@ namespace csb.bot_moderator
                 {
                     logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
+                    await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.Chat.Id);
                 }
             }
         }

@@ -152,4 +152,12 @@ namespace csb.server.tg_dtos
         public List<tgUserFeedbackDto> users { get; set; } = new();
     }
     #endregion
+
+    #region MarkFollowerWasDeclined
+    public class tgUserDeclineDto
+    {
+        public long tg_user_id { get; set; }
+        public string geo { get; set; }
+    }
+    #endregion
 }

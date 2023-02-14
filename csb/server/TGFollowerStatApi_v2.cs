@@ -330,6 +330,37 @@ namespace csb.server
             }
 
         }
+
+        public async Task MarkFollowerWasDeclined(string geotag, long id)
+        {
+            tgUserDeclineDto decline = new tgUserDeclineDto()
+            {
+                geo = geotag,
+                tg_user_id = id
+            };
+
+            var json = JsonConvert.SerializeObject(decline);
+
+            var addr = $"{url}/v1/telegram/declineUser";
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.PostAsync(addr, data);
+                var result = await response.Content.ReadAsStringAsync();
+                var jres = JObject.Parse(result);
+                bool res = jres["success"].ToObject<bool>();
+                if (!res)
+                    throw new Exception($"success=false");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"MarkFollowerWasDecined {ex.Message}");
+            }
+        }
         #endregion
     }
 }
