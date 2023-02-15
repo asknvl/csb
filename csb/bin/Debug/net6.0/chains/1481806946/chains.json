@@ -16,36 +16,12 @@
         "ReplacedWords": [],
         "AutoChanges": [
           {
-            "OldText": "@booowos",
-            "NewText": "@amirrsallah"
+            "OldText": "https://partner.xtime",
+            "NewText": "https://signalaviator.online"
           },
           {
-            "OldText": "https://pinedmessage.xtime",
-            "NewText": "https://t.me/c/1243990530/20767"
-          },
-          {
-            "OldText": "https://training.xtime",
-            "NewText": "https://t.me/+IQ5zBmd97N82NmNi"
-          },
-          {
-            "OldText": "https://howiamlook.xtime",
-            "NewText": "https://t.me/c/1243990530/20777"
-          },
-          {
-            "OldText": "https://feedback.xtime",
-            "NewText": "https://t.me/feebback"
-          },
-          {
-            "OldText": "@booowos",
-            "NewText": "@asknvl1"
-          },
-          {
-            "OldText": "https://partner.xtime/",
-            "NewText": "https://avisignal.online/"
-          },
-          {
-            "OldText": "https://promo.xtime",
-            "NewText": "ind1dep"
+            "OldText": "promo.xtime",
+            "NewText": "p2dep"
           }
         ]
       }

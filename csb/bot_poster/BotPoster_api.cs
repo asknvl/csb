@@ -599,17 +599,23 @@ namespace csb.bot_poster
                         int delta = autochange.NewText.Length - autochange.OldText.Length;
 
                         //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
-                        var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
-
-                        foreach (var item in found)
+                        //var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
+                        var found = resEntities.FirstOrDefault(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
+                        if (found != null)
                         {
-                            int ind = resEntities.IndexOf(item);
+                            int ind = resEntities.IndexOf(found);
                             resEntities[ind].Length += delta;
                         }
 
-                        if (found != null && found.Count > 0)
+                        //foreach (var item in found)
+                        //{
+                        //    int ind = resEntities.IndexOf(item);
+                        //    resEntities[ind].Length += delta;
+                        //}
+
+                        if (found != null/* && found.Count > 0*/)
                         {
-                            var indexEntity = resEntities.IndexOf(found[0]);
+                            var indexEntity = resEntities.IndexOf(found/*[0]*/);
                             for (int i = indexEntity + 1; i < resEntities.Count; i++)
                             {
                                 if (resEntities[i].Offset > indexReplace)
