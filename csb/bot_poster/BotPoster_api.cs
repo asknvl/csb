@@ -599,23 +599,23 @@ namespace csb.bot_poster
                         int delta = autochange.NewText.Length - autochange.OldText.Length;
 
                         //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
-                        //var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
-                        var found = resEntities.FirstOrDefault(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
-                        if (found != null)
-                        {
-                            int ind = resEntities.IndexOf(found);
-                            resEntities[ind].Length += delta;
-                        }
-
-                        //foreach (var item in found)
+                        var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
+                        //var found = resEntities.FirstOrDefault(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
+                        //if (found != null)
                         //{
-                        //    int ind = resEntities.IndexOf(item);
+                        //    int ind = resEntities.IndexOf(found);
                         //    resEntities[ind].Length += delta;
                         //}
 
-                        if (found != null/* && found.Count > 0*/)
+                        foreach (var item in found)
                         {
-                            var indexEntity = resEntities.IndexOf(found/*[0]*/);
+                            int ind = resEntities.IndexOf(item);
+                            resEntities[ind].Length += delta;
+                        }
+
+                        if (found != null && found.Count > 0)
+                        {
+                            var indexEntity = resEntities.IndexOf(found[0]);
                             for (int i = indexEntity + 1; i < resEntities.Count; i++)
                             {
                                 if (resEntities[i].Offset > indexReplace)
@@ -719,6 +719,10 @@ namespace csb.bot_poster
             //var reply = message.ReplyToMessage;
             //int? replyId = message.ReplyToMessage?.MessageId;
 
+
+            var ent = filterEntities(messageEntities);
+
+
             try
             {
                 await bot.SendTextMessageAsync(
@@ -741,7 +745,7 @@ namespace csb.bot_poster
             var ErrorMessage = exception switch
             {
                 ApiRequestException apiRequestException
-                    => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
+                    => $"{GeoTag} Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
                 _ => exception.ToString()
             };
             Console.WriteLine(ErrorMessage);

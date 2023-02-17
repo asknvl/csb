@@ -358,7 +358,7 @@ namespace csb.server
             }
             catch (Exception ex)
             {
-                throw new Exception($"MarkFollowerWasDecined {ex.Message}");
+                throw new Exception($"MarkFollowerWasDecined {geotag} {id} {ex.Message}");
             }
         }
         #endregion
