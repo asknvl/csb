@@ -1,50 +1,27 @@
-15.02.2023 23:26:13 inf MDR > Moderator stopped
-15.02.2023 23:26:13 inf MDR > Startting moderator...
-15.02.2023 23:26:13 inf MDR > Moderator started, bot username=testmoderator2_bot channelID=null
-15.02.2023 23:29:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:32:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:35:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:38:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:41:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:44:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:47:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:50:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:53:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:56:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-15.02.2023 23:59:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:02:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:05:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:08:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:11:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:14:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:17:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:20:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:23:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:26:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:29:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:32:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:35:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:38:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:41:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:44:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:47:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:50:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:53:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:56:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 0:59:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:02:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:05:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:08:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:11:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:14:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:17:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:20:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:23:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:26:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:28:10 err MDR > Telegram.Bot.Exceptions.RequestException: Exception during making request
- ---> System.Net.Http.HttpRequestException: An error occurred while sending the request.
- ---> System.IO.IOException: Unable to read data from the transport connection: Программа на вашем хост-компьютере разорвала установленное подключение..
- ---> System.Net.Sockets.SocketException (10053): Программа на вашем хост-компьютере разорвала установленное подключение.
+19.02.2023 1:32:28 inf MDR > Moderator stopped
+19.02.2023 1:32:28 inf MDR > Startting moderator...
+19.02.2023 1:32:28 inf MDR > Moderator started, bot username=testmoderator2_bot channelID=null
+19.02.2023 1:35:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:38:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:41:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:44:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:47:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:50:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:53:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:56:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 1:59:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 2:02:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 2:05:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 2:08:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 2:11:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 2:14:28 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:15:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:15:18 err MDR > Telegram.Bot.Exceptions.RequestException: Request timed out
+ ---> System.Threading.Tasks.TaskCanceledException: The request was canceled due to the configured HttpClient.Timeout of 100 seconds elapsing.
+ ---> System.TimeoutException: The operation was canceled.
+ ---> System.Threading.Tasks.TaskCanceledException: The operation was canceled.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Операция ввода/вывода была прервана из-за завершения потока команд или по запросу приложения..
+ ---> System.Net.Sockets.SocketException (995): Операция ввода/вывода была прервана из-за завершения потока команд или по запросу приложения.
    --- End of inner exception stack trace ---
    at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
    at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
@@ -56,85 +33,24 @@
    at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
    at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
    at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
    --- End of inner exception stack trace ---
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRequest`1 request, CancellationToken cancellationToken)
-   at Telegram.Bot.Extensions.Polling.DefaultUpdateReceiver.ReceiveAsync(IUpdateHandler updateHandler, CancellationToken cancellationToken)
-16.02.2023 1:29:00 err MDR > Telegram.Bot.Exceptions.RequestException: Exception during making request
- ---> System.Net.Http.HttpRequestException: An error occurred while sending the request.
- ---> System.IO.IOException: Unable to read data from the transport connection: Программа на вашем хост-компьютере разорвала установленное подключение..
- ---> System.Net.Sockets.SocketException (10053): Программа на вашем хост-компьютере разорвала установленное подключение.
    --- End of inner exception stack trace ---
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
-   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](TIOAdapter adapter)
-   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](TIOAdapter adapter, Memory`1 buffer)
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
-   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.HandleFailure(Exception e, Boolean telemetryStarted, HttpResponseMessage response, CancellationTokenSource cts, CancellationToken cancellationToken, CancellationTokenSource pendingRequestsCts)
    at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
    at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
    --- End of inner exception stack trace ---
    at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
    at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRequest`1 request, CancellationToken cancellationToken)
    at Telegram.Bot.Extensions.Polling.DefaultUpdateReceiver.ReceiveAsync(IUpdateHandler updateHandler, CancellationToken cancellationToken)
-16.02.2023 1:29:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:32:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:32:35 err MDR > Telegram.Bot.Exceptions.RequestException: Exception during making request
- ---> System.Net.Http.HttpRequestException: An error occurred while sending the request.
- ---> System.IO.IOException: Unable to read data from the transport connection: Программа на вашем хост-компьютере разорвала установленное подключение..
- ---> System.Net.Sockets.SocketException (10053): Программа на вашем хост-компьютере разорвала установленное подключение.
-   --- End of inner exception stack trace ---
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
-   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](TIOAdapter adapter)
-   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](TIOAdapter adapter, Memory`1 buffer)
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
-   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRequest`1 request, CancellationToken cancellationToken)
-   at Telegram.Bot.Extensions.Polling.DefaultUpdateReceiver.ReceiveAsync(IUpdateHandler updateHandler, CancellationToken cancellationToken)
-16.02.2023 1:35:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:38:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:41:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:44:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:47:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:50:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:53:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:56:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 1:59:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:02:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:05:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:08:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:11:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:14:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:17:13 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
-16.02.2023 2:19:45 err MDR > Telegram.Bot.Exceptions.RequestException: Exception during making request
- ---> System.Net.Http.HttpRequestException: An error occurred while sending the request.
- ---> System.IO.IOException: Unable to read data from the transport connection: Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера..
- ---> System.Net.Sockets.SocketException (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера.
-   --- End of inner exception stack trace ---
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
-   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](TIOAdapter adapter)
-   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](TIOAdapter adapter, Memory`1 buffer)
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
-   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRequest`1 request, CancellationToken cancellationToken)
-   at Telegram.Bot.Extensions.Polling.DefaultUpdateReceiver.ReceiveAsync(IUpdateHandler updateHandler, CancellationToken cancellationToken)
+19.02.2023 7:18:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:21:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:24:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:27:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:30:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:33:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:36:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:39:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:42:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:45:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:48:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0
+19.02.2023 7:51:06 inf MDR > TEST02 DAILY_PUSH: delivered 0 of 0

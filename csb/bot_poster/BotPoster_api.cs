@@ -584,7 +584,7 @@ namespace csb.bot_poster
             foreach (var autochange in autoChanges)
             {
                 resEntities = resEntities?.OrderBy(e => e.Offset).ToList();
-
+                
                 int indexReplace = resText.IndexOf(autochange.OldText);
                 //-
                 while (indexReplace != -1)
@@ -592,36 +592,53 @@ namespace csb.bot_poster
                     //resText = resText.Replace(autochange.OldText, autochange.NewText);
 
                     resText = resText.Remove(indexReplace, autochange.OldText.Length).Insert(indexReplace, autochange.NewText);
-                    
+
 
                     if (resEntities != null)
                     {
+
+                        var isReplacedEntity = resEntities.Any(e => e.Offset == indexReplace);
+
                         int delta = autochange.NewText.Length - autochange.OldText.Length;
 
-                        //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
-                        var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
-                        //var found = resEntities.FirstOrDefault(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
-                        //if (found != null)
-                        //{
-                        //    int ind = resEntities.IndexOf(found);
-                        //    resEntities[ind].Length += delta;
-                        //}
-
-                        foreach (var item in found)
+                        if (isReplacedEntity)
                         {
-                            int ind = resEntities.IndexOf(item);
-                            resEntities[ind].Length += delta;
-                        }
 
-                        if (found != null && found.Count > 0)
-                        {
-                            var indexEntity = resEntities.IndexOf(found[0]);
-                            for (int i = indexEntity + 1; i < resEntities.Count; i++)
+                            //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
+                            var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
+                            //var found = resEntities.FirstOrDefault(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
+                            //if (found != null)
+                            //{
+                            //    int ind = resEntities.IndexOf(found);
+                            //    resEntities[ind].Length += delta;
+                            //}
+
+                            foreach (var item in found)
                             {
-                                if (resEntities[i].Offset > indexReplace)
-                                    resEntities[i].Offset += delta;
+                                int ind = resEntities.IndexOf(item);
+                                resEntities[ind].Length += delta;
+                            }
+
+
+                            if (found != null && found.Count > 0)
+                            {
+                                var indexEntity = resEntities.IndexOf(found[0]);
+                                for (int i = indexEntity + 1; i < resEntities.Count; i++)
+                                {
+                                    if (resEntities[i].Offset > indexReplace)
+                                        resEntities[i].Offset += delta;
+                                }
+                            }
+                        } else
+                        {
+                            var found = resEntities.Where(e => e.Offset >= indexReplace).ToList();
+                            foreach (var item in found)
+                            {
+                                int ind = resEntities.IndexOf(item);
+                                resEntities[ind].Offset += delta;
                             }
                         }
+
                     }
 
                     indexReplace = resText.IndexOf(autochange.OldText);

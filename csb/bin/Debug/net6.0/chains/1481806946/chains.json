@@ -22,6 +22,26 @@
           {
             "OldText": "promo.xtime",
             "NewText": "p2dep"
+          },
+          {
+            "OldText": "@booowos",
+            "NewText": "@asknvl1"
+          },
+          {
+            "OldText": "https://feedback.xtime",
+            "NewText": "https://t.me/feebback"
+          },
+          {
+            "OldText": "https://pinedmessage.xtime",
+            "NewText": "https://t.me/c/1243990530/33224"
+          },
+          {
+            "OldText": "https://training.xtime",
+            "NewText": "https://t.me/+IQ5zBmd97N82NmNi"
+          },
+          {
+            "OldText": "https://howiamlook.xtime",
+            "NewText": "https://t.me/c/1243990530/20777"
           }
         ]
       }
