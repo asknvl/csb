@@ -112,18 +112,22 @@ namespace csb.moderation
                 Save();
             };
 
-            foreach (var pattern in patternPushData.Messages)
+            if (autoChanges != null)
             {
-                var tmp = pattern.Clone();
-                tmp.MakeAutochange(autoChanges);
-                mbot.DailyPushData.Messages.Add(tmp);
-            }
 
-            foreach (var pattern in patternSmartPushData.Messages)
-            {
-                var tmp = pattern.Clone();
-                tmp.MakeAutochange(autoChanges);
-                mbot.PushData.Messages.Add(tmp);
+                foreach (var pattern in patternPushData.Messages)
+                {
+                    var tmp = pattern.Clone();
+                    tmp.MakeAutochange(autoChanges);
+                    mbot.DailyPushData.Messages.Add(tmp);
+                }
+
+                foreach (var pattern in patternSmartPushData.Messages)
+                {
+                    var tmp = pattern.Clone();
+                    tmp.MakeAutochange(autoChanges);
+                    mbot.PushData.Messages.Add(tmp);
+                }
             }
 
             mbot.Start();

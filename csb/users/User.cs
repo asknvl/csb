@@ -1342,7 +1342,9 @@ namespace csb.users
                                 var bot = chain.Bots.Last();
                                 bot.ChannelLink = msg;
 
-                                //bot.AutoChanges.Add(new AutoChange() { OldText = bot.VictimLink, NewText = bot.ChannelLink });
+                                var autoChange = new AutoChange() { OldText = bot.VictimLink, NewText = bot.ChannelLink };
+                                chain.AddAutoChange(currentBotName, autoChange);
+                                chainprocessor.Save();                                
 
                                 chain.State = ChainState.X;
                                 await messagesProcessor.Back(chat);
@@ -1500,20 +1502,22 @@ namespace csb.users
                                 if (chain != null)
                                 {
                                     var outbot = chain.Bots.FirstOrDefault(b => b.GeoTag.Equals(currentModeratorGeoTag));
+                                    //if (outbot != null)
+                                    //{
+                                    //    victimLink = outbot.VictimLink;
+                                    //    channelLink = outbot.ChannelLink;
+                                    //}
+
+                                    //AutoChange pmAutochange = new AutoChange()
+                                    //{
+                                    //    OldText = outbot.VictimLink,
+                                    //    NewText = outbot.ChannelLink
+                                    //};
+
+                                    List<AutoChange> allAutoChanges = null;
                                     if (outbot != null)
-                                    {
-                                        victimLink = outbot.VictimLink;
-                                        channelLink = outbot.ChannelLink;
-                                    }
-
-                                    AutoChange pmAutochange = new AutoChange()
-                                    {
-                                        OldText = outbot.VictimLink,
-                                        NewText = outbot.ChannelLink
-                                    };
-
-                                    var allAutoChanges = new List<AutoChange>(outbot.AutoChanges);
-                                    allAutoChanges.Add(pmAutochange);
+                                        allAutoChanges = new List<AutoChange>(outbot.AutoChanges);
+                                    //allAutoChanges.Add(pmAutochange);
 
                                     //moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, new List<AutoChange> { pmAutochange });
                                     moderationProcessor.Add(moder_token, currentModeratorGeoTag, chain.DailyPushData, chain.PushData, allAutoChanges);
