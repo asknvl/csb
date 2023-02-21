@@ -1343,7 +1343,7 @@ namespace csb.users
                                 bot.ChannelLink = msg;
 
                                 var autoChange = new AutoChange() { OldText = bot.VictimLink, NewText = bot.ChannelLink };
-                                chain.AddAutoChange(currentBotName, autoChange);
+                                bot.AutoChanges.Add(autoChange);
                                 chainprocessor.Save();                                
 
                                 chain.State = ChainState.X;
@@ -1489,8 +1489,8 @@ namespace csb.users
                             try
                             {
                                 IChain chain = null;
-                                string victimLink;
-                                string channelLink;
+                                //string victimLink;
+                                //string channelLink;
 
                                 try
                                 {
@@ -1591,7 +1591,12 @@ namespace csb.users
                                 await messagesProcessor.Back(chat);
                                 await messagesProcessor.Back(chat);
 
-                                //await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Прощальное сообщение создано. Добавить часовые уведомления?", "addpush"));
+
+                                var chain = chainsProcessor.Get(currentModeratorGeoTag);
+                                currentChainID = chain.Id;
+                                await messagesProcessor.Add(chat, "editChain", await sendTextButtonMessage(chat, $"Редактирование цепочки {chain.ToString()}", "editChain"));
+
+                                //await messagesProcessor.Add(chat, "addpush", await sendTextButtonMessage(chat, "Прощальное сообщение создано. Добавить часовые уведомления", "addpush"));
                                 State = BotState.free;
                             }
                             catch (Exception ex)

@@ -1,52 +1,292 @@
 [
   {
-    "GeoTag": "TEST01",
+    "GeoTag": "TEST0",
     "Name": "testmoderator1_bot",
     "Token": "5667741487:AAHeStGOG7XAnINKPIkOHUq0fkGXWWvZS4k",
-    "ChannelID": -618442838,
-    "LeadType": 0,
-    "Greetings": {
-      "HelloMessage": {
-        "Text": null,
-        "Entities": null,
-        "ReplyMarkup": null
-      },
-      "ByeMessage": {
-        "Text": null,
-        "Entities": null,
-        "ReplyMarkup": null
-      }
-    },
-    "PushData": {
-      "Messages": []
-    },
-    "DailyPushData": {
-      "Messages": []
-    }
-  },
-  {
-    "GeoTag": "TEST02",
-    "Name": "testmoderator2_bot",
-    "Token": "5911667484:AAGdR8NIRG1ULAp9jrH5gHOGqCJtULONMPw",
     "ChannelID": null,
     "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
-        "Text": null,
+        "Text": "hi",
         "Entities": null,
         "ReplyMarkup": null
       },
       "ByeMessage": {
-        "Text": null,
+        "Text": "bye",
         "Entities": null,
         "ReplyMarkup": null
       }
     },
     "PushData": {
-      "Messages": []
+      "Messages": [
+        {
+          "TimePeriod": 1.0,
+          "Id": 1,
+          "Message": {
+            "message_id": 6028,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927702,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "smart 1 @asknvl1",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        },
+        {
+          "TimePeriod": 2.0,
+          "Id": 2,
+          "Message": {
+            "message_id": 6032,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927744,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "smart 2 @asknvl1",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        }
+      ]
     },
     "DailyPushData": {
-      "Messages": []
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 6038,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927766,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push 1 @asknvl1",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 7,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 6040,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927770,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push 2 @asknvl1",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 7,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        }
+      ]
+    }
+  },
+  {
+    "GeoTag": "TEST1",
+    "Name": "testmoderator2_bot",
+    "Token": "5911667484:AAGdR8NIRG1ULAp9jrH5gHOGqCJtULONMPw",
+    "ChannelID": null,
+    "LeadType": null,
+    "Greetings": {
+      "HelloMessage": {
+        "Text": "hi",
+        "Entities": null,
+        "ReplyMarkup": null
+      },
+      "ByeMessage": {
+        "Text": "bye",
+        "Entities": null,
+        "ReplyMarkup": null
+      }
+    },
+    "PushData": {
+      "Messages": [
+        {
+          "TimePeriod": 1.0,
+          "Id": 1,
+          "Message": {
+            "message_id": 6028,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927702,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "smart 1 @asknvl2",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        },
+        {
+          "TimePeriod": 2.0,
+          "Id": 2,
+          "Message": {
+            "message_id": 6032,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927744,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "smart 2 @asknvl2",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        }
+      ]
+    },
+    "DailyPushData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 6038,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927766,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push 1 @asknvl2",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 7,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 6040,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927770,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push 2 @asknvl2",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 7,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        }
+      ]
     }
   }
 ]

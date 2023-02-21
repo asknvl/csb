@@ -6,7 +6,7 @@
     "PhoneNumber": "+79918437350",
     "Bots": [
       {
-        "GeoTag": "TEST01",
+        "GeoTag": "TEST0",
         "Token": "5966864927:AAG61yr2W129DJWwY_7e1JYVTZeYcJK7goE",
         "Name": "testoutput1_bot",
         "ChannelID": -1001692610611,
@@ -16,32 +16,24 @@
         "ReplacedWords": [],
         "AutoChanges": [
           {
-            "OldText": "https://partner.xtime",
-            "NewText": "https://signalaviator.online"
-          },
-          {
-            "OldText": "promo.xtime",
-            "NewText": "p2dep"
-          },
-          {
             "OldText": "@booowos",
             "NewText": "@asknvl1"
-          },
+          }
+        ]
+      },
+      {
+        "GeoTag": "TEST1",
+        "Token": "5951686484:AAGy2emjZfyeDRESQ9Pjps8qsrI5iO_8acI",
+        "Name": "testoutput2_bot",
+        "ChannelID": -1001666542030,
+        "ChannelTitle": "OUT2",
+        "VictimLink": "@booowos",
+        "ChannelLink": "@asknvl2",
+        "ReplacedWords": [],
+        "AutoChanges": [
           {
-            "OldText": "https://feedback.xtime",
-            "NewText": "https://t.me/feebback"
-          },
-          {
-            "OldText": "https://pinedmessage.xtime",
-            "NewText": "https://t.me/c/1243990530/33224"
-          },
-          {
-            "OldText": "https://training.xtime",
-            "NewText": "https://t.me/+IQ5zBmd97N82NmNi"
-          },
-          {
-            "OldText": "https://howiamlook.xtime",
-            "NewText": "https://t.me/c/1243990530/20777"
+            "OldText": "@booowos",
+            "NewText": "@asknvl2"
           }
         ]
       }
@@ -54,10 +46,130 @@
     },
     "ReplacedWords": [],
     "DailyPushData": {
-      "Messages": []
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 6038,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927766,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push 1 @booowos",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 7,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        },
+        {
+          "Id": 2,
+          "Message": {
+            "message_id": 6040,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927770,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "push 2 @booowos",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 7,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        }
+      ]
     },
     "PushData": {
-      "Messages": []
+      "Messages": [
+        {
+          "TimePeriod": 1.0,
+          "Id": 1,
+          "Message": {
+            "message_id": 6028,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927702,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "smart 1 @booowos",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        },
+        {
+          "TimePeriod": 2.0,
+          "Id": 2,
+          "Message": {
+            "message_id": 6032,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1676927744,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "smart 2 @booowos",
+            "entities": [
+              {
+                "type": "mention",
+                "offset": 8,
+                "length": 8
+              }
+            ]
+          },
+          "FilePath": null
+        }
+      ]
     },
     "State": 0
   }
