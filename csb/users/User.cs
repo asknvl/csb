@@ -2454,7 +2454,7 @@ namespace csb.users
                 case "editDailyPushes":
                     try
                     {
-                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка периодических уведомлений:", "editDailyPushesMenu"));
+                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка ежедневных уведомлений:", "editDailyPushesMenu"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)
@@ -2525,7 +2525,7 @@ namespace csb.users
                             }
                         }
 
-                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка периодических уведомлений:", "editDailyPushesMenu"));
+                        await messagesProcessor.Add(chat, "editDailyPushesMenu", await sendTextButtonMessage(chat, "Настройка ежедневных уведомлений:", "editDailyPushesMenu"));
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     } catch (Exception ex)

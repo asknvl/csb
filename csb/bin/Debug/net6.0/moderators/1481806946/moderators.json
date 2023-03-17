@@ -23,7 +23,7 @@
           "TimePeriod": 1.0,
           "Id": 1,
           "Message": {
-            "message_id": 6028,
+            "message_id": 6319,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -31,29 +31,83 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927702,
+            "date": 1677269344,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "smart 1 @asknvl1",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1263,
+            "forward_date": 1674169877,
+            "video": {
+              "width": 1280,
+              "height": 720,
+              "duration": 8,
+              "thumb": {
+                "width": 320,
+                "height": 180,
+                "file_id": "AAMCAgADGQEAAhivY_kZYIFcVjupVUWN9NTSiiJhUSYAAvciAAKmxVFK5o_gedr8LlwBAAdtAAMuBA",
+                "file_unique_id": "AQAD9yIAAqbFUUpy",
+                "file_size": 5856
+              },
+              "file_name": "IMG_9189.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIYr2P5GWCBXFY7qVVFjfTU0ooiYVEmAAL3IgACpsVRSuaP4Hna_C5cLgQ",
+              "file_unique_id": "AgAD9yIAAqbFUUo",
+              "file_size": 2166983
+            },
+            "caption": "❗️FAMILIA ATENCIÓN ❗️ \n \nMe acaba de llegar este video de uno de mis suscriptores, \nNo saben lo feliz que me pongo al escuchar que les esta yendo muy bien con mi canal, cómo pueden ver y escuchar es un Feliz ganador 🏆  \n \nQue gracias a todas las buenas inversiones ha podido salir adelante y pagar todas sus deudas 😎🔥 \n \n💎Familia todo esto lo hago por ustedes, esto es una gran motivación que me  recarga de energía para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS @asknvl1 \n \n✅Vamos con toda la motivación para ganar 🏆",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 21
+              },
+              {
+                "type": "code",
+                "offset": 25,
+                "length": 197
+              },
+              {
+                "type": "underline",
+                "offset": 223,
+                "length": 97
+              },
+              {
+                "type": "bold",
+                "offset": 476,
+                "length": 155
+              },
               {
                 "type": "mention",
-                "offset": 8,
+                "offset": 632,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💎TU TAMBIÉN PUEDES GANAR 💎",
+                    "url": "https://t.me/asknvl1"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_34.MP4"
         },
         {
           "TimePeriod": 2.0,
           "Id": 2,
           "Message": {
-            "message_id": 6032,
+            "message_id": 6323,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -61,23 +115,72 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927744,
+            "date": 1677269364,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "smart 2 @asknvl1",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1262,
+            "forward_date": 1674161957,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 9,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAAhizY_kZdExFXYs1zatwmiSU847ZsPQAAroiAAKmxVFKhBh3hDdLVe4BAAdtAAMuBA",
+                "file_unique_id": "AQADuiIAAqbFUUpy",
+                "file_size": 10067
+              },
+              "file_name": "IMG_9188.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIYs2P5GXRMRV2LNc2rcJoklPOO2bD0AAK6IgACpsVRSoQYd4Q3S1XuLgQ",
+              "file_unique_id": "AgADuiIAAqbFUUo",
+              "file_size": 1234965
+            },
+            "caption": "SEGUIMOS TRABAJANDO DURO 💪\n\nNo paramos de seguir trabajando todos los días por ustedes para darle los mejores resultados y las mejores ganancias pues esto nos demuestra que somos un canal demasiado responsable con todo nuestro trabajo🔥\n\nTodo eso lo hago para darle a usted la tranquilidad y la seguridad de qué su dinero está haciendo bien invertido 🤙\n\n📲Escríbeme para más información ℹ️  @asknvl1",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 27
+              },
+              {
+                "type": "code",
+                "offset": 29,
+                "length": 206
+              },
+              {
+                "type": "underline",
+                "offset": 239,
+                "length": 115
+              },
               {
                 "type": "mention",
-                "offset": 8,
+                "offset": 393,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🥇GANANCIAS SEGURAS🥇",
+                    "url": "https://t.me/asknvl1"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_35.MP4"
         }
       ]
     },
@@ -86,7 +189,7 @@
         {
           "Id": 1,
           "Message": {
-            "message_id": 6038,
+            "message_id": 6329,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -94,28 +197,95 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927766,
+            "date": 1677269399,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "push 1 @asknvl1",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1261,
+            "forward_date": 1674152873,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADcwADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUp4",
+                "file_size": 1272
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADbQADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUpy",
+                "file_size": 14097
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADeAADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUp9",
+                "file_size": 56792
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADeQADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUp-",
+                "file_size": 73302
+              }
+            ],
+            "caption": "Y SI FAMILIA, HOY ES UN EXCELENTE DÍA 🤑\n\nAsí que hoy no pueden perderse esta oportunidad ✅\n\nMuchos de nosotros no sabemos vivir el presente. Mientras estamos en el trabajo, soñamos con unas vacaciones y 🤯descansar en el mar, en lugar de resolver problemas, huimos a los sueños, en lugar de disfrutar de las oportunidades que nos brinda el día. Solo trata de detenerte y en algún momento analizar exactamente el momento presente. Y Sí, te sorprenderás de lo mucho que puedes lograr 💵\n\n🏦 Si tu quieres obtener todo eso que siempre soñaste simplemente escríbeme  @asknvl1",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 38
+              },
+              {
+                "type": "underline",
+                "offset": 42,
+                "length": 48
+              },
+              {
+                "type": "italic",
+                "offset": 93,
+                "length": 392
+              },
+              {
+                "type": "code",
+                "offset": 490,
+                "length": 72
+              },
               {
                 "type": "mention",
-                "offset": 7,
+                "offset": 564,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🔊HOY ES TU DÍA PARA GANAR🔊",
+                    "url": "https://t.me/asknvl1"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_36.jpg"
         },
         {
           "Id": 2,
           "Message": {
-            "message_id": 6040,
+            "message_id": 6331,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -123,23 +293,92 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927770,
+            "date": 1677269406,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "push 2 @asknvl1",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1257,
+            "forward_date": 1674134195,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 9,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAAhi7Y_kZnieSozbOGxK9TYc4wKzWk5IAAk0nAAI9NElKBRm0y4d_2sUBAAdtAAMuBA",
+                "file_unique_id": "AQADTScAAj00SUpy",
+                "file_size": 11260
+              },
+              "file_name": "IMG_9162.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIYu2P5GZ4nkqM2zhsSvU2HOMCs1pOSAAJNJwACPTRJSgUZtMuHf9rFLgQ",
+              "file_unique_id": "AgADTScAAj00SUo",
+              "file_size": 1283332
+            },
+            "caption": "🌏BUENOS DIAS FAMILIA ☀️❤️ \n\n🤑Activos hoy trabajando por y para ustedes, hoy les dejo los resultados de mis señales!!🔥\n\nVamos a sacar mucho provecho a las inversiones ganando mucho dinero\n\n✅Solo tendré 35 plazas abiertas para hoy así que lo te quedes sin la tuya \n\nSi estás interesado simplemente escríbeme y empieza ha ganar 🏆 \n\n📲CONTACTO:  @asknvl1",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 2,
+                "length": 22
+              },
+              {
+                "type": "underline",
+                "offset": 2,
+                "length": 20
+              },
+              {
+                "type": "bold",
+                "offset": 74,
+                "length": 46
+              },
+              {
+                "type": "underline",
+                "offset": 74,
+                "length": 44
+              },
+              {
+                "type": "bold",
+                "offset": 169,
+                "length": 23
+              },
+              {
+                "type": "underline",
+                "offset": 169,
+                "length": 20
+              },
+              {
+                "type": "bold",
+                "offset": 333,
+                "length": 13
+              },
               {
                 "type": "mention",
-                "offset": 7,
+                "offset": 346,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "♦️HOY ES TU DÍA PARA GANAR♦️",
+                    "url": "https://t.me/asknvl1"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_37.MP4"
         }
       ]
     }
@@ -149,17 +388,99 @@
     "Name": "testmoderator2_bot",
     "Token": "5911667484:AAGdR8NIRG1ULAp9jrH5gHOGqCJtULONMPw",
     "ChannelID": null,
-    "LeadType": null,
+    "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
-        "Text": "hi",
-        "Entities": null,
-        "ReplyMarkup": null
+        "Text": "​​😢Amigo, es una lástima que hayas decidido dejar nuestra gran y amigable familia😢\n\nEspero que te vayas después de ganar mucho dinero con mi ayuda y no necesites más ayuda. En ese caso, estoy feliz y mi trabajo está hecho ❤️‍🔥\n\nY si aún no has intentado ganar dinero con mi ayuda, dame la oportunidad de demostrar que es real. Cuantas más personas pueda ayudar, mejor será para mí y mi familia 🏆👍🏾\n\n❗️Además, te adjunto algunas de las personas que han trabajado conmigo hasta la fecha. Como puedes ver, la mayoría de ellos obtuvieron sus ganancias. Ahora es tu turno❗️\n\n⬇️ENVÍEME un mensaje de texto si tienes alguna pregunta⬇️",
+        "Entities": [
+          {
+            "type": "text_link",
+            "offset": 0,
+            "length": 2,
+            "url": "https://telegra.ph/file/3fcda0c427796949d2183.jpg"
+          },
+          {
+            "type": "bold",
+            "offset": 4,
+            "length": 78
+          },
+          {
+            "type": "italic",
+            "offset": 175,
+            "length": 55
+          },
+          {
+            "type": "underline",
+            "offset": 330,
+            "length": 73
+          },
+          {
+            "type": "code",
+            "offset": 407,
+            "length": 84
+          },
+          {
+            "type": "bold",
+            "offset": 578,
+            "length": 53
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "🔥Quiero Invertir🔥",
+                "url": "https://t.me/Santiago_Sannchez"
+              }
+            ]
+          ]
+        }
       },
       "ByeMessage": {
-        "Text": "bye",
-        "Entities": null,
-        "ReplyMarkup": null
+        "Text": "​​😢Amigo, es una lástima que hayas decidido dejar nuestra gran y amigable familia😢\n\nEspero que te vayas después de ganar mucho dinero con mi ayuda y no necesites más ayuda. En ese caso, estoy feliz y mi trabajo está hecho ❤️‍🔥\n\nY si aún no has intentado ganar dinero con mi ayuda, dame la oportunidad de demostrar que es real. Cuantas más personas pueda ayudar, mejor será para mí y mi familia 🏆👍🏾\n\n❗️Además, te adjunto algunas de las personas que han trabajado conmigo hasta la fecha. Como puedes ver, la mayoría de ellos obtuvieron sus ganancias. Ahora es tu turno❗️\n\n⬇️ENVÍEME un mensaje de texto si tienes alguna pregunta⬇️",
+        "Entities": [
+          {
+            "type": "text_link",
+            "offset": 0,
+            "length": 2,
+            "url": "https://telegra.ph/file/3fcda0c427796949d2183.jpg"
+          },
+          {
+            "type": "bold",
+            "offset": 4,
+            "length": 78
+          },
+          {
+            "type": "italic",
+            "offset": 175,
+            "length": 55
+          },
+          {
+            "type": "underline",
+            "offset": 330,
+            "length": 73
+          },
+          {
+            "type": "code",
+            "offset": 407,
+            "length": 84
+          },
+          {
+            "type": "bold",
+            "offset": 578,
+            "length": 53
+          }
+        ],
+        "ReplyMarkup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "🔥Quiero Invertir🔥",
+                "url": "https://t.me/Santiago_Sannchez"
+              }
+            ]
+          ]
+        }
       }
     },
     "PushData": {
@@ -168,7 +489,7 @@
           "TimePeriod": 1.0,
           "Id": 1,
           "Message": {
-            "message_id": 6028,
+            "message_id": 6319,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -176,29 +497,83 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927702,
+            "date": 1677269344,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "smart 1 @asknvl2",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1263,
+            "forward_date": 1674169877,
+            "video": {
+              "width": 1280,
+              "height": 720,
+              "duration": 8,
+              "thumb": {
+                "width": 320,
+                "height": 180,
+                "file_id": "AAMCAgADGQEAAhivY_kZYIFcVjupVUWN9NTSiiJhUSYAAvciAAKmxVFK5o_gedr8LlwBAAdtAAMuBA",
+                "file_unique_id": "AQAD9yIAAqbFUUpy",
+                "file_size": 5856
+              },
+              "file_name": "IMG_9189.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIYr2P5GWCBXFY7qVVFjfTU0ooiYVEmAAL3IgACpsVRSuaP4Hna_C5cLgQ",
+              "file_unique_id": "AgAD9yIAAqbFUUo",
+              "file_size": 2166983
+            },
+            "caption": "❗️FAMILIA ATENCIÓN ❗️ \n \nMe acaba de llegar este video de uno de mis suscriptores, \nNo saben lo feliz que me pongo al escuchar que les esta yendo muy bien con mi canal, cómo pueden ver y escuchar es un Feliz ganador 🏆  \n \nQue gracias a todas las buenas inversiones ha podido salir adelante y pagar todas sus deudas 😎🔥 \n \n💎Familia todo esto lo hago por ustedes, esto es una gran motivación que me  recarga de energía para seguir dando lo mejor de mi para ustedes 🔥🏆 \n \n❗️Tu también puedes  estar en la misma situación que el y puedes cambiar tu estilo vida simplemente con unirte a mi canal Por eso te invito a que Me ESCRIBAS @asknvl2 \n \n✅Vamos con toda la motivación para ganar 🏆",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 21
+              },
+              {
+                "type": "code",
+                "offset": 25,
+                "length": 197
+              },
+              {
+                "type": "underline",
+                "offset": 223,
+                "length": 97
+              },
+              {
+                "type": "bold",
+                "offset": 476,
+                "length": 155
+              },
               {
                 "type": "mention",
-                "offset": 8,
+                "offset": 632,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "💎TU TAMBIÉN PUEDES GANAR 💎",
+                    "url": "https://t.me/asknvl2"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_34.MP4"
         },
         {
           "TimePeriod": 2.0,
           "Id": 2,
           "Message": {
-            "message_id": 6032,
+            "message_id": 6323,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -206,23 +581,72 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927744,
+            "date": 1677269364,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "smart 2 @asknvl2",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1262,
+            "forward_date": 1674161957,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 9,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAAhizY_kZdExFXYs1zatwmiSU847ZsPQAAroiAAKmxVFKhBh3hDdLVe4BAAdtAAMuBA",
+                "file_unique_id": "AQADuiIAAqbFUUpy",
+                "file_size": 10067
+              },
+              "file_name": "IMG_9188.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIYs2P5GXRMRV2LNc2rcJoklPOO2bD0AAK6IgACpsVRSoQYd4Q3S1XuLgQ",
+              "file_unique_id": "AgADuiIAAqbFUUo",
+              "file_size": 1234965
+            },
+            "caption": "SEGUIMOS TRABAJANDO DURO 💪\n\nNo paramos de seguir trabajando todos los días por ustedes para darle los mejores resultados y las mejores ganancias pues esto nos demuestra que somos un canal demasiado responsable con todo nuestro trabajo🔥\n\nTodo eso lo hago para darle a usted la tranquilidad y la seguridad de qué su dinero está haciendo bien invertido 🤙\n\n📲Escríbeme para más información ℹ️  @asknvl2",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 27
+              },
+              {
+                "type": "code",
+                "offset": 29,
+                "length": 206
+              },
+              {
+                "type": "underline",
+                "offset": 239,
+                "length": 115
+              },
               {
                 "type": "mention",
-                "offset": 8,
+                "offset": 393,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🥇GANANCIAS SEGURAS🥇",
+                    "url": "https://t.me/asknvl2"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_35.MP4"
         }
       ]
     },
@@ -231,7 +655,7 @@
         {
           "Id": 1,
           "Message": {
-            "message_id": 6038,
+            "message_id": 6329,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -239,28 +663,95 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927766,
+            "date": 1677269399,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "push 1 @asknvl2",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1261,
+            "forward_date": 1674152873,
+            "photo": [
+              {
+                "width": 90,
+                "height": 51,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADcwADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUp4",
+                "file_size": 1272
+              },
+              {
+                "width": 320,
+                "height": 180,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADbQADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUpy",
+                "file_size": 14097
+              },
+              {
+                "width": 800,
+                "height": 450,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADeAADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUp9",
+                "file_size": 56792
+              },
+              {
+                "width": 1280,
+                "height": 720,
+                "file_id": "AgACAgIAAxkBAAIYuWP5GZeAmjsNrRHGvVL1XP_9FFROAALhxzEbPTRRStjmOAFXpUzjAQADAgADeQADLgQ",
+                "file_unique_id": "AQAD4ccxGz00UUp-",
+                "file_size": 73302
+              }
+            ],
+            "caption": "Y SI FAMILIA, HOY ES UN EXCELENTE DÍA 🤑\n\nAsí que hoy no pueden perderse esta oportunidad ✅\n\nMuchos de nosotros no sabemos vivir el presente. Mientras estamos en el trabajo, soñamos con unas vacaciones y 🤯descansar en el mar, en lugar de resolver problemas, huimos a los sueños, en lugar de disfrutar de las oportunidades que nos brinda el día. Solo trata de detenerte y en algún momento analizar exactamente el momento presente. Y Sí, te sorprenderás de lo mucho que puedes lograr 💵\n\n🏦 Si tu quieres obtener todo eso que siempre soñaste simplemente escríbeme  @asknvl2",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 0,
+                "length": 38
+              },
+              {
+                "type": "underline",
+                "offset": 42,
+                "length": 48
+              },
+              {
+                "type": "italic",
+                "offset": 93,
+                "length": 392
+              },
+              {
+                "type": "code",
+                "offset": 490,
+                "length": 72
+              },
               {
                 "type": "mention",
-                "offset": 7,
+                "offset": 564,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "🔊HOY ES TU DÍA PARA GANAR🔊",
+                    "url": "https://t.me/asknvl2"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_36.jpg"
         },
         {
           "Id": 2,
           "Message": {
-            "message_id": 6040,
+            "message_id": 6331,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -268,23 +759,92 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1676927770,
+            "date": 1677269406,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "push 2 @asknvl2",
-            "entities": [
+            "forward_from_chat": {
+              "id": -1001639014776,
+              "type": "channel",
+              "title": "PERX"
+            },
+            "forward_from_message_id": 1257,
+            "forward_date": 1674134195,
+            "video": {
+              "width": 848,
+              "height": 464,
+              "duration": 9,
+              "thumb": {
+                "width": 320,
+                "height": 175,
+                "file_id": "AAMCAgADGQEAAhi7Y_kZnieSozbOGxK9TYc4wKzWk5IAAk0nAAI9NElKBRm0y4d_2sUBAAdtAAMuBA",
+                "file_unique_id": "AQADTScAAj00SUpy",
+                "file_size": 11260
+              },
+              "file_name": "IMG_9162.MP4",
+              "mime_type": "video/mp4",
+              "file_id": "BAACAgIAAxkBAAIYu2P5GZ4nkqM2zhsSvU2HOMCs1pOSAAJNJwACPTRJSgUZtMuHf9rFLgQ",
+              "file_unique_id": "AgADTScAAj00SUo",
+              "file_size": 1283332
+            },
+            "caption": "🌏BUENOS DIAS FAMILIA ☀️❤️ \n\n🤑Activos hoy trabajando por y para ustedes, hoy les dejo los resultados de mis señales!!🔥\n\nVamos a sacar mucho provecho a las inversiones ganando mucho dinero\n\n✅Solo tendré 35 plazas abiertas para hoy así que lo te quedes sin la tuya \n\nSi estás interesado simplemente escríbeme y empieza ha ganar 🏆 \n\n📲CONTACTO:  @asknvl2",
+            "caption_entities": [
+              {
+                "type": "bold",
+                "offset": 2,
+                "length": 22
+              },
+              {
+                "type": "underline",
+                "offset": 2,
+                "length": 20
+              },
+              {
+                "type": "bold",
+                "offset": 74,
+                "length": 46
+              },
+              {
+                "type": "underline",
+                "offset": 74,
+                "length": 44
+              },
+              {
+                "type": "bold",
+                "offset": 169,
+                "length": 23
+              },
+              {
+                "type": "underline",
+                "offset": 169,
+                "length": 20
+              },
+              {
+                "type": "bold",
+                "offset": 333,
+                "length": 13
+              },
               {
                 "type": "mention",
-                "offset": 7,
+                "offset": 346,
                 "length": 8
               }
-            ]
+            ],
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "♦️HOY ES TU DÍA PARA GANAR♦️",
+                    "url": "https://t.me/asknvl2"
+                  }
+                ]
+              ]
+            }
           },
-          "FilePath": null
+          "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\chains\\1481806946\\TEST\\file_37.MP4"
         }
       ]
     }

@@ -22,7 +22,7 @@ namespace csb.bot_moderator
         #region const        
         const double push_period = 8 * 60 * 1000; // мс = 10 минут
 #if DEBUG
-        const double daily_push_period = 3 * 60 * 1000; // мс = 3 минуты
+        const double daily_push_period = 8 * 60 * 1000; // мс = 3 минуты
 #else
         const double daily_push_period = 10 * 60 * 1000; // мс = 10 минут
 #endif
@@ -96,7 +96,7 @@ namespace csb.bot_moderator
 #if !DEBUG
             pushTimer.Interval = push_period;
 #else
-            pushTimer.Interval = 10000;
+            pushTimer.Interval = push_period;
 #endif
             pushTimer.AutoReset = true;
             pushTimer.Elapsed += PushTimer_Elapsed;
