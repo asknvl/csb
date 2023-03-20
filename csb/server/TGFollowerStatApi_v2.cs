@@ -360,7 +360,7 @@ namespace csb.server
             {
                 throw new Exception($"MarkFollowerWasDecined {geotag} {id} {ex.Message}");
             }
-        }
+        }        
         #endregion
     }
 }

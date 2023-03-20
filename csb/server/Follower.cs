@@ -20,6 +20,7 @@ namespace csb.server
         public int office_id { get; set; } 
         //[JsonIgnore]
         public bool is_subscribed { get; set; }
+        public string subscribe_date { get; set; }
 
         public override string ToString()
         {
@@ -38,6 +39,7 @@ namespace csb.server
                    $"{tg_user_id} " +
                    $"{firstname} " +
                    $"{lastname} " +
+                   $"{subscribe_date} " +
                    $"{usrnm} " +
                    $"{link} ";
 

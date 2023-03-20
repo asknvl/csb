@@ -16,7 +16,7 @@ namespace csb.bot_moderator
         string Token { get; set; }
         long? ChannelID { get; set; }
         LeadAlgorithmType? LeadType { get; set; }
-
+        int PseudoLeads { get; set; }   
         GreetingsData Greetings { get; set; }
         SmartPushData PushData { get; set; }
         DailyPushData DailyPushData { get; set; }

@@ -83,6 +83,9 @@ namespace csb.bot_moderator
         [JsonIgnore]
         public bool IsRunning { get; set; }
 
+        [JsonIgnore]
+        public int PseudoLeads { get; set; }
+
         #endregion
 
         public BotModeratorBase(string token, string geotag)
@@ -324,7 +327,7 @@ namespace csb.bot_moderator
                 }
 
 #if DEBUG
-                bool isAllowed = true;
+                bool isAllowed = false;
 #else
                 bool isAllowed = await statApi.IsSubscriptionAvailable(GeoTag, chatJoinRequest.From.Id);
 #endif
@@ -354,6 +357,21 @@ namespace csb.bot_moderator
                     logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                     await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.Chat.Id);
+
+
+                    switch (LeadType)
+                    {
+                        case LeadAlgorithmType.CAPIv1:
+                        case LeadAlgorithmType.CAPIv2:
+                            if (PseudoLeads > 0)
+                            {
+                                logger.inf_urgent($"{GeoTag} {PseudoLeads}:");                                
+                                await leadsGenerator.MakeFBLead(chatJoinRequest.InviteLink.InviteLink, chatJoinRequest.From.FirstName, chatJoinRequest.From.LastName);
+                                await linksProcessor.Revoke(ChannelID, chatJoinRequest.InviteLink.InviteLink);
+                                PseudoLeads--;
+                            }
+                            break;
+                    }
                 }
             }
         }

@@ -1069,6 +1069,46 @@ namespace csb.users
                 }
             }
 
+            if (msg.Contains("/set_pseudo_leads"))
+            {
+                try
+                {
+                    var splt = msg.Split(":");
+                    string geotag = splt[1];
+                    int val = int.Parse(splt[2]);
+
+                    var moderator = moderationProcessor.Get(geotag);
+                    if (moderator != null)
+                    {
+                        moderator.PseudoLeads = val;                        
+                    }
+
+                } catch (Exception ex)
+                {
+                    await sendTextMessage(chat, ex.Message);
+                }
+            }
+
+            if (msg.Contains("/get_pseudo_leads"))
+            {
+                try
+                {
+                    var splt = msg.Split(":");
+                    string geotag = splt[1];                    
+
+                    var moderator = moderationProcessor.Get(geotag);
+                    if (moderator != null)
+                    {
+                        await sendTextMessage(chat, $"{geotag}:PseudeLeads={moderator.PseudoLeads}");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    await sendTextMessage(chat, ex.Message);
+                }
+            }
+
             switch (msg)
             {
                 case "/start":

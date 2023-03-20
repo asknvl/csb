@@ -15,5 +15,6 @@ namespace csb.server
         string lastname { get; set; }   
         string invite_link { get; set; }
         string tg_geolocation { get; set; }
+        string subscribe_date { get; set; }
     }
 }

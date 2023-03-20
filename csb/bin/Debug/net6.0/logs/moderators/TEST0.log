@@ -1,55 +1,12 @@
-15.03.2023 23:14:42 inf MDR > Moderator stopped
-15.03.2023 23:14:42 inf MDR > Startting moderator...
-15.03.2023 23:14:43 inf MDR > Moderator started, bot username=testmoderator1_bot channelID=null
-15.03.2023 23:21:13 err MDR > Telegram.Bot.Exceptions.RequestException: Request timed out
- ---> System.Threading.Tasks.TaskCanceledException: The request was canceled due to the configured HttpClient.Timeout of 100 seconds elapsing.
- ---> System.TimeoutException: The operation was canceled.
- ---> System.Threading.Tasks.TaskCanceledException: The operation was canceled.
- ---> System.IO.IOException: Unable to read data from the transport connection: Операция ввода/вывода была прервана из-за завершения потока команд или по запросу приложения..
- ---> System.Net.Sockets.SocketException (995): Операция ввода/вывода была прервана из-за завершения потока команд или по запросу приложения.
-   --- End of inner exception stack trace ---
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
-   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
-   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](TIOAdapter adapter)
-   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](TIOAdapter adapter, Memory`1 buffer)
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
-   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
-   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
-   --- End of inner exception stack trace ---
-   --- End of inner exception stack trace ---
-   at System.Net.Http.HttpClient.HandleFailure(Exception e, Boolean telemetryStarted, HttpResponseMessage response, CancellationTokenSource cts, CancellationToken cancellationToken, CancellationTokenSource pendingRequestsCts)
-   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   --- End of inner exception stack trace ---
-   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
-   at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRequest`1 request, CancellationToken cancellationToken)
-   at Telegram.Bot.Extensions.Polling.DefaultUpdateReceiver.ReceiveAsync(IUpdateHandler updateHandler, CancellationToken cancellationToken)
-15.03.2023 23:22:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-15.03.2023 23:22:44 inf MDR > TEST0 SMART_PUSH: delivered 0
-15.03.2023 23:30:44 inf MDR > TEST0 SMART_PUSH: delivered 0
-15.03.2023 23:30:44 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-15.03.2023 23:38:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-15.03.2023 23:38:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-15.03.2023 23:46:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-15.03.2023 23:46:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-15.03.2023 23:54:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-15.03.2023 23:54:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:02:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:02:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:10:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:10:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:18:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:18:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:26:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:26:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:34:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:34:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:42:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:42:45 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:50:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:50:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
-16.03.2023 0:58:43 inf MDR > TEST0 SMART_PUSH: delivered 0
-16.03.2023 0:58:43 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+19.03.2023 11:04:45 inf MDR > Moderator stopped
+19.03.2023 11:04:45 inf MDR > Startting moderator...
+19.03.2023 11:04:46 inf MDR > Moderator started, bot username=testmoderator1_bot channelID=-1001692610611
+19.03.2023 11:04:52 err MDR > UpdateFollowers success=false
+19.03.2023 11:05:03 inf MDR > TEST0 DECLINED(1) -1001692610611 1784884123 Raja Movej  rajamovej TEST01 TEST TEST2 TEST1 
+19.03.2023 11:05:32 inf MDR > TEST0 DECLINED(2) -1001692610611 1784884123 Raja Movej  rajamovej TEST01 TEST TEST2 TEST1 
+19.03.2023 11:06:54 inf MDR > TEST0 DECLINED(3) -1001692610611 1784884123 Raja Movej  rajamovej TEST01 TEST TEST2 TEST1 
+19.03.2023 11:06:59 inf MDR > TEST0 10:
+19.03.2023 11:07:02 err MDR > GetLeadData Response status code does not indicate success: 400 (Bad Request).
+19.03.2023 11:07:23 inf MDR > TEST0 DECLINED(4) -1001692610611 1784884123 Raja Movej  rajamovej TEST01 TEST TEST2 TEST1 
+19.03.2023 11:07:27 inf MDR > TEST0 10:
+19.03.2023 11:07:27 err MDR > GetLeadData Response status code does not indicate success: 400 (Bad Request).
