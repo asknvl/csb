@@ -84,7 +84,7 @@ namespace csb.bot_moderator
         public bool IsRunning { get; set; }
 
         [JsonIgnore]
-        public int PseudoLeads { get; set; }
+        public Dictionary<string, int> PseudoLeads { get; set; } = new();
 
         #endregion
 
@@ -363,15 +363,58 @@ namespace csb.bot_moderator
                     {
                         case LeadAlgorithmType.CAPIv1:
                         case LeadAlgorithmType.CAPIv2:
-                            if (PseudoLeads > 0)
+
+                            try
                             {
-                                logger.inf_urgent($"{GeoTag} {PseudoLeads}:");                                
-                                await leadsGenerator.MakeFBLead(chatJoinRequest.InviteLink.InviteLink, chatJoinRequest.From.FirstName, chatJoinRequest.From.LastName);
-                                await linksProcessor.Revoke(ChannelID, chatJoinRequest.InviteLink.InviteLink);
-                                PseudoLeads--;
+                                var lead_data = await trackApi.GetLeadData(chatJoinRequest.InviteLink.InviteLink);
+                                string pixel = lead_data.fb_pixel;
+
+                                if (PseudoLeads.ContainsKey(pixel))
+                                {
+
+                                    logger.inf_urgent($"PseudoLead: {GeoTag} {pixel} {PseudoLeads[pixel]}");
+
+                                    if (PseudoLeads[pixel] > 0)
+                                    {
+                                        PseudoLeads[pixel]--;
+                                        logger.inf_urgent($"PseudoLeads left: {PseudoLeads[pixel]}");
+
+                                        await leadsGenerator.MakeFBLead(chatJoinRequest.InviteLink.InviteLink, chatJoinRequest.From.FirstName, chatJoinRequest.From.LastName);
+                                        await linksProcessor.Revoke(ChannelID, chatJoinRequest.InviteLink.InviteLink);
+
+                                    }
+                                    else
+                                    {
+                                        //logger.inf_urgent($"No pseudoleads for pixel {pixel} left. Pixel removed");
+                                        //PseudoLeads.Remove(pixel);
+                                    }
+
+                                    
+                                }
                             }
+                            catch (Exception ex)
+                            {
+                                logger.err(ex.Message);
+                            }
+
                             break;
                     }
+
+                    
+
+                    //switch (LeadType)
+                    //{
+                    //    case LeadAlgorithmType.CAPIv1:
+                    //    case LeadAlgorithmType.CAPIv2:
+                    //        if (PseudoLeads > 0)
+                    //        {
+                    //            logger.inf_urgent($"{GeoTag} {PseudoLeads}:");                                
+                    //            await leadsGenerator.MakeFBLead(chatJoinRequest.InviteLink.InviteLink, chatJoinRequest.From.FirstName, chatJoinRequest.From.LastName);
+                    //            await linksProcessor.Revoke(ChannelID, chatJoinRequest.InviteLink.InviteLink);
+                    //            PseudoLeads--;
+                    //        }
+                    //        break;
+                    //}
                 }
             }
         }

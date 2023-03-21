@@ -1075,12 +1075,13 @@ namespace csb.users
                 {
                     var splt = msg.Split(":");
                     string geotag = splt[1];
-                    int val = int.Parse(splt[2]);
+                    string pixel = splt[2];
+                    int val = int.Parse(splt[3]);
 
                     var moderator = moderationProcessor.Get(geotag);
                     if (moderator != null)
                     {
-                        moderator.PseudoLeads = val;                        
+                        moderator.PseudoLeads.Add(pixel, val);
                     }
 
                 } catch (Exception ex)
@@ -1099,7 +1100,37 @@ namespace csb.users
                     var moderator = moderationProcessor.Get(geotag);
                     if (moderator != null)
                     {
-                        await sendTextMessage(chat, $"{geotag}:PseudeLeads={moderator.PseudoLeads}");
+                        string s = "";
+                        foreach (var item in moderator.PseudoLeads)
+                        {
+                            s += $"{item.Key} {item.Value}";
+                        }
+
+                        string output = (!s.Equals("")) ? $"{geotag}:PseudeLeads={s}" : "No pseudo leads set";
+
+                        await sendTextMessage(chat, output);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    await sendTextMessage(chat, ex.Message);
+                }
+            }
+
+            if (msg.Contains("/del_pseudo_leads"))
+            {
+                try
+                {
+                    var splt = msg.Split(":");
+                    string geotag = splt[1];
+                    string pixel = splt[2];
+
+                    var moderator = moderationProcessor.Get(geotag);
+                    if (moderator != null)
+                    {
+                        if (moderator.PseudoLeads.ContainsKey(pixel))
+                            moderator.PseudoLeads.Remove(pixel);
                     }
 
                 }
