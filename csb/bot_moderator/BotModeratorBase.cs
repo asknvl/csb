@@ -22,7 +22,7 @@ namespace csb.bot_moderator
         #region const        
         const double push_period = 8 * 60 * 1000; // мс = 10 минут
 #if DEBUG
-        const double daily_push_period = 8 * 60 * 1000; // мс = 3 минуты
+        const double daily_push_period = 1 * 60 * 1000; // мс = 3 минуты
 #else
         const double daily_push_period = 10 * 60 * 1000; // мс = 10 минут
 #endif
@@ -209,7 +209,7 @@ namespace csb.bot_moderator
                     //    Console.WriteLine("set fileId=null");
                     //    message.fileId = null;
                     //}
-                    await message.Send(1784884123, bot);
+                    await message.Send(1447725495, bot);
                     cntr++;
                 }
                 else
@@ -327,7 +327,7 @@ namespace csb.bot_moderator
                 }
 
 #if DEBUG
-                bool isAllowed = false;
+                bool isAllowed = true;
 #else
                 bool isAllowed = await statApi.IsSubscriptionAvailable(GeoTag, chatJoinRequest.From.Id);
 #endif
@@ -356,7 +356,7 @@ namespace csb.bot_moderator
                 {
                     logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.Chat.Id);
+                    await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.From.Id);
 
 
                     switch (LeadType)
@@ -582,7 +582,7 @@ namespace csb.bot_moderator
             //if (ChannelID != null)
             //    linksProcessor.Generate(ChannelID, 20).Wait();
 
-            linksProcessor.StartLinkNumberControl(ChannelID, cts);
+            linksProcessor.StartLinkNumberControl(ChannelID, cts); 
 
             var receiverOptions = new ReceiverOptions
             {

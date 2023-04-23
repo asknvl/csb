@@ -4,7 +4,7 @@
     "Name": "testmoderator1_bot",
     "Token": "5667741487:AAHeStGOG7XAnINKPIkOHUq0fkGXWWvZS4k",
     "ChannelID": -1001692610611,
-    "LeadType": 1,
+    "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
         "Text": "hi",
