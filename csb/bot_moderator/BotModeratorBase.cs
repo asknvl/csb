@@ -3,6 +3,7 @@ using asknvl.logger;
 using csb.addme_service;
 using csb.invitelinks;
 using csb.server;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace csb.bot_moderator
 
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
-        ILogger logger;
+        asknvl.logger.ILogger logger;
         protected ITelegramBotClient bot;
         protected CancellationTokenSource cts;
 
@@ -128,7 +129,9 @@ namespace csb.bot_moderator
                 string date_from = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
                 string date_to = DateTime.Now.ToString("yyyy-MM-dd");
 
+                logger.inf_urgent($"SMART:GeoTag={GeoTag}");
                 var subs = await statApi.GetNoFeedbackFollowers(GeoTag, date_from, date_to);
+                logger.inf_urgent($"SMART:GeoTag={GeoTag} subs count={subs.Count}");
 
                 foreach (var subscriber in subs)
                 {
@@ -141,7 +144,22 @@ namespace csb.bot_moderator
                     double Tp = lastPushHours;
                     double Tl = subscriber.time_diff_last_push_subscr;
 
-                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > Tp && m.TimePeriod < Tc - Tl + Tp);
+
+                    //if (subscriber.tg_user_id.Equals(2018370443))
+                    //{
+                    //    logger.inf_urgent("!!! 2018370443");
+
+                    //    logger.inf_urgent($"lastPushSendHours={lastPushSendHours}");
+                    //    logger.inf_urgent($"lastPushDeliveredHours={lastPushDeliveredHours}");
+                    //    logger.inf_urgent($"lastPushHours={lastPushHours}");
+
+                    //    logger.inf_urgent($"Tc={subscriber.time_after_subscribe}");
+                    //    logger.inf_urgent($"Tp={lastPushHours}");
+                    //    logger.inf_urgent($"Tl={subscriber.time_diff_last_push_subscr}");
+                    //}
+
+
+                    var pushmessage = PushData.Messages.FirstOrDefault(m => m.TimePeriod > Tp && m.TimePeriod < Tc - Tl + Tp);                    
 
                     if (pushmessage != null)
                     {
@@ -156,8 +174,17 @@ namespace csb.bot_moderator
                         }
                         catch (Exception ex)
                         {
-                            await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
-                            throw;
+
+                            try
+                            {
+
+                                await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
+                            } catch 
+                            {
+                            }
+
+                            logger.inf_urgent($"SMART: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message {ex.Message}");
+                            //throw;
                             //logger.err($"PUSH: user {subscriber.tg_user_id} NOT pushed with {pushmessage.TimePeriod} hour message {ex.Message}");
                         }
 
@@ -165,6 +192,7 @@ namespace csb.bot_moderator
                     else
                     {
                         //No messages for user yet
+                        //logger.inf_urgent("SMART:pusmessage=null");
                     }
                 }
 #else
