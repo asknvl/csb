@@ -15,6 +15,7 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace csb.bot_moderator
 {
@@ -363,13 +364,14 @@ namespace csb.bot_moderator
                 {
                     try
                     {
+
                         if (Greetings.HelloMessage != null)
                             await bot.SendTextMessageAsync(
                                      chatJoinRequest.From.Id,
                                      text: Greetings.HelloMessage.Text,
                                      replyMarkup: Greetings.HelloMessage.ReplyMarkup,
                                      entities: Greetings.HelloMessage.Entities,
-                                     disableWebPagePreview: true,
+                                     disableWebPagePreview: true,                                     
                                      cancellationToken: cancellationToken);
                     }
                     catch (Exception ex)
