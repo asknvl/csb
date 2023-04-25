@@ -59,6 +59,10 @@
             "Telegram.Bot.Extensions.Polling": {
               "target": "Package",
               "version": "[1.0.2, )"
+            },
+            "WTelegramClient": {
+              "target": "Package",
+              "version": "[3.4.2, )"
             }
           },
           "imports": [

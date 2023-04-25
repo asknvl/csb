@@ -71,7 +71,7 @@ namespace csb.usr_push
         #endregion
 
         #region private
-        private void User_Update(TL.IObject arg)
+        private async Task OnUpdate(TL.IObject arg)
         {
             if (arg is not UpdatesBase updates)
                 return;
@@ -94,8 +94,8 @@ namespace csb.usr_push
                 user = new Client(Config);
                 usr = await user.LoginUserIfNeeded();
                 username = usr.username;
-                user.Update -= User_Update;
-                user.Update += User_Update;
+                user.OnUpdate -= OnUpdate;
+                user.OnUpdate += OnUpdate;
                 res = true;
             }).ContinueWith(t =>
             {
