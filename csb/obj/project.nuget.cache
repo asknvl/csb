@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ph3ZkjGw3gN87628HGgUC408GGSvraQ8jNEoZiUW1/furnviKGrWXn51aYJllaA7S7lT60bxrH14i+Ga29guZg==",
+  "dgSpecHash": "u1+G57lxMpDSlNmautZQlS+0Ns63nLI/Y00EEe32AAULzVOpcSJiBC89XEmVyLj1ZjZZqYUmURmjsOTqXtWpcw==",
   "success": true,
   "projectFilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\csb.csproj",
   "expectedPackageFiles": [
@@ -16,7 +16,8 @@
     "C:\\Users\\asknvl\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\asknvl\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
     "C:\\Users\\asknvl\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512",
-    "C:\\Users\\asknvl\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
+    "C:\\Users\\asknvl\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\wtelegramclient\\3.4.2\\wtelegramclient.3.4.2.nupkg.sha512"
   ],
   "logs": []
 }

@@ -142,7 +142,7 @@ namespace csb.usr_listener
             timer.Start();
         }
 
-        private void User_Update(TL.IObject u)
+        private async Task OnUpdate(TL.IObject u)
         {
 
             if (u is not UpdatesBase updates)
@@ -572,8 +572,10 @@ namespace csb.usr_listener
 
                 await RestoreBots();
 
-                user.Update -= User_Update;
-                user.Update += User_Update;
+                
+
+                user.OnUpdate -= OnUpdate;
+                user.OnUpdate += OnUpdate;
 
                 Console.WriteLine($"User {PhoneNumber} started");
 
@@ -589,7 +591,7 @@ namespace csb.usr_listener
             timer?.Stop();
             if (user != null)
             {
-                user.Update -= User_Update;
+                user.OnUpdate -= OnUpdate;
                 user.Dispose();
             }
 
