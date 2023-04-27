@@ -10,6 +10,12 @@ namespace csb.bot_moderator
         [JsonProperty]
         public TextMessage? HelloMessage { get; set; } = new();
         [JsonProperty]
+        public string PushStartEmoji { get; set; } = "🔥🔥🔥";
+        [JsonProperty]
+        public string PushStartText { get; set; }
+        [JsonProperty]
+        public TextMessage? HelloMessageReply { get; set; } = new();
+        [JsonProperty]
         public TextMessage? ByeMessage { get; set; } = new();
     }
 }

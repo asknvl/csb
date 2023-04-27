@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace csb.users
 {
@@ -138,6 +139,10 @@ namespace csb.users
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Настроить Join сообщение", callbackData: "editJoinMessage"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить push-старт", callbackData: "editPushStart"),
                 },
 
                 new[] {
@@ -306,6 +311,13 @@ namespace csb.users
 
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Завершить", callbackData: "finishEddingGreetings"),
+                }
+            })},
+
+              {"finishEddingJoinReply", new(new[] {
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Завершить", callbackData: "finishEddingJoinReply"),
                 }
             })},
 
@@ -787,6 +799,34 @@ namespace csb.users
 
         }
 
+        InlineKeyboardMarkup getMyPushStartMarkUp(bool usePushStart)
+        {
+            InlineKeyboardButton[][] pushstart_buttons = new InlineKeyboardButton[6][];
+            int i = 0;
+
+            if (usePushStart)
+            {
+                pushstart_buttons[0] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Использовать push-старт кнопку ✓", callbackData: $"pushstart_on") };
+                pushstart_buttons[1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Не использовать push-старт кнопку", callbackData: $"pushstart_off") };                
+            }
+            else
+            {
+                pushstart_buttons[0] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Использовать push-старт кнопку", callbackData: $"pushstart_on") };
+                pushstart_buttons[1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Не использовать push-старт кнопку ✓", callbackData: $"pushstart_off") };
+            }
+
+            pushstart_buttons[2] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Добавить ответ на push-start", callbackData: $"pushstart_add_reply") };
+            pushstart_buttons[3] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Удалить ответ на push-start", callbackData: $"pushstart_remove_reply") };
+            pushstart_buttons[4] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: $"Посмотреть ответ на push-start", callbackData: $"pushstart_show_reply") };
+
+            pushstart_buttons[5] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToModeratorShow") };
+
+            InlineKeyboardMarkup inlineKeyboard = new(pushstart_buttons);
+
+            return inlineKeyboard;
+
+        }
+
         async Task<Message> sendTextMessage(long chat, string message)
         {
             return await bot.SendTextMessageAsync(
@@ -986,6 +1026,15 @@ namespace csb.users
                 chatId: chat,
                 text:"Выберите алгоритм для обработки лидов:",
                 replyMarkup: getMyLeadAlgorithmsMarkUp(type),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showMyModeratorsPushStart(long chat, bool usePushStart)
+        {
+            await messagesProcessor.Add(chat, "editPushStart", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: "Настройки push-start:",
+                replyMarkup: getMyPushStartMarkUp(usePushStart),
                 cancellationToken: cancellationToken));
         }
 
@@ -1683,6 +1732,24 @@ namespace csb.users
                                 moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.Text = update.Message.Text;
                                 moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.Entities = update.Message.Entities;
                                 moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage.ReplyMarkup = update.Message.ReplyMarkup;
+
+                                moderationProcessor.Save();
+                                await messagesProcessor.Back(chat);
+
+                                State = BotState.free;
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingModeratorJoinMessageReply:
+                            try
+                            {
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessageReply.Text = update.Message.Text;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessageReply.Entities = update.Message.Entities;
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessageReply.ReplyMarkup = update.Message.ReplyMarkup;
 
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
@@ -2427,11 +2494,39 @@ namespace csb.users
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
+
+                case "finishEddingJoinReply":
+                    State = BotState.free;
+                    await messagesProcessor.Back(chat);
+                    await messagesProcessor.Delete(chat, "finishEddingJoinReply");
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
                 case "editJoinMessage":
                     //await messagesProcessor.Back(chat);
                     //await messagesProcessor.Delete(chat, "editJoinMessage");                    
                     await messagesProcessor.Add(chat, "editJoinMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Join сообщение нажмите Добавить", "editJoinMessageMenu"));
                     await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "editPushStart":
+                    try
+                    {
+                        var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+
+                        if (moderator != null)
+                        {
+                            var usePushStrart = moderator.UsePushStartButton;
+                            await showMyModeratorsPushStart(chat, usePushStrart);
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+                        }
+                        
+                        
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    
                     break;
 
                 case "editLeaveMessage":
@@ -2700,6 +2795,44 @@ namespace csb.users
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     }
                     catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "pushstart_on":
+                    try
+                    {
+                        var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                        if (moderator != null)
+                        {
+                            bool ps = true;
+                            moderator.UsePushStartButton = ps;
+                            await showMyModeratorsPushStart(chat, ps);
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+                            moderationProcessor.Save();
+                        }
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "pushstart_off":
+                    try
+                    {
+                        var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                        if (moderator != null)
+                        {
+                            bool ps = false;
+                            moderator.UsePushStartButton = ps;
+                            await showMyModeratorsPushStart(chat, ps);
+                            await bot.AnswerCallbackQueryAsync(query.Id);
+                            moderationProcessor.Save();
+
+                        }
+                    } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
@@ -3012,6 +3145,52 @@ namespace csb.users
                                     break;
                             }
 
+                        } catch (Exception ex)
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                        }
+                    }
+
+
+                    if (data.Contains("pushstart"))
+                    {
+                        try {
+                            string[] splt = data.Split("_");
+
+                            switch (splt[1])
+                            {
+
+                                case "add":
+                                    State = BotState.waitingModeratorJoinMessageReply;
+                                    string helloReqMsg = "Перешлите (forward) сюда ответ на нажатие push-кнопки, для отмены нажмите Завершить";
+                                    await messagesProcessor.Add(chat, "waitingModeratorJoinMessageReply", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingJoinReply"));
+                                    break;
+
+                                case "remove":
+                                    moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessageReply = new();
+                                    await sendTextMessage(Id, "Сообщение удалено");
+                                    break;
+
+                                case "show":
+                                    try
+                                    {
+                                        GreetingsData greetings = moderationProcessor.Greetings(currentModeratorGeoTag);
+                                        await bot.SendTextMessageAsync(
+                                               Id,
+                                               text: greetings.HelloMessageReply.Text,
+                                               replyMarkup: greetings.HelloMessageReply.ReplyMarkup,
+                                               entities: greetings.HelloMessageReply.Entities,
+                                               disableWebPagePreview: false,
+                                               cancellationToken: cancellationToken);
+                                    } catch (Exception ex)
+                                    {
+                                        await sendTextMessage(Id, "Сообщение не задано");
+                                    }
+                                    break;
+
+                            }
+
+                            await bot.AnswerCallbackQueryAsync(query.Id);
                         } catch (Exception ex)
                         {
                             await sendTextMessage(query.Message.Chat.Id, ex.Message);

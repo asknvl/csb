@@ -7,7 +7,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
@@ -87,6 +89,27 @@ namespace csb.bot_moderator
 
         [JsonIgnore]
         public Dictionary<string, int> PseudoLeads { get; set; } = new();
+
+        bool usePushStartButton;
+        [JsonProperty]
+        public bool UsePushStartButton
+        {
+            get => usePushStartButton;
+            set
+            {
+                usePushStartButton = value;
+
+                try
+                {
+                    Greetings.PushStartText = getPushButtonText(Greetings.HelloMessage.Text);
+                }
+                catch (Exception ex)
+                {
+                    Greetings.PushStartText = null;
+                }
+
+            }
+        }
 
         #endregion
 
@@ -365,14 +388,47 @@ namespace csb.bot_moderator
                     try
                     {
 
-                        if (Greetings.HelloMessage != null)
+                        if (!string.IsNullOrEmpty(Greetings.PushStartText) && UsePushStartButton)
+                        {
+                            ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
+                            {
+                                new KeyboardButton[] { $"{Greetings.PushStartText}" },
+                            })
+                            {
+                                ResizeKeyboard = true
+                            };
+
+                            if (Greetings.HelloMessage != null)
+                                await bot.SendTextMessageAsync(
+                                         chatJoinRequest.From.Id,
+                                         text: Greetings.HelloMessage.Text,
+                                         replyMarkup: replyKeyboardMarkup,
+                                         entities: Greetings.HelloMessage.Entities,
+                                         disableWebPagePreview: true,
+                                         cancellationToken: cancellationToken);
+
+                        }
+                        else
+                        {
+
                             await bot.SendTextMessageAsync(
                                      chatJoinRequest.From.Id,
                                      text: Greetings.HelloMessage.Text,
                                      replyMarkup: Greetings.HelloMessage.ReplyMarkup,
                                      entities: Greetings.HelloMessage.Entities,
-                                     disableWebPagePreview: true,                                     
+                                     disableWebPagePreview: true,
                                      cancellationToken: cancellationToken);
+                        }
+
+
+                        //if (Greetings.HelloMessage != null)
+                        //    await bot.SendTextMessageAsync(
+                        //             chatJoinRequest.From.Id,
+                        //             text: Greetings.HelloMessage.Text,
+                        //             replyMarkup: Greetings.HelloMessage.ReplyMarkup,
+                        //             entities: Greetings.HelloMessage.Entities,
+                        //             disableWebPagePreview: true,
+                        //             cancellationToken: cancellationToken);
                     }
                     catch (Exception ex)
                     {
@@ -419,7 +475,7 @@ namespace csb.bot_moderator
                                         //PseudoLeads.Remove(pixel);
                                     }
 
-                                    
+
                                 }
                             }
                             catch (Exception ex)
@@ -430,7 +486,7 @@ namespace csb.bot_moderator
                             break;
                     }
 
-                    
+
 
                     //switch (LeadType)
                     //{
@@ -555,7 +611,7 @@ namespace csb.bot_moderator
 
             switch (update.Type)
             {
-                case UpdateType.MyChatMember:                    
+                case UpdateType.MyChatMember:
                     try
                     {
                         processMyChatMember(update);
@@ -563,7 +619,7 @@ namespace csb.bot_moderator
                     catch (Exception ex)
                     {
                         logger.err(ex.Message);
-                    }                    
+                    }
                     break;
 
                 case UpdateType.ChatJoinRequest:
@@ -587,8 +643,61 @@ namespace csb.bot_moderator
                         logger.err(ex.Message);
                     }
                     break;
+
+                case UpdateType.Message:
+                    if (update.Message != null)
+                    {
+                        if (update.Message.Text != null)
+                        {
+
+                            string msg = update.Message.Text;
+
+                            var pushStartMsg = (string.IsNullOrEmpty(Greetings.PushStartText)) ? "" : Greetings.PushStartText.Replace(Greetings.PushStartEmoji, "");
+
+                            if (msg.Contains(pushStartMsg) && Greetings.HelloMessageReply != null)
+                            {
+                                try
+                                {
+                                    await bot.SendTextMessageAsync(
+                                        update.Message.From.Id,
+                                        text: Greetings.HelloMessageReply.Text,
+                                        replyMarkup: Greetings.HelloMessageReply.ReplyMarkup,
+                                        entities: Greetings.HelloMessageReply.Entities,
+                                        disableWebPagePreview: false,
+                                        cancellationToken: cancellationToken);
+
+                                } catch (Exception ex)
+                                {
+
+                                }
+                            }
+
+                        }
+                    }
+                    break;
             }
 
+        }
+        #endregion
+
+        #region helpers
+        string getPushButtonText(string message)
+        {
+            string res = null;
+
+            string pattern = @"/[a-zA-Z]+(?:\s|$)";
+
+            Regex regex = new Regex(pattern);
+            Match match = regex.Match(message);
+
+            if (match.Success)
+            {
+                res = match.Value;
+                res = res.Replace("\n", "").Replace("/", "").Trim();
+                res = $"{Greetings.PushStartEmoji}{res}{Greetings.PushStartEmoji}";
+            }
+
+            return res;
         }
         #endregion
 
@@ -612,11 +721,11 @@ namespace csb.bot_moderator
             //if (ChannelID != null)
             //    linksProcessor.Generate(ChannelID, 20).Wait();
 
-            linksProcessor.StartLinkNumberControl(ChannelID, cts); 
+            linksProcessor.StartLinkNumberControl(ChannelID, cts);
 
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember, UpdateType.MyChatMember }
+                AllowedUpdates = new UpdateType[] { UpdateType.ChatJoinRequest, UpdateType.ChatMember, UpdateType.MyChatMember, UpdateType.Message }
             };
 
             bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);

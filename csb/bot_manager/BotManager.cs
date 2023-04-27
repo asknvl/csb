@@ -43,7 +43,11 @@ namespace csb.bot_manager
         waitingModeratorGeoTag,
         waitingModeratorToken,
 
-        waitingModeratorHelloMessage,                        
+        waitingModeratorHelloMessage,          
+        waitingModeratorJoinMessageReply,
+        //waitingModeratorInitialText,
+        //waitingModeratorHelloMessageReply,
+
         waitingModerarotAlternativeLink,
         waitingModeratorByeMessage,
 
