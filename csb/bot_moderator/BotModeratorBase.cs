@@ -404,7 +404,7 @@ namespace csb.bot_moderator
                                          text: Greetings.HelloMessage.Text,
                                          replyMarkup: replyKeyboardMarkup,
                                          entities: Greetings.HelloMessage.Entities,
-                                         disableWebPagePreview: true,
+                                         disableWebPagePreview: false,
                                          cancellationToken: cancellationToken);
 
                         }
@@ -416,7 +416,7 @@ namespace csb.bot_moderator
                                      text: Greetings.HelloMessage.Text,
                                      replyMarkup: Greetings.HelloMessage.ReplyMarkup,
                                      entities: Greetings.HelloMessage.Entities,
-                                     disableWebPagePreview: true,
+                                     disableWebPagePreview: false,
                                      cancellationToken: cancellationToken);
                         }
 
