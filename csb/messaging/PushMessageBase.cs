@@ -10,6 +10,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using TL.Methods;
 
 namespace csb.messaging
 {
@@ -131,18 +132,18 @@ namespace csb.messaging
             }
         }
 
-        async Task<int> sendTextMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendTextMessage(long id, ITelegramBotClient bot, IReplyMarkup? markup = null)
         {
             var m = await bot.SendTextMessageAsync(
                     chatId: id,
                     text: Message.Text,
                     entities: Message.Entities,
-                    replyMarkup: Message.ReplyMarkup,
+                    replyMarkup: (markup == null) ? Message.ReplyMarkup : markup,
                     cancellationToken: new CancellationToken());
             return m.MessageId;
         }
 
-        async Task<int> sendPhotoMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendPhotoMessage(long id, ITelegramBotClient bot, IReplyMarkup? markup = null)
         {
             int messageId;
 
@@ -181,7 +182,7 @@ namespace csb.messaging
             return messageId;
         }
 
-        async Task<int> sendVideoMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendVideoMessage(long id, ITelegramBotClient bot, IReplyMarkup? markup = null)
         {
             int messageId;
             if (fileId == null)
@@ -221,7 +222,47 @@ namespace csb.messaging
             return messageId;
         }
 
-        async Task<int> sendDocumentMessage(long id, ITelegramBotClient bot)
+        async Task<int> sendVideoNoteMessage(long id, ITelegramBotClient bot, IReplyMarkup? markup = null)
+        {
+            int messageId;
+            if (fileId == null)
+            {
+                Console.WriteLine($"Message {id} fileId=null");
+
+                await using var fileStream = System.IO.File.OpenRead(FilePath);
+
+                var sent = await bot.SendVideoNoteAsync(
+                    id,
+                    fileStream,
+                    duration: Message.VideoNote.Duration,
+                    length: Message.VideoNote.Length,
+                    replyMarkup: Message.ReplyMarkup);
+
+                fileId = sent.VideoNote.FileId;
+                messageId = sent.MessageId;
+
+            }
+            else
+            {
+                InputMediaVideo imv = new InputMediaVideo(new InputMedia(fileId));
+
+                imv.Caption = Message.Caption;
+                imv.CaptionEntities = Message.CaptionEntities;
+
+                InputMediaDocument doc = new InputMediaDocument(imv.Media);
+
+                var sent = await bot.SendVideoAsync(id,
+                       doc.Media,
+                       caption: Message.Caption,
+                       replyMarkup: Message.ReplyMarkup,
+                       captionEntities: Message.CaptionEntities);
+                messageId = sent.MessageId;
+            }
+
+            return messageId;
+        }
+
+        async Task<int> sendDocumentMessage(long id, ITelegramBotClient bot, IReplyMarkup? markup = null)
         {
             int messageId;
             if (fileId == null)
@@ -258,25 +299,29 @@ namespace csb.messaging
             return messageId;
         }
 
-        async Task<int> send(long id, ITelegramBotClient bot)
+        async Task<int> send(long id, ITelegramBotClient bot, IReplyMarkup? markup = null)
         {
             int messageId;
             switch (Message.Type)
             {
                 case MessageType.Text:
-                    messageId =  await sendTextMessage(id, bot);
+                    messageId =  await sendTextMessage(id, bot, markup);
                     break;
 
                 case MessageType.Photo:
-                    messageId = await sendPhotoMessage(id, bot);
+                    messageId = await sendPhotoMessage(id, bot, markup);
+                    break;
+                                    
+                case MessageType.Video:                
+                    messageId = await sendVideoMessage(id, bot, markup);
                     break;
 
-                case MessageType.Video:
-                    messageId = await sendVideoMessage(id, bot);
+                case MessageType.VideoNote:
+                    messageId = await sendVideoNoteMessage(id, bot, markup); 
                     break;
 
                 case MessageType.Document:
-                    messageId = await sendDocumentMessage(id, bot);
+                    messageId = await sendDocumentMessage(id, bot, markup);
                     break;
 
                 default:
@@ -309,29 +354,45 @@ namespace csb.messaging
             }
         }
 
-        public virtual async Task<int> Send(long id, ITelegramBotClient bot)
+        public virtual async Task<int> Send(long id, ITelegramBotClient bot, IReplyMarkup markup = null)
         {
             int messageId = 0;
 
-            await Task.Run(async () => {
-
-                try
+            if (Message != null)
+            {
+                await Task.Run(async () =>
                 {
-                    messageId = await send(id, bot);
 
-                } catch (Exception ex)
-                {
-                    if (ex.Message.ToLower().Contains("wrong file"))
+                    try
                     {
-                        Console.WriteLine("Resending with fileId = null");
-                        fileId = null;
-                        messageId = await send(id, bot);
-                    } else
-                        throw;
-                }
-            });
+                        messageId = await send(id, bot, markup);
 
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.ToLower().Contains("wrong file"))
+                        {
+                            Console.WriteLine("Resending with fileId = null");
+                            fileId = null;
+                            messageId = await send(id, bot, markup);
+                        }
+                        else
+                            throw;
+                    }
+                });
+            }
+           
             return messageId;
+        }
+
+        public void Clear()
+        {
+            if (System.IO.File.Exists(FilePath))
+            {
+                System.IO.File.Delete(FilePath);
+            }
+
+            
         }
 
     }

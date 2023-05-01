@@ -7,76 +7,71 @@
     "LeadType": 0,
     "Greetings": {
       "HelloMessage": {
-        "Text": "​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​❗️ MENSAJE PARA LOS NOVATO❗️\n\n🎁 haga clic aquí\n/COMENZARAHORA\n\n Hola 👋🏼 \n\n☑️ Bienvenido al canal donde ayudo a la gente común a ganar dinero. Sé que esto lo ves mucho en internet, pero esta vez estás de suerte y estás en el lugar correcto🏆\n\n☑️ Mi nombre es Santiago y llevo más de 7 años analizando partidos deportivos de forma profesional. Además de eso, pago por el acceso mensual a una base de datos de partidos fijos con la que el 95% de la gente gana dinero.\nÚltimamente he decidido dedicarme a ayudar a la gente y por eso multiplico su inversión y me llevo un porcentaje de las ganancias por mi trabajo 💎\n\n☑️ ¿Cuál es mi beneficio? \nComparto mis conocimientos y no invierto para nada mi propio dinero en los partidos. Los principales ingresos provienen de las ganancias de mis suscriptores\n\n☑️ ¿Cuáles son sus beneficios?\nNo necesitas registrarte en ningún sitio y no realizas acciones innecesarias. Todos los procesos los hago yo personalmente.\n\n☑️ ¿Qué obtienes cuando trabajas conmigo?\n-Realizo personalmente todas las operaciones y respondo de la calidad del trabajo.\n-Apoyo total en todas las etapas de la operación.\n-En el caso de perder dinero por mi culpa -Devolución de todo el dinero invertido\n-En el caso de ganar - se obtiene un múltiplo de su inversión.\n\n☑️ ¿Cuáles son las garantías?\n-Soy una persona pública y doy la cara abiertamente, por lo que realizo mi trabajo de forma honesta y abierta.\n-Cientos de testimonios de personas que ya trabajan conmigo y a cada uno de ellos puedes escribir si tienes dudas. Aquí tienes enlaces a algunas reseñas\n-Trabajo bajo licencia de las casas de apuestas oficiales y perder mi lugar y privilegios definitivamente no está en mis planes\n\n✅  haga clic aquí \n/COMENZARAHORA",
-        "Entities": [
-          {
-            "type": "text_link",
-            "offset": 0,
-            "length": 51,
-            "url": "https://telegra.ph/file/be3379045e920e6848215.jpg"
+        "Id": 0,
+        "Message": {
+          "message_id": 4182,
+          "from": {
+            "id": 1481806946,
+            "is_bot": false,
+            "first_name": "Alexey",
+            "username": "asknvl",
+            "language_code": "ru"
           },
-          {
-            "type": "bot_command",
-            "offset": 97,
-            "length": 14
+          "date": 1682884933,
+          "chat": {
+            "id": 1481806946,
+            "type": "private",
+            "username": "asknvl",
+            "first_name": "Alexey"
           },
-          {
-            "type": "bold",
-            "offset": 114,
-            "length": 4
+          "forward_from": {
+            "id": 6084099531,
+            "is_bot": true,
+            "first_name": "BotGirl",
+            "username": "bottt_girlll_bot"
           },
-          {
-            "type": "underline",
-            "offset": 129,
-            "length": 164
-          },
-          {
-            "type": "bold",
-            "offset": 669,
-            "length": 22
-          },
-          {
-            "type": "bold",
-            "offset": 854,
-            "length": 27
-          },
-          {
-            "type": "italic",
-            "offset": 882,
-            "length": 124
-          },
-          {
-            "type": "bold",
-            "offset": 1010,
-            "length": 38
-          },
-          {
-            "type": "bold",
-            "offset": 1332,
-            "length": 25
-          },
-          {
-            "type": "italic",
-            "offset": 1358,
-            "length": 392
-          },
-          {
-            "type": "bot_command",
-            "offset": 1770,
-            "length": 14
-          }
-        ],
-        "ReplyMarkup": null
+          "forward_date": 1682335588,
+          "text": "🎁To start earning CLICK this - /STARTNOW\n\n🔥To start earning, you need to register. \nNow my analytics work only with this product.\nAfter registration, you need to replenish your balance.\nHave you increased the balance? Great😎\n\n☑️ Let's move on... I have a free CANAL where you read this post. Every day you can get ~ three predictions on it. Never bet all-in!\nOn a free channel, I do my best so that everyone can make some money and learn a little bit about making money on Aviator🚀 \n\n☑️If you have any doubts, I have a CHANNEL WITH FEEDBACK from all the people who are already working with me with good results.\nYou can write to each of them, talk to them in person and make sure that everything is real and not complicated🤑\n\n✅If you want detailed instructions on how to start working with me, go to my TRAINING CHANNEL\nWatch the training video, read all the information carefully and let's make money together\n\n✅To start earning CLICK this - /STARTNOW",
+          "entities": [
+            {
+              "type": "bold",
+              "offset": 19,
+              "length": 10
+            },
+            {
+              "type": "bot_command",
+              "offset": 32,
+              "length": 9
+            },
+            {
+              "type": "bold",
+              "offset": 935,
+              "length": 10
+            },
+            {
+              "type": "bot_command",
+              "offset": 948,
+              "length": 9
+            }
+          ]
+        },
+        "FilePath": null
       },
       "PushStartEmoji": "🔥🔥🔥",
-      "PushStartText": "🔥🔥🔥COMENZARAHORA🔥🔥🔥",
+      "PushStartText": "🔥🔥🔥STARTNOW🔥🔥🔥",
+      "UsePushStartButton": true,
+      "PreJoinMessage": {
+        "Id": 0,
+        "Message": null,
+        "FilePath": null
+      },
       "HelloMessageReply": {
-        "Text": "Бро, следи за каналом и будешь в плюсе!",
+        "Text": null,
         "Entities": null,
         "ReplyMarkup": null
       },
       "ByeMessage": {
-        "Text": "bye",
+        "Text": null,
         "Entities": null,
         "ReplyMarkup": null
       }
@@ -86,7 +81,6 @@
     },
     "DailyPushData": {
       "Messages": []
-    },
-    "UsePushStartButton": true
+    }
   }
 ]

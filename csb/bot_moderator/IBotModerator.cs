@@ -17,8 +17,7 @@ namespace csb.bot_moderator
         long? ChannelID { get; set; }
         LeadAlgorithmType? LeadType { get; set; }
         Dictionary<string, int> PseudoLeads { get; set; }        
-        GreetingsData Greetings { get; set; }
-        public bool UsePushStartButton { get; set; }
+        GreetingsData Greetings { get; set; }        
         SmartPushData PushData { get; set; }
         DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; set; }

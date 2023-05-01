@@ -44,7 +44,9 @@ namespace csb.bot_manager
         waitingModeratorToken,
 
         waitingModeratorHelloMessage,          
-        waitingModeratorJoinMessageReply,
+
+        waitingModeratorPreJoinMessageEdit,
+        waitingModeratorJoinMessageReplyEdit,
         //waitingModeratorInitialText,
         //waitingModeratorHelloMessageReply,
 

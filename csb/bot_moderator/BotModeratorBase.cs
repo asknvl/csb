@@ -52,6 +52,9 @@ namespace csb.bot_moderator
 
         protected ILeadsGenerator leadsGenerator;
         protected IInviteLinksProcessor linksProcessor;
+
+        int allowedSubscribeRequestCounter = 0;
+        int pushStartCounter = 0;
         #endregion
 
         #region properies
@@ -77,8 +80,17 @@ namespace csb.bot_moderator
                 Start();
             }
         }
+
+        GreetingsData greeteings = new();
         [JsonProperty]
-        public GreetingsData Greetings { get; set; } = new();
+        public GreetingsData Greetings
+        {
+            get => greeteings;
+            set
+            {
+                greeteings = value;               
+            }
+        }
         [JsonProperty]
         public SmartPushData PushData { get; set; } = new();
         [JsonProperty]
@@ -89,28 +101,6 @@ namespace csb.bot_moderator
 
         [JsonIgnore]
         public Dictionary<string, int> PseudoLeads { get; set; } = new();
-
-        bool usePushStartButton;
-        [JsonProperty]
-        public bool UsePushStartButton
-        {
-            get => usePushStartButton;
-            set
-            {
-                usePushStartButton = value;
-
-                try
-                {
-                    Greetings.PushStartText = getPushButtonText(Greetings.HelloMessage.Text);
-                }
-                catch (Exception ex)
-                {
-                    Greetings.PushStartText = null;
-                }
-
-            }
-        }
-
         #endregion
 
         public BotModeratorBase(string token, string geotag)
@@ -387,37 +377,63 @@ namespace csb.bot_moderator
                 {
                     try
                     {
+                        allowedSubscribeRequestCounter++;
 
-                        if (!string.IsNullOrEmpty(Greetings.PushStartText) && UsePushStartButton)
+                        if (!string.IsNullOrEmpty(Greetings.PushStartText) && Greetings.UsePushStartButton)
                         {
                             ReplyKeyboardMarkup replyKeyboardMarkup = new(new[]
                             {
                                 new KeyboardButton[] { $"{Greetings.PushStartText}" },
                             })
                             {
-                                ResizeKeyboard = true
+                                ResizeKeyboard = true,
+                                OneTimeKeyboard = true
                             };
 
                             if (Greetings.HelloMessage != null)
-                                await bot.SendTextMessageAsync(
-                                         chatJoinRequest.From.Id,
-                                         text: Greetings.HelloMessage.Text,
-                                         replyMarkup: replyKeyboardMarkup,
-                                         entities: Greetings.HelloMessage.Entities,
-                                         disableWebPagePreview: false,
-                                         cancellationToken: cancellationToken);
+                            {
+
+                                if (Greetings.PreJoinMessage != null)
+                                {
+                                    try
+                                    {
+                                        await Greetings.PreJoinMessage.Send(chatJoinRequest.From.Id, bot);
+                                    } catch (Exception ex) { }
+                                }
+
+                                await Greetings.HelloMessage.Send(chatJoinRequest.From.Id, bot, replyKeyboardMarkup);
+                            }
+                            //await bot.SendTextMessageAsync(
+                            //         chatJoinRequest.From.Id,
+                            //         text: Greetings.HelloMessage.Text,
+                            //         replyMarkup: replyKeyboardMarkup,
+                            //         entities: Greetings.HelloMessage.Entities,
+                            //         disableWebPagePreview: false,
+                            //         cancellationToken: cancellationToken);
 
                         }
                         else
                         {
+                            if (Greetings.HelloMessage != null)
+                            {
+                                if (Greetings.PreJoinMessage != null)
+                                {
+                                    try
+                                    {
+                                        await Greetings.PreJoinMessage.Send(chatJoinRequest.From.Id, bot);
+                                    } catch (Exception ex) { }
+                                }
 
-                            await bot.SendTextMessageAsync(
-                                     chatJoinRequest.From.Id,
-                                     text: Greetings.HelloMessage.Text,
-                                     replyMarkup: Greetings.HelloMessage.ReplyMarkup,
-                                     entities: Greetings.HelloMessage.Entities,
-                                     disableWebPagePreview: false,
-                                     cancellationToken: cancellationToken);
+                                await Greetings.HelloMessage.Send(chatJoinRequest.From.Id, bot);
+                            }
+
+                            //await bot.SendTextMessageAsync(
+                            //chatJoinRequest.From.Id,
+                            //text: Greetings.HelloMessage.Text,
+                            //replyMarkup: Greetings.HelloMessage.ReplyMarkup,
+                            //entities: Greetings.HelloMessage.Entities,
+                            //disableWebPagePreview: false,
+                            //cancellationToken: cancellationToken);
                         }
 
 
@@ -666,6 +682,8 @@ namespace csb.bot_moderator
                                         disableWebPagePreview: false,
                                         cancellationToken: cancellationToken);
 
+                                    logger.inf_urgent($"{GeoTag} pushStartCounter={++pushStartCounter} allowedSubscribeRequestCounter={allowedSubscribeRequestCounter} {update.Message.From.FirstName}  {update.Message.From.LastName} {update.Message.From.Id}");
+
                                 } catch (Exception ex)
                                 {
 
@@ -681,24 +699,27 @@ namespace csb.bot_moderator
         #endregion
 
         #region helpers
-        string getPushButtonText(string message)
+        InlineKeyboardMarkup ReplyKeyboardToInlineKeyboard(ReplyKeyboardMarkup replyKeyboard)
         {
-            string res = null;
+            List<List<InlineKeyboardButton>> inlineKeyboardRows = new List<List<InlineKeyboardButton>>();
 
-            string pattern = @"/[a-zA-Z]+(?:\s|$)";
-
-            Regex regex = new Regex(pattern);
-            Match match = regex.Match(message);
-
-            if (match.Success)
+            foreach (var row in replyKeyboard.Keyboard)
             {
-                res = match.Value;
-                res = res.Replace("\n", "").Replace("/", "").Trim();
-                res = $"{Greetings.PushStartEmoji}{res}{Greetings.PushStartEmoji}";
+                List<InlineKeyboardButton> inlineRow = new List<InlineKeyboardButton>();
+
+                foreach (var button in row)
+                {
+                    // You can customize the callback data as needed
+                    InlineKeyboardButton inlineButton = InlineKeyboardButton.WithCallbackData(button.Text, button.Text);
+                    inlineRow.Add(inlineButton);
+                }
+
+                inlineKeyboardRows.Add(inlineRow);
             }
 
-            return res;
+            return new InlineKeyboardMarkup(inlineKeyboardRows);
         }
+       
         #endregion
 
         #region public

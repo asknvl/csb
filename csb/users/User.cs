@@ -142,6 +142,10 @@ namespace csb.users
                 },
 
                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить кружок", callbackData: "editPreJoinMessage"),
+                },
+
+                new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Настроить push-старт", callbackData: "editPushStart"),
                 },
 
@@ -171,6 +175,21 @@ namespace csb.users
                 },
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_join_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
+            {"editPreJoinMessageMenu", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "greetings_prejoin_show"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "greetings_prejoin_add"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "greetings_prejoin_delete"),
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
@@ -1664,9 +1683,15 @@ namespace csb.users
                         case BotState.waitingModeratorHelloMessage:
                             try
                             {
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Text = update.Message.Text;
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Entities = update.Message.Entities;
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
+
+                                JoinMessage join = await JoinMessage.Create(chat, bot, update.Message, currentModeratorGeoTag);
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = join;
+
+                                //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Text = update.Message.Text;
+                                //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Entities = update.Message.Entities;
+                                //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
+
+
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
 
@@ -1686,9 +1711,13 @@ namespace csb.users
                         case BotState.waitingModeratorHelloMessageEdit:
                             try
                             {
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Text = update.Message.Text;
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Entities = update.Message.Entities;
-                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
+                                //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Text = update.Message.Text;
+                                //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.Entities = update.Message.Entities;
+                                //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage.ReplyMarkup = update.Message.ReplyMarkup;
+                                JoinMessage join = await JoinMessage.Create(chat, bot, update.Message, currentModeratorGeoTag);
+                                moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = join;
+
+
                                 moderationProcessor.Save();
                                 await messagesProcessor.Back(chat);
 
@@ -1744,7 +1773,23 @@ namespace csb.users
                             }
                             break;
 
-                        case BotState.waitingModeratorJoinMessageReply:
+                        case BotState.waitingModeratorPreJoinMessageEdit:
+                            try
+                            {
+
+                                JoinMessage prejoin = await JoinMessage.Create(chat, bot, update.Message, currentModeratorGeoTag);
+                                moderationProcessor.Greetings(currentModeratorGeoTag).PreJoinMessage = prejoin;
+                                moderationProcessor.Save();
+                                await messagesProcessor.Back(chat);
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
+                        case BotState.waitingModeratorJoinMessageReplyEdit:
                             try
                             {
                                 moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessageReply.Text = update.Message.Text;
@@ -2509,6 +2554,13 @@ namespace csb.users
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
+                case "editPreJoinMessage":
+                    //await messagesProcessor.Back(chat);
+                    //await messagesProcessor.Delete(chat, "editJoinMessage");                    
+                    await messagesProcessor.Add(chat, "editPreJoinMessageMenu", await sendTextButtonMessage(chat, "Для того чтобы заменить Кружок нажмите Добавить", "editPreJoinMessageMenu"));
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
                 case "editPushStart":
                     try
                     {
@@ -2516,8 +2568,11 @@ namespace csb.users
 
                         if (moderator != null)
                         {
-                            var usePushStrart = moderator.UsePushStartButton;
-                            await showMyModeratorsPushStart(chat, usePushStrart);
+                            //var usePushStrart = moderator.UsePushStartButton;
+
+                            var usePushStart = moderationProcessor.Greetings(currentModeratorGeoTag).UsePushStartButton;
+
+                            await showMyModeratorsPushStart(chat, usePushStart);
                             await bot.AnswerCallbackQueryAsync(query.Id);
                         }
                         
@@ -2807,7 +2862,7 @@ namespace csb.users
                         if (moderator != null)
                         {
                             bool ps = true;
-                            moderator.UsePushStartButton = ps;
+                            moderator.Greetings.UsePushStartButton = ps;
                             await showMyModeratorsPushStart(chat, ps);
                             await bot.AnswerCallbackQueryAsync(query.Id);
                             moderationProcessor.Save();
@@ -2826,7 +2881,7 @@ namespace csb.users
                         if (moderator != null)
                         {
                             bool ps = false;
-                            moderator.UsePushStartButton = ps;
+                            moderator.Greetings.UsePushStartButton = ps;
                             await showMyModeratorsPushStart(chat, ps);
                             await bot.AnswerCallbackQueryAsync(query.Id);
                             moderationProcessor.Save();
@@ -3081,22 +3136,35 @@ namespace csb.users
                                         switch (type)
                                         {
                                             case "join":
-                                                greetingsMsg = greetings.HelloMessage;
+                                                var msg = greetings.HelloMessage;
+                                                await msg.Send(Id, bot);
+                                                //greetingsMsg = greetings.HelloMessage;
+
                                                 break;
                                             case "leave":
                                                 greetingsMsg = greetings.ByeMessage;
+                                                await bot.SendTextMessageAsync(
+                                                   Id,
+                                                   text: greetingsMsg.Text,
+                                                   replyMarkup: greetingsMsg.ReplyMarkup,
+                                                   entities: greetingsMsg.Entities,
+                                                   disableWebPagePreview: false,
+                                                   cancellationToken: cancellationToken);
+                                                break;
+                                            case "prejoin":                                                
+                                                await moderationProcessor.Greetings(currentModeratorGeoTag).PreJoinMessage.Send(chat, bot);                                                
                                                 break;
                                             default:
                                                 break;
                                         }
 
-                                        await bot.SendTextMessageAsync(
-                                               Id,
-                                               text: greetingsMsg.Text,
-                                               replyMarkup: greetingsMsg.ReplyMarkup,
-                                               entities: greetingsMsg.Entities,
-                                               disableWebPagePreview: false,
-                                               cancellationToken: cancellationToken);
+                                        //await bot.SendTextMessageAsync(
+                                        //       Id,
+                                        //       text: greetingsMsg.Text,
+                                        //       replyMarkup: greetingsMsg.ReplyMarkup,
+                                        //       entities: greetingsMsg.Entities,
+                                        //       disableWebPagePreview: false,
+                                        //       cancellationToken: cancellationToken);
 
                                     } catch (Exception ex)
                                     {
@@ -3118,6 +3186,11 @@ namespace csb.users
                                             string byeReqMsg = "Перешлите (forward) сюда прощальное \U000026B0 сообщение, для отмены нажмите Завершить";
                                             await messagesProcessor.Add(chat, "waitingModeratorByeMessage", await sendTextButtonMessage(chat, byeReqMsg, "finishEddingGreetings"));
                                             break;
+                                        case "prejoin":
+                                            State = BotState.waitingModeratorPreJoinMessageEdit;
+                                            string preJoinReqMsg = "Перешлите (forward) сюда кружок, для отмены нажмите Завершить";
+                                            await messagesProcessor.Add(chat, "waitingModeratorPreJoinMessage", await sendTextButtonMessage(chat, preJoinReqMsg, "finishEddingGreetings"));
+                                            break;
                                         default:
                                             break;
                                     }
@@ -3128,10 +3201,14 @@ namespace csb.users
                                     switch (type)
                                     {
                                         case "join":
-                                            moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = new();
+                                            //moderationProcessor.Greetings(currentModeratorGeoTag).HelloMessage = new();
+                                            moderationProcessor.Greetings(currentModeratorGeoTag).DeleteHelloMessage();
                                             break;
                                         case "leave":
                                             moderationProcessor.Greetings(currentModeratorGeoTag).ByeMessage = new();
+                                            break;
+                                        case "prejoin":
+                                            moderationProcessor.Greetings(currentModeratorGeoTag).DeletePreJoinMessage();
                                             break;
                                         default:
                                             break;
@@ -3161,7 +3238,7 @@ namespace csb.users
                             {
 
                                 case "add":
-                                    State = BotState.waitingModeratorJoinMessageReply;
+                                    State = BotState.waitingModeratorJoinMessageReplyEdit;
                                     string helloReqMsg = "Перешлите (forward) сюда ответ на нажатие push-кнопки, для отмены нажмите Завершить";
                                     await messagesProcessor.Add(chat, "waitingModeratorJoinMessageReply", await sendTextButtonMessage(chat, helloReqMsg, "finishEddingJoinReply"));
                                     break;
