@@ -1,7 +1,4 @@
-30.04.2023 23:10:44 inf MDR > Moderator stopped
-30.04.2023 23:10:44 inf MDR > Startting moderator...
-30.04.2023 23:10:45 inf MDR > Moderator started, bot username=moderator1test_bot channelID=-1001692610611
-30.04.2023 23:10:57 err MDR > Cannot write a null value for property 'text'. Property requires a value. Path ''.
-30.04.2023 23:10:58 inf MDR > KRD TEST0 LEFT -1001692610611 1784884123 Raja Movej   @rajamovej NOLINK 
-30.04.2023 23:11:00 inf MDR > TEST0 APPROVED(1) -1001692610611 1784884123 Raja Movej  rajamovej TEST01 TEST TEST2 
-30.04.2023 23:11:00 inf MDR > KRD TEST0 JOIN -1001692610611 1784884123 Raja Movej   @rajamovej link=https://t.me/+JHWPRT3U... 
+01.05.2023 14:08:27 inf MDR > Moderator stopped
+01.05.2023 14:08:27 inf MDR > Startting moderator...
+01.05.2023 14:08:27 inf MDR > Moderator started, bot username=moderator1test_bot channelID=-1001692610611
+01.05.2023 14:09:27 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0

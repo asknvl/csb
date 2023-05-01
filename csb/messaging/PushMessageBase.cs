@@ -235,7 +235,7 @@ namespace csb.messaging
                     id,
                     fileStream,
                     duration: Message.VideoNote.Duration,
-                    length: Message.VideoNote.Length,
+                    //length: Message.VideoNote.Length,
                     replyMarkup: Message.ReplyMarkup);
 
                 fileId = sent.VideoNote.FileId;

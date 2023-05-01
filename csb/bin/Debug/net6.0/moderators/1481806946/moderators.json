@@ -62,8 +62,45 @@
       "UsePushStartButton": true,
       "PreJoinMessage": {
         "Id": 0,
-        "Message": null,
-        "FilePath": null
+        "Message": {
+          "message_id": 4226,
+          "from": {
+            "id": 1481806946,
+            "is_bot": false,
+            "first_name": "Alexey",
+            "username": "asknvl",
+            "language_code": "ru"
+          },
+          "date": 1682939276,
+          "chat": {
+            "id": 1481806946,
+            "type": "private",
+            "username": "asknvl",
+            "first_name": "Alexey"
+          },
+          "forward_from": {
+            "id": 6084099531,
+            "is_bot": true,
+            "first_name": "BotGirl",
+            "username": "bottt_girlll_bot"
+          },
+          "forward_date": 1682872902,
+          "video_note": {
+            "length": 640,
+            "duration": 42,
+            "thumb": {
+              "width": 320,
+              "height": 320,
+              "file_id": "AAMCAgADGQEAAhCCZE-dizuuqjYGVjtg4-kecdVhIaAAAhYsAAJGw3hKOu1A0J1yeb8BAAdtAAMvBA",
+              "file_unique_id": "AQADFiwAAkbDeEpy",
+              "file_size": 21260
+            },
+            "file_id": "DQACAgIAAxkBAAIQgmRPnYs7rqo2BlY7YOPpHnHVYSGgAAIWLAACRsN4SjrtQNCdcnm_LwQ",
+            "file_unique_id": "AgADFiwAAkbDeEo",
+            "file_size": 3960575
+          }
+        },
+        "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\moderators\\1481806946\\TEST0\\file_8.mp4"
       },
       "HelloMessageReply": {
         "Text": null,
