@@ -20,7 +20,8 @@ namespace csb.invitelinks
                 default:
                 case null:
                 case LeadAlgorithmType.TrackerOnly:
-                    return new StaticInviteLinkProcessor();                    
+                    //return new StaticInviteLinkProcessor();                    
+                    return new DynamicInviteLinkProcessor(geotag, bot, trackApi);
                 case LeadAlgorithmType.CAPIv1:
                 case LeadAlgorithmType.CAPIv2:
                     return new DynamicInviteLinkProcessor(geotag, bot, trackApi);                

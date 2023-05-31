@@ -403,14 +403,6 @@ namespace csb.bot_moderator
 
                                 await Greetings.HelloMessage.Send(chatJoinRequest.From.Id, bot, replyKeyboardMarkup);
                             }
-                            //await bot.SendTextMessageAsync(
-                            //         chatJoinRequest.From.Id,
-                            //         text: Greetings.HelloMessage.Text,
-                            //         replyMarkup: replyKeyboardMarkup,
-                            //         entities: Greetings.HelloMessage.Entities,
-                            //         disableWebPagePreview: false,
-                            //         cancellationToken: cancellationToken);
-
                         }
                         else
                         {
@@ -425,26 +417,8 @@ namespace csb.bot_moderator
                                 }
 
                                 await Greetings.HelloMessage.Send(chatJoinRequest.From.Id, bot);
-                            }
-
-                            //await bot.SendTextMessageAsync(
-                            //chatJoinRequest.From.Id,
-                            //text: Greetings.HelloMessage.Text,
-                            //replyMarkup: Greetings.HelloMessage.ReplyMarkup,
-                            //entities: Greetings.HelloMessage.Entities,
-                            //disableWebPagePreview: false,
-                            //cancellationToken: cancellationToken);
+                            }                            
                         }
-
-
-                        //if (Greetings.HelloMessage != null)
-                        //    await bot.SendTextMessageAsync(
-                        //             chatJoinRequest.From.Id,
-                        //             text: Greetings.HelloMessage.Text,
-                        //             replyMarkup: Greetings.HelloMessage.ReplyMarkup,
-                        //             entities: Greetings.HelloMessage.Entities,
-                        //             disableWebPagePreview: true,
-                        //             cancellationToken: cancellationToken);
                     }
                     catch (Exception ex)
                     {
