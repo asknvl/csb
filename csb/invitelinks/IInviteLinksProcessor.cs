@@ -8,6 +8,6 @@ namespace csb.invitelinks
         Task<string> Generate(long? channelid);
         Task<int> Generate(long? channelid, int n);
         Task Revoke(long? channelid, string link);
-        Task StartLinkNumberControl(long? channelid, CancellationTokenSource cts);
+        Task StartLinkNumberControl(long? channelid, CancellationTokenSource cts);        
     }
 }
