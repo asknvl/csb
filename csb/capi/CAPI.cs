@@ -17,7 +17,7 @@ namespace capi_test.capi
     public class CAPI : ICAPI
     {
         #region const
-        string API_VERSION = "v15.0";
+        string API_VERSION = "v17.0";
         #endregion
 
         #region vars

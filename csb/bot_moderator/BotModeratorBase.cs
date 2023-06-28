@@ -241,21 +241,21 @@ namespace csb.bot_moderator
                     return;
 
 #if DEBUG
-                var message = DailyPushData.Messages.FirstOrDefault(m => m.Id > cntr);
+                //var message = DailyPushData.Messages.FirstOrDefault(m => m.Id > cntr);
 
-                if (message != null)
-                {
-                    Console.WriteLine($"{cntr}{message.Id}");
-                    //if (cntr == 4)
-                    //{
-                    //    Console.WriteLine("set fileId=null");
-                    //    message.fileId = null;
-                    //}
-                    await message.Send(1447725495, bot);
-                    cntr++;
-                }
-                else
-                    cntr = 0;
+                //if (message != null)
+                //{
+                //    Console.WriteLine($"{cntr}{message.Id}");
+                //    //if (cntr == 4)
+                //    //{
+                //    //    Console.WriteLine("set fileId=null");
+                //    //    message.fileId = null;
+                //    //}
+                //    await message.Send(1447725495, bot);
+                //    cntr++;
+                //}
+                //else
+                //    cntr = 0;
 #else
 
                 var subs = await statApi.GetUsersNeedDailyPush(GeoTag, 24);

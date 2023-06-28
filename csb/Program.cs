@@ -24,13 +24,13 @@ namespace csb
 
             GlobalSettings settings = GlobalSettings.getInstance();
 
-            Console.WriteLine("Вдудь 3.5.3");
+            Console.WriteLine("Вдудь 3.5.4");
             Console.WriteLine($"Офис:{settings.office}");
             BotManager manager = new BotManager();
             manager.Start();
 
-            //string token = "EAAeZBUdwokCsBAKVSe5CzF5unKx5gLdgEOlI7ZBKZAKgSzdZBMIn45jMPilx5BMxXxtk39FEAxAZAg9nIvm5FL4LLVKUjkvLgdCFf9A9gESUZB5ZAZCNZCJYZAwlB6ZBBUUKKlEYrozACGiAp8IPFnmr5fYw6vnGlZAME7eKI6mAz6zbuSrb4EVc93Bp";
-            //string pixel = "467020078954092";
+            //string token = "EAACeORAy5ggBAAQK6MxX6quoDg8Bv16AZCtQGO62PWBjBOiJjb5dBlago7ZCvAQXA1loXEhtb6UjkdxYFWiYUm7HL0DVc4fSi6oeYVbQvAgBmGCtfskhy9UjUqfZC3bN6bekSox3oABOGnND2Nx22AMeH1MIjgiXd17CqqqZBZAWeMzwpvwZC7jdXYxuQnuQYZD";
+            //string pixel = "1052154679095265";
 
             //string ua = $"Mozilla/5.0 (Windows NT 10.0; Win64, x64);\r\nAppleWebKit/537.36 (KHTML, like Gecko);\r\nChrome/87.0.4280.141;\r\nSafari/537.36.";
             //string ip = "46.175.145.172";
@@ -41,12 +41,13 @@ namespace csb
 
 
 
-            //Task.Run(async () => {
-            //    await cAPI.MakeLeadEvent(pixel, token, 178999888, "Alex Willis", "Bert", ua, ip, fbc, "TEST84112");
-            //    await cAPI.MakeLeadEvent(pixel, token, 178999888, "Pere", "Meiz", ua, ip, fbc, "TEST84112");
-            //    await cAPI.MakeLeadEvent(pixel, token, 178999888, "Claus Shulze", null, ua, fbc);
-            //    await cAPI.MakeLeadEvent(pixel, token, 178999888, "Василий", "Петров", ua, ip, fbc);
-            //    await cAPI.MakeLeadEvent(pixel, token, 178999888, "Семен", "Шариков", ua, fbc);
+            //Task.Run(async () =>
+            //{
+            //    //await cAPI.MakeLeadEvent(pixel, token, 178999888, "Alex Willis", "Bert", ua, ip, fbc, "TEST84112");
+            //    //await cAPI.MakeLeadEvent(pixel, token, 178999888, "Pere", "Meiz", ua, ip, fbc, "TEST84112");
+            //    //await cAPI.MakeLeadEvent(pixel, token, 178999888, "Claus Shulze", null, ua, fbc);
+            //    //await cAPI.MakeLeadEvent(pixel, token, 178999888, "Василий", "Петров", ua, ip, fbc);
+            //    await cAPI.MakeLeadEvent(pixel, token, 178999888, "Семен", "Шариков");
             //});
 
 

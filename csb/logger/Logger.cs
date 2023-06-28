@@ -83,7 +83,8 @@ namespace asknvl.logger
                     while (logMessages.Count > 0)
                     {
                         LogMessage message = logMessages.Dequeue();
-                        sw.WriteLine(message.ToString());
+                        if (message != null)
+                            sw.WriteLine(message.ToString());
                     }
                 }
 

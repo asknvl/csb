@@ -1,4 +1,5 @@
-﻿using csb.bot_poster;
+﻿using asknvl.logger;
+using csb.bot_poster;
 using csb.matching;
 using Newtonsoft.Json;
 using System;
@@ -45,6 +46,8 @@ namespace csb.usr_listener
         Random rand = new Random();
 
         ITextMatchingAnalyzer textMatchingAnalyzer;
+
+        ILogger logger;
 
 #endregion
 
@@ -148,7 +151,7 @@ namespace csb.usr_listener
             if (u is not UpdatesBase updates)
                 return;
 
-            Console.WriteLine($"Updates Length = {updates.UpdateList.Length}");
+            logger.inf($"Updates Length = {updates.UpdateList.Length}");            
 
             foreach (var update in updates.UpdateList)
             {
@@ -170,8 +173,7 @@ namespace csb.usr_listener
                             {
                                 foreach (var item in FilteredWords)
                                     if (m.message.ToLower().Contains(item.ToLower()))
-                                    {
-                                        Console.WriteLine($"filtered by: {item}");
+                                    {                                        
                                         return;
                                     }
                             }
@@ -203,13 +205,53 @@ namespace csb.usr_listener
 
                                 if (nomediaIDs.Count > messages_buffer_length)
                                     nomediaIDs.Clear();
-                                nomediaIDs.Add((from_chat, unm.message.ID));
-                                Console.WriteLine($"added text, total:{nomediaIDs.Count}");
+                                nomediaIDs.Add((from_chat, unm.message.ID));                                
                                 break;
                         }
                         break;
                 }
             }
+        }
+
+        private async Task OnOther(IObject arg)
+        {
+            await Task.Run(async () => { 
+                if (arg is ReactorError err)
+                {
+                    logger.err($"{PhoneNumber} ReactorError {err.Exception.Message}");                    
+
+                    while (true)
+                    {
+                        logger.err("Disposing the client and trying to reconnect in 5 seconds...");                        
+
+                        user?.Dispose();
+                        user = null;
+
+                       
+
+                        await Task.Delay(5000);
+
+                        try
+                        {
+                            user = new Client(Config);
+                            user.OnUpdate += OnUpdate;
+                            user.OnOther += OnOther;
+                            await user.LoginUserIfNeeded();
+
+                            await ResoreInputChannels();
+
+                            break;
+
+                        } catch (Exception ex)
+                        {
+                            logger.err("Connection still failing: " + ex.Message);                            
+                        }
+
+                    }
+
+
+                }
+            });
         }
 
         private async void MediaGroup_MediaReadyEvent(MediaGroup group)
@@ -255,12 +297,11 @@ namespace csb.usr_listener
 
                 if (mediaIDs.Count > messages_buffer_length)
                     mediaIDs.Clear();
-                mediaIDs.Add(group.MessageIDs.ToArray());
-                Console.WriteLine($"added {group.MessageIDs.Count} medias, total:{mediaIDs.Count}");
+                mediaIDs.Add(group.MessageIDs.ToArray());                
 
             } catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                logger.err($"mediaGroup ready error {ex.Message}");                
             } finally
             {
             }
@@ -270,8 +311,7 @@ namespace csb.usr_listener
         {
 
             if (mediaIDs.Count == 0)
-            {
-                Console.WriteLine("NO MORE MEDIA");
+            {             
                 return;
             }
 
@@ -299,13 +339,12 @@ namespace csb.usr_listener
                     await user.Messages_ForwardMessages(ChatIDs[0].Item1, ids, rands.ToArray(), item);
                 } catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
-                    Console.WriteLine("RETRY MEDIA");
+                    logger.err($"sendMedia error {ex.Message}");                    
                     await sendMedia();
                 }
             }
 
-            Console.WriteLine($"{DateTime.Now} media sent");
+            logger.inf_urgent($"{DateTime.Now} media sent");            
         }
 
         async Task sendText()
@@ -314,8 +353,7 @@ namespace csb.usr_listener
             Message message = null;
 
             if (nomediaIDs.Count == 0)
-            {
-                Console.WriteLine("NO MORE TEXT");
+            {                
                 return;
             }
 
@@ -345,7 +383,7 @@ namespace csb.usr_listener
 
             } catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.err($"sendText error {ex.Message}");
             }
 #endif
 
@@ -365,8 +403,7 @@ namespace csb.usr_listener
 
                 } catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine("RETRY TEXT");
+                    logger.err($"sendText error {ex.Message}");
                     await sendText();
                 }
             }
@@ -539,6 +576,8 @@ namespace csb.usr_listener
                 return;
             }
 
+            logger = new Logger("USR", "userapi", PhoneNumber);
+
             textMatchingAnalyzer = new TextMatchingAnalyzer(MessageBufferLength);
 
             mediaGroup = new();
@@ -547,14 +586,26 @@ namespace csb.usr_listener
 
             Task.Run(async () =>
             {
-                Console.WriteLine($"Starting user {PhoneNumber}...");
+                //Console.WriteLine($"Starting user {PhoneNumber}...");
+
+                //WTelegram.Helpers.Log = (l, s) => System.Diagnostics.Debug.WriteLine("Usr>" + s);
 
                 try
                 {
                     user = new Client(Config);
+
+                    //user.OnUpdate -= OnUpdate;
+                    user.OnUpdate += OnUpdate;
+
+                    //user.OnOther -= OnOther;
+                    user.OnOther += OnOther;
+                    //user.MaxAutoReconnects = 1;
+                    
+
                 } catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    logger.err(ex.Message);
+                    //Console.WriteLine(ex.Message);
                 }
 
                 var usr = await user.LoginUserIfNeeded();
@@ -572,13 +623,16 @@ namespace csb.usr_listener
 
                 await RestoreBots();
 
+
+
+                //user.OnUpdate -= OnUpdate;
+                //user.OnUpdate += OnUpdate;
+
+                //user.OnOther -= OnOther;
+                //user.OnOther += OnOther;
+
+                logger.inf($"User {PhoneNumber} started");
                 
-
-                user.OnUpdate -= OnUpdate;
-                user.OnUpdate += OnUpdate;
-
-                Console.WriteLine($"User {PhoneNumber} started");
-
                 StartedEvent?.Invoke(PhoneNumber);
 
                 IsRunning = true;
@@ -593,6 +647,7 @@ namespace csb.usr_listener
             {
                 user.OnUpdate -= OnUpdate;
                 user.Dispose();
+                user = null;
             }
 
             IsRunning = false;
