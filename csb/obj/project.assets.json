@@ -227,7 +227,7 @@
           }
         }
       },
-      "WTelegramClient/3.5.1": {
+      "WTelegramClient/3.5.3": {
         "type": "package",
         "compile": {
           "lib/net5.0/WTelegramClient.dll": {
@@ -616,10 +616,10 @@
         "telegram.bot.extensions.polling.nuspec"
       ]
     },
-    "WTelegramClient/3.5.1": {
-      "sha512": "/nQbo+9PiTOryCmATx6uxS4nd5ztEQC7wFppE4XIJaDMKCFqQTTdiq1fC6afAati9LffJ96YGESsuGKgVESjVA==",
+    "WTelegramClient/3.5.3": {
+      "sha512": "ywyhWxkFLv0NLthIo4F1Cm/6ZgSzxIKZ6FJOZjX3aBly9LTDy1M2R3V0l9Nb9HGb6m+Exg/TYv1NWIEt/FQGHQ==",
       "type": "package",
-      "path": "wtelegramclient/3.5.1",
+      "path": "wtelegramclient/3.5.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -629,7 +629,7 @@
         "lib/netstandard2.0/WTelegramClient.dll",
         "lib/netstandard2.0/WTelegramClient.xml",
         "logo.png",
-        "wtelegramclient.3.5.1.nupkg.sha512",
+        "wtelegramclient.3.5.3.nupkg.sha512",
         "wtelegramclient.nuspec"
       ]
     }
@@ -641,7 +641,7 @@
       "RestSharp >= 106.10.0",
       "Telegram.Bot >= 18.0.0",
       "Telegram.Bot.Extensions.Polling >= 1.0.2",
-      "WTelegramClient >= 3.5.1"
+      "WTelegramClient >= 3.5.3"
     ]
   },
   "packageFolders": {
@@ -705,7 +705,7 @@
           },
           "WTelegramClient": {
             "target": "Package",
-            "version": "[3.5.1, )"
+            "version": "[3.5.3, )"
           }
         },
         "imports": [

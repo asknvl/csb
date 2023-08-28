@@ -1,9 +1,2 @@
-21.08.2023 13:37:30 inf ADM > Starting admin TEST0...
-21.08.2023 13:37:30 inf ADM > Admin TEST0 started
-21.08.2023 13:37:45 err ADM > HandleMessage error: MarkFollowerMadeFeedback success=false
-21.08.2023 13:39:21 err ADM > HandleMessage error: MarkFollowerWasReplied success=false
-21.08.2023 14:16:44 err ADM > HandleMessage error: MarkFollowerMadeFeedback success=false
-21.08.2023 14:16:44 err ADM > HandleMessage error: MarkFollowerMadeFeedback success=false
-21.08.2023 14:16:44 err ADM > HandleMessage error: MarkFollowerMadeFeedback success=false
-21.08.2023 14:16:44 err ADM > HandleMessage error: MarkFollowerMadeFeedback success=false
-21.08.2023 14:16:44 err ADM > HandleMessage error: MarkFollowerMadeFeedback success=false
+25.08.2023 23:03:57 inf ADM > Starting admin TEST0...
+25.08.2023 23:03:57 inf ADM > Admin TEST0 started

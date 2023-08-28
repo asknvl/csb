@@ -22,6 +22,9 @@ namespace csb
         static void Main(string[] args)
         {
 
+            WTelegram.Helpers.Log = (x, y) => {
+            };
+
             GlobalSettings settings = GlobalSettings.getInstance();
 
             Console.WriteLine("Вдудь 3.5.5");

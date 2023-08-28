@@ -52,7 +52,7 @@ namespace csb.usr_push
                                 await statApi.MarkFollowerWasReplied(geotag, id);
                                 outcomeIds.Add(id);
                                 logger.inf($"Follower {id} was replied {geotag}");
-                                logger.inf_urgent(outcomeIds.ToString());
+                                //logger.inf_urgent(outcomeIds.ToString());
 
                             }
                         }
@@ -63,7 +63,7 @@ namespace csb.usr_push
                                 await statApi.MarkFollowerMadeFeedback(geotag, id);
                                 incomeIds.Add(id);
                                 logger.inf($"Follower {id} made feedback {geotag}");
-                                logger.inf_urgent(incomeIds.ToString());
+                                //logger.inf_urgent(incomeIds.ToString());
                             }
                         }
                         break;
