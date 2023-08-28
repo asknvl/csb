@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using asknvl.logger;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,9 +15,12 @@ namespace csb.usr_push
     public abstract class TGUserBase : ITGUser
     {
         #region vars
-        Client user;
+        protected Client user;
         readonly ManualResetEventSlim verifyCodeReady = new();
-        string verifyCode;        
+        string verifyCode;
+        protected ILogger logger;
+        //protected readonly Dictionary<long, TL.User> Users = new();
+        //protected readonly Dictionary<long, ChatBase> Chats = new();
         #endregion
 
         #region properties
@@ -56,9 +60,11 @@ namespace csb.usr_push
                 case "session_pathname": return $"{dir}/{phone_number}.session";
                 case "phone_number": return phone_number;
                 case "verification_code":
+                    logger.inf($"Admin verification code request {geotag}...");
                     VerificationCodeRequestEvent?.Invoke(geotag);
                     verifyCodeReady.Reset();
                     verifyCodeReady.Wait();
+                    logger.inf($"Admin verification code obtained");
                     return verifyCode;
                 case "first_name": return "Stevie";  
                 case "last_name": return "Voughan";  
@@ -67,36 +73,52 @@ namespace csb.usr_push
             }
         }
 
-        abstract protected void processUpdate(Update update);
+        abstract protected void processUpdates(UpdatesBase update);
         #endregion
 
         #region private
-        private async Task OnUpdate(TL.IObject arg)
-        {
-            if (arg is not UpdatesBase updates)
-                return;
-
-            foreach (var update in updates.UpdateList)
-            {
-                processUpdate(update);
-            }
+        private async Task OnUpdate(UpdatesBase updates)
+        {            
+            processUpdates(updates);
         }
+
+        private async Task User_OnOther(IObject arg)
+        {
+            await Task.Run(() => { 
+            
+                if (arg is ReactorError err)
+                {
+                    logger.err($"Admin {geotag} ReactorError: {err.Exception.Message}");
+                }
+
+            });
+        }
+
         #endregion
 
         #region public
-        public Task Start()
+        public virtual Task Start()
         {
             User usr = null;
             bool res = false;
 
+            logger = new Logger("ADM", "admins", $"{geotag}_{phone_number}");
+
             return Task.Run(async () =>
             {
+                logger.inf($"Starting admin {geotag}...");
                 user = new Client(Config);
                 usr = await user.LoginUserIfNeeded();
                 username = usr.username;
                 user.OnUpdate -= OnUpdate;
                 user.OnUpdate += OnUpdate;
+
+                user.OnOther -= User_OnOther;
+                user.OnOther += User_OnOther;
+
                 res = true;
+                logger.inf($"Admin {geotag} started");
+
             }).ContinueWith(t =>
             {
                 UserStartedResultEvent?.Invoke(geotag, res);
@@ -113,6 +135,7 @@ namespace csb.usr_push
         {            
             user?.Dispose();
         }
+        
         #endregion
 
         #region events

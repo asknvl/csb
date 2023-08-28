@@ -141,15 +141,16 @@ namespace csb.server.tg_dtos
     #endregion
 
     #region MarkFollowerMadeFeedback
-    public class tgUserFeedbackDto
+    public class tgUserStateDto
     {
         public long tg_user_id { get; set; }
         public string tg_geolocation { get; set; }
-        public bool is_user_send_msg { get; set; }
+        public bool? is_user_send_msg { get; set; } = null;
+        public bool? is_user_msg_processed { get; set; } = null;
     }
-    public class tgUsersFeedbackDto
+    public class tgUsersStatesDto
     {
-        public List<tgUserFeedbackDto> users { get; set; } = new();
+        public List<tgUserStateDto> users { get; set; } = new();
     }
     #endregion
 

@@ -98,8 +98,8 @@ namespace csb.server
         public virtual async Task MarkFollowerMadeFeedback(string geotag, long id)
         {
 
-            tgUsersFeedbackDto feedback = new();
-            feedback.users.Add(new tgUserFeedbackDto()
+            tgUsersStatesDto feedback = new();
+            feedback.users.Add(new tgUserStateDto()
             {
                 tg_user_id = id,
                 tg_geolocation = geotag,
@@ -127,6 +127,39 @@ namespace csb.server
                 throw new Exception($"MarkFollowerMadeFeedback {ex.Message}");
             }
 
+        }
+
+        public virtual async Task MarkFollowerWasReplied(string geotag, long id)
+        {
+            tgUsersStatesDto reply = new();
+            reply.users.Add(new tgUserStateDto()
+            {
+                tg_user_id = id,
+                tg_geolocation = geotag,    
+                is_user_msg_processed = true
+            });
+
+            string json = JsonConvert.SerializeObject(reply);
+
+            var addr = $"{url}/v1/telegram/userByGeo";
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.PostAsync(addr, data);
+                var result = await response.Content.ReadAsStringAsync();
+                var jres = JObject.Parse(result);
+                bool res = jres["success"].ToObject<bool>();
+                if (!res)
+                    throw new Exception($"success=false");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"MarkFollowerWasReplied {ex.Message}");
+            }
         }
 
         public virtual async Task MarkFollowerWasPushed(string geotag, long id, double hours, bool status)

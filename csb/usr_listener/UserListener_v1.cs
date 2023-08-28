@@ -51,7 +51,7 @@ namespace csb.usr_listener
 
 #endregion
 
-#region properties
+        #region properties
         [JsonIgnore]
         public string PhoneNumber { get; set; }
         [JsonIgnore]
@@ -248,8 +248,6 @@ namespace csb.usr_listener
                         }
 
                     }
-
-
                 }
             });
         }

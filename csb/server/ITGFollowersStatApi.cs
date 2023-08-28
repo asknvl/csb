@@ -18,6 +18,7 @@ namespace csb.server
         Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours);
         Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState);
         Task MarkFollowerMadeFeedback(string geotag, long id);
+        Task MarkFollowerWasReplied(string geotag, long id);
     }
 
     public enum DailyPushState
