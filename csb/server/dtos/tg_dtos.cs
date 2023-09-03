@@ -161,4 +161,21 @@ namespace csb.server.tg_dtos
         public string geo { get; set; }
     }
     #endregion
+
+    #region AutoAnswerUser
+    public class autoAnswerGeoDto
+    {
+        public string geo { get; set; }
+        public int count_telegram_users { get; set; }
+        public List<long> telegram_users { get; set; } = new();
+
+    }
+
+
+    public class autoAnswerRequestDto
+    {
+        public bool success { get; set; }   
+        public autoAnswerGeoDto data { get; set; }
+    }
+    #endregion
 }

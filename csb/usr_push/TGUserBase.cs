@@ -1,12 +1,16 @@
 ﻿using asknvl.logger;
+using csb.chains;
+using csb.users;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 using TL;
 using WTelegram;
 
@@ -21,6 +25,9 @@ namespace csb.usr_push
         protected ILogger logger;
         //protected readonly Dictionary<long, TL.User> Users = new();
         //protected readonly Dictionary<long, ChatBase> Chats = new();
+
+        protected Dictionary<long, TL.User> _users = new();
+        protected Dictionary<long, ChatBase> _chats = new();
         #endregion
 
         #region properties
@@ -34,6 +41,9 @@ namespace csb.usr_push
         public string geotag { get; set; }
         [JsonProperty]
         public string? username { get; set; }
+
+        [JsonIgnore]
+        public bool IsRunning { get; set; }
         #endregion
 
         public TGUserBase(string api_id, string api_hash, string phone_number, string geotag)
@@ -79,7 +89,17 @@ namespace csb.usr_push
         #region private
         private async Task OnUpdate(UpdatesBase updates)
         {            
-            processUpdates(updates);
+            updates.CollectUsersChats(_users, _chats);
+
+            if (updates is UpdateShortMessage usm && !_users.ContainsKey(usm.user_id))
+                (await user.Updates_GetDifference(usm.pts - usm.pts_count, usm.date, 0)).CollectUsersChats(_users, _chats);
+            else if (updates is UpdateShortChatMessage uscm && (!_users.ContainsKey(uscm.from_id) || !_chats.ContainsKey(uscm.chat_id)))
+                (await user.Updates_GetDifference(uscm.pts - uscm.pts_count, uscm.date, 0)).CollectUsersChats(_users, _chats);
+
+            await Task.Run(async () =>
+            {
+                processUpdates(updates);
+            });
         }
 
         private async Task User_OnOther(IObject arg)
@@ -99,8 +119,8 @@ namespace csb.usr_push
         #region public
         public virtual Task Start()
         {
-            User usr = null;
-            bool res = false;
+            TL.User usr = null;
+            IsRunning = false;
 
             logger = new Logger("ADM", "admins", $"{geotag}_{phone_number}");
 
@@ -116,12 +136,18 @@ namespace csb.usr_push
                 user.OnOther -= User_OnOther;
                 user.OnOther += User_OnOther;
 
-                res = true;
+                IsRunning = true;
+
+
+
+                //var dialogs = await user.Messages_GetAllDialogs();
+                //dialogs.CollectUsersChats(_users, _chats);
+
                 logger.inf($"Admin {geotag} started");
 
             }).ContinueWith(t =>
             {
-                UserStartedResultEvent?.Invoke(geotag, res);
+                UserStartedResultEvent?.Invoke(geotag, IsRunning);
             });
         }
 
@@ -142,5 +168,7 @@ namespace csb.usr_push
         public event Action<string> VerificationCodeRequestEvent;
         public event Action<string, bool> UserStartedResultEvent;
         #endregion
+
+     
     }
 }

@@ -1,3 +1,6 @@
-25.08.2023 23:03:56 inf MDR > Moderator stopped
-25.08.2023 23:03:56 inf MDR > Startting moderator...
-25.08.2023 23:03:57 inf MDR > Moderator started, bot username=moderator1test_bot channelID=-1001692610611
+03.09.2023 11:47:15 inf MDR > Moderator stopped
+03.09.2023 11:47:15 inf MDR > Startting moderator...
+03.09.2023 11:47:16 inf MDR > Moderator started, bot username=moderator1test_bot channelID=-1001692610611
+03.09.2023 11:47:16 err MDR > Cannot write a null value for property 'text'. Property requires a value. Path ''.
+03.09.2023 11:47:16 err MDR > UpdateFollowers success=false
+03.09.2023 11:48:16 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0

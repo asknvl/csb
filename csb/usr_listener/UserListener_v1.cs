@@ -121,9 +121,11 @@ namespace csb.usr_listener
                 //case "verification_code": /*return "65420";*/Console.Write("Code: "); return Console.ReadLine();
 
                 case "verification_code":
+                    logger.inf_urgent($"{PhoneNumber} Verifivation Code Requested");
                     NeedVerifyCodeEvent?.Invoke(PhoneNumber);
                     codeReady.Reset();
                     codeReady.Wait();
+                    logger.inf_urgent($"{PhoneNumber} Verifivation Code enetred {VerifyCode}");
                     return VerifyCode;
 
                 case "first_name": return "Stevie";      // if sign-up is required

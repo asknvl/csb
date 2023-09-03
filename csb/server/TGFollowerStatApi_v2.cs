@@ -303,6 +303,37 @@ namespace csb.server
             return users;
         }
 
+        public async Task<List<long>> GetUsersNeedAutoReply(string geotag, int minute_offset, int minute_period)
+        {
+            List<long> res = new();
+
+            var addr = $"{url}/v1/telegram/autoAnswerUsers?min_from={minute_offset}&min_to={minute_period}&geo={geotag}";
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.GetAsync(addr);
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                var resp = JsonConvert.DeserializeObject<autoAnswerRequestDto>(result);
+                if (resp.success)
+                    res = resp.data.telegram_users;
+                else
+                    throw new Exception("success=false");
+
+            } catch (Exception ex)
+            {
+                throw new Exception($"GetUsersNeedAutoReply {ex.Message}");
+            }
+
+                
+
+          
+
+            return res;
+        }
+
         public virtual async Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState)
         {
             string json = "";

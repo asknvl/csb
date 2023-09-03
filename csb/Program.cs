@@ -22,7 +22,8 @@ namespace csb
         static void Main(string[] args)
         {
 
-            WTelegram.Helpers.Log = (x, y) => {
+            WTelegram.Helpers.Log = (x, y) =>
+            {
             };
 
             GlobalSettings settings = GlobalSettings.getInstance();

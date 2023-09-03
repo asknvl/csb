@@ -24,6 +24,8 @@ namespace csb.usr_push
 
         CircularBuffer incomeIds = new CircularBuffer(50);
         CircularBuffer outcomeIds = new CircularBuffer(50);
+
+        System.Timers.Timer autoAnswerTimer = new System.Timers.Timer();
         #endregion
 
         #region properties        
@@ -31,6 +33,14 @@ namespace csb.usr_push
 
         public UserAdmin(string api_id, string api_hash, string phone_number, string geotag) : base(api_id, api_hash, phone_number, geotag)
         {
+            autoAnswerTimer.Interval = 1 * 60 * 1000;
+            autoAnswerTimer.AutoReset = true;
+            autoAnswerTimer.Elapsed += AutoAnswerTimer_Elapsed;
+        }
+
+        private void AutoAnswerTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #region protected
@@ -39,33 +49,76 @@ namespace csb.usr_push
             long id = 0;
             try
             {
+
                 switch (messageBase)
                 {
                     case TL.Message m:
 
+                        
+
                         id = m.Peer.ID;
+                        //var u = _users[id];
+
+                        string fn = "udefined";
+                        string ln = "undefined";
+                        string un = "undefined";
+
+                        if (_users.ContainsKey(id))
+                        {
+                            fn = _users[id].first_name;
+                            ln = _users[id].last_name;
+                            un = _users[id].username;
+                        }                        
+
+                        //var i = await user.Users_GetFullUser(_users[id]);
+
+                        string err = "";
 
                         if (m.flags.HasFlag(TL.Message.Flags.out_))
                         {
                             if (!outcomeIds.ContainsID(id))
                             {
-                                await statApi.MarkFollowerWasReplied(geotag, id);
-                                outcomeIds.Add(id);
-                                logger.inf($"Follower {id} was replied {geotag}");
-                                //logger.inf_urgent(outcomeIds.ToString());
+                                bool r = true;
+                                
+                                try
+                                {
+                                    await statApi.MarkFollowerWasReplied(geotag, id);                                    
+                                } catch (Exception ex)
+                                {
+                                    r = false;
+                                    err = ex.Message;
 
+                                } finally
+                                {
+                                    logger.inf_urgent($"User id={id} fn={fn} ln={ln} un={un} REPLIED={r} ({err}) {geotag}");
+                                    outcomeIds.Add(id);
+                                    logger.inf_urgent(outcomeIds.ToString());
+                                }
                             }
                         }
                         else
                         {
                             if (!incomeIds.ContainsID(id))
                             {
-                                await statApi.MarkFollowerMadeFeedback(geotag, id);
-                                incomeIds.Add(id);
-                                logger.inf($"Follower {id} made feedback {geotag}");
-                                //logger.inf_urgent(incomeIds.ToString());
+                                bool f = true;
+                                try
+                                {
+                                    await statApi.MarkFollowerMadeFeedback(geotag, id);
+                                } catch (Exception ex)
+                                {
+                                    f = false;
+                                    err = ex.Message;
+                                } finally
+                                {
+                                    logger.inf_urgent($"User id={id} fn={fn} ln={ln} un={un} FEEDBACK={f} ({err}) {geotag}");
+                                    incomeIds.Add(id);
+                                    logger.inf_urgent(incomeIds.ToString());
+                                }                                
                             }
                         }
+
+
+
                         break;
                     case MessageService ms:
                         break;
@@ -80,17 +133,15 @@ namespace csb.usr_push
         protected override async void processUpdates(UpdatesBase updates)
         {
             foreach (var update in updates.UpdateList)
-            {
-
+            {   
                 switch (update)
                 {
                     case UpdateNewMessage unm:
                         await HandleMessage(unm.message);
                         break;
                 }
-
             }
-        }
+        }      
         #endregion
     }
 }
