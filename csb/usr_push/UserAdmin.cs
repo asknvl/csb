@@ -28,7 +28,9 @@ namespace csb.usr_push
         System.Timers.Timer autoAnswerTimer = new System.Timers.Timer();
         #endregion
 
-        #region properties        
+        #region properties 
+        public bool NeedAutoAnswer { get; set; }
+        public AutoAnswerData AutoAnswerData { get; set; } = new();
         #endregion
 
         public UserAdmin(string api_id, string api_hash, string phone_number, string geotag) : base(api_id, api_hash, phone_number, geotag)
@@ -40,7 +42,12 @@ namespace csb.usr_push
 
         private void AutoAnswerTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            throw new NotImplementedException();
+            
+            if (NeedAutoAnswer && AutoAnswerData.Messages.Count > 0)
+            {
+                var users = statApi.GetUsersNeedAutoReply(geotag, 60, 1.5);
+            }
+
         }
 
         #region protected
@@ -141,7 +148,31 @@ namespace csb.usr_push
                         break;
                 }
             }
-        }      
+        }
+        #endregion
+
+        #region override
+        public override Task Start()
+        {
+            return base.Start().ContinueWith(async t =>
+            {
+
+                //Random r = new Random();
+                //r.
+                //autoAnswerTimer.;
+
+                //await Task.Delay(r.);
+
+                //Task.Run(() => {
+                //    Random r = new Random();
+                //    r.Next(1, 10);
+                //});
+
+                autoAnswerTimer.Start();
+
+
+            });
+        }
         #endregion
     }
 }

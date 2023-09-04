@@ -6,7 +6,7 @@
     "PhoneNumber": "+79918437350",
     "Bots": [
       {
-        "GeoTag": "TEST",
+        "GeoTag": "TEST0",
         "Token": "6059202950:AAFijY4bpNBfj6V4AFVLV0g1iWCG4n_GVnw",
         "Name": "output1test_bot",
         "ChannelID": -1001692610611,
@@ -34,6 +34,32 @@
     },
     "PushData": {
       "Messages": []
+    },
+    "AutoAnswerData": {
+      "Messages": [
+        {
+          "Id": 1,
+          "Message": {
+            "message_id": 5116,
+            "from": {
+              "id": 1481806946,
+              "is_bot": false,
+              "first_name": "Alexey",
+              "username": "asknvl",
+              "language_code": "ru"
+            },
+            "date": 1693818598,
+            "chat": {
+              "id": 1481806946,
+              "type": "private",
+              "username": "asknvl",
+              "first_name": "Alexey"
+            },
+            "text": "нов2\\"
+          },
+          "FilePath": null
+        }
+      ]
     },
     "State": 0
   }

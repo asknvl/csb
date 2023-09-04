@@ -15,6 +15,7 @@ namespace csb.usr_push
         public string phone_number { get; set; }
         public string api_id { get; set; }
         public string api_hash { get; set; }
+        public bool IsRunning { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         #region vars

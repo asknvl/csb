@@ -303,7 +303,7 @@ namespace csb.server
             return users;
         }
 
-        public async Task<List<long>> GetUsersNeedAutoReply(string geotag, int minute_offset, int minute_period)
+        public async Task<List<long>> GetUsersNeedAutoAnswer(string geotag, int minute_offset, double minute_period)
         {
             List<long> res = new();
 

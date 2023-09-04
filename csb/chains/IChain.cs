@@ -3,6 +3,7 @@ using csb.bot_poster;
 using csb.messaging;
 using csb.moderation;
 using csb.usr_listener;
+using csb.usr_push;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace csb.chains
         //public List<AutoChange> AutoChanges { get; set; }
         public SmartPushData PushData { get; set; }
         public DailyPushData DailyPushData { get; set; }
+        public AutoAnswerData AutoAnswerData { get; set; }
         bool IsRunning { get; }
         ChainState State { get; set; }
 
@@ -55,7 +57,8 @@ namespace csb.chains
         void ClearDailyPushMessages(IModeratorsProcessor moderators);
         void AddSmartPushMessage(SmartPushMessage message, IModeratorsProcessor moderators);
         void ClearSmartPushMessages(IModeratorsProcessor moderators);
-
+        void AddAutoAnswerMessage(AutoAnswerMessage pattern, ITGUserManager<UserAdmin> admins);
+        void ClearAutoAnswerMessage(ITGUserManager<UserAdmin> admins);
 
     }
 

@@ -1,6 +1,153 @@
-03.09.2023 11:47:15 inf MDR > Moderator stopped
-03.09.2023 11:47:15 inf MDR > Startting moderator...
-03.09.2023 11:47:16 inf MDR > Moderator started, bot username=moderator1test_bot channelID=-1001692610611
-03.09.2023 11:47:16 err MDR > Cannot write a null value for property 'text'. Property requires a value. Path ''.
-03.09.2023 11:47:16 err MDR > UpdateFollowers success=false
-03.09.2023 11:48:16 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:33:12 inf MDR > Moderator stopped
+04.09.2023 12:33:12 inf MDR > Startting moderator...
+04.09.2023 12:33:13 inf MDR > Moderator started, bot username=moderator1test_bot channelID=-1001692610611
+04.09.2023 12:34:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:35:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:36:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:37:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:38:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:39:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:40:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:41:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:42:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:43:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:44:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:45:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:46:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:47:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:48:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:49:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:50:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:51:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:52:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:53:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:54:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:55:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:56:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:57:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:58:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 12:59:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:00:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:01:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:02:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:03:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:04:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:05:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:06:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:07:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:08:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:09:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:10:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:11:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:12:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:13:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:14:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:15:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:16:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:17:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:18:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:19:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:20:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:21:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:22:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:23:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:24:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:25:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:26:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:27:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:28:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:29:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:30:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:31:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:32:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:33:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:34:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:35:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:36:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:37:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:38:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:39:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:40:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:41:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:42:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:43:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:44:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:45:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:46:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:47:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:48:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:49:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:50:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:51:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:52:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:53:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:54:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:55:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:56:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:57:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:58:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 13:59:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:00:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:01:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:02:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:03:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:04:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:05:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:06:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:07:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:08:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:09:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:10:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:11:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:12:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:13:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:14:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:15:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:16:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:17:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:18:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:19:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:20:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:21:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:22:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:23:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:24:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:25:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:26:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:27:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:28:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:28:15 err MDR > Telegram.Bot.Exceptions.RequestException: Exception during making request
+ ---> System.Net.Http.HttpRequestException: An error occurred while sending the request.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Программа на вашем хост-компьютере разорвала установленное подключение..
+ ---> System.Net.Sockets.SocketException (10053): Программа на вашем хост-компьютере разорвала установленное подключение.
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource<System.Int32>.GetResult(Int16 token)
+   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](TIOAdapter adapter)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](TIOAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Telegram.Bot.TelegramBotClient.<MakeRequestAsync>g__SendRequestAsync|21_0[TResponse](HttpClient httpClient, HttpRequestMessage httpRequest, CancellationToken cancellationToken)
+   at Telegram.Bot.TelegramBotClient.MakeRequestAsync[TResponse](IRequest`1 request, CancellationToken cancellationToken)
+   at Telegram.Bot.Extensions.Polling.DefaultUpdateReceiver.ReceiveAsync(IUpdateHandler updateHandler, CancellationToken cancellationToken)
+04.09.2023 14:29:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:30:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:31:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:32:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:33:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:34:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:35:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:36:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:37:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:38:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:39:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:40:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:41:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:42:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0
+04.09.2023 14:43:13 inf MDR > TEST0 DAILY_PUSH: delivered 0 of 0

@@ -73,7 +73,9 @@ namespace csb.bot_manager
         waitingAutoChangeDelete,
 
         waitingAddDaily,
-        waitingDeleteDaily
+        waitingDeleteDaily,
+
+        waitingAddAutoAnswer,         
 
 
     }

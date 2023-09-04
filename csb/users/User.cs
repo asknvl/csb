@@ -115,6 +115,10 @@ namespace csb.users
                     InlineKeyboardButton.WithCallbackData(text: "Настройка ежедневных push-уведомлений", callbackData: "editDailyPushes"),
                 },
 
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настройка автоответов", callbackData: "editAutoAnswers"),
+                },
+
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
                 },
@@ -220,6 +224,21 @@ namespace csb.users
                 },
                 new[] {
                     InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "daily_delete"),
+                },
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
+                }
+            })},
+
+            {"editAutoAnswersMenu", new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Посмотреть", callbackData: "autoanswers_show"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Добавить", callbackData: "autoanswers_add"),
+                },
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить", callbackData: "autoanswers_delete"),
                 },
                  new[] {
                     InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back"),
@@ -773,6 +792,25 @@ namespace csb.users
             return inlineKeyboard;
         }
 
+        InlineKeyboardMarkup getAdminMarkUp(UserAdmin admin)
+        {
+            InlineKeyboardButton[][] admins_buttons = new InlineKeyboardButton[3 + 1][];
+
+            if (admin.IsRunning)
+                admins_buttons[0] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Остановить администратора", callbackData: $"stopAdmin") };
+            else
+                admins_buttons[0] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Запустить администратора", callbackData: $"restartAdmin") };
+
+            if (admin.NeedAutoAnswer)
+                admins_buttons[1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Автоответ ✓", callbackData: $"admin_{admin.geotag}_autoanswer_off") };
+            else
+                admins_buttons[1] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Автоответ", callbackData: $"admin_{admin.geotag}_autoanswer_on") };
+
+            admins_buttons[2] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "Удалить администратора", callbackData: $"deleteAdmin") };
+            admins_buttons[3] = new InlineKeyboardButton[] { InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "back") };
+            return new(admins_buttons);
+        }
+
         InlineKeyboardMarkup getMyPushMessagesMarkUp()
         {
 
@@ -817,6 +855,8 @@ namespace csb.users
             return inlineKeyboard;
 
         }
+
+        
 
         InlineKeyboardMarkup getMyPushStartMarkUp(bool usePushStart)
         {
@@ -1054,6 +1094,15 @@ namespace csb.users
                 chatId: chat,
                 text: "Настройки push-start:",
                 replyMarkup: getMyPushStartMarkUp(usePushStart),
+                cancellationToken: cancellationToken));
+        }
+
+        async Task showAdminEdit(long chat, UserAdmin admin)
+        {
+            await messagesProcessor.Add(chat, "editAdmin", await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: $"Выбран администратор {admin.geotag}. Что сделать?",
+                replyMarkup: getAdminMarkUp(admin),
                 cancellationToken: cancellationToken));
         }
 
@@ -1987,6 +2036,27 @@ namespace csb.users
                             }
                             break;
 
+                        case BotState.waitingAddAutoAnswer:
+                            try
+                            {
+                                var chain = chainsProcessor.Get(currentChainID);
+                                AutoAnswerMessage pattern = await AutoAnswerMessage.Create(chat, bot, update.Message, chain.Name);
+
+                                chain.AddAutoAnswerMessage(pattern.Clone(), adminManager);
+                                chainprocessor.Save();
+
+                                int cntr = chain.PushData.Messages.Count;
+                                //await messagesProcessor.Add(chat, "autoanswers_add", await sendTextMessage(chat, $"Автоответ добавлен."));
+                                await messagesProcessor.Add(chat, "editAutoAnswersMenu", await sendTextButtonMessage(chat, "Автоответ добавлен. Что сделать?", "editAutoAnswersMenu"));
+                                State = BotState.free;
+
+                            } catch (Exception ex)
+                            {
+                                await sendTextMessage(chat, ex.Message);
+                                return;
+                            }
+                            break;
+
                     }
                     break;
             }
@@ -2469,7 +2539,7 @@ namespace csb.users
                         switch (State)
                         {
                             case BotState.waitingAdminGeoTag:
-                                await messagesProcessor.Back(chat);                                
+                                await messagesProcessor.Back(chat);
                                 return;
 
                             case BotState.waitingAdminPhoneNumber:
@@ -2482,7 +2552,7 @@ namespace csb.users
                         if (!string.IsNullOrEmpty(currentAdminGeoTag))
                         {
                             try
-                            {                                
+                            {
                                 adminManager.Delete(currentAdminGeoTag);
                             } catch { };
                         }
@@ -2532,6 +2602,25 @@ namespace csb.users
                     }
                     break;
 
+                case "stopAdmin":
+                    try
+                    {
+                        var admin = adminManager.Get(currentAdminGeoTag);
+                        if (admin != null)
+                        {
+                            admin.Stop();
+                            await messagesProcessor.Back(chat);
+                            await messagesProcessor.Back(chat);
+                            await showMyAdmins(chat);
+                            await bot.AnswerCallbackQueryAsync(query.Id, "Админ остановлен");
+                        }
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
                 case "finishEddingGreetings":
                     State = BotState.waitingModeratorByeMessage;
                     await messagesProcessor.Back(chat);
@@ -2575,13 +2664,13 @@ namespace csb.users
                             await showMyModeratorsPushStart(chat, usePushStart);
                             await bot.AnswerCallbackQueryAsync(query.Id);
                         }
-                        
-                        
+
+
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
-                    
+
                     break;
 
                 case "editLeaveMessage":
@@ -2606,7 +2695,7 @@ namespace csb.users
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
-                    }                    
+                    }
                     break;
 
                 case "backToModeratorShow":
@@ -2802,7 +2891,7 @@ namespace csb.users
 
                 case "smart_delete":
                     try
-                    {   
+                    {
                         await deleteMyModeratorsSmartPushMessages(chat);
                         await bot.AnswerCallbackQueryAsync(query.Id);
                     }
@@ -2892,6 +2981,75 @@ namespace csb.users
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
                     }
                     break;
+
+                case "editAutoAnswers":
+                    try
+                    {
+
+                        await messagesProcessor.Add(chat, "editAutoAnswersMenu", await sendTextButtonMessage(chat, "Настройка автоответов:", "editAutoAnswersMenu"));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
+                case "autoanswers_show":
+
+                    try
+                    {
+
+                        var chain = chainsProcessor.Get(currentChainID);
+                        var messages = chain.AutoAnswerData.Messages;
+
+                        await bot.AnswerCallbackQueryAsync(query.Id);                        
+                        int cntr = 0;
+
+                        if (messages.Count > 0)
+                        {
+                            foreach (var message in messages)
+                            {
+                                message.fileId = null;
+                                pushMessagesIds.Enqueue(await message.Send(chat, bot));
+                                cntr++;
+                            }
+                            await messagesProcessor.Add(chat, "finishAutoAnswersShow", await sendTextButtonMessage(chat, $"Показано {cntr} сообщений", "back"));
+                        }
+                        else
+                        {
+                            await sendTextMessage(query.Message.Chat.Id, $"Для цепочки {chain.Name} не установлены автоответы");
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+
+
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "autoanswers_add":
+                    await messagesProcessor.Add(chat, "autoanswers_add", await sendTextButtonMessage(chat, "Перешлите сюда сообщение-автоответ:", "back"));
+                    State = BotState.waitingAddAutoAnswer;
+                    await bot.AnswerCallbackQueryAsync(query.Id);
+                    break;
+
+                case "autoanswers_delete":
+                    try
+                    {
+                        var chain = chainsProcessor.Get(currentChainID);
+                        chain.ClearAutoAnswerMessage(adminManager);
+                        await sendTextMessage(query.Message.Chat.Id, $"Автоответ удален для всей цепочки");
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
 
                 case "":
                     break;
@@ -3278,10 +3436,28 @@ namespace csb.users
                     {
                         try
                         {
-                            currentAdminGeoTag = data.Replace("admin_", "");
-                            var admin = adminManager.Get(currentAdminGeoTag);
-                            string m = $"Выбран администратор {admin.geotag}. Что сделать?";
-                            await messagesProcessor.Add(chat, "editAdmin", await sendTextButtonMessage(chat, m, "editAdmin"));
+
+                            if (!data.Contains("autoanswer"))
+                            {
+
+                                currentAdminGeoTag = data.Replace("admin_", "");
+                                var admin = adminManager.Get(currentAdminGeoTag);
+                                await showAdminEdit(chat, admin);
+                            }
+                            else
+                            {
+
+                                var splt = data.Split("_");
+                                currentAdminGeoTag = splt[1];
+                                var admin = adminManager.Get(currentAdminGeoTag);
+                                admin.NeedAutoAnswer = (splt[3].Equals("on")) ? true : false;
+                                await showAdminEdit(chat, admin);
+
+                            }
+
+                            //string m = $"Выбран администратор {admin.geotag}. Что сделать?";
+                            //await messagesProcessor.Add(chat, "editAdmin", await sendTextButtonMessage(chat, m, "editAdmin"));
+
                             await bot.AnswerCallbackQueryAsync(query.Id);
 
                         } catch (Exception ex)

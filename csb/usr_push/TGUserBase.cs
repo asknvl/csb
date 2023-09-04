@@ -160,6 +160,7 @@ namespace csb.usr_push
         public void Stop()
         {            
             user?.Dispose();
+            IsRunning = false;
         }
         
         #endregion

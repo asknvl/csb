@@ -18,6 +18,10 @@ namespace csb.usr_push
         string geotag { get; set; }
         [JsonProperty]
         string phone_number { get; set; }
+
+        [JsonIgnore]
+        bool IsRunning { get; set; }
+
         Task Start();
         void Stop();
         void SetVerifyCode(string code);

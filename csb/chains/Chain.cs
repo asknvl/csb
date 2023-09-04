@@ -3,6 +3,7 @@ using csb.bot_poster;
 using csb.messaging;
 using csb.moderation;
 using csb.usr_listener;
+using csb.usr_push;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace csb.chains
         public DailyPushData DailyPushData { get; set; } = new();
         [JsonProperty]
         public SmartPushData PushData { get; set; } = new();
+        [JsonProperty]
+        public AutoAnswerData AutoAnswerData { get; set; } = new();
 
         [JsonIgnore]        
         public bool IsRunning
@@ -367,6 +370,59 @@ namespace csb.chains
                 }
             }            
             moderators.Save();
+        }
+
+        public void AddAutoAnswerMessage(AutoAnswerMessage pattern, ITGUserManager<UserAdmin> admins)
+        {
+            AutoAnswerData.Messages.Clear();
+
+            AutoAnswerData.Messages.Add(pattern);
+            pattern.Id = AutoAnswerData.Messages.Count;
+
+            foreach (var outbot in Bots)
+            {
+                string geotag = outbot.GeoTag;
+                var patternCpy = pattern.Clone();
+                
+                try
+                {
+                    var admin = admins.Get(outbot.GeoTag);//moderators.SmartPushData(geotag).Messages.Add(patternCpy);
+                    if (admin != null)
+                    {
+                        admin.AutoAnswerData.Messages.Add(patternCpy);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+            admins.Save();
+        }
+
+        public void ClearAutoAnswerMessage(ITGUserManager<UserAdmin> admins)
+        {
+            AutoAnswerData.Messages.Clear();
+            foreach (var outbot in Bots)
+            {
+                string geotag = outbot.GeoTag;               
+
+                try
+                {
+                    var admin = admins.Get(outbot.GeoTag);//moderators.SmartPushData(geotag).Messages.Add(patternCpy);
+                    if (admin != null)
+                    {
+                        admin.AutoAnswerData.Messages.Clear();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+            admins.Save();
         }
     }
 }

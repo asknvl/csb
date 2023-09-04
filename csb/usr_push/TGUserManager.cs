@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace csb.usr_push
 {
-    public class TGUserManager<T> : ITGUserManager<T> where T : ITGUser
+    public class TGUserManager<T> : ITGUserManager<T> where T : UserAdmin
     {
         #region vars
         IStorage<IEnumerable<T>> storage;        
@@ -86,6 +86,10 @@ namespace csb.usr_push
                 await user.Start();
         }
 
+        public void Save()
+        {
+            storage.save(Users);
+        }
         #endregion
 
         #region events        

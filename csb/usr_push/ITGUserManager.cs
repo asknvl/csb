@@ -15,6 +15,7 @@ namespace csb.usr_push
         void Delete(string geotag);
         void Delete(T user);
         void StartAll();
+        void Save();
 
         event Action<string> VerificationCodeRequestEvent;
         public event Action<string, bool> UserStartedResultEvent;
