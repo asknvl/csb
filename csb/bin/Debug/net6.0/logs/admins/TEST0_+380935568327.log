@@ -1,2 +1,8 @@
-04.09.2023 12:33:13 inf ADM > Starting admin TEST0...
-04.09.2023 12:33:13 inf ADM > Admin TEST0 started
+08.09.2023 14:49:38 inf ADM > Starting admin TEST0...
+08.09.2023 14:49:38 inf ADM > Admin TEST0 started
+08.09.2023 14:50:38 inf ADM > User id=1842421061 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback success=false) TEST0
+08.09.2023 14:50:38 inf ADM > Circular buffer: cntr=1 length=50
+08.09.2023 14:50:39 inf ADM > TEST0 AutoAnswerTimer elpased: ids=0
+08.09.2023 14:51:38 inf ADM > TEST0 AutoAnswerTimer elpased: ids=0
+08.09.2023 14:52:38 inf ADM > TEST0 AutoAnswerTimer elpased: ids=0
+08.09.2023 14:53:38 inf ADM > TEST0 AutoAnswerTimer elpased: ids=0

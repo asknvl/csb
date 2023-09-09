@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -162,6 +163,39 @@ namespace csb.server
             }
         }
 
+        public virtual async Task MarkFollowerWasAutoMessaged(string geotag, long id)
+        {
+            tgUsersStatesDto reply = new();
+            reply.users.Add(new tgUserStateDto()
+            {
+                tg_user_id = id,
+                tg_geolocation = geotag,
+                is_user_get_auto_answer = true
+            });
+
+            string json = JsonConvert.SerializeObject(reply);
+
+            var addr = $"{url}/v1/telegram/userByGeo";
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpClient = httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            try
+            {
+                var response = await httpClient.PostAsync(addr, data);
+                var result = await response.Content.ReadAsStringAsync();
+                var jres = JObject.Parse(result);
+                bool res = jres["success"].ToObject<bool>();
+                if (!res)
+                    throw new Exception($"success=false");
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"MarkFollowerWasAutoMessaged {ex.Message}");
+            }
+        }
+
         public virtual async Task MarkFollowerWasPushed(string geotag, long id, double hours, bool status)
         {
             string json;
@@ -307,7 +341,10 @@ namespace csb.server
         {
             List<long> res = new();
 
-            var addr = $"{url}/v1/telegram/autoAnswerUsers?min_from={minute_offset}&min_to={minute_period}&geo={geotag}";
+            string offset = minute_offset.ToString(CultureInfo.InvariantCulture);
+            string period = minute_period.ToString(CultureInfo.InvariantCulture);
+
+            var addr = $"{url}/v1/telegram/autoAnswerUsers?min_from={offset}&min_to={period}&geo={geotag}";
             var httpClient = httpClientFactory.CreateClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 

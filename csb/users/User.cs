@@ -1314,7 +1314,7 @@ namespace csb.users
                         string res = "";
                         foreach (var item in admins)
                         {
-                            res += $"{item.geotag} {item.username} {item.phone_number}\n";
+                            res += $"{item.geotag} {item.username} {item.phone_number} enabled={item.IsRunning} autoanswer:{item.NeedAutoAnswer}, {item.AutoAnswerData.Messages.Count}\n";
                         }
                         await sendTextMessage(chat, res);
 
@@ -3044,6 +3044,7 @@ namespace csb.users
                         var chain = chainsProcessor.Get(currentChainID);
                         chain.ClearAutoAnswerMessage(adminManager);
                         await sendTextMessage(query.Message.Chat.Id, $"Автоответ удален для всей цепочки");
+                        await bot.AnswerCallbackQueryAsync(query.Id);
                     } catch (Exception ex)
                     {
                         await sendTextMessage(query.Message.Chat.Id, ex.Message);
@@ -3451,6 +3452,7 @@ namespace csb.users
                                 currentAdminGeoTag = splt[1];
                                 var admin = adminManager.Get(currentAdminGeoTag);
                                 admin.NeedAutoAnswer = (splt[3].Equals("on")) ? true : false;
+                                adminManager.Save();
                                 await showAdminEdit(chat, admin);
 
                             }

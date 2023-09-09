@@ -1,6 +1,7 @@
 ﻿
 using asknvl.logger;
 using csb.server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,25 +30,49 @@ namespace csb.usr_push
         #endregion
 
         #region properties 
+        [JsonProperty]
         public bool NeedAutoAnswer { get; set; }
         public AutoAnswerData AutoAnswerData { get; set; } = new();
         #endregion
 
         public UserAdmin(string api_id, string api_hash, string phone_number, string geotag) : base(api_id, api_hash, phone_number, geotag)
         {
-            autoAnswerTimer.Interval = 1 * 60 * 1000;
+            autoAnswerTimer.Interval =  1 * 60 * 1000;
             autoAnswerTimer.AutoReset = true;
             autoAnswerTimer.Elapsed += AutoAnswerTimer_Elapsed;
         }
 
-        private void AutoAnswerTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private async void AutoAnswerTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            
-            if (NeedAutoAnswer && AutoAnswerData.Messages.Count > 0)
+            try
             {
-                var users = statApi.GetUsersNeedAutoReply(geotag, 60, 1.5);
+                if (NeedAutoAnswer && AutoAnswerData.Messages.Count > 0)
+                {
+                    var ids = await statApi.GetUsersNeedAutoAnswer(geotag, 60, 1.5);
+
+                    logger.inf_urgent($"{geotag} AutoAnswerTimer elpased: ids={ids.Count}");
+
+                    foreach ( var id in ids )
+                    {
+                        TL.User auto_msg_user = null;
+                        bool found = _users.TryGetValue(id, out auto_msg_user);
+                        if (found)
+                        {
+                            var peer = new InputPeerUser(auto_msg_user.ID, auto_msg_user.access_hash);
+
+                            logger.inf_urgent($"AutoAnswerTimer Sent to: {auto_msg_user.id} {auto_msg_user.first_name} {auto_msg_user.last_name} {auto_msg_user.username}");
+                            await user.SendMessageAsync(/*auto_msg_user*/peer, AutoAnswerData.Messages[0].Message.Text);
+                            //await statApi.MarkFollowerWasReplied(geotag, id);
+                            await statApi.MarkFollowerWasAutoMessaged(geotag, id);
+                        }
+                    }
+                }
             }
 
+            catch(Exception ex)
+            {
+                logger.err($"AutoAnswerTimer: {ex.Message}");
+            }
         }
 
         #region protected
@@ -56,12 +81,9 @@ namespace csb.usr_push
             long id = 0;
             try
             {
-
                 switch (messageBase)
                 {
-                    case TL.Message m:
-
-                        
+                    case TL.Message m:                        
 
                         id = m.Peer.ID;
                         //var u = _users[id];
@@ -123,8 +145,6 @@ namespace csb.usr_push
                                 }                                
                             }
                         }
-
-
 
                         break;
                     case MessageService ms:

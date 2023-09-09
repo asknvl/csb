@@ -19,7 +19,8 @@ namespace csb.server
         Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState);
         Task MarkFollowerMadeFeedback(string geotag, long id);
         Task MarkFollowerWasReplied(string geotag, long id);
-        Task<List<long>> GetUsersNeedAutoReply(string geotag, int minute_offset, double minute_period);
+        Task MarkFollowerWasAutoMessaged(string geotag, long id);
+        Task<List<long>> GetUsersNeedAutoAnswer(string geotag, int minute_offset, double minute_period);
     }
 
     public enum DailyPushState

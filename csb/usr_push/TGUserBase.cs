@@ -91,15 +91,20 @@ namespace csb.usr_push
         {            
             updates.CollectUsersChats(_users, _chats);
 
-            if (updates is UpdateShortMessage usm && !_users.ContainsKey(usm.user_id))
+            if (updates is UpdateShortMessage usm/* && !_users.ContainsKey(usm.user_id)*/)
+            {
+                if (_users.ContainsKey(usm.user_id))
+                {
+                    _users.Remove(usm.user_id);
+                }
+
                 (await user.Updates_GetDifference(usm.pts - usm.pts_count, usm.date, 0)).CollectUsersChats(_users, _chats);
+            }
+                
             else if (updates is UpdateShortChatMessage uscm && (!_users.ContainsKey(uscm.from_id) || !_chats.ContainsKey(uscm.chat_id)))
                 (await user.Updates_GetDifference(uscm.pts - uscm.pts_count, uscm.date, 0)).CollectUsersChats(_users, _chats);
 
-            await Task.Run(async () =>
-            {
-                processUpdates(updates);
-            });
+            processUpdates(updates);
         }
 
         private async Task User_OnOther(IObject arg)

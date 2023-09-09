@@ -1,34 +1,12 @@
 [
   {
-    "NeedAutoAnswer": false,
+    "NeedAutoAnswer": true,
     "AutoAnswerData": {
       "Messages": [
         {
-          "Id": 3,
-          "Message": {
-            "message_id": 5086,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1693810771,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "123"
-          },
-          "FilePath": null
-        },
-        {
           "Id": 1,
           "Message": {
-            "message_id": 5100,
+            "message_id": 5173,
             "from": {
               "id": 1481806946,
               "is_bot": false,
@@ -36,36 +14,14 @@
               "username": "asknvl",
               "language_code": "ru"
             },
-            "date": 1693813337,
+            "date": 1693857604,
             "chat": {
               "id": 1481806946,
               "type": "private",
               "username": "asknvl",
               "first_name": "Alexey"
             },
-            "text": "нов1"
-          },
-          "FilePath": null
-        },
-        {
-          "Id": 1,
-          "Message": {
-            "message_id": 5116,
-            "from": {
-              "id": 1481806946,
-              "is_bot": false,
-              "first_name": "Alexey",
-              "username": "asknvl",
-              "language_code": "ru"
-            },
-            "date": 1693818598,
-            "chat": {
-              "id": 1481806946,
-              "type": "private",
-              "username": "asknvl",
-              "first_name": "Alexey"
-            },
-            "text": "нов2\\"
+            "text": "автоответ"
           },
           "FilePath": null
         }

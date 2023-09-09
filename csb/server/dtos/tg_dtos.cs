@@ -147,6 +147,7 @@ namespace csb.server.tg_dtos
         public string tg_geolocation { get; set; }
         public bool? is_user_send_msg { get; set; } = null;
         public bool? is_user_msg_processed { get; set; } = null;
+        public bool? is_user_get_auto_answer { get; set; } = null;  
     }
     public class tgUsersStatesDto
     {
