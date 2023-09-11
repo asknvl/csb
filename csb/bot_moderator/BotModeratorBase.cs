@@ -3,6 +3,7 @@ using asknvl.logger;
 using csb.addme_service;
 using csb.invitelinks;
 using csb.server;
+using csb.telemetry;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -99,8 +100,14 @@ namespace csb.bot_moderator
         [JsonIgnore]
         public bool IsRunning { get; set; }
 
+        [JsonProperty]
+        public bool NeedTelemetry { get; set; }
+
         [JsonIgnore]
         public Dictionary<string, int> PseudoLeads { get; set; } = new();
+
+        [JsonIgnore]
+        public BaseTelemetryProcessor Telemetry { get; set; }         
         #endregion
 
         public BotModeratorBase(string token, string geotag)
@@ -110,6 +117,7 @@ namespace csb.bot_moderator
             GeoTag = geotag;
 
             logger = new Logger("MDR", "moderators", GeoTag);
+            Telemetry = new BotModeratorTelemetryProcessor(GeoTag);
 
 #if !DEBUG
             pushTimer.Interval = push_period;
@@ -235,6 +243,9 @@ namespace csb.bot_moderator
             int sent = 0;
             int delivered = 0;
 
+            var p = ((BotModeratorTelemetryProcessor)Telemetry);
+            var o = (BotModeratorTelemetryObject)p.TelemetryObject;
+
             try
             {
                 if (DailyPushData.Messages.Count == 0)
@@ -307,6 +318,8 @@ namespace csb.bot_moderator
             } finally
             {
                 logger.inf_urgent($"{GeoTag} DAILY_PUSH: delivered {delivered} of {sent}");
+                o.DailyPushes.Sent += sent;
+                o.DailyPushes.Delivered += delivered;
             }
         }
 
@@ -347,6 +360,9 @@ namespace csb.bot_moderator
 
         protected virtual async Task processChatJoinRequest(Update update, CancellationToken cancellationToken)
         {
+            var p = ((BotModeratorTelemetryProcessor)Telemetry);
+            var o = (BotModeratorTelemetryObject)p.TelemetryObject;
+
             if (update.ChatJoinRequest != null)
             {
 
@@ -427,13 +443,19 @@ namespace csb.bot_moderator
                     await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                     logger.inf_urgent($"{GeoTag} APPROVED({++appCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
 
+                    o.Subscribers.Approved = appCntr;
+
+                    
+
                 }
                 else
                 {
-                    logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
+                    logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");                    
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
-                    await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.From.Id);
 
+                    o.Subscribers.Declined = decCntr;
+
+                    await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.From.Id);
 
                     switch (LeadType)
                     {
@@ -599,6 +621,9 @@ namespace csb.bot_moderator
             if (update == null)
                 return;
 
+            var p = ((BotModeratorTelemetryProcessor)Telemetry);
+            var o = (BotModeratorTelemetryObject)p.TelemetryObject;
+
             switch (update.Type)
             {
                 case UpdateType.MyChatMember:
@@ -657,6 +682,9 @@ namespace csb.bot_moderator
                                         cancellationToken: cancellationToken);
 
                                     logger.inf_urgent($"{GeoTag} pushStartCounter={++pushStartCounter} allowedSubscribeRequestCounter={allowedSubscribeRequestCounter} {update.Message.From.FirstName}  {update.Message.From.LastName} {update.Message.From.Id}");
+
+                                    o.PushStart.Shown = allowedSubscribeRequestCounter;
+                                    o.PushStart.Clicked = pushStartCounter;                                    
 
                                 } catch (Exception ex)
                                 {

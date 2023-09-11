@@ -189,8 +189,46 @@ namespace csb.bot_manager
                             return;
                         }
 
-                        await userManager.UpdateMessage(update);
+                        //telemetry:id:on
+                        if (userManager.Check(chat) && msg.Contains("/telemetry"))
+                        {
 
+                            try
+                            {
+
+                                var splt = msg.Split(":");
+                                string m = "Неправильный параметр команды";
+                                long id = long.Parse(splt[1]);
+
+                            switch (splt[2])
+                                {
+                                    case "on":
+                                        userManager.ToggleTelemetry(chat, id, true);
+                                        m = "Телеметрия включена";
+                                        break;
+                                    case "off":
+                                        userManager.ToggleTelemetry(chat, id, false);
+                                        m = "Телеметрия выключена";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                await bot.SendTextMessageAsync(
+                                       chatId: chat,
+                                       text: m,
+                                       cancellationToken: cancellationToken);
+
+                            } catch (Exception ex)
+                            {
+                                await bot.SendTextMessageAsync(
+                                    chatId: chat,
+                                    text: ex.Message,
+                                    cancellationToken: cancellationToken);
+                            }
+                            return;
+                        }
+
+                        await userManager.UpdateMessage(update);
                     });
 
 

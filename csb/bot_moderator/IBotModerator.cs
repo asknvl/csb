@@ -1,5 +1,6 @@
 ﻿using asknvl;
 using asknvl.leads;
+using csb.telemetry;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace csb.bot_moderator
 {
     public interface IBotModerator
     {
+        BaseTelemetryProcessor Telemetry { get; set; }
         string GeoTag { get; set; }
         string Name { get; set; }
         string Token { get; set; }
@@ -21,6 +23,7 @@ namespace csb.bot_moderator
         SmartPushData PushData { get; set; }
         DailyPushData DailyPushData { get; set; }
         bool IsRunning { get; set; }
+        bool NeedTelemetry { get; set; }
         void Start();
         void Stop();
 

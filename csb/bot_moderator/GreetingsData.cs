@@ -23,7 +23,7 @@ namespace csb.bot_moderator
         //[JsonProperty]
         //public List<JoinMessage> JoinMessages { get; set; } = new();
         [JsonProperty]
-        public string PushStartEmoji { get; set; } = "🔥🔥🔥";
+        public string PushStartEmoji { get; set; } = "🔥";
         [JsonProperty]
         public string PushStartText { get; set; }
 

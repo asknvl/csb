@@ -92,6 +92,26 @@ namespace csb.users
             }
         }
 
+        public void ToggleTelemetry(long userId, long observerId, bool state)
+        {
+            var found = users.FirstOrDefault(u => u.Id == userId);
+            if (found != null)
+            {
+                //found.NeedTelemetry = state;
+                //storage.save(this); 
+                if (state)
+                {
+                    if (!found.TelemetryObserversIds.Contains(observerId))
+                        found.TelemetryObserversIds.Add(observerId);
+                } else
+                {
+                    if (found.TelemetryObserversIds.Contains(observerId))
+                        found.TelemetryObserversIds.Remove(observerId);
+                }
+                storage.save(this);
+            }
+        }
+
         public async Task UpdateCallbackQuery(CallbackQuery? query)
         {
             var user = users.FirstOrDefault(u => u.Id == query.Message.Chat.Id);

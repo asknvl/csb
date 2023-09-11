@@ -14,9 +14,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
+//using TL;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace csb.users
@@ -404,9 +406,7 @@ namespace csb.users
         int currentChainID;
         string currentBotGeoTag;
         string currentModeratorGeoTag;
-        string currentAdminGeoTag;
-
-        //PushMessage currentPushMessage;
+        string currentAdminGeoTag;        
         double currentPushMessageTime;
 
 
@@ -414,6 +414,8 @@ namespace csb.users
         string oldText;
         BotState State;
         Queue<int> pushMessagesIds = new Queue<int>();
+
+        System.Timers.Timer telemetryTimer;
         #endregion
 
         #region properties
@@ -421,6 +423,8 @@ namespace csb.users
         public long Id { get; set; }
         [JsonProperty]
         public string Name { get; set; }
+        [JsonProperty]
+        public List<long> TelemetryObserversIds { get; set; } = new();
         [JsonIgnore]
         public ITelegramBotClient bot { get; set; }
         [JsonIgnore]
@@ -462,9 +466,46 @@ namespace csb.users
 
         public User()
         {
+            telemetryTimer = new System.Timers.Timer();
+            telemetryTimer.Interval = 60 * 1000;
+            telemetryTimer.AutoReset = true;
+            telemetryTimer.Elapsed += TelemetryTimer_Elapsed;
+            telemetryTimer.Start();
         }
 
         #region private
+        private async void TelemetryTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var moderators = moderationProcessor.ModeratorBots.Where(b => b.NeedTelemetry);
+            foreach (var moderator in moderators)
+            {
+
+                if (!moderator.NeedTelemetry)
+                    continue;
+
+                var errors = moderator.Telemetry.TelemetryObject.GetErrors();
+                string errorMsg = "";
+                if (errors.Count > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        errorMsg += $"{error}\n";
+                    }
+
+                    errorMsg = $"❕{moderator.GeoTag}:\n{errorMsg}";
+                    
+                    try
+                    {
+
+                        await sendTextMessage(Id, errorMsg);
+
+                    } catch (Exception ex)
+                    {
+
+                    }
+                }                
+            }
+        }
         private async void ChainsProcessor_NeedVerifyCodeEvent(int id, string phone)
         {
             currentChainID = id;
@@ -478,7 +519,6 @@ namespace csb.users
             //await messagesProcessor.Delete(Id, "startsave");
             //await messagesProcessor.Delete(Id, "editChain");            
             //await showMyChains(Id);
-
         }
         private async void Adminmanager_VerificationCodeRequestEvent(string geotag)
         {
@@ -536,6 +576,54 @@ namespace csb.users
             InlineKeyboardMarkup inlineKeyboard = new(moderators_buttons);
 
             return inlineKeyboard;
+        }
+
+        InlineKeyboardMarkup getMyModeratorMarkUp(IBotModerator moderator)
+        {
+
+            string needTelemetry = (moderator.NeedTelemetry) ? "Телеметрия 🟢" : "Телеметрия 🔴";
+
+            return new(new[] {
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: needTelemetry, callbackData: "toggleModeratorTelemetry"),
+                },
+
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Изменить геотег", callbackData: "editModeratorGeoTag"),
+                },
+
+                 new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Алгоритм формирования лидов", callbackData: "checkLeadAlgorithm"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить Join сообщение", callbackData: "editJoinMessage"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить кружок", callbackData: "editPreJoinMessage"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить push-старт", callbackData: "editPushStart"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Настроить Leave сообщение", callbackData: "editLeaveMessage"),
+                },
+
+                //new[] {
+                //    InlineKeyboardButton.WithCallbackData(text: "Настроить Push сообщения", callbackData: "editPushMessages"),
+                //},
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "Удалить модератора", callbackData: "deleteModerator"),
+                },
+
+                new[] {
+                    InlineKeyboardButton.WithCallbackData(text: "« Назад", callbackData: "backToMyModerators"),
+                }
+            });
         }
 
         InlineKeyboardMarkup getMyModeratorsDailyPushMessagesShowMarkUp()
@@ -902,6 +990,16 @@ namespace csb.users
                 text: message,
                 replyMarkup: inlineKeyboards[key],
                 disableWebPagePreview:true,
+                cancellationToken: cancellationToken);
+        }
+
+        async Task<Message> sendTextButtonMessage(long chat, string message, InlineKeyboardMarkup markup)
+        {
+            return await bot.SendTextMessageAsync(
+                chatId: chat,
+                text: message,
+                replyMarkup: markup,
+                disableWebPagePreview: true,
                 cancellationToken: cancellationToken);
         }
 
@@ -2686,6 +2784,21 @@ namespace csb.users
                     await bot.AnswerCallbackQueryAsync(query.Id);
                     break;
 
+                case "toggleModeratorTelemetry":
+                    try
+                    {
+                        var moderator = moderationProcessor.Get(currentModeratorGeoTag);
+                        moderator.NeedTelemetry = !moderator.NeedTelemetry;
+                        string m = $"Выбран модератор {moderator.GeoTag}. Что сделать?";
+                        await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, getMyModeratorMarkUp(moderator)));
+                        await bot.AnswerCallbackQueryAsync(query.Id);
+                        moderationProcessor.Save();
+                    } catch (Exception ex)
+                    {
+                        await sendTextMessage(query.Message.Chat.Id, ex.Message);
+                    }
+                    break;
+
                 case "checkLeadAlgorithm":
                     try
                     {
@@ -2704,7 +2817,8 @@ namespace csb.users
                         await messagesProcessor.Back(chat);
                         var moderator = moderationProcessor.Get(currentModeratorGeoTag);
                         string m = $"Выбран модератор {moderator.GeoTag}. Что сделать?";
-                        await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
+                        //await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
+                        await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, getMyModeratorMarkUp(moderator)));
                         await bot.AnswerCallbackQueryAsync(query.Id);
 
                     }
@@ -3252,7 +3366,8 @@ namespace csb.users
                             currentModeratorGeoTag = data.Replace("moderator_", "");
                             var moderator = moderationProcessor.Get(currentModeratorGeoTag);
                             string m = $"Выбран модератор {moderator.GeoTag}. Что сделать?";
-                            await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
+                            //await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, "editModerator"));
+                            await messagesProcessor.Add(chat, "editModerator", await sendTextButtonMessage(chat, m, getMyModeratorMarkUp(moderator)));
                             await bot.AnswerCallbackQueryAsync(query.Id);
 
                         } catch (Exception ex)

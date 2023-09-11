@@ -118,6 +118,7 @@
     },
     "DailyPushData": {
       "Messages": []
-    }
+    },
+    "NeedTelemetry": true
   }
 ]

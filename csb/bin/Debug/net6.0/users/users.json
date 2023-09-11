@@ -2,7 +2,8 @@
   "users": [
     {
       "Id": 1481806946,
-      "Name": "Alexey "
+      "Name": "Alexey ",
+      "NeedTelemetry": true
     }
   ]
 }
