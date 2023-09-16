@@ -9,7 +9,7 @@
       "HelloMessage": {
         "Id": 0,
         "Message": {
-          "message_id": 4182,
+          "message_id": 5675,
           "from": {
             "id": 1481806946,
             "is_bot": false,
@@ -17,7 +17,7 @@
             "username": "asknvl",
             "language_code": "ru"
           },
-          "date": 1682884933,
+          "date": 1694528352,
           "chat": {
             "id": 1481806946,
             "type": "private",
@@ -25,12 +25,12 @@
             "first_name": "Alexey"
           },
           "forward_from": {
-            "id": 6084099531,
+            "id": 5732538181,
             "is_bot": true,
-            "first_name": "BotGirl",
-            "username": "bottt_girlll_bot"
+            "first_name": "mytestany",
+            "username": "mytestanybot_bot"
           },
-          "forward_date": 1682335588,
+          "forward_date": 1694528181,
           "text": "🎁To start earning CLICK this - /STARTNOW\n\n🔥To start earning, you need to register. \nNow my analytics work only with this product.\nAfter registration, you need to replenish your balance.\nHave you increased the balance? Great😎\n\n☑️ Let's move on... I have a free CANAL where you read this post. Every day you can get ~ three predictions on it. Never bet all-in!\nOn a free channel, I do my best so that everyone can make some money and learn a little bit about making money on Aviator🚀 \n\n☑️If you have any doubts, I have a CHANNEL WITH FEEDBACK from all the people who are already working with me with good results.\nYou can write to each of them, talk to them in person and make sure that everything is real and not complicated🤑\n\n✅If you want detailed instructions on how to start working with me, go to my TRAINING CHANNEL\nWatch the training video, read all the information carefully and let's make money together\n\n✅To start earning CLICK this - /STARTNOW",
           "entities": [
             {
@@ -60,48 +60,7 @@
       "PushStartEmoji": "🔥🔥🔥",
       "PushStartText": "🔥🔥🔥STARTNOW🔥🔥🔥",
       "UsePushStartButton": true,
-      "PreJoinMessage": {
-        "Id": 0,
-        "Message": {
-          "message_id": 4226,
-          "from": {
-            "id": 1481806946,
-            "is_bot": false,
-            "first_name": "Alexey",
-            "username": "asknvl",
-            "language_code": "ru"
-          },
-          "date": 1682939276,
-          "chat": {
-            "id": 1481806946,
-            "type": "private",
-            "username": "asknvl",
-            "first_name": "Alexey"
-          },
-          "forward_from": {
-            "id": 6084099531,
-            "is_bot": true,
-            "first_name": "BotGirl",
-            "username": "bottt_girlll_bot"
-          },
-          "forward_date": 1682872902,
-          "video_note": {
-            "length": 640,
-            "duration": 42,
-            "thumb": {
-              "width": 320,
-              "height": 320,
-              "file_id": "AAMCAgADGQEAAhCCZE-dizuuqjYGVjtg4-kecdVhIaAAAhYsAAJGw3hKOu1A0J1yeb8BAAdtAAMvBA",
-              "file_unique_id": "AQADFiwAAkbDeEpy",
-              "file_size": 21260
-            },
-            "file_id": "DQACAgIAAxkBAAIQgmRPnYs7rqo2BlY7YOPpHnHVYSGgAAIWLAACRsN4SjrtQNCdcnm_LwQ",
-            "file_unique_id": "AgADFiwAAkbDeEo",
-            "file_size": 3960575
-          }
-        },
-        "FilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\bin\\Debug\\net6.0\\moderators\\1481806946\\TEST0\\file_8.mp4"
-      },
+      "PreJoinMessage": null,
       "HelloMessageReply": {
         "Text": null,
         "Entities": null,

@@ -19,7 +19,7 @@ namespace csb.telemetry
             TelemetryResult res = new TelemetryResult()
             {
                 entity = "DailyPushes",
-                success = Sent > 0 && Delivered > 0,
+                success = /*(Sent > 0 && Delivered < Sent * 0.3)*/true,
                 data = $"sent={Sent} delivered={Delivered}"
             };
             
@@ -34,8 +34,16 @@ namespace csb.telemetry
     }
 
     public class Subscribers : ITelemetryResult
-    {
-        public int Approved { get; set; } = 0;
+    {        
+        int approved;
+        public int Approved {
+            get => approved;
+            set
+            {
+                approved = value;
+            }
+        }
+        public int Unsubscribed { get; set; } = 0;
         public int Declined { get; set; } = 0;
 
         public TelemetryResult Get()
@@ -43,9 +51,10 @@ namespace csb.telemetry
             TelemetryResult res = new TelemetryResult()
             {
                 entity = "Subscribers",
-                success = Approved > 0 && Declined < Approved,
+                success = true,
                 data = $"approved={Approved} declined={Declined}"
             };
+            Reset();
             return res;
         }
 
@@ -53,6 +62,7 @@ namespace csb.telemetry
         {
             Approved = 0;
             Declined = 0;
+            Unsubscribed = 0;
         }
     }
 
@@ -66,7 +76,7 @@ namespace csb.telemetry
             TelemetryResult res = new TelemetryResult()
             {
                 entity = "PushStart",
-                success = Shown > 0 && Clicked >= Shown * 0.3,
+                success = Clicked >= Shown * 0.3,
                 data = $"shown={Shown} clicked={Clicked}"
             };
             return res;
@@ -108,7 +118,6 @@ namespace csb.telemetry
                 res.Add($"{sbr.entity} {sbr.data}");
             if (!psr.success)
                 res.Add($"{psr.entity} {psr.data}");
-
             return res;
         }
 

@@ -3,7 +3,15 @@
     {
       "Id": 1481806946,
       "Name": "Alexey ",
-      "NeedTelemetry": true
+      "TelemetryObserversIds": [
+        1481806946,
+        6258037402
+      ]
+    },
+    {
+      "Id": 6258037402,
+      "Name": "Your Personal Manager ",
+      "TelemetryObserversIds": []
     }
   ]
 }

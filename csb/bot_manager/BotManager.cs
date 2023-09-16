@@ -3,6 +3,7 @@ using csb.bot_poster;
 using csb.chains;
 using csb.settings;
 using csb.settings.validators;
+using csb.telemetry;
 using csb.users;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,11 @@ namespace csb.bot_manager
     public enum BotState
     {
         free,
-        waitingChainName,        
+        waitingChainName,
         waitingPhoneNumber,
 
         waitingBotGeoTag,
-        waitingToken,     
+        waitingToken,
         waitingOutputChannelId,
         waitingVictimChannelLink,
         waitingOutputChannelLink,
@@ -43,7 +44,7 @@ namespace csb.bot_manager
         waitingModeratorGeoTag,
         waitingModeratorToken,
 
-        waitingModeratorHelloMessage,          
+        waitingModeratorHelloMessage,
 
         waitingModeratorPreJoinMessageEdit,
         waitingModeratorJoinMessageReplyEdit,
@@ -75,12 +76,12 @@ namespace csb.bot_manager
         waitingAddDaily,
         waitingDeleteDaily,
 
-        waitingAddAutoAnswer,         
+        waitingAddAutoAnswer,
 
 
     }
-    
-    
+
+
 
     public class BotManager
     {
@@ -103,7 +104,7 @@ namespace csb.bot_manager
             userManager.Init();
         }
 
-       
+
 
         public async void Start()
         {
@@ -113,7 +114,7 @@ namespace csb.bot_manager
             {
                 AllowedUpdates = new UpdateType[] { UpdateType.Message, UpdateType.CallbackQuery }
             };
-            bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, new CancellationToken());            
+            bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, new CancellationToken());
         }
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
@@ -126,19 +127,21 @@ namespace csb.bot_manager
                     await userManager.UpdateCallbackQuery(update.CallbackQuery);
                     break;
 
-                    case UpdateType.Message:
+                case UpdateType.Message:
 
-                    await Task.Run(async () => {
+                    await Task.Run(async () =>
+                    {
 
                         var chat = update.Message.Chat.Id;
                         string msg = (update.Message.Text != null) ? update.Message.Text : "";
-                      
+
                         if (msg.Equals("/addme"))
                         {
                             try
                             {
                                 addMe.Add(chat);
-                            } catch (Exception ex)
+                            }
+                            catch (Exception ex)
                             {
                                 await bot.SendTextMessageAsync(
                                   chatId: chat,
@@ -165,10 +168,10 @@ namespace csb.bot_manager
 
                             await bot.SendTextMessageAsync(
                                    chatId: chat,
-                                   text: helloText,                                   
+                                   text: helloText,
                                    cancellationToken: cancellationToken);
                             return;
-                            
+
                         }
 
                         if (!userManager.Check(chat) && !msg.Equals("/start"))
@@ -183,9 +186,10 @@ namespace csb.bot_manager
                         if (msg.Equals("/start"))
                         {
                             await bot.SendTextMessageAsync(
-                                  chatId: chat,
-                                  text: "Введите пароль",
-                                  cancellationToken: cancellationToken);
+                            chatId: chat,
+                                  text: $"Ваш ID `{chat}`, введите пароль:",
+                                  cancellationToken: cancellationToken,
+                                  parseMode: ParseMode.MarkdownV2);
                             return;
                         }
 
@@ -195,12 +199,11 @@ namespace csb.bot_manager
 
                             try
                             {
-
                                 var splt = msg.Split(":");
                                 string m = "Неправильный параметр команды";
                                 long id = long.Parse(splt[1]);
 
-                            switch (splt[2])
+                                switch (splt[2])
                                 {
                                     case "on":
                                         userManager.ToggleTelemetry(chat, id, true);
@@ -218,7 +221,8 @@ namespace csb.bot_manager
                                        text: m,
                                        cancellationToken: cancellationToken);
 
-                            } catch (Exception ex)
+                            }
+                            catch (Exception ex)
                             {
                                 await bot.SendTextMessageAsync(
                                     chatId: chat,
@@ -233,7 +237,7 @@ namespace csb.bot_manager
 
 
                     break;
-            }            
+            }
         }
 
         public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)

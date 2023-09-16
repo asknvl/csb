@@ -35,27 +35,28 @@ namespace csb.telemetry
             resetTimer.Start();
         }
 
-        #region protected
-        protected void AddException(string mesage)
-        {
-            Exceptions.Enqueue($"{DateTime.Now}{mesage}");
-        }
-
-        protected string GetExceptions()
-        {
-            string res = "";
-
-            while (Exceptions.Count > 0)
-            {
-                res += $"{Exceptions.Dequeue()}\n";
-            }
-
-            return res;
-        }
+        #region protected       
         #endregion
 
 
         #region public
+        public void AddException(string mesage)
+        {
+            if (!Exceptions.Contains(mesage))
+                Exceptions.Enqueue($"{mesage}");
+        }
+
+        public List<string> GetExceptions()
+        {
+            List<string> res = new();
+
+            while (Exceptions.Count > 0)
+            {
+                res.Add(Exceptions.Dequeue());                
+            }
+
+            return res;
+        }
         public virtual void Reset()
         {
             Exceptions.Clear();

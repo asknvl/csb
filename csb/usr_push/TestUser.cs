@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csb.telemetry;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace csb.usr_push
         public string api_id { get; set; }
         public string api_hash { get; set; }
         public bool IsRunning { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public BaseTelemetryProcessor Telemetry { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         #region vars

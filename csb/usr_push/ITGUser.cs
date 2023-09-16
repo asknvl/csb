@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using csb.telemetry;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace csb.usr_push
     public interface ITGUser
     {
         [JsonProperty]
-        public string api_id { get; set; }
+        string api_id { get; set; }
         [JsonProperty]
-        public string api_hash { get; set; }        
+        string api_hash { get; set; }        
         [JsonProperty]
         string geotag { get; set; }
         [JsonProperty]
@@ -21,6 +22,9 @@ namespace csb.usr_push
 
         [JsonIgnore]
         bool IsRunning { get; set; }
+
+        [JsonIgnore]
+        BaseTelemetryProcessor Telemetry { get; set; }
 
         Task Start();
         void Stop();

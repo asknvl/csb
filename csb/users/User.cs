@@ -424,7 +424,7 @@ namespace csb.users
         [JsonProperty]
         public string Name { get; set; }
         [JsonProperty]
-        public List<long> TelemetryObserversIds { get; set; } = new();
+        public List<long> TelemetryObserversIds { get; set; } = new();        
         [JsonIgnore]
         public ITelegramBotClient bot { get; set; }
         [JsonIgnore]
@@ -467,7 +467,7 @@ namespace csb.users
         public User()
         {
             telemetryTimer = new System.Timers.Timer();
-            telemetryTimer.Interval = 60 * 1000;
+            telemetryTimer.Interval = 10 * 60 * 1000;
             telemetryTimer.AutoReset = true;
             telemetryTimer.Elapsed += TelemetryTimer_Elapsed;
             telemetryTimer.Start();
@@ -490,20 +490,71 @@ namespace csb.users
                     foreach (var error in errors)
                     {
                         errorMsg += $"{error}\n";
-                    }
+                    }                    
+                }
 
-                    errorMsg = $"❕{moderator.GeoTag}:\n{errorMsg}";
-                    
+                var exceptions = moderator.Telemetry.GetExceptions();
+                if (exceptions.Count > 0)
+                {
+                    foreach (var ex in exceptions)
+                    {
+                        errorMsg += $"{ex}\n";
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(errorMsg))
+                {
+                    errorMsg = $"❗️ moderator.{moderator.GeoTag}:\n{errorMsg}";
                     try
                     {
-
-                        await sendTextMessage(Id, errorMsg);
-
-                    } catch (Exception ex)
-                    {
+                        foreach (var id in TelemetryObserversIds)
+                        {
+                            await sendTextMessage(id, errorMsg);
+                        }
 
                     }
-                }                
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
+
+            var admins = adminManager.Users;
+            foreach (var admin in admins)
+            {
+                var errors = admin.Telemetry.TelemetryObject.GetErrors();
+                string errorMsg = "";
+                if (errors.Count > 0)
+                {
+                    foreach (var error in errors)
+                    {
+                        errorMsg += $"{error}\n";
+                    }
+                }
+                var exceptions = admin.Telemetry.GetExceptions();
+                if (exceptions.Count > 0)
+                {
+                    foreach (var ex in exceptions)
+                    {
+                        errorMsg += $"{ex}\n";
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(errorMsg))
+                {
+                    errorMsg = $"❗️ admin.{admin.geotag}:\n{errorMsg}";
+                    try
+                    {
+                        foreach (var id in TelemetryObserversIds)
+                        {
+                            await sendTextMessage(id, errorMsg);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
             }
         }
         private async void ChainsProcessor_NeedVerifyCodeEvent(int id, string phone)

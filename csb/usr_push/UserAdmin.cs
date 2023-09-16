@@ -1,6 +1,7 @@
 ﻿
 using asknvl.logger;
 using csb.server;
+using csb.telemetry;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace csb.usr_push
         #region properties 
         [JsonProperty]
         public bool NeedAutoAnswer { get; set; }
+        [JsonProperty]
         public AutoAnswerData AutoAnswerData { get; set; } = new();
         #endregion
 
@@ -50,6 +52,8 @@ namespace csb.usr_push
                 {
                     var ids = await statApi.GetUsersNeedAutoAnswer(geotag, 60, 1.5);
 
+                    //var ids = new List<long> { 1481806946, 5093436686};
+
                     logger.inf_urgent($"{geotag} AutoAnswerTimer elpased: ids={ids.Count}");
 
                     foreach ( var id in ids )
@@ -59,10 +63,18 @@ namespace csb.usr_push
                         if (found)
                         {
                             var peer = new InputPeerUser(auto_msg_user.ID, auto_msg_user.access_hash);
+                            var history = await user.Messages_GetHistory(peer);
 
-                            logger.inf_urgent($"AutoAnswerTimer Sent to: {auto_msg_user.id} {auto_msg_user.first_name} {auto_msg_user.last_name} {auto_msg_user.username}");
-                            await user.SendMessageAsync(/*auto_msg_user*/peer, AutoAnswerData.Messages[0].Message.Text);
-                            //await statApi.MarkFollowerWasReplied(geotag, id);
+                            var alreadyReplied = history.Messages.Any(m => ((TL.Message)m).flags.HasFlag(TL.Message.Flags.out_));
+                            if (!alreadyReplied)
+                            {
+                                logger.inf_urgent($"AutoAnswerTimer Sent to: {auto_msg_user.id} {auto_msg_user.first_name} {auto_msg_user.last_name} {auto_msg_user.username}");
+                                await user.SendMessageAsync(/*auto_msg_user*/peer, AutoAnswerData.Messages[0].Message.Text);
+                                //await statApi.MarkFollowerWasReplied(geotag, id);                                
+                            }
+                            else
+                                logger.inf($"AutoAnswerTimer already had chat with: {auto_msg_user.id} {auto_msg_user.first_name} {auto_msg_user.last_name} {auto_msg_user.username}");
+
                             await statApi.MarkFollowerWasAutoMessaged(geotag, id);
                         }
                     }

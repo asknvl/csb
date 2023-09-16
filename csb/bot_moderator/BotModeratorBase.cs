@@ -325,13 +325,18 @@ namespace csb.bot_moderator
 
         Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
+            var p = ((BotModeratorTelemetryProcessor)Telemetry);
+
             var ErrorMessage = exception switch
             {
                 ApiRequestException apiRequestException
                     => $"{GeoTag} Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
                 _ => exception.ToString()
             };
-            logger.err(ErrorMessage);
+
+            p.AddException($"Telegram API Error");
+
+            logger.err(ErrorMessage);            
             return Task.CompletedTask;
         }
         #endregion
@@ -349,6 +354,7 @@ namespace csb.bot_moderator
                 case ChatMemberStatus.Administrator:
                 case ChatMemberStatus.Member:
                     ChannelID = id;
+                    linksProcessor.UpdateChannelID(ChannelID);
                     ParametersUpdatedEvent?.Invoke(this);
                     logger.inf($"Moderator added to channel/group ID={id}");
                     //int linksNumber = await linksProcessor.Generate(ChannelID, 10);
@@ -406,34 +412,47 @@ namespace csb.bot_moderator
                                 OneTimeKeyboard = true
                             };
 
-                            if (Greetings.HelloMessage != null)
+                            if (Greetings.HelloMessage?.Message != null)
                             {
 
-                                if (Greetings.PreJoinMessage != null)
+                                if (Greetings.PreJoinMessage?.Message != null)
                                 {
                                     try
                                     {
                                         await Greetings.PreJoinMessage.Send(chatJoinRequest.From.Id, bot);
-                                    } catch (Exception ex) { }
+                                    }
+                                    catch (Exception ex) { }
                                 }
+                                //else
+                                //    p.AddException("Не установлен кружок");
+
 
                                 await Greetings.HelloMessage.Send(chatJoinRequest.From.Id, bot, replyKeyboardMarkup);
+                                
                             }
+                            else
+                                p.AddException("Не установлено приветственное сообщение");
                         }
                         else
                         {
-                            if (Greetings.HelloMessage != null)
+                            p.AddException("Не установленa старт-кнопка");
+
+                            if (Greetings.HelloMessage?.Message != null)
                             {
-                                if (Greetings.PreJoinMessage != null)
+                                if (Greetings.PreJoinMessage?.Message != null)
                                 {
                                     try
                                     {
                                         await Greetings.PreJoinMessage.Send(chatJoinRequest.From.Id, bot);
                                     } catch (Exception ex) { }
                                 }
+                                //else
+                                //    p.AddException("Не установлен кружок");
 
                                 await Greetings.HelloMessage.Send(chatJoinRequest.From.Id, bot);
-                            }                            
+                            } else
+                                p.AddException("Не установлено приветственное сообщение");
+
                         }
                     }
                     catch (Exception ex)
@@ -443,7 +462,7 @@ namespace csb.bot_moderator
                     await bot.ApproveChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
                     logger.inf_urgent($"{GeoTag} APPROVED({++appCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");
 
-                    o.Subscribers.Approved = appCntr;
+                    o.Subscribers.Approved++;
 
                     
 
@@ -453,7 +472,7 @@ namespace csb.bot_moderator
                     logger.inf_urgent($"{GeoTag} DECLINED({++decCntr}) {chatJoinRequest.Chat.Id} {chatJoinRequest.From.Id} {chatJoinRequest.From.FirstName} {chatJoinRequest.From.LastName} {chatJoinRequest.From.Username} {tags}");                    
                     await bot.DeclineChatJoinRequest(chatJoinRequest.Chat.Id, chatJoinRequest.From.Id);
 
-                    o.Subscribers.Declined = decCntr;
+                    o.Subscribers.Declined++;
 
                     await statApi.MarkFollowerWasDeclined(GeoTag, chatJoinRequest.From.Id);
 
@@ -516,8 +535,12 @@ namespace csb.bot_moderator
                 }
             }
         }
+
         protected virtual async Task processChatMember(Update update, CancellationToken cancellationToken)
         {
+            var p = ((BotModeratorTelemetryProcessor)Telemetry);
+            var o = (BotModeratorTelemetryObject)p.TelemetryObject;
+
             if (update.ChatMember != null)
             {
 
@@ -604,6 +627,7 @@ namespace csb.bot_moderator
 
                         follower.is_subscribed = false;
                         followers.Add(follower);
+                        o.Subscribers.Unsubscribed++;
                         await statApi.UpdateFollowers(followers);
 
                         break;
@@ -739,6 +763,13 @@ namespace csb.bot_moderator
             cts = new CancellationTokenSource();
 
             linksProcessor = InviteLinkProcessorFactory.Create(GeoTag, LeadType, bot, trackApi);
+
+            linksProcessor.ExceptionEvent += (s) => {
+                var p = ((BotModeratorTelemetryProcessor)Telemetry);
+                p.AddException(s);
+
+            };
+
             leadsGenerator = LeadsGeneratorFactory.Create(GeoTag, LeadType, trackApi);
 
             //if (ChannelID != null)

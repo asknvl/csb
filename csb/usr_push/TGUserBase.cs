@@ -1,5 +1,6 @@
 ﻿using asknvl.logger;
 using csb.chains;
+using csb.telemetry;
 using csb.users;
 using Newtonsoft.Json;
 using System;
@@ -28,6 +29,9 @@ namespace csb.usr_push
 
         protected Dictionary<long, TL.User> _users = new();
         protected Dictionary<long, ChatBase> _chats = new();
+
+        System.Timers.Timer watchdogTimer = new System.Timers.Timer();
+        TGUserTelemetryObject telemetryOject;
         #endregion
 
         #region properties
@@ -41,9 +45,11 @@ namespace csb.usr_push
         public string geotag { get; set; }
         [JsonProperty]
         public string? username { get; set; }
-
         [JsonIgnore]
         public bool IsRunning { get; set; }
+
+        [JsonIgnore]
+        public BaseTelemetryProcessor Telemetry { get; set; }
         #endregion
 
         public TGUserBase(string api_id, string api_hash, string phone_number, string geotag)
@@ -52,6 +58,11 @@ namespace csb.usr_push
             this.api_hash = api_hash;
             this.phone_number = phone_number;
             this.geotag = geotag;
+
+            Telemetry = new TGUserTelemetryProcessor(geotag);
+            telemetryOject = (TGUserTelemetryObject)Telemetry.TelemetryObject;
+
+                
         }
 
         #region protected
@@ -113,7 +124,10 @@ namespace csb.usr_push
             
                 if (arg is ReactorError err)
                 {
-                    logger.err($"Admin {geotag} ReactorError: {err.Exception.Message}");
+
+                    string s = $"Admin {geotag} ReactorError: {err.Exception.Message}";
+                    Telemetry.AddException($"ReactorError: {err.Exception.Message}");
+                    logger.err(s);
                 }
 
             });
@@ -126,6 +140,15 @@ namespace csb.usr_push
         {
             TL.User usr = null;
             IsRunning = false;
+
+            watchdogTimer = new System.Timers.Timer();
+            watchdogTimer.Interval = 5 * 60 * 1000;
+            watchdogTimer.Elapsed += (s, e) => {
+                telemetryOject.Startup.IsStartedOk = false;
+            };
+
+            telemetryOject.Startup.IsStartedOk = true;
+            watchdogTimer.Start();
 
             logger = new Logger("ADM", "admins", $"{geotag}_{phone_number}");
 
@@ -152,6 +175,7 @@ namespace csb.usr_push
 
             }).ContinueWith(t =>
             {
+                watchdogTimer.Stop();
                 UserStartedResultEvent?.Invoke(geotag, IsRunning);
             });
         }

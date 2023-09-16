@@ -9,6 +9,8 @@ namespace csb.invitelinks
 {
     public class StaticInviteLinkProcessor : IInviteLinksProcessor
     {
+        public event Action<string> ExceptionEvent;
+
         public Task<string> Generate(long? channelid)
         {
             return Task.FromResult(string.Empty);
@@ -27,6 +29,10 @@ namespace csb.invitelinks
         public Task StartLinkNumberControl(long? channelid, CancellationTokenSource cts)
         {
             return Task.CompletedTask;
+        }
+
+        public void UpdateChannelID(long? channelid)
+        {         
         }
     }
 }
