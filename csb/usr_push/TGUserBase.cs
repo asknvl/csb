@@ -30,8 +30,10 @@ namespace csb.usr_push
         protected Dictionary<long, TL.User> _users = new();
         protected Dictionary<long, ChatBase> _chats = new();
 
-        System.Timers.Timer watchdogTimer = new System.Timers.Timer();
-        TGUserTelemetryObject telemetryOject;
+        System.Timers.Timer startWatchDogTimer;        
+        System.Timers.Timer updatesWatchDogTimer;
+
+        protected TGUserTelemetryObject telemetryOject;
         #endregion
 
         #region properties
@@ -99,7 +101,8 @@ namespace csb.usr_push
 
         #region private
         private async Task OnUpdate(UpdatesBase updates)
-        {            
+        {
+            telemetryOject.Updates.UpdatesCntr++;
             updates.CollectUsersChats(_users, _chats);
 
             if (updates is UpdateShortMessage usm/* && !_users.ContainsKey(usm.user_id)*/)
@@ -133,6 +136,11 @@ namespace csb.usr_push
             });
         }
 
+
+        private void StartWatchDogTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            telemetryOject.Updates.UpdatesCntrPrev = telemetryOject.Updates.UpdatesCntr;            
+        }
         #endregion
 
         #region public
@@ -141,14 +149,19 @@ namespace csb.usr_push
             TL.User usr = null;
             IsRunning = false;
 
-            watchdogTimer = new System.Timers.Timer();
-            watchdogTimer.Interval = 5 * 60 * 1000;
-            watchdogTimer.Elapsed += (s, e) => {
+            startWatchDogTimer = new System.Timers.Timer();
+            startWatchDogTimer.Interval = 5 * 60 * 1000;
+            startWatchDogTimer.Elapsed += (s, e) => {
                 telemetryOject.Startup.IsStartedOk = false;
             };
-
             telemetryOject.Startup.IsStartedOk = true;
-            watchdogTimer.Start();
+            startWatchDogTimer.Start();
+
+            updatesWatchDogTimer = new System.Timers.Timer();
+            updatesWatchDogTimer.Interval = 60 * 60 * 1000;
+            updatesWatchDogTimer.AutoReset = true;
+            startWatchDogTimer.Elapsed += StartWatchDogTimer_Elapsed;
+            startWatchDogTimer.Start();
 
             logger = new Logger("ADM", "admins", $"{geotag}_{phone_number}");
 
@@ -175,7 +188,7 @@ namespace csb.usr_push
 
             }).ContinueWith(t =>
             {
-                watchdogTimer.Stop();
+                startWatchDogTimer.Stop();
                 UserStartedResultEvent?.Invoke(geotag, IsRunning);
             });
         }

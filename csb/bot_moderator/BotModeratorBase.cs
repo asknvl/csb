@@ -3,6 +3,7 @@ using asknvl.logger;
 using csb.addme_service;
 using csb.invitelinks;
 using csb.server;
+using csb.server.tg_dtos;
 using csb.telemetry;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -39,8 +40,8 @@ namespace csb.bot_moderator
         protected ITelegramBotClient bot;
         protected CancellationTokenSource cts;
 
-        System.Timers.Timer pushTimer = new System.Timers.Timer();
-        System.Timers.Timer dailyPushTimer = new System.Timers.Timer();
+        System.Timers.Timer pushTimer;        
+        System.Timers.Timer dailyPushTimer;        
 
 #if DEBUG
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
@@ -68,7 +69,7 @@ namespace csb.bot_moderator
         [JsonProperty]
         public long? ChannelID { get; set; } = null;
 
-        LeadAlgorithmType? leadType = null;
+        LeadAlgorithmType? leadType = LeadAlgorithmType.CAPIv1;
         [JsonProperty]
         public LeadAlgorithmType? LeadType
         {
@@ -119,16 +120,14 @@ namespace csb.bot_moderator
             logger = new Logger("MDR", "moderators", GeoTag);
             Telemetry = new BotModeratorTelemetryProcessor(GeoTag);
 
-#if !DEBUG
+            pushTimer = new System.Timers.Timer();
             pushTimer.Interval = push_period;
-#else
-            pushTimer.Interval = push_period;
-#endif
             pushTimer.AutoReset = true;
-            pushTimer.Elapsed += PushTimer_Elapsed;
+            pushTimer.Elapsed += PushTimer_Elapsed;            
             pushTimer.Start();
 
-
+            
+            dailyPushTimer = new System.Timers.Timer();
             dailyPushTimer.Interval = daily_push_period;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed;
@@ -140,6 +139,7 @@ namespace csb.bot_moderator
         int tstcntr = 0;
         async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
             if (PushData.Messages.Count == 0)
                 return;
 
@@ -196,10 +196,8 @@ namespace csb.bot_moderator
                         }
                         catch (Exception ex)
                         {
-
                             try
                             {
-
                                 await statApi.MarkFollowerWasPushed(GeoTag, id, pushmessage.TimePeriod, false);
                             } catch 
                             {
@@ -317,7 +315,8 @@ namespace csb.bot_moderator
                 logger.err(ex.Message);
             } finally
             {
-                logger.inf_urgent($"{GeoTag} DAILY_PUSH: delivered {delivered} of {sent}");
+                if (sent > 0)
+                    logger.inf_urgent($"{GeoTag} DAILY_PUSH: delivered {delivered} of {sent}");
                 o.DailyPushes.Sent += sent;
                 o.DailyPushes.Delivered += delivered;
             }
@@ -409,7 +408,7 @@ namespace csb.bot_moderator
                             })
                             {
                                 ResizeKeyboard = true,
-                                OneTimeKeyboard = true
+                                OneTimeKeyboard = true,                                 
                             };
 
                             if (Greetings.HelloMessage?.Message != null)
@@ -511,7 +510,7 @@ namespace csb.bot_moderator
                             }
                             catch (Exception ex)
                             {
-                                logger.err(ex.Message);
+                                logger.err(ex.Message);                                
                             }
 
                             break;
@@ -611,7 +610,8 @@ namespace csb.bot_moderator
 
                         try
                         {
-                            if (Greetings.ByeMessage != null)
+                            if (Greetings.ByeMessage.Text != null)
+                            {
                                 await bot.SendTextMessageAsync(
                                          member.From.Id,
                                          text: Greetings.ByeMessage.Text,
@@ -619,10 +619,13 @@ namespace csb.bot_moderator
                                          entities: Greetings.ByeMessage.Entities,
                                          disableWebPagePreview: false,
                                          cancellationToken: cancellationToken);
+                            }
+                            else
+                                p.AddException("Не установлено прощальное сообщение");
                         }
                         catch (Exception ex)
-                        {
-                            logger.err(ex.Message);
+                        {                            
+                            logger.err(ex.Message);                            
                         }
 
                         follower.is_subscribed = false;
@@ -712,7 +715,7 @@ namespace csb.bot_moderator
 
                                 } catch (Exception ex)
                                 {
-
+                                    p.AddException("Не удалось отправить ответ на push-старт");
                                 }
                             }
 

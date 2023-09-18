@@ -46,11 +46,6 @@ C:\KONOVALOV\Sources\csb\csb\obj\Release\net6.0\csb.dll
 C:\KONOVALOV\Sources\csb\csb\obj\Release\net6.0\ref\csb.dll
 C:\KONOVALOV\Sources\csb\csb\obj\Release\net6.0\csb.pdb
 C:\KONOVALOV\Sources\csb\csb\obj\Release\net6.0\csb.genruntimeconfig.cache
-C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.csproj.AssemblyReference.cache
-C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.GeneratedMSBuildEditorConfig.editorconfig
-C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.AssemblyInfoInputs.cache
-C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.AssemblyInfo.cs
-C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.csproj.CoreCompileInputs.cache
 C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\csb.exe
 C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\csb.deps.json
 C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\csb.runtimeconfig.json
@@ -68,6 +63,11 @@ C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\RestSharp.dll
 C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\Telegram.Bot.dll
 C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\Telegram.Bot.Extensions.Polling.dll
 C:\WORK\RaceUP\sources\csb\csb\bin\Release\net6.0\WTelegramClient.dll
+C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.csproj.AssemblyReference.cache
+C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.GeneratedMSBuildEditorConfig.editorconfig
+C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.AssemblyInfoInputs.cache
+C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.AssemblyInfo.cs
+C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.csproj.CoreCompileInputs.cache
 C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.csproj.CopyComplete
 C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\csb.dll
 C:\WORK\RaceUP\sources\csb\csb\obj\Release\net6.0\refint\csb.dll

@@ -26,10 +26,31 @@ namespace csb.telemetry
         }        
     }
 
+    public class Updates : ITelemetryResult
+    {
+        public uint UpdatesCntr { get; set; }
+        public uint UpdatesCntrPrev { get; set; }   
+
+        public TelemetryResult Get()
+        {
+            bool s = (UpdatesCntr != UpdatesCntrPrev);
+            string m = $"UpdateCntr={UpdatesCntr} UpdateCntrPrev={UpdatesCntrPrev}";
+
+            TelemetryResult res = new TelemetryResult()
+            {
+                entity = "Updates",
+                success = s,
+                data = m
+            };
+            return res;
+        }
+    }
+
     public class TGUserTelemetryObject : BaseTelemetryObject
     {
         #region properties
         public Startup Startup { get; set; } = new();
+        public Updates Updates { get; set; } = new();
         #endregion
 
         public override List<string> GetErrors()
@@ -37,9 +58,12 @@ namespace csb.telemetry
             List<string> res = new();
 
             var stp = Startup.Get();
+            var upd = Updates.Get();
 
             if (!stp.success)
                 res.Add($"{stp.entity} {stp.data}");
+            if (!upd.success)
+                res.Add($"{upd.entity} {upd.data}");
 
             return res;
         }
