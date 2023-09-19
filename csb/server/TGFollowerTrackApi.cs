@@ -93,7 +93,7 @@ namespace csb.server
             }
             catch (Exception ex)
             {
-                throw new Exception($"GetInviteLinksAvailabl {ex.Message}");
+                throw new Exception($"GetInviteLinksAvailable {ex.Message}");
             }
 
             return res;

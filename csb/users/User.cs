@@ -467,13 +467,33 @@ namespace csb.users
         public User()
         {
             telemetryTimer = new System.Timers.Timer();
-            telemetryTimer.Interval = 10 * 60 * 1000;
+            telemetryTimer.Interval = 20 * 60 * 1000;
             telemetryTimer.AutoReset = true;
             telemetryTimer.Elapsed += TelemetryTimer_Elapsed;
             telemetryTimer.Start();
         }
 
         #region private
+        async Task sendExceptions(string errorMsg, string geotag, string entity)
+        {
+            if (!string.IsNullOrEmpty(errorMsg))
+            {
+                errorMsg = $"❗️ {entity}.{geotag}:\n{errorMsg}";
+                try
+                {
+                    foreach (var id in TelemetryObserversIds)
+                    {
+                        await sendTextMessage(id, errorMsg);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+
+
         private async void TelemetryTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var moderators = moderationProcessor.ModeratorBots.Where(b => b.NeedTelemetry);
@@ -502,21 +522,23 @@ namespace csb.users
                     }
                 }
 
-                if (!string.IsNullOrEmpty(errorMsg))
-                {
-                    errorMsg = $"❗️ moderator.{moderator.GeoTag}:\n{errorMsg}";
-                    try
-                    {
-                        foreach (var id in TelemetryObserversIds)
-                        {
-                            await sendTextMessage(id, errorMsg);
-                        }
+                await sendExceptions(errorMsg, moderator.GeoTag, "moderator");
 
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
+                //if (!string.IsNullOrEmpty(errorMsg))
+                //{
+                //    errorMsg = $"❗️ moderator.{moderator.GeoTag}:\n{errorMsg}";
+                //    try
+                //    {
+                //        foreach (var id in TelemetryObserversIds)
+                //        {
+                //            await sendTextMessage(id, errorMsg);
+                //        }
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //    }
+                //}
             }
 
             var admins = adminManager.Users;
@@ -540,20 +562,57 @@ namespace csb.users
                     }
                 }
 
-                if (!string.IsNullOrEmpty(errorMsg))
-                {
-                    errorMsg = $"❗️ admin.{admin.geotag}:\n{errorMsg}";
-                    try
-                    {
-                        foreach (var id in TelemetryObserversIds)
-                        {
-                            await sendTextMessage(id, errorMsg);
-                        }
+                await sendExceptions(errorMsg, admin.geotag, "admin");
 
-                    }
-                    catch (Exception ex)
+                //if (!string.IsNullOrEmpty(errorMsg))
+                //{
+                //    errorMsg = $"❗️ admin.{admin.geotag}:\n{errorMsg}";
+                //    try
+                //    {
+                //        foreach (var id in TelemetryObserversIds)
+                //        {
+                //            await sendTextMessage(id, errorMsg);
+                //        }
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //    }
+                //}
+            }
+
+            var chains = chainsProcessor.Chains;
+            foreach (var chain in chains)
+            {
+                foreach (var bot in chain.Bots)
+                {
+                    string errorMsg = "";
+                    var exceptions = bot.Telemetry.GetExceptions();
+                    if (exceptions.Count > 0)
                     {
+                        foreach (var ex in exceptions)
+                        {
+                            errorMsg += $"{ex}\n";
+                        }
                     }
+
+                    await sendExceptions(errorMsg, bot.GeoTag, "bot");
+
+                    //if (!string.IsNullOrEmpty(errorMsg))
+                    //{
+                    //    errorMsg = $"❗️ bot.{bot.GeoTag}:\n{errorMsg}";
+                    //    try
+                    //    {
+                    //        foreach (var id in TelemetryObserversIds)
+                    //        {
+                    //            await sendTextMessage(id, errorMsg);
+                    //        }
+
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //    }
+                    //}
                 }
             }
         }

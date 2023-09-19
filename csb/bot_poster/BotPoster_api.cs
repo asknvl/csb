@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using csb.telemetry;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,15 +24,6 @@ namespace csb.bot_poster
             @"(Подписаться на )\w*\s|S",
             @"(Подписаться на )\w*.*",
             @"[@][[a-zA-Z0-9_]{5,32}", //@telegram
-            @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
-        };
-
-
-        string[] replace_patterns_change_links = {
-            @"((http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?)", //url
-            @"\S*\.*ru",
-            @"(Подписаться на )\w*\s|S",
-            @"(Подписаться на )\w*.*",
             @"t\.me\/[-a-zA-Z0-9.]+(\/\S*)?", //t.me/asdasd
         };
         #endregion
@@ -65,41 +57,53 @@ namespace csb.bot_poster
         public List<AutoChange> AutoChanges { get; set; } = new();
         [JsonIgnore]
         public bool IsRunning { get; set; }
-        #endregion
-
         [JsonIgnore]
         public long AllowedID { get; set; }
+        [JsonIgnore]
+        public BaseTelemetryProcessor Telemetry { get; set; }
+        #endregion
 
         public BotPoster_api(string token)
         {
             Token = token;
+            Telemetry = new BotPosterTelemetryProcessor(GeoTag);
         }
 
-        public void Start()
+        public async Task Start()
         {
             if (IsRunning)
                 return;
 
-            bot = new TelegramBotClient(Token);
-            User u = bot.GetMeAsync().Result;
-            Name = u.Username;
-
-            cts = new CancellationTokenSource();
-
-            mediaTimer = new System.Timers.Timer();
-            mediaTimer.Interval = 5000;
-            mediaTimer.AutoReset = false;
-            mediaTimer.Elapsed += MediaTimer_Elapsed;
-
-            var receiverOptions = new ReceiverOptions
+            try
             {
-                AllowedUpdates = new UpdateType[] { UpdateType.Message }
-            };
-            bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
 
-            Console.WriteLine(Name + "output bot" + "started");
+                bot = new TelegramBotClient(Token);
 
-            IsRunning = true;
+                User u = await bot.GetMeAsync();
+                Name = u.Username;
+
+                cts = new CancellationTokenSource();
+
+                mediaTimer = new System.Timers.Timer();
+                mediaTimer.Interval = 5000;
+                mediaTimer.AutoReset = false;
+                mediaTimer.Elapsed += MediaTimer_Elapsed;
+
+                var receiverOptions = new ReceiverOptions
+                {
+                    AllowedUpdates = new UpdateType[] { UpdateType.Message }
+                };
+                bot.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions, cts.Token);
+
+                Console.WriteLine(Name + "output bot" + "started");
+
+                IsRunning = true;
+
+            } catch (Exception ex)
+            {
+                Telemetry.AddException("Не удалось запустить бота");
+                throw;
+            }
         }
 
         public void Stop()
@@ -117,6 +121,9 @@ namespace csb.bot_poster
 
                 if (message.Chat.Id != AllowedID)
                     return;
+
+                if (AutoChanges.Count == 0)
+                    Telemetry.AddException("Не установлены автозамены");
 
                 string? text;
                 MessageEntity[]? entities;
@@ -255,202 +262,27 @@ namespace csb.bot_poster
                         default:
                             await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
                             break;
-
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                }
-            }
-        }
-
-        async Task processMyChatMember(Update update)
-        {
-            if (update.MyChatMember != null)
-            {
-                long id = update.MyChatMember.Chat.Id;
-                string title = update.MyChatMember.Chat.Title;
-
-                switch (update.MyChatMember.NewChatMember.Status)
-                {
-                    case ChatMemberStatus.Administrator:
-                    case ChatMemberStatus.Member:
-                        ChannelID = id;
-                        ChannelTitle = title;
-                        break;
-                    default:
-                        break;
+                    Telemetry.AddException($"Ошибка обработки входящего сообщения");
                 }
             }
         }
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
         {
-
             if (update == null)
                 return;
 
             switch (update.Type)
             {
-                //case UpdateType.MyChatMember:
-                //    await processMyChatMember(update);
-                //    break;
-
                 case UpdateType.Message:
                     await processMesage(update, cancellationToken);
                     break;
             }
-
-            //if (update.Message == null)
-            //    return;
-
-            //var message = update.Message;
-
-            //if (message.Chat.Id != AllowedID)
-            //    return;            
-
-            //string? text;
-            //MessageEntity[]? entities;
-
-            //if (message.ReplyMarkup != null)
-            //    swapMarkupLink(message.ReplyMarkup, AutoChanges);
-
-            //Console.WriteLine(Name + " " + message.Text);            
-
-            //try
-            //{
-
-            //    switch (message.Type)
-            //    {
-
-            //        case MessageType.Photo:
-
-            //            InputMediaPhoto imp = new InputMediaPhoto(new InputMedia(message.Photo[0].FileId));
-
-            //            if (!ChannelLink.Equals("0"))
-            //            {
-
-            //                (imp.Caption, imp.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
-
-            //            } else
-            //            {
-
-            //                (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-            //                imp.Caption = text;
-            //                imp.CaptionEntities = entities;                            
-            //            }
-
-            //            if (message.MediaGroupId == null)
-            //            {
-            //                InputMediaDocument doc = new InputMediaDocument(imp.Media);
-
-            //                await bot.SendPhotoAsync(ChannelID,
-            //                    doc.Media,
-            //                    caption: imp.Caption,
-            //                    replyMarkup:message.ReplyMarkup,
-            //                    captionEntities: imp.CaptionEntities);
-            //                break;
-            //            }
-
-            //            if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
-            //            {
-            //                await bot.SendMediaGroupAsync(
-            //                    chatId: ChannelID,
-            //                    media: mediaList,
-            //                    cancellationToken: cancellationToken);
-            //                mediaList.Clear();
-            //            }
-            //            mediaGroupId = message.MediaGroupId;
-
-            //            if (mediaList.Count == 0)
-            //                mediaTimer.Start();
-
-            //            mediaList.Add(imp);
-
-            //            break;
-
-
-            //        case MessageType.Video:
-
-            //            InputMediaVideo imv = new InputMediaVideo(new InputMedia(message.Video.FileId));
-            //            if (!ChannelLink.Equals("0"))
-            //            {
-            //                (imv.Caption, imv.CaptionEntities) = autoChange(message.Caption, filterEntities(message.CaptionEntities), AutoChanges);
-            //            }
-            //            else
-            //            {
-
-            //                (text, entities) = getUpdatedText(message.Caption, message.CaptionEntities);
-            //                imv.Caption = text;
-            //                imv.CaptionEntities = entities;
-            //            }
-
-            //            if (message.MediaGroupId == null)
-            //            {
-            //                InputMediaDocument doc = new InputMediaDocument(imv.Media);
-
-            //                await bot.SendVideoAsync(ChannelID,
-            //                    doc.Media,
-            //                    caption: imv.Caption,
-            //                    replyMarkup: message.ReplyMarkup,
-            //                    captionEntities: imv.CaptionEntities);
-            //                break;
-            //            }
-
-
-            //            if (!mediaGroupId.Equals(message.MediaGroupId) && mediaList.Count > 1)
-            //            {
-            //                var s = await bot.SendMediaGroupAsync(
-            //                   chatId: ChannelID,
-            //                   media: mediaList,
-            //                   cancellationToken: cancellationToken);
-            //                mediaList.Clear();
-            //            }
-            //            mediaGroupId = message.MediaGroupId;
-
-            //            if (mediaList.Count == 0)
-            //                mediaTimer.Start();
-
-            //            mediaList.Add(imv);
-            //            break;
-
-            //        case MessageType.Document:
-
-            //            text = message.Caption;
-            //            entities = message.CaptionEntities;
-
-            //            if (!ChannelLink.Equals("0"))
-            //            {
-            //                (text, entities) = autoChange(text, filterEntities(entities), AutoChanges);
-
-            //            } else
-            //            {
-            //                (text, entities) = getUpdatedText(text, entities);
-            //            }
-
-            //            InputMedia idoc = new InputMedia(message.Document.FileId);
-            //            await bot.SendDocumentAsync(
-            //                    chatId: ChannelID,
-            //                    idoc,
-            //                    caption: text,
-            //                    captionEntities: entities);
-
-            //            break;
-
-            //        case MessageType.Text:
-            //            await postTextAndWebPage(message, cancellationToken);
-            //            break;
-
-            //        default:
-            //            await bot.CopyMessageAsync(ChannelID, message.Chat, message.MessageId, null, null, message.Entities, null, null, null, null, message.ReplyMarkup, cancellationToken);
-            //            break;
-
-            //    }
-            //} catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
         }
 
         void swapMarkupLink(InlineKeyboardMarkup markup, List<AutoChange> autoChanges)
@@ -468,15 +300,12 @@ namespace csb.bot_poster
             foreach (var button in markup.InlineKeyboard)
             {
                 foreach (var item in button)
-                {
-                    //item.Url = $"http://t.me/{newlink.Replace("@", "")}";
+                {                    
                     foreach (var autochange in autoChanges)
                         item.Url = item.Url.Replace(autochange.OldText.Replace("@", ""), autochange.NewText.Replace("@", ""));
-
                 }
             }
         }
-
 
         (string?, MessageEntity[]?) getUpdatedText(string text, MessageEntity[]? entities)
         {
@@ -507,7 +336,6 @@ namespace csb.bot_poster
                     text = text.Replace(match.Value, "");
 
                     if (tmpEntities != null)
-
                     {
                         tmpEntities = tmpEntities.OrderBy(e => e.Offset).ToList();
                         int position = match.Index;
@@ -529,11 +357,8 @@ namespace csb.bot_poster
                         {
 
                         }
-
                     }
-
                 }
-
             }
 
             if (tmpEntities != null)
@@ -589,10 +414,7 @@ namespace csb.bot_poster
                 //-
                 while (indexReplace != -1)
                 {
-                    //resText = resText.Replace(autochange.OldText, autochange.NewText);
-
                     resText = resText.Remove(indexReplace, autochange.OldText.Length).Insert(indexReplace, autochange.NewText);
-
 
                     if (resEntities != null)
                     {
@@ -602,23 +424,14 @@ namespace csb.bot_poster
                         int delta = autochange.NewText.Length - autochange.OldText.Length;
 
                         if (isReplacedEntity)
-                        {
-
-                            //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
+                        {                          
                             var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
-                            //var found = resEntities.FirstOrDefault(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length);
-                            //if (found != null)
-                            //{
-                            //    int ind = resEntities.IndexOf(found);
-                            //    resEntities[ind].Length += delta;
-                            //}
-
+                         
                             foreach (var item in found)
                             {
                                 int ind = resEntities.IndexOf(item);
                                 resEntities[ind].Length += delta;
                             }
-
 
                             if (found != null && found.Count > 0)
                             {
@@ -642,37 +455,7 @@ namespace csb.bot_poster
                     }
 
                     indexReplace = resText.IndexOf(autochange.OldText);
-                }
-                //-
-
-                //if (indexReplace == -1)
-                //    continue;
-
-                //resText = resText.Replace(autochange.OldText, autochange.NewText);
-
-                //if (resEntities != null)
-                //{
-                //    int delta = autochange.NewText.Length - autochange.OldText.Length;
-
-                //    //var found = resEntities.Where(e => e.Offset == indexReplace).ToList();
-                //    var found = resEntities.Where(e => e.Offset <= indexReplace && indexReplace < e.Offset + e.Length).ToList();
-
-                //    foreach (var item in found)
-                //    {
-                //        int ind = resEntities.IndexOf(item);
-                //        resEntities[ind].Length += delta;
-                //    }
-
-                //    if (found != null && found.Count > 0)
-                //    {
-                //        var indexEntity = resEntities.IndexOf(found[0]);
-                //        for (int i = indexEntity + 1; i < resEntities.Count; i++)
-                //        {
-                //            if (resEntities[i].Offset > indexReplace)
-                //                resEntities[i].Offset += delta;
-                //        }
-                //    }
-                //}
+                }                
             }
 
             return (resText, resEntities?.ToArray());
@@ -733,12 +516,7 @@ namespace csb.bot_poster
             if (!string.IsNullOrEmpty(GeoTag) && GeoTag.Contains("BRAA"))
                 disablePreview = true;
 
-            //var reply = message.ReplyToMessage;
-            //int? replyId = message.ReplyToMessage?.MessageId;
-
-
             var ent = filterEntities(messageEntities);
-
 
             try
             {
@@ -766,6 +544,7 @@ namespace csb.bot_poster
                 _ => exception.ToString()
             };
             Console.WriteLine(ErrorMessage);
+            Telemetry.AddException($"Telegram API Error");
             return Task.CompletedTask;
         }
 

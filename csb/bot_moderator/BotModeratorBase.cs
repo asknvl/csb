@@ -40,8 +40,10 @@ namespace csb.bot_moderator
         protected ITelegramBotClient bot;
         protected CancellationTokenSource cts;
 
-        System.Timers.Timer pushTimer;        
-        System.Timers.Timer dailyPushTimer;        
+        System.Timers.Timer pushTimer;
+
+        System.Timers.Timer dailyPushTimer;
+        bool isFirstDailyPushTimer = true;
 
 #if DEBUG
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
@@ -126,9 +128,11 @@ namespace csb.bot_moderator
             pushTimer.Elapsed += PushTimer_Elapsed;            
             pushTimer.Start();
 
-            
-            dailyPushTimer = new System.Timers.Timer();
-            dailyPushTimer.Interval = daily_push_period;
+            Random r = new Random();
+            int offset = r.Next(1, 10);
+
+            dailyPushTimer = new System.Timers.Timer(offset * 60 * 1000);
+            //dailyPushTimer.Interval = daily_push_period;
             dailyPushTimer.AutoReset = true;
             dailyPushTimer.Elapsed += DailyPushTimer_Elapsed;
             dailyPushTimer.Start();
@@ -139,7 +143,6 @@ namespace csb.bot_moderator
         int tstcntr = 0;
         async void PushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-
             if (PushData.Messages.Count == 0)
                 return;
 
@@ -237,6 +240,12 @@ namespace csb.bot_moderator
         int cntr = 0;
         async void DailyPushTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
+            if (isFirstDailyPushTimer)
+            {
+                isFirstDailyPushTimer = false;
+                dailyPushTimer.Interval = daily_push_period;
+            }
 
             int sent = 0;
             int delivered = 0;

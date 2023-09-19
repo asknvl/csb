@@ -69,8 +69,7 @@ namespace csb.telemetry
         }
 
         public override void Reset()
-        {
-            var stp = Startup.Get();
+        {            
         }
     }
 }
