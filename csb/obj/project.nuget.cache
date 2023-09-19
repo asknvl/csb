@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "U53na3+RpXETE0sSmxOH2oV5Pl0hb/ujbL7yN5/+a/Yh1X6nsl4EbqwD6thuyh1FJ13yzU8dNHfgpSjQ0CuSBA==",
+  "success": true,
+  "projectFilePath": "C:\\WORK\\RaceUP\\sources\\csb\\csb\\csb.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.http\\7.0.0\\microsoft.extensions.http.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\restsharp\\106.10.0\\restsharp.106.10.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512",
+    "C:\\Users\\asknvl\\.nuget\\packages\\wtelegramclient\\3.5.3\\wtelegramclient.3.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}
