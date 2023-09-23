@@ -89,7 +89,7 @@ namespace csb.chains
                 foreach (var item in Bots)
                 {
                     item.ReplacedWords = new List<string>(ReplacedWords);
-                    await item.Start();
+                    item.Start();
                     User.AddCorrespondingBot(item.Name);
                 } 
                 User.Start();
@@ -142,7 +142,7 @@ namespace csb.chains
                 Bots.Add(bot);
                 try
                 {
-                    await bot.Start();
+                    bot.Start();
                     if (User != null)
                     {
                         User.AddCorrespondingBot(bot.Name);

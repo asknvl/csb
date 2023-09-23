@@ -69,7 +69,7 @@ namespace csb.bot_poster
             Telemetry = new BotPosterTelemetryProcessor(GeoTag);
         }
 
-        public async Task Start()
+        public void Start()
         {
             if (IsRunning)
                 return;
@@ -79,7 +79,7 @@ namespace csb.bot_poster
 
                 bot = new TelegramBotClient(Token);
 
-                User u = await bot.GetMeAsync();
+                User u = bot.GetMeAsync().Result;
                 Name = u.Username;
 
                 cts = new CancellationTokenSource();
