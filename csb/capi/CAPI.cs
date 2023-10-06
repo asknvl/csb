@@ -17,13 +17,13 @@ namespace capi_test.capi
     public class CAPI : ICAPI
     {
         #region const
-        string API_VERSION = "v17.0";
+        public string API_VERSION = "v17.0";
         #endregion
 
         #region vars
         string path = "";
         ServiceCollection serviceCollection;
-        IHttpClientFactory httpClientFactory;
+        protected IHttpClientFactory httpClientFactory;
         ILogger logger;
         #endregion
 
@@ -43,7 +43,7 @@ namespace capi_test.capi
         #endregion
 
         #region private
-        string getSHA256(string input)
+        protected string getSHA256(string input)
         {
             string normalized = input.ToLower().Replace(" ", "");
             var bytes = Encoding.UTF8.GetBytes(normalized);
@@ -139,6 +139,11 @@ namespace capi_test.capi
             }
 
             return result;
+        }
+
+        public virtual Task<string> MakeContactEvent(string pixel_id, string token, long? tg_user_id = null, string firstname = null, string lastname = null, string client_user_agent = null, string client_ip_address = null, string fbc = null, string fbp = null, string test_event_code = null)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
