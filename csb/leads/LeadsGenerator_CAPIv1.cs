@@ -19,7 +19,7 @@ namespace asknvl.leads
             logger = new Logger("LDS", "leadsgenerator_CAPIv1", geotag);
         }
         #region public
-        public override async Task<string> MakeFBLead(string invite_link, string firstname = null, string lastname = null)
+        public override async Task<string> MakeFbOptimizationEvent(string invite_link, string firstname = null, string lastname = null)
         {
             logger.inf_urgent("lead_data?");
             var lead_data = await trackApi.GetLeadData(invite_link);
@@ -51,9 +51,12 @@ namespace asknvl.leads
             } catch (Exception ex)
             {
                 logger.err(ex.Message);
+                throw;
             }
 
             return lead_data.tg_link;
+
+            //return Task.FromResult(string.Empty);
         }
         #endregion
     }

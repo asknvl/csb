@@ -13,7 +13,7 @@
           "RestSharp": "106.10.0",
           "Telegram.Bot": "18.0.0",
           "Telegram.Bot.Extensions.Polling": "1.0.2",
-          "WTelegramClient": "3.5.3"
+          "WTelegramClient": "3.5.9"
         },
         "runtime": {
           "csb.dll": {}
@@ -138,11 +138,11 @@
           }
         }
       },
-      "WTelegramClient/3.5.3": {
+      "WTelegramClient/3.5.9": {
         "runtime": {
           "lib/net5.0/WTelegramClient.dll": {
-            "assemblyVersion": "3.5.3.0",
-            "fileVersion": "3.5.3.0"
+            "assemblyVersion": "3.5.9.0",
+            "fileVersion": "3.5.9.0"
           }
         }
       }
@@ -245,12 +245,12 @@
       "path": "telegram.bot.extensions.polling/1.0.2",
       "hashPath": "telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
     },
-    "WTelegramClient/3.5.3": {
+    "WTelegramClient/3.5.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ywyhWxkFLv0NLthIo4F1Cm/6ZgSzxIKZ6FJOZjX3aBly9LTDy1M2R3V0l9Nb9HGb6m+Exg/TYv1NWIEt/FQGHQ==",
-      "path": "wtelegramclient/3.5.3",
-      "hashPath": "wtelegramclient.3.5.3.nupkg.sha512"
+      "sha512": "sha512-HSPt5OS8kcrFR/exKvmHjvrgQzxserDLNv7vP+BKq93lh4fu3ksIOsDQG0l0L6kqsMEVrak7S0ipiAh+joNFhA==",
+      "path": "wtelegramclient/3.5.9",
+      "hashPath": "wtelegramclient.3.5.9.nupkg.sha512"
     }
   }
 }

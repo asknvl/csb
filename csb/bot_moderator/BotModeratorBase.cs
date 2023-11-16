@@ -504,7 +504,7 @@ namespace csb.bot_moderator
                                         PseudoLeads[pixel]--;
                                         logger.inf_urgent($"PseudoLeads left: {PseudoLeads[pixel]}");
 
-                                        await leadsGenerator.MakeFBLead(chatJoinRequest.InviteLink.InviteLink, chatJoinRequest.From.FirstName, chatJoinRequest.From.LastName);
+                                        await leadsGenerator.MakeFbOptimizationEvent(chatJoinRequest.InviteLink.InviteLink, chatJoinRequest.From.FirstName, chatJoinRequest.From.LastName);
                                         await linksProcessor.Revoke(ChannelID, chatJoinRequest.InviteLink.InviteLink);
 
                                     }
@@ -594,23 +594,19 @@ namespace csb.bot_moderator
                             {
                                 followers.Add(follower);
                                 await statApi.UpdateFollowers(followers);
-#if CAPI_RELEASE || CAPI_DEBUG
-                                logger.inf_urgent("DB+");
-#endif                             
-                                var linkToRevoke = await leadsGenerator.MakeFBLead(member.InviteLink.InviteLink,
-                                                                                   firstname: follower.firstname,
-                                                                                   lastname: follower.lastname); //return invite link to revoke
 
+                                string linkToRevoke = string.Empty;
+                                try
+                                {
+                                    linkToRevoke = await leadsGenerator.MakeFbOptimizationEvent(member.InviteLink.InviteLink,
+                                                                                       firstname: follower.firstname,
+                                                                                       lastname: follower.lastname); //return invite link to revoke
+                                } catch (Exception ex)
+                                {
+                                    p.AddException("Не удалось отправить лид в фб");
+                                }
                                 await linksProcessor.Revoke(ChannelID, link);
-
-#if CAPI_RELEASE || CAPI_DEBUG
-                                logger.inf_urgent("Lead+");
-#endif
-
                                 var nextLink = await linksProcessor.Generate(ChannelID);
-#if CAPI_RELEASE || CAPI_DEBUG
-                                logger.inf_urgent("NextLink+");
-#endif
                             }
                         }
                         break;

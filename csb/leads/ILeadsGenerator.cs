@@ -9,7 +9,7 @@ namespace asknvl.leads
 {
     public interface ILeadsGenerator
     {
-        Task<string> MakeFBLead(string invite_link, string firstname = null, string lastname = null);
+        Task<string> MakeFbOptimizationEvent(string invite_link, string firstname = null, string lastname = null);
         Task MakeTrackerLead();
     }
 
