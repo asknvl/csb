@@ -9,7 +9,7 @@
       "HelloMessage": {
         "Id": 0,
         "Message": {
-          "message_id": 5840,
+          "message_id": 5989,
           "from": {
             "id": 1481806946,
             "is_bot": false,
@@ -17,19 +17,31 @@
             "username": "asknvl",
             "language_code": "ru"
           },
-          "date": 1695067349,
+          "date": 1700430515,
           "chat": {
             "id": 1481806946,
             "type": "private",
             "username": "asknvl",
             "first_name": "Alexey"
           },
-          "text": "hi"
+          "text": "🔥Hola, ¡me alegra que TE hayas unido a mí canal! \n\nQuiero darte una oportunidad única de hacer realidad tu sueño🙏 \n\nVivimos en un mundo donde no todo el mundo puede comprar un iPhone por 1000 dólares o un MacBook por 1500 dólares 🥺\n\n🚀Tengo una gran oferta para ti que te ayudará a conseguir lo que deseas a un precio muy asequible\n/COMENZARAHORA",
+          "entities": [
+            {
+              "type": "bold",
+              "offset": 2,
+              "length": 332
+            },
+            {
+              "type": "bot_command",
+              "offset": 335,
+              "length": 14
+            }
+          ]
         },
         "FilePath": null
       },
       "PushStartEmoji": "🔥",
-      "PushStartText": null,
+      "PushStartText": "🔥COMENZARAHORA🔥",
       "UsePushStartButton": true,
       "PreJoinMessage": {
         "Id": 0,

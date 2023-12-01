@@ -1,2 +1,4 @@
-16.11.2023 23:07:43 inf ADM > Starting admin TEST0...
-16.11.2023 23:07:44 inf ADM > Admin TEST0 started
+20.11.2023 0:46:46 inf ADM > Starting admin TEST0...
+20.11.2023 0:46:47 inf ADM > Admin TEST0 started
+20.11.2023 0:46:55 inf ADM > User id=1692610611 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback success=false) TEST0
+20.11.2023 0:46:55 inf ADM > Circular buffer: cntr=1 length=50

@@ -519,7 +519,7 @@ namespace csb.bot_moderator
                             }
                             catch (Exception ex)
                             {
-                                logger.err(ex.Message);                                
+                                logger.err("mrk1 " + ex.Message);                                
                             }
 
                             break;
@@ -603,7 +603,7 @@ namespace csb.bot_moderator
                                                                                        lastname: follower.lastname); //return invite link to revoke
                                 } catch (Exception ex)
                                 {
-                                    p.AddException("Не удалось отправить лид в фб");
+                                    p.AddException($"Не удалось отправить лид в фб {ex.Message}");
                                 }
                                 await linksProcessor.Revoke(ChannelID, link);
                                 var nextLink = await linksProcessor.Generate(ChannelID);

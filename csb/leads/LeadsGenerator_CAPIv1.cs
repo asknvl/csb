@@ -21,7 +21,7 @@ namespace asknvl.leads
         #region public
         public override async Task<string> MakeFbOptimizationEvent(string invite_link, string firstname = null, string lastname = null)
         {
-            logger.inf_urgent("lead_data?");
+            logger.inf_urgent($"lead_data {invite_link} ?");
             var lead_data = await trackApi.GetLeadData(invite_link);
 
             //lead_data.fb_capi = "EAAPtCiVFHZC0BAMD89TgFZBByxUZBzCH0zzrZClWHbyNSvRy0YlElMSCZAucuxJ4ZBacnpyk1mxcy8ZBv9XRtq66cn1ZCA5mXtwRGqQmVZAWZAoGF2ebHipajbOPndwpx3fBZCMOLOODbsrker86nmEJM9VwKrn2RGznHEzrZAjhcJ5j6EEn0rh7BK8bBUI59DYiJFoZD";

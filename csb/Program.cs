@@ -23,11 +23,11 @@ namespace csb
         static void Main(string[] args)
         {
 
-//#if RELEASE
-//            WTelegram.Helpers.Log = (x, y) =>
-//            {
-//            };
-//#endif
+#if RELEASE
+            WTelegram.Helpers.Log = (x, y) =>
+            {
+            };
+#endif
 
             GlobalSettings settings = GlobalSettings.getInstance();
 
