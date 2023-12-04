@@ -18,23 +18,26 @@ namespace asknvl.leads
             capi = new CAPI();
             logger = new Logger("LDS", "leadsgenerator_CAPIv1", geotag);
         }
+
         #region public
         public override async Task<string> MakeFbOptimizationEvent(string invite_link, string firstname = null, string lastname = null)
         {
-            logger.inf_urgent($"lead_data {invite_link} ?");
-            var lead_data = await trackApi.GetLeadData(invite_link);
-
-            //lead_data.fb_capi = "EAAPtCiVFHZC0BAMD89TgFZBByxUZBzCH0zzrZClWHbyNSvRy0YlElMSCZAucuxJ4ZBacnpyk1mxcy8ZBv9XRtq66cn1ZCA5mXtwRGqQmVZAWZAoGF2ebHipajbOPndwpx3fBZCMOLOODbsrker86nmEJM9VwKrn2RGznHEzrZAjhcJ5j6EEn0rh7BK8bBUI59DYiJFoZD";
-
-            logger.inf_urgent($"lead_data: $link={lead_data.tg_link}\n" +
-                                           $"pixel={lead_data.fb_pixel}\n" +
-                                           $"capi={lead_data.fb_capi}\n" +                                           
-                                           $"ip={lead_data.ip}\n" +
-                                           $"ua={lead_data.user_agent}\n" +
-                                           $"fbc={lead_data.fbcl_id}\n" +
-                                           $"fbp={lead_data.fbp}");
+            string res = "";
             try
             {
+                logger.inf_urgent($"lead_data {invite_link} ?");
+
+                var lead_data = await trackApi.GetLeadData(invite_link);
+                res = lead_data.tg_link;
+
+                logger.inf_urgent($"lead_data: $link={lead_data.tg_link}\n" +
+                                               $"pixel={lead_data.fb_pixel}\n" +
+                                               $"capi={lead_data.fb_capi}\n" +
+                                               $"ip={lead_data.ip}\n" +
+                                               $"ua={lead_data.user_agent}\n" +
+                                               $"fbc={lead_data.fbcl_id}\n" +
+                                               $"fbp={lead_data.fbp}");
+
                 var leadRes = await capi.MakeLeadEvent(
                                 lead_data.fb_pixel,
                                 lead_data.fb_capi,
@@ -48,15 +51,14 @@ namespace asknvl.leads
 
                 logger.inf_urgent(leadRes);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                logger.err(ex.Message);
+                logger.err("mrk2 " + ex.Message);
                 throw;
             }
 
-            return lead_data.tg_link;
-
-            //return Task.FromResult(string.Empty);
+            return res;
         }
         #endregion
     }

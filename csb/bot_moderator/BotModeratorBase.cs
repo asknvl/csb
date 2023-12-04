@@ -605,8 +605,22 @@ namespace csb.bot_moderator
                                 {
                                     p.AddException($"Не удалось отправить лид в фб {ex.Message}");
                                 }
-                                await linksProcessor.Revoke(ChannelID, link);
-                                var nextLink = await linksProcessor.Generate(ChannelID);
+
+                                try
+                                {
+                                    await linksProcessor.Revoke(ChannelID, link);
+                                } catch (Exception ex)
+                                {
+
+                                }
+
+                                try
+                                {
+                                    var nextLink = await linksProcessor.Generate(ChannelID);
+                                } catch (Exception ex)
+                                {
+
+                                }
                             }
                         }
                         break;
