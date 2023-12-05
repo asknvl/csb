@@ -617,9 +617,7 @@ namespace csb.bot_moderator
                                 try
                                 {
                                     var nextLink = await linksProcessor.Generate(ChannelID);
-                                } catch (Exception ex)
-                                {
-
+                                } catch (Exception ex) { 
                                 }
                             }
                         }
