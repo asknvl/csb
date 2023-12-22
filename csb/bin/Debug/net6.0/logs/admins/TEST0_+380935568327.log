@@ -1,4 +1,30 @@
-20.11.2023 0:46:46 inf ADM > Starting admin TEST0...
-20.11.2023 0:46:47 inf ADM > Admin TEST0 started
-20.11.2023 0:46:55 inf ADM > User id=1692610611 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback success=false) TEST0
-20.11.2023 0:46:55 inf ADM > Circular buffer: cntr=1 length=50
+09.12.2023 20:45:19 inf ADM > Starting admin TEST0...
+09.12.2023 20:45:20 inf ADM > Admin TEST0 started
+09.12.2023 20:45:41 inf ADM > User id=1692610611 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)) TEST0
+09.12.2023 20:45:41 inf ADM > Circular buffer: cntr=1 length=50
+09.12.2023 20:46:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:47:05 inf ADM > User id=1311350734 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)) TEST0
+09.12.2023 20:47:05 inf ADM > Circular buffer: cntr=2 length=50
+09.12.2023 20:47:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:48:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:49:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:50:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:51:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:52:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:53:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:54:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:55:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:56:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:57:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:58:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 20:58:47 inf ADM > User id=1142631927 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)) TEST0
+09.12.2023 20:58:47 inf ADM > Circular buffer: cntr=3 length=50
+09.12.2023 20:59:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 21:00:14 inf ADM > User id=1606175480 fn=udefined ln=undefined un=undefined FEEDBACK=False (MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)) TEST0
+09.12.2023 21:00:14 inf ADM > Circular buffer: cntr=4 length=50
+09.12.2023 21:00:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 21:01:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 21:02:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 21:03:27 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 21:04:22 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+09.12.2023 21:05:29 err ADM > AutoAnswerTimer: GetUsersNeedAutoReply Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
