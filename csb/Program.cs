@@ -26,12 +26,14 @@ namespace csb
 #if RELEASE
             WTelegram.Helpers.Log = (x, y) =>
             {
+                if (x == 3 || x == 4)
+                    Console.WriteLine(y);
             };
 #endif
 
             GlobalSettings settings = GlobalSettings.getInstance();
 
-            Console.WriteLine("Вдудь 3.6.0");
+            Console.WriteLine("Вдудь 3.6.1");
             Console.WriteLine($"Офис:{settings.office}");
             BotManager manager = new BotManager();
             manager.Start();

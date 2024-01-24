@@ -5,6 +5,7 @@ using csb.telemetry;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,8 +25,8 @@ namespace csb.usr_push
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");       
 #endif
 
-        CircularBuffer incomeIds = new CircularBuffer(50);
-        CircularBuffer outcomeIds = new CircularBuffer(50);
+        //CircularBuffer incomeIds = new CircularBuffer(50);
+        CircularBuffer outcomeIds = new CircularBuffer(1024);
 
         System.Timers.Timer autoAnswerTimer = new System.Timers.Timer();
         #endregion
@@ -141,32 +142,32 @@ namespace csb.usr_push
                                     err = ex.Message;
                                 } finally
                                 {
-                                    logger.inf_urgent($"User id={id} fn={fn} ln={ln} un={un} REPLIED={r} ({err}) {geotag}");
+                                    logger.inf_urgent($"REPLIED: {id} {fn} {ln} {un} {r} ({err})");
                                     outcomeIds.Add(id);
                                     logger.inf_urgent(outcomeIds.ToString());
                                 }
                             }
                         }
-                        else
-                        {
-                            if (!incomeIds.ContainsID(id))
-                            {
-                                bool f = true;
-                                try
-                                {
-                                    await statApi.MarkFollowerMadeFeedback(geotag, id);
-                                } catch (Exception ex)
-                                {
-                                    f = false;
-                                    err = ex.Message;                                    
-                                } finally
-                                {
-                                    logger.inf_urgent($"User id={id} fn={fn} ln={ln} un={un} FEEDBACK={f} ({err}) {geotag}");
-                                    incomeIds.Add(id);
-                                    logger.inf_urgent(incomeIds.ToString());
-                                }                                
-                            }
-                        }
+                        //else
+                        //{
+                        //    if (!incomeIds.ContainsID(id))
+                        //    {
+                        //        bool f = true;
+                        //        try
+                        //        {
+                        //            await statApi.MarkFollowerMadeFeedback(geotag, id);
+                        //        } catch (Exception ex)
+                        //        {
+                        //            f = false;
+                        //            err = ex.Message;                                    
+                        //        } finally
+                        //        {
+                        //            logger.inf_urgent($"User id={id} fn={fn} ln={ln} un={un} FEEDBACK={f} ({err}) {geotag}");
+                        //            incomeIds.Add(id);
+                        //            logger.inf_urgent(incomeIds.ToString());
+                        //        }                                
+                        //    }
+                        //}
 
                         break;
                     case MessageService ms:
@@ -177,7 +178,6 @@ namespace csb.usr_push
                 string s = $"HandleMessage error: id={id} {ex.Message}";
                 logger.err(s);
                 Telemetry.AddException(s);
-
             }
         }
 
@@ -185,7 +185,7 @@ namespace csb.usr_push
         protected override async void processUpdates(UpdatesBase updates)
         {
             foreach (var update in updates.UpdateList)
-            {   
+            {
                 switch (update)
                 {
                     case UpdateNewMessage unm:
@@ -201,22 +201,22 @@ namespace csb.usr_push
         {
             return base.Start().ContinueWith(async t =>
             {
-
-                //Random r = new Random();
-                //r.
-                //autoAnswerTimer.;
-
-                //await Task.Delay(r.);
-
-                //Task.Run(() => {
-                //    Random r = new Random();
-                //    r.Next(1, 10);
-                //});
-
                 autoAnswerTimer.Start();
-
-
             });
+        }
+
+        protected override async Task processNewUser(long user_id, string fn = null, string ln = null, string un = null)
+        {
+            try
+            {
+                logger.inf($"WROTE: {fn} {ln} {un}");                
+                await statApi.MarkFollowerMadeFeedback(geotag, user_id);   
+            }
+            catch (Exception ex)
+            {                
+                logger.err($"processNewUser {user_id}: {ex.Message}");
+                Telemetry.AddException($"Не удалось записать данные о первом сообщении лида в базу {user_id} {fn} {ln} {un} ({ex.Message})");
+            } 
         }
         #endregion
     }

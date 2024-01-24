@@ -9,36 +9,34 @@ namespace csb.usr_push
     public class CircularBuffer
     {
         #region vars
-        long[] buffer;        
-        int cntr = 0;
-        object l = new object();
+        List<long> buffer = new();
+        int capacity;
+        uint count = 0;
         #endregion
         public CircularBuffer(int capacity) {             
-            buffer = new long[capacity];
+            this.capacity = capacity;
         }
 
         #region public
         public void Add(long id)
         {
-            lock (l)
+            if (!buffer.Contains(id))
             {
-                buffer[cntr] = id;
-                cntr++;
-                cntr %= buffer.Length;
-            }
+                count++;
+                buffer.Add(id);
+                if (buffer.Count > capacity)
+                    buffer.RemoveAt(0);
+            }            
         }
 
         public bool ContainsID(long id)
         {
-            lock (l)
-            {
-                return buffer.Contains(id);
-            }
+            return buffer.Contains(id);
         }
 
         public override string ToString()
         {
-            return $"Circular buffer: cntr={cntr} length={buffer.Length}";
+            return $"Circular buffer: cntr={count} length={buffer.Count}";
         }
         #endregion
     }

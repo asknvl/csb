@@ -29,6 +29,7 @@ namespace csb.usr_push
 
         protected Dictionary<long, TL.User> _users = new();
         protected Dictionary<long, ChatBase> _chats = new();
+        Messages_Dialogs _dialogs;
 
         System.Timers.Timer startWatchDogTimer;        
         System.Timers.Timer updatesWatchDogTimer;
@@ -102,24 +103,54 @@ namespace csb.usr_push
         #region private
         private async Task OnUpdate(UpdatesBase updates)
         {
-            telemetryOject.Updates.UpdatesCntr++;
-            updates.CollectUsersChats(_users, _chats);
 
+            telemetryOject.Updates.UpdatesCntr++;
+
+            long newUserId = 0;
+
+            foreach (var update in updates.UpdateList)
+            {
+                switch (update)
+                {
+                    case UpdateNewChannelMessage ucm:
+                        //Чтобы сообщения от каналов не записывались
+                        break;
+
+                    case UpdateNewMessage unm:
+                        var id = unm.message.Peer.ID;
+                        if (!_users.ContainsKey(id))
+                        {
+                            newUserId = id;                            
+                        }
+                        break;
+                }
+            }
+
+            updates.CollectUsersChats(_users, _chats);
             if (updates is UpdateShortMessage usm/* && !_users.ContainsKey(usm.user_id)*/)
             {
                 if (_users.ContainsKey(usm.user_id))
                 {
                     _users.Remove(usm.user_id);
-                }
-
+                }             
                 (await user.Updates_GetDifference(usm.pts - usm.pts_count, usm.date, 0)).CollectUsersChats(_users, _chats);
             }
-                
-            else if (updates is UpdateShortChatMessage uscm && (!_users.ContainsKey(uscm.from_id) || !_chats.ContainsKey(uscm.chat_id)))
-                (await user.Updates_GetDifference(uscm.pts - uscm.pts_count, uscm.date, 0)).CollectUsersChats(_users, _chats);
+            //else if (updates is UpdateShortChatMessage uscm && (!_users.ContainsKey(uscm.from_id) || !_chats.ContainsKey(uscm.chat_id)))
+            //    (await user.Updates_GetDifference(uscm.pts - uscm.pts_count, uscm.date, 0)).CollectUsersChats(_users, _chats);
+
+            if (newUserId != 0)
+            {
+                var fn = _users[newUserId].first_name;
+                var ln = _users[newUserId].last_name;
+                var un = _users[newUserId].username;
+                await processNewUser(newUserId, fn: fn, ln: ln, un: un);
+            }
 
             processUpdates(updates);
+
         }
+
+        abstract protected Task processNewUser(long user_id, string? fn = null, string? ln = null, string? un = null);        
 
         private async Task User_OnOther(IObject arg)
         {
@@ -179,11 +210,46 @@ namespace csb.usr_push
 
                 IsRunning = true;
 
+                
+                
+
+                var dialogs = await user.Messages_GetDialogs(limit:50);
+                dialogs.CollectUsersChats(_users, _chats);
 
 
-                //var dialogs = await user.Messages_GetAllDialogs();
-                //dialogs.CollectUsersChats(_users, _chats);
+                foreach (var u in _users)
+                {   
 
+                    var h = await user.Messages_GetHistory(u.Value, limit: 100);
+
+                    var m = h.Messages.Any(ms => !((TL.Message)ms).flags.HasFlag(TL.Message.Flags.out_));
+
+                    if (!m)
+                    {
+                        var chat = _users[u.Key];
+
+                        if (!chat.IsBot)
+                        {   //Если есть неотвеченные диалоги и не бот и не я сам, тогда отпраляем тохе
+                            Console.WriteLine($"ЕСТЬ!!! {chat.first_name} {chat.last_name}");
+                        }
+
+                    }
+
+                }
+
+                //var c = await user.Messages_GetAllChats();
+                //foreach (var ch in c.chats)
+                //{                    
+                //    var h = await user.Messages_GetHistory(ch.Value, limit: 10);
+                //}
+                
+
+                //foreach (var dialog in c.Dialogs)
+                //{
+                //    var p = 
+                //    var history = user.Messages_GetHistory(dialog.Peer);
+                //}
+                
                 logger.inf($"Admin {geotag} started");
 
             }).ContinueWith(t =>

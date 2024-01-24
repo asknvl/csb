@@ -50,7 +50,7 @@ namespace csb.bot_moderator
 #else
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");
 #endif
-        protected ITGFollowerTrackApi trackApi = new TGFollowerTrackApi("https://app.alopadsa.ru");
+        protected ITGFollowerTrackApi trackApi = new TGFollowerTrackApi("https://app.flopasda.site");
 
         protected AddMeService addMe = AddMeService.getInstance();
 
