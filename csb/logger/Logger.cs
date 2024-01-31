@@ -61,7 +61,7 @@ namespace asknvl.logger
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
-            timer.Interval = 1000;
+            timer.Interval = 5000;
             timer.AutoReset = true;
             timer.Elapsed += Timer_Elapsed;
             timer.Start();

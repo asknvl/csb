@@ -62,7 +62,7 @@
             },
             "WTelegramClient": {
               "target": "Package",
-              "version": "[3.5.9, )"
+              "version": "[3.6.5, )"
             }
           },
           "imports": [

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using csb.settings;
 using capi_test.capi;
 using csb.capi;
+using System.Diagnostics;
 
 namespace csb
 {
@@ -23,13 +24,13 @@ namespace csb
         static void Main(string[] args)
         {
 
-#if RELEASE
-            WTelegram.Helpers.Log = (x, y) =>
-            {
-                if (x == 3 || x == 4)
-                    Console.WriteLine(y);
-            };
-#endif
+            //#if RELEASE
+            //WTelegram.Helpers.Log = (x, y) =>
+            //{
+            //    if (x == 3 || x == 4 || x == 5)
+            //        Console.WriteLine(y);
+            //};
+            //#endif
 
             GlobalSettings settings = GlobalSettings.getInstance();
 

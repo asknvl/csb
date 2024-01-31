@@ -96,18 +96,25 @@ namespace csb.server
             return users;
         }
 
-        public virtual async Task MarkFollowerMadeFeedback(string geotag, long id)
+        public virtual async Task MarkFollowerMadeFeedback(string geotag, long id, string? fn = null, string? ln = null, string? un = null)
         {
 
             tgUsersStatesDto feedback = new();
             feedback.users.Add(new tgUserStateDto()
             {
                 tg_user_id = id,
-                tg_geolocation = geotag,
-                is_user_send_msg = true
+                tg_geolocation = geotag,                
+                is_user_send_msg = true,
+
+                firstname = fn,
+                lastname = ln,
+                username = un,
             });
 
-            string json = JsonConvert.SerializeObject(feedback);
+            string json = JsonConvert.SerializeObject(feedback, Formatting.Indented, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
 
             var addr = $"{url}/v1/telegram/userByGeo";
             var data = new StringContent(json, Encoding.UTF8, "application/json");

@@ -182,7 +182,7 @@ namespace csb.usr_push
         }
 
 
-        protected override async void processUpdates(UpdatesBase updates)
+        protected override async Task processUpdates(UpdatesBase updates)
         {
             foreach (var update in updates.UpdateList)
             {
@@ -209,8 +209,10 @@ namespace csb.usr_push
         {
             try
             {
-                logger.inf($"WROTE: {fn} {ln} {un}");                
-                await statApi.MarkFollowerMadeFeedback(geotag, user_id);   
+                logger.inf($"WROTE: {user_id} {fn} {ln} {un}");
+                //Debug.WriteLine($"WROTE: {user_id} {fn} {ln} {un}");
+                //await Task.Delay(200);
+                await statApi.MarkFollowerMadeFeedback(geotag, user_id, fn, ln, un);   
             }
             catch (Exception ex)
             {                

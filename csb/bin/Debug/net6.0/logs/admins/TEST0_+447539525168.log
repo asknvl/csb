@@ -1,1 +1,24 @@
-24.01.2024 3:34:45 inf ADM > Starting admin TEST0...
+30.01.2024 0:06:33 inf ADM > Starting admin TEST0...
+30.01.2024 0:06:35 inf ADM > offline chat ->
+30.01.2024 0:06:35 inf ADM > WROTE: 6635143131 Matilda Stevenson  matildasreven
+30.01.2024 0:06:37 err ADM > processNewUser 6635143131: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:06:37 inf ADM > offline chat ->
+30.01.2024 0:06:37 inf ADM > WROTE: 6893078405 Jeanett Hardy jeanetthardy
+30.01.2024 0:06:39 err ADM > processNewUser 6893078405: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:06:39 inf ADM > offline chat ->
+30.01.2024 0:06:39 inf ADM > WROTE: 6728387912 Katrina Hamilton katrinahamilton
+30.01.2024 0:06:51 err ADM > processNewUser 6728387912: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:06:51 inf ADM > offline chat ->
+30.01.2024 0:06:51 inf ADM > WROTE: 6361645877 Arthur Kelly  arthuekelly
+30.01.2024 0:06:53 err ADM > processNewUser 6361645877: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:06:53 inf ADM > offline chat ->
+30.01.2024 0:06:53 inf ADM > WROTE: 6764043743 Cuthbert Fox cuthbertfox2324
+30.01.2024 0:06:55 err ADM > processNewUser 6764043743: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:06:55 inf ADM > offline chat ->
+30.01.2024 0:06:55 inf ADM > WROTE: 6335029215 Randell Wood rendellwood
+30.01.2024 0:06:57 err ADM > processNewUser 6335029215: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:06:58 inf ADM > offline chat ->
+30.01.2024 0:06:58 inf ADM > WROTE: 6746041326 Kevin Norman  KevNorman
+30.01.2024 0:07:00 err ADM > processNewUser 6746041326: MarkFollowerMadeFeedback Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (185.46.9.229:4000)
+30.01.2024 0:07:02 inf ADM > Admin TEST0 started
+30.01.2024 0:08:43 inf ADM > WROTE: 6423261069   

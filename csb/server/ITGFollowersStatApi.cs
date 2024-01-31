@@ -17,7 +17,7 @@ namespace csb.server
         Task<List<string>> GetFollowerGeoTags(long id);
         Task<List<tgUserDailyPushInfo>> GetUsersNeedDailyPush(string geotag, double hours);
         Task MarkFollowerWasDailyPushed(string geotag, long userId, int pushId, DailyPushState pushState);
-        Task MarkFollowerMadeFeedback(string geotag, long id);
+        Task MarkFollowerMadeFeedback(string geotag, long id, string? fn = null, string? ln = null, string? un = null);
         Task MarkFollowerWasReplied(string geotag, long id);
         Task MarkFollowerWasAutoMessaged(string geotag, long id);
         Task<List<long>> GetUsersNeedAutoAnswer(string geotag, int minute_offset, double minute_period);
