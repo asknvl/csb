@@ -20,9 +20,9 @@ namespace csb.usr_push
         #region vars
         settings.GlobalSettings globals = settings.GlobalSettings.getInstance();
 #if DEBUG
-        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://185.46.9.229:4000");
 #else
-        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");       
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://136.243.74.153:4000");       
 #endif
 
         //CircularBuffer incomeIds = new CircularBuffer(50);

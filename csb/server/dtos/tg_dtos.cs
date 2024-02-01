@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -143,17 +144,26 @@ namespace csb.server.tg_dtos
     #region MarkFollowerMadeFeedback
     public class tgUserStateDto
     {
+        [JsonProperty]
         public long tg_user_id { get; set; }
+        [JsonProperty]
         public string tg_geolocation { get; set; }
+        [JsonProperty]
         public bool? is_user_send_msg { get; set; } = null;
+        [JsonProperty]
         public bool? is_user_msg_processed { get; set; } = null;
+        [JsonProperty]
         public bool? is_user_get_auto_answer { get; set; } = null;
+        [JsonProperty]
         public string? username { get; set; } = null;
+        [JsonProperty]
         public string? firstname { get; set; } = null;
+        [JsonProperty]
         public string? lastname { get; set; } = null;
     }
     public class tgUsersStatesDto
     {
+        [JsonProperty]
         public List<tgUserStateDto> users { get; set; } = new();
     }
     #endregion
@@ -161,7 +171,9 @@ namespace csb.server.tg_dtos
     #region MarkFollowerWasDeclined
     public class tgUserDeclineDto
     {
+        [JsonProperty]
         public long tg_user_id { get; set; }
+        [JsonProperty]
         public string geo { get; set; }
     }
     #endregion
@@ -169,8 +181,11 @@ namespace csb.server.tg_dtos
     #region AutoAnswerUser
     public class autoAnswerGeoDto
     {
+        [JsonProperty]
         public string geo { get; set; }
+        [JsonProperty]
         public int count_telegram_users { get; set; }
+        [JsonProperty]
         public List<long> telegram_users { get; set; } = new();
 
     }
@@ -178,7 +193,9 @@ namespace csb.server.tg_dtos
 
     public class autoAnswerRequestDto
     {
-        public bool success { get; set; }   
+        [JsonProperty]
+        public bool success { get; set; }
+        [JsonProperty]
         public autoAnswerGeoDto data { get; set; }
     }
     #endregion

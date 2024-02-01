@@ -191,14 +191,6 @@ namespace csb.usr_push
                 //else if (updates is UpdateShortChatMessage uscm && (!_users.ContainsKey(uscm.from_id) || !_chats.ContainsKey(uscm.chat_id)))
                 //    (await user.Updates_GetDifference(uscm.pts - uscm.pts_count, uscm.date, 0)).CollectUsersChats(_users, _chats);
 
-                //if (_users.Count > 0)
-                //{
-                //    Console.WriteLine($"UNM ----------------------------------->  USER[0] = {_users.First().Key}");
-                //    Console.WriteLine($"UNM ----------------------------------->  USER[_] = {_users.Last().Key}");
-                //}
-
-
-
                 if (newUserId != 0)
                 {
                     var fn = _users[newUserId].first_name;
@@ -222,7 +214,7 @@ namespace csb.usr_push
 
         private async Task User_OnOther(IObject arg)
         {
-            await Task.Run(() => { 
+            await Task.Run(async () => { 
             
                 if (arg is ReactorError err)
                 {
@@ -230,6 +222,49 @@ namespace csb.usr_push
                     string s = $"Admin {geotag} ReactorError: {err.Exception.Message}";
                     Telemetry.AddException($"ReactorError: {err.Exception.Message}");
                     logger.err(s);
+
+                    IsRunning = false;
+                    int cntr = 0;
+
+                    while (cntr < 10)
+                    {
+
+                        string msg = $"Disposing admin {geotag} and trying to reconnect in 5 seconds {++cntr}...";
+
+                        logger.err(msg);
+                        Telemetry.AddException(msg);
+
+                        user?.Dispose();
+                        user = null;
+
+                        await Task.Delay(5000);
+
+                        try
+                        {
+                            user = new Client(Config);
+                            user.OnUpdate += OnUpdate;
+                            user.OnOther += User_OnOther;
+                            await user.LoginUserIfNeeded();
+                            IsRunning = true;
+                            break;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            msg = $"Admin {geotag} connection still failing: " + ex.Message;
+                            logger.err(msg);
+                            Telemetry.AddException(msg);
+                        }
+
+                    }
+
+                    if (!IsRunning)
+                    {
+                        var msg = $"Unable to start admin {geotag}";
+                        logger.err(msg);
+                        Telemetry.AddException(msg);
+                    }
+
                 }
 
             });
@@ -278,7 +313,7 @@ namespace csb.usr_push
 
                 IsRunning = true;
 
-                var dialogs = await user.Messages_GetDialogs(limit: 200);
+                var dialogs = await user.Messages_GetDialogs(limit: 100);
                 dialogs.CollectUsersChats(_users, _chats);
                 int counter = 0;
 

@@ -46,11 +46,11 @@ namespace csb.bot_moderator
         bool isFirstDailyPushTimer = true;
 
 #if DEBUG
-        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://185.46.9.229:4000");
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://185.46.9.229:4000");
 #else
-        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://136.243.74.153:4000");
 #endif
-        protected ITGFollowerTrackApi trackApi = new TGFollowerTrackApi("https://app.flopasda.site");
+        protected ITGFollowerTrackApi trackApi = new TGFollowerTrackApi_v1("https://app.flopasda.site");
 
         protected AddMeService addMe = AddMeService.getInstance();
 
