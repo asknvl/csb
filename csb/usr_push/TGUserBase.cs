@@ -122,7 +122,8 @@ namespace csb.usr_push
                         return;                 
                 }
 
-                long newUserId = 0;
+                //long newUserId = 0;
+
 
                 foreach (var update in updates.UpdateList)
                 {
@@ -133,6 +134,7 @@ namespace csb.usr_push
                         case UpdateNewChannelMessage ucm:
                             //Чтобы сообщения от каналов не записывались
                             break;
+
 
                         case UpdateNewMessage unm:
 
@@ -147,25 +149,48 @@ namespace csb.usr_push
                             try
                             {
 
-                                var id = unm.message.Peer.ID;
-                                if (!_users.ContainsKey(id))
+                                bool isIncoming = true;
+
+                                var m = unm.message as TL.Message;
+                                if (m != null)
                                 {
-                                    newUserId = id;
+                                    isIncoming = !m.flags.HasFlag(TL.Message.Flags.out_);
+                                }
 
-                                    //updates.CollectUsersChats(_users, _chats);
+                                if (isIncoming)
+                                {
 
-                                    //string? fn = null;
-                                    //string? ln = null;
-                                    //string? un = null;
+                                    var id = unm.message.Peer.ID;
+                                    if (!_users.ContainsKey(id))
+                                    {
+                                        //newUserId = id;
 
-                                    //if (_users.ContainsKey(id))
-                                    //{
-                                    //    fn = _users[id].first_name;
-                                    //    ln = _users[id].last_name;
-                                    //    un = _users[id].username;
-                                    //}
+                                        updates.CollectUsersChats(_users, _chats);
 
-                                    //await processNewUser(id, fn, ln, un);
+                                        if (updates is UpdateShortMessage p_usm/* && !_users.ContainsKey(usm.user_id)*/)
+                                        {
+                                            if (_users.ContainsKey(p_usm.user_id))
+                                            {
+                                                _users.Remove(p_usm.user_id);
+                                            }
+                                        (await user.Updates_GetDifference(p_usm.pts - p_usm.pts_count, p_usm.date, 0)).CollectUsersChats(_users, _chats);
+                                        }
+
+
+
+                                        string? fn = null;
+                                        string? ln = null;
+                                        string? un = null;
+
+                                        if (_users.ContainsKey(id))
+                                        {
+                                            fn = _users[id].first_name;
+                                            ln = _users[id].last_name;
+                                            un = _users[id].username;
+                                        }
+
+                                        await processNewUser(id, fn, ln, un);
+                                    }
                                 }
                             }
                             catch (Exception ex)
@@ -177,31 +202,36 @@ namespace csb.usr_push
 
                 }
 
-                updates.CollectUsersChats(_users, _chats);
+                //updates.CollectUsersChats(_users, _chats);
 
-                if (updates is UpdateShortMessage usm/* && !_users.ContainsKey(usm.user_id)*/)
-                {
-                    if (_users.ContainsKey(usm.user_id))
-                    {
-                        _users.Remove(usm.user_id);
-                    }
-                    (await user.Updates_GetDifference(usm.pts - usm.pts_count, usm.date, 0)).CollectUsersChats(_users, _chats);
-                }
+                //if (updates is UpdateShortMessage usm/* && !_users.ContainsKey(usm.user_id)*/)
+                //{
+                //    if (_users.ContainsKey(usm.user_id))
+                //    {
+                //        _users.Remove(usm.user_id);
+                //    }
+                //    (await user.Updates_GetDifference(usm.pts - usm.pts_count, usm.date, 0)).CollectUsersChats(_users, _chats);
+                //}
+
+
+
+
 
                 //else if (updates is UpdateShortChatMessage uscm && (!_users.ContainsKey(uscm.from_id) || !_chats.ContainsKey(uscm.chat_id)))
                 //    (await user.Updates_GetDifference(uscm.pts - uscm.pts_count, uscm.date, 0)).CollectUsersChats(_users, _chats);
 
-                if (newUserId != 0)
-                {
-                    var fn = _users[newUserId].first_name;
-                    var ln = _users[newUserId].last_name;
-                    var un = _users[newUserId].username;
-                    await processNewUser(newUserId, fn: fn, ln: ln, un: un);
-                }
+                //if (newUserId != 0)
+                //{
+                //    var fn = _users[newUserId].first_name;
+                //    var ln = _users[newUserId].last_name;
+                //    var un = _users[newUserId].username;
+                //    await processNewUser(newUserId, fn: fn, ln: ln, un: un);
+                //}
 
                 await processUpdates(updates);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 string s = $"OnUpdate 1: {ex.Message}";
                 logger.err(s);
@@ -313,41 +343,41 @@ namespace csb.usr_push
 
                 IsRunning = true;
 
-                var dialogs = await user.Messages_GetDialogs(limit: 100);
+                var dialogs = await user.Messages_GetDialogs(limit: 200);
                 dialogs.CollectUsersChats(_users, _chats);
-                int counter = 0;
+                //int counter = 0;
 
-                foreach (var u in _users)
-                {
-                    try
-                    {
+                //foreach (var u in _users)
+                //{
+                //    try
+                //    {
 
-                        var h = await user.Messages_GetHistory(u.Value, limit: 25);
-                        bool user_processed = false;
-                        var chat = _users[u.Key];
+                //        var h = await user.Messages_GetHistory(u.Value, limit: 25);
+                //        bool user_processed = false;
+                //        var chat = _users[u.Key];
 
-                        foreach (var m in h.Messages)
-                        {
-                            var msg = m as TL.Message;
-                            if (msg.flags.HasFlag(TL.Message.Flags.out_))
-                            {
-                                user_processed = true;
-                                //Console.WriteLine($"БЫЛ ОТВЕТ!!! {chat.first_name} {chat.last_name} {++counter}");
-                                break;
-                            }
-                        }
+                //        foreach (var m in h.Messages)
+                //        {
+                //            var msg = m as TL.Message;
+                //            if (msg.flags.HasFlag(TL.Message.Flags.out_))
+                //            {
+                //                user_processed = true;
+                //                //Console.WriteLine($"БЫЛ ОТВЕТ!!! {chat.first_name} {chat.last_name} {++counter}");
+                //                break;
+                //            }
+                //        }
 
-                        if (!user_processed && chat.id != usr.ID && !chat.IsBot && chat.id != 777000)
-                        {
-                            logger.inf("offline chat ->");
-                            await processNewUser(chat.id, u.Value.first_name, u.Value.last_name, u.Value.username);
-                            //Console.WriteLine($"НЕ БЫЛО ОТВЕТA!!! {chat.first_name} {chat.last_name} {++counter}");
-                        }
-                    } catch (Exception ex)
-                    {
-                        logger.inf($"Admin {geotag} GetHistory: {ex.Message}");
-                    }
-                }
+                //        if (!user_processed && chat.id != usr.ID && !chat.IsBot && chat.id != 777000)
+                //        {
+                //            logger.inf("offline chat ->");
+                //            await processNewUser(chat.id, u.Value.first_name, u.Value.last_name, u.Value.username);
+                //            //Console.WriteLine($"НЕ БЫЛО ОТВЕТA!!! {chat.first_name} {chat.last_name} {++counter}");
+                //        }
+                //    } catch (Exception ex)
+                //    {
+                //        logger.inf($"Admin {geotag} GetHistory: {ex.Message}");
+                //    }
+                //}
 
 
                 logger.inf($"Admin {geotag} started");
