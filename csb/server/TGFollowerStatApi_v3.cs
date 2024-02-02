@@ -145,7 +145,11 @@ namespace csb.server
                 is_user_msg_processed = true
             });
 
-            string json = JsonConvert.SerializeObject(reply);
+            string json = JsonConvert.SerializeObject(reply, Formatting.Indented, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
 
             var addr = $"{url}/v1/telegram/userByGeo";
             var data = new StringContent(json, Encoding.UTF8, "application/json");          
