@@ -97,6 +97,43 @@ namespace csb.usr_push
             }
         }
 
+        async Task<TL.Update[]> getGAPUpdates(UpdatesTooLong utl) 
+        {
+            List<TL.Update> res = new();
+
+            var state = await user.Updates_GetState();
+            await Task.Delay(500);
+            var ust = await user.Updates_GetDifference(state.pts, state.date, state.qts);
+
+            switch (ust)
+            {
+                case Updates_DifferenceSlice dsl:
+                    break;
+
+                case Updates_DifferenceTooLong dtl:
+                    
+                    break;
+
+                case Updates_Difference d:
+                    break;
+            }
+
+
+            while (ust is Updates_DifferenceSlice dsl)
+            {
+                Console.WriteLine($"-------------------------> {geotag} DifferentSlice");
+                logger.inf("DifferentSlice");
+
+                foreach (var upd in dsl.OtherUpdates)
+                {
+                    res.Add(upd);
+                }
+                ust = await user.Updates_GetDifference(dsl.intermediate_state.pts, dsl.intermediate_state.date, dsl.intermediate_state.qts);
+            }
+
+            return res.ToArray<TL.Update>();
+        }
+
         abstract protected Task processUpdates(UpdatesBase update);
         #endregion
 
@@ -104,39 +141,52 @@ namespace csb.usr_push
         private async Task OnUpdate(UpdatesBase updates)
         {
 
+            TL.Update[] updatesList = new TL.Update[0];
+
             try
             {
                 
                 Console.WriteLine($"-------------------------> {geotag}");
                 telemetryOject.Updates.UpdatesCntr++;
 
-                //long newUserId = 0;
-
                 switch (updates)
-                {
+                {   
+
                     case UpdatesTooLong utl:
                         Console.WriteLine($"-------------------------> {geotag} UpdatesTooLong ");
                         logger.inf("UpdatesTooLong");
+
+                        
+
                         var state = await user.Updates_GetState();
                         var ust = await user.Updates_GetDifference(state.pts, state.date, state.qts);
-                        return;                 
+
+                        //updatesList = await getGAPUpdates(utl);
+
+                        break;
+
+                    default:
+                        updatesList = updates.UpdateList;
+                        break;
+
                 }
 
-                //long newUserId = 0;
 
-
-                foreach (var update in updates.UpdateList)
-                {
-
+                foreach (var update in /*updates.UpdateList*/updatesList)
+                {   
 
                     switch (update)
-                    {
+                    {                        
+
+                        
+
                         case UpdateNewChannelMessage ucm:
-                            //Чтобы сообщения от каналов не записывались
+                            //Чтобы сообщения от каналов не записывались                            
+                            
                             break;
 
 
-                        case UpdateNewMessage unm:
+                        case UpdateNewMessage unm:                            
 
                             //switch (unm.message)
                             //{
