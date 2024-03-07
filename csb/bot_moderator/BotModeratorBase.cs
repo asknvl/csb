@@ -48,7 +48,7 @@ namespace csb.bot_moderator
 #if DEBUG
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://185.46.9.229:4000");
 #else
-        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://136.243.74.153:4000");
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("https://ru.flopasda.site");
 #endif
         protected ITGFollowerTrackApi trackApi = new TGFollowerTrackApi_v1("https://app.flopasda.site");
 

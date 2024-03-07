@@ -22,7 +22,7 @@ namespace csb.usr_push
 #if DEBUG
         protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://185.46.9.229:4000");
 #else
-        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("http://136.243.74.153:4000");       
+        protected ITGFollowersStatApi statApi = new TGFollowersStatApi_v3("https://ru.flopasda.site");       
 #endif
 
         //CircularBuffer incomeIds = new CircularBuffer(50);
@@ -135,7 +135,9 @@ namespace csb.usr_push
                                 
                                 try
                                 {
+#if RELEASE
                                     await statApi.MarkFollowerWasReplied(geotag, id);                                    
+#endif
                                 } catch (Exception ex)
                                 {
                                     r = false;
@@ -194,7 +196,7 @@ namespace csb.usr_push
                 }
             }
         }
-        #endregion
+#endregion
 
         #region override
         public override Task Start()
@@ -212,7 +214,10 @@ namespace csb.usr_push
                 logger.inf($"WROTE: {user_id} {fn} {ln} {un}");
                 //Debug.WriteLine($"WROTE: {user_id} {fn} {ln} {un}");
                 //await Task.Delay(200);
+
+#if RELEASE
                 await statApi.MarkFollowerMadeFeedback(geotag, user_id, fn, ln, un);   
+#endif
             }
             catch (Exception ex)
             {                
@@ -220,6 +225,6 @@ namespace csb.usr_push
                 Telemetry.AddException($"Не удалось записать данные о первом сообщении лида в базу {user_id} {fn} {ln} {un} ({ex.Message})");
             } 
         }
-        #endregion
+#endregion
     }
 }

@@ -34,7 +34,12 @@ namespace csb.usr_push
         System.Timers.Timer startWatchDogTimer;        
         System.Timers.Timer updatesWatchDogTimer;
 
+        System.Timers.Timer stuckTimer;
+        System.Timers.Timer keepAliveTimer;
+
         protected TGUserTelemetryObject telemetryOject;
+
+        Updates_State lastState = new Updates_State();
         #endregion
 
         #region properties
@@ -65,7 +70,93 @@ namespace csb.usr_push
             Telemetry = new TGUserTelemetryProcessor(geotag);
             telemetryOject = (TGUserTelemetryObject)Telemetry.TelemetryObject;
 
-                
+
+            stuckTimer = new System.Timers.Timer();
+            stuckTimer.Interval = 5000;
+            stuckTimer.AutoReset = true;
+            stuckTimer.Elapsed += StuckTimer_Elapsed;
+            stuckTimer.Start();
+
+            keepAliveTimer = new System.Timers.Timer();
+            keepAliveTimer.Interval = 1 * 60 * 1000;
+            keepAliveTimer.AutoReset = true;
+            keepAliveTimer.Elapsed += KeepAliveTimer_Elapsed; ;
+            keepAliveTimer.Start();
+
+
+        }
+
+       
+
+        uint updateCounter = 0;
+        uint updateCounterMem = 1;
+
+        async Task forceRestart()
+        {
+
+            logger.err("Restart on Timer");
+            user?.Dispose();
+            user = null;
+            IsRunning = false;
+
+            user = new Client(Config);            
+            user.OnUpdate += OnUpdate;
+            user.OnOther += User_OnOther;
+
+            await user.LoginUserIfNeeded();
+
+            IsRunning = true;
+            logger.err("Restarted OK");
+
+            //catch (Exception ex)
+            //{
+            //    string msg = $"Unable to restart";
+            //    logger.err(msg);
+            //    Telemetry.AddException(msg);
+            //}
+        }
+
+        private async void KeepAliveTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (updateCounter == updateCounterMem)
+            {
+
+                logger.err($"KeepAliveTimer: updateCounter={updateCounter} updateCounterMem={updateCounterMem}");
+
+                try
+                {
+                    await forceRestart();
+                }
+                catch (Exception ex)
+                {
+                    string msg = $"Unable to restart";
+                    logger.err(msg);
+                    Telemetry.AddException(msg);
+                }
+
+            }
+            updateCounterMem = updateCounter;
+        }
+
+        private async void StuckTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (needRestartFlag)
+            {
+
+                logger.err($"StuckTimer: needRestart={needRestartFlag}");
+
+                try
+                {
+                    await forceRestart();
+
+                } catch (Exception ex)
+                {
+                    string msg = $"Unable to restart";
+                    logger.err(msg);
+                    Telemetry.AddException(msg);
+                }
+
+            }            
         }
 
         #region protected
@@ -100,30 +191,107 @@ namespace csb.usr_push
         abstract protected Task processUpdates(UpdatesBase update);
         #endregion
 
+
+
+
+        bool needRestartFlag = false;        
+
         #region private
         private async Task OnUpdate(UpdatesBase updates)
         {
 
             try
-            {
-                
-                Console.WriteLine($"-------------------------> {geotag}");
+            {                
                 telemetryOject.Updates.UpdatesCntr++;
-
-                //long newUserId = 0;
 
                 switch (updates)
                 {
                     case UpdatesTooLong utl:
+
                         Console.WriteLine($"-------------------------> {geotag} UpdatesTooLong ");
                         logger.inf("UpdatesTooLong");
-                        var state = await user.Updates_GetState();
+
+                        needRestartFlag = true;
+
+                        var state = await user.Updates_GetState();                        
                         var ust = await user.Updates_GetDifference(state.pts, state.date, state.qts);
-                        return;                 
+
+                        //needRestartFlag = true;
+
+
+                        //if (lastState == null)
+                        //{
+                        //    lastState = await user.Updates_GetState();
+                        //    lastState.pts -= 100;
+                        //}
+
+                        //logger.inf($"UpdatesTooLong LastState {lastState.pts} {lastState.date} {lastState.qts} {lastState.seq}");
+                        //var ust = await user.Updates_GetDifference(lastState.pts, lastState.date, lastState.qts);
+
+                        //switch (ust)
+                        //{
+                        //    case Updates_Difference df:
+
+                        //        logger.inf($"Difference={ust.State?.pts} {ust.State?.date} {ust.State?.qts} {ust.State?.seq}");
+                        //        lastState = df.State;
+                        //        break;
+
+                        //    case Updates_DifferenceSlice sl:
+                        //        logger.inf($"DifferenceSlice={ust.State?.pts} {ust.State?.date} {ust.State?.qts} {ust.State?.seq}");
+                        //        lastState = sl.State;
+                        //        break;
+
+                        //    case Updates_DifferenceEmpty em:
+                        //        logger.inf($"DifferenceEmpty={ust.State?.pts} {ust.State?.date} {ust.State?.qts} {ust.State?.seq}");
+                        //        lastState = em.State;
+                        //        break;
+
+                        //    case Updates_DifferenceTooLong tl:
+                        //        logger.inf($"DifferenceTooLong={ust.State?.pts} {ust.State?.date} {ust.State?.qts} {ust.State?.seq}");
+                        //        lastState = tl.State;
+                        //        break;
+                        //}
+
+                        //if (needRestartFlag)
+                        //{
+
+                        //    logger.err("Restart on UpdateTooLong...");
+                        //    user?.Dispose();
+                        //    user = null;
+
+                        //    await Task.Delay(2000);
+
+                        //    try
+                        //    {
+                        //        user = new Client(Config);
+                        //        user.OnUpdate -= OnUpdate;
+                        //        user.OnOther -= User_OnOther;
+                        //        user.OnUpdate += OnUpdate;
+                        //        user.OnOther += User_OnOther;
+                        //        await user.LoginUserIfNeeded();
+                        //        IsRunning = true;
+
+                        //        logger.err("Restarted OK");
+
+                        //        break;
+
+                        //    }
+                        //    catch (Exception ex)
+                        //    {
+                        //        string msg = $"Unable to start";
+                        //        logger.err(msg);
+                        //        Telemetry.AddException(msg);
+                        //    }
+                        //}
+
+
+                        return;                    
                 }
 
-                //long newUserId = 0;
-
+                
+                needRestartFlag = false;
+                updateCounter++;
+                Console.WriteLine($"-------------------------> {geotag} Update cntr={updateCounter} {updates.ToString()}");                
 
                 foreach (var update in updates.UpdateList)
                 {
@@ -137,14 +305,6 @@ namespace csb.usr_push
 
 
                         case UpdateNewMessage unm:
-
-                            //switch (unm.message)
-                            //{
-                            //    case TL.Message m:
-                            //        break;
-                            //    case TL.MessageService ms:
-                            //        break;
-                            //}
 
                             try
                             {
@@ -164,6 +324,10 @@ namespace csb.usr_push
                                     if (!_users.ContainsKey(id))
                                     {
                                         //newUserId = id;
+
+                                        lastState = await user.Updates_GetState();
+                                        logger.inf($"LastState={lastState.pts} {lastState.date} {lastState.qts} {lastState.seq}");
+
 
                                         updates.CollectUsersChats(_users, _chats);
 
@@ -189,7 +353,9 @@ namespace csb.usr_push
                                             un = _users[id].username;
                                         }
 
-                                        await processNewUser(id, fn, ln, un);
+
+                                        processNewUser(id, fn, ln, un);
+
                                     }
                                 }
                             }
@@ -305,7 +471,7 @@ namespace csb.usr_push
         {
             telemetryOject.Updates.UpdatesCntrPrev = telemetryOject.Updates.UpdatesCntr;            
         }
-        #endregion
+#endregion
 
         #region public
         public virtual Task Start()
@@ -333,8 +499,15 @@ namespace csb.usr_push
             {
                 logger.inf($"Starting admin {geotag}...");
                 user = new Client(Config);
+
+              
                 usr = await user.LoginUserIfNeeded();
+
+                lastState = await user.Updates_GetState();
+               
+
                 username = usr.username;
+
                 user.OnUpdate -= OnUpdate;
                 user.OnUpdate += OnUpdate;
 
@@ -379,7 +552,7 @@ namespace csb.usr_push
                 //    }
                 //}
 
-
+            
                 logger.inf($"Admin {geotag} started");
 
             }).ContinueWith(t =>

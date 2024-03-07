@@ -73,7 +73,7 @@ namespace csb
 
 
             //Task.Run(async () => {
-            //    ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("http://136.243.74.153:4000");
+            //    ITGFollowersStatApi statApi = new TGFollowersStatApi_v2("https://ru.flopasda.site");
             //    //var res = await statApi.GetFollowerGeoTags(1481806946);
 
             //    //string date_to = DateTime.Now.ToString("yyyy-MM-dd");
