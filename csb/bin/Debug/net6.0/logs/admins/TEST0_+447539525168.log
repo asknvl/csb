@@ -1,23 +1,2 @@
-18.02.2024 21:22:12 inf ADM > Starting admin TEST0...
-18.02.2024 21:22:13 inf ADM > Admin TEST0 started
-18.02.2024 21:24:12 err ADM > KeepAliveTimer: updateCounter=0 updateCounterMem=0
-18.02.2024 21:24:12 err ADM > Restart on Timer
-18.02.2024 21:24:12 err ADM > Restarted OK
-18.02.2024 21:25:12 err ADM > KeepAliveTimer: updateCounter=0 updateCounterMem=0
-18.02.2024 21:25:12 err ADM > Restart on Timer
-18.02.2024 21:25:12 err ADM > Restarted OK
-18.02.2024 21:26:12 err ADM > KeepAliveTimer: updateCounter=2 updateCounterMem=2
-18.02.2024 21:26:12 err ADM > Restart on Timer
-18.02.2024 21:26:12 err ADM > Restarted OK
-18.02.2024 21:29:12 err ADM > KeepAliveTimer: updateCounter=4 updateCounterMem=4
-18.02.2024 21:29:12 err ADM > Restart on Timer
-18.02.2024 21:29:12 err ADM > Restarted OK
-18.02.2024 21:30:12 err ADM > KeepAliveTimer: updateCounter=5 updateCounterMem=5
-18.02.2024 21:30:12 err ADM > Restart on Timer
-18.02.2024 21:30:13 err ADM > Restarted OK
-18.02.2024 21:32:12 err ADM > KeepAliveTimer: updateCounter=6 updateCounterMem=6
-18.02.2024 21:32:12 err ADM > Restart on Timer
-18.02.2024 21:32:12 err ADM > Restarted OK
-18.02.2024 21:35:12 err ADM > KeepAliveTimer: updateCounter=8 updateCounterMem=8
-18.02.2024 21:35:12 err ADM > Restart on Timer
-18.02.2024 21:35:12 err ADM > Restarted OK
+29.03.2024 23:43:20 inf ADM > Starting admin TEST0...
+29.03.2024 23:43:21 inf ADM > Admin TEST0 started

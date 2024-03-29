@@ -250,6 +250,7 @@ namespace csb.bot_poster
                             await bot.SendDocumentAsync(
                                     chatId: ChannelID,
                                     idoc,
+                                    replyMarkup: message.ReplyMarkup,
                                     caption: text,
                                     captionEntities: entities);
 
