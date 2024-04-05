@@ -592,7 +592,7 @@ namespace csb.usr_listener
 
                 try
                 {
-                    user = new Client(Config);
+                    user = new Client(Config);                   
 
                     //user.OnUpdate -= OnUpdate;
                     user.OnUpdate += OnUpdate;
@@ -608,10 +608,18 @@ namespace csb.usr_listener
                     //Console.WriteLine(ex.Message);
                 }
 
-                var usr = await user.LoginUserIfNeeded();
-                ID = usr.ID;
+                try
+                {
+                    var usr = await user.LoginUserIfNeeded();
+                    ID = usr.ID;
+                } catch (Exception ex)
+                {
+                    logger.err(ex.Message);
+                }
+
                 chats = await user.Messages_GetAllChats();
                 dialogs = await user.Messages_GetAllDialogs();
+
                 foreach (var item in CorrespondingBotNames)
                 {
                     resolvedBots.Add(await user.Contacts_ResolveUsername(item));
