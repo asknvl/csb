@@ -613,7 +613,7 @@ namespace csb.usr_listener
                     var usr = await user.LoginUserIfNeeded();
                     ID = usr.ID;
                 } catch (Exception ex)
-                {
+                {                    
                     logger.err(ex.Message);
                 }
 
