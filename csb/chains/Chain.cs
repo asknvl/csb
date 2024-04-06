@@ -71,11 +71,12 @@ namespace csb.chains
 
             if (User == null)
             {
-                User = new UserListener_v1(PhoneNumber);
+                User = new UserListener_v1(PhoneNumber, Name);
             }
 
             //User = new UserListener(PhoneNumber);
             User.PhoneNumber = PhoneNumber;
+            User.Name = Name;
             User.NeedVerifyCodeEvent += (phone) =>
             {
                 NeedVerifyCodeEvent?.Invoke(Id, phone);

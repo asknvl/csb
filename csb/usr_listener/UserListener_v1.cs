@@ -54,6 +54,10 @@ namespace csb.usr_listener
         #region properties
         [JsonIgnore]
         public string PhoneNumber { get; set; }
+
+        [JsonIgnore]
+        public string Name { get; set; }
+
         [JsonIgnore]
         public List<string> CorrespondingBotNames { get; set; } = new();
 
@@ -136,16 +140,18 @@ namespace csb.usr_listener
 
         }
 
-        public UserListener_v1(string phonenumber)
+        public UserListener_v1(string phonenumber, string name)
         {
             PhoneNumber = phonenumber;
-          
+            Name = name;
+
             timer = new();
             timer.Interval = 60 * TimeInterval * 1000;
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
             timer.Start();
-        }
+            Name = name;
+         }
 
         private async Task OnUpdate(TL.IObject u)
         {
@@ -576,7 +582,7 @@ namespace csb.usr_listener
                 return;
             }
 
-            logger = new Logger("USR", "userapi", PhoneNumber);
+            logger = new Logger("USR", "userapi", $"{Name}_{PhoneNumber}");
 
             textMatchingAnalyzer = new TextMatchingAnalyzer(MessageBufferLength);
 
